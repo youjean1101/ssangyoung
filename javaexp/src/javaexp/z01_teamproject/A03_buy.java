@@ -10,7 +10,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class A03_buy {
-	// babo2
 	public static void pCashReceipt(){
 		Scanner sc2 = new Scanner(System.in);
 		System.out.println("\n[현금영수증]");
