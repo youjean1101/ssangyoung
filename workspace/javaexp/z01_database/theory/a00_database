@@ -1,0 +1,32 @@
+https://drive.google.com/file/d/15hm9eaFm75YwhAWJhiiv1uv3eTKuDM0F/view?usp=sharing
+에서 설치 /scott 파일 받기
+
+# 데이터베이스 설치
+	xe
+1.	oracle server 
+	setup.exe
+	관리자계정 비밀번호 : 1111
+	scott.sql : 계정과 sample예제 처리
+	
+	cmd
+	sqlplus
+	system
+	1111 ==> enter
+	@scott.sql
+	conn scott/tiger;
+	select * from emp;
+	
+	
+2. oracle client(eclipse plugin)
+	dbeaver : 마켓플레이스에서 검색해서 설정.
+	접속정보 
+	localhost, xe, scott, tiger, 1521
+	ip : localhost - 서버가 접속하려는 client와 동일할 때 사용..
+	db명 : xe
+	계정 : scott - 대소문자 구분하지 않음
+	비번 : tiger - 대소문자 구분
+	port : 1521 - 하나의 서버 컴퓨터에서 여러 개의 서버를 이용할 때
+					구분해주는 개념
+				ex) 하나의 컴퓨터에 파일서버, 웹서버, DB서버, 메일 서버등
+					여러개의 서버를 외부에서 접속해서 처리할 수 있는데, 
+					이러한 여러 개의 서버를 구분해주는 개념이 포트이다.

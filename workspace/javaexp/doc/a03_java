@@ -1,0 +1,50 @@
+# 자바의 데이터 처리 단위
+1. bit
+	0/1
+2. byte : bit 8개 모여 데이터의 기본 유형 시작
+   char : 문자단위
+   ..
+   기본 데이터 유형..
+   int num01 = 25;
+   char ch01 = 'A';
+   정수, 실수, 문자, boolean
+3. 배열형 데이터(object 개념~~)
+	1) 같은 기본데이터 유형이 모여서 데이터 처리
+		int[] arry = {100,200,300};
+		double[] arry = {1.5,1.7...};
+	2) 문자열
+		char[] carry = {'홍','길','동'};
+		==> 데이터 유형 만들어 짐.
+		String name = "홍길동"; // 문자열 데이터
+		참조변수.length : 
+		참조변수[index개념]
+4. 객체형 데이터
+	1) 다른 유형의 데이터를 모아서 처리
+		class Person{
+			String name;
+			int age;
+			boolean isAult;
+			}
+		Person p01 = new Person();
+-------------------------------------------------------
+5. 배열+객체, 
+		Person[] p = {new Person(), new Person()...}
+		List<Person> plist = new ArrayList<Person>();
+6. 객체안에 배열과 객체 포함.
+		class Person{
+			Woman woman;
+		}
+		class Person{
+			String[]favFoods;
+			int [] prices;
+		}
+7. 여러객체를 동적처리(1:다)
+		class Person{
+			Food[] food;
+			List<Friend> flist;
+		}
+	하나의 객체 안에 여러개의 객체들이 포함되는 경우
+	ex)  김밥(여러가지재료), 자동차(핸들, 엔진, 타이어 등등)
+	
+	//여기까지 메모리 끝.
+	

@@ -1,0 +1,340 @@
+# 객체의 지식계열화 (순서계열대로 공부하는게 좋음)
+1. OOP개념
+2. 객체의 메모리 구조 (stack, heap)
+3. 컴파일 과정
+	- main()없는 클래스
+		클래스 ==> @@@.class
+	- main()있는 클래스
+		클래스 ==> @@@.class ==> 실행(메모리 로딩)
+	
+4. 클래스와 객체의 차이점
+	- 클래스 : 코드의 설계, 도면
+	- 객체 : 클래스를 main()을 통해 실제 메모리에 로딩한 내용
+	
+5. 클래스의 구성 요소에 대한 이해
+	1) 필드 : 객체가 사용하는 데이터유형을 저장
+	2) 생성자 : 처음 클래스로 부터 생성할 때, 필드를 초기화해주는 기능을 가진 함수
+		클래스명과 동일 new Person("홍길동");
+		this(), super() - 생성자의 첫라인
+			현재클래스의 생성자, 상위 부모클래스의 생성자
+		생성자 overloading 규칙 적용
+			
+		
+	3) 메서드 : 필드와 상호관계를 가지면서 기능을 처리해주는 함수
+		- 매개변수(overloading) - 갯수, 타입, 다른 타입의 순서
+		- 리턴유형
+		- 프로세스 처리
+		- 실제리턴값 처리
+		- 위 구성요소의 혼합예제
+		
+	4) 객체의 구성요소의 연계된 혼합예제
+		필드값으로 저장할 데이터를 선언하고, 생성자를 통해서 필드를 초기화(한번만)하고
+		각종 기능을 메서드를 통해서 필드 데이터 저장/변경 처리.(여러번 처리)
+	ex) 자판기
+	AutoSeller as01 = new AutoSeller("콜라", 1200,"사이다",1000);
+	as01.inputMoney(1000);
+	as01.inputMoney(1000);
+	as01.inputMoney(1000);
+	
+	as01.inputMoney(500);
+	as01.inputMoney(1000);
+	as01.inputMoney(1000);
+	System.out.println("구매한 결과:"+as01.chiceProd(1));
+	as01.inputMoney(1000);
+	System.out.println("구매한 결과:"+as01.chiceProd(2));
+	
+	AutoSeller as02 = new AutoSeller("캔커피1", 1000,"쥬스",1200); //두번째 자판기
+	as02.inputMoney(500);
+	as02.inputMoney(1000);
+	as02.inputMoney(1000);
+	System.out.println("구매한 결과:"+as02.chiceProd(1));
+	as02.inputMoney(1000);
+	System.out.println("구매한 결과:"+as02.chiceProd(2));
+	
+	class AutoSeller{
+		String prod01;
+		String prod02;
+		int proPrice01;		 
+		int proPrice02;
+		int totMoney; 		// 필드
+		AutoSeller(String prod01,int proPrice01, String prod02, int proPrice02){
+			this.prod01 = prod01;		 
+			this.prod02 = prod02;
+			this.proPrice01 = proPrice01;		 
+			this.proPrice02 = proPrice02;
+			}
+			void inputMoney(int money){
+				this.totMoney += money;
+				System.out.println("입금액:"+money);
+				System.out.println("총금액:"+totMoney);
+
+			}
+			String chiceProd(int chnum){
+				String retProd="물건 없음.";
+				if(chNum==1){
+					if(totMoney<proPrice01){
+						System.out.println("금액이 부족합니다.");
+					}else{
+						retProd = this.prod01;
+						totMoney-=proPrice01;
+						retProd+="잔액: "+totMoney;
+						}
+					}					
+				if(chNum==2){
+					if(totMoney<proPrice02){
+					System.out.println("금액이 부족합니다.");
+					}else{
+					retProd = this.prod02; 	// 리턴할 물건
+					totMoney-=proPrice02;	// 잔액 처리
+					retProd+="잔액: "+totMoney;
+					}
+				}
+				return retProd;
+			}
+		}
+============================================(2차원적)
+6. 접근제어자의 필요성과 사용방법
+	1) private < default < protected < public
+	# package : 
+	클래스를 그룹화하여 물리적으로 폴드, 논리적으로 클래스를 묶는 단위로 사용된다.
+	접근제어자는 default(X)이상 일 때, 자유롭게 사용이 가능하다. 
+	외부 패키지에 있는 객체를 사용할 때.
+		1. 상속관계
+			접근제어자 protected, public이면 사용 가능
+		2. 상속관계X
+			public일 때만 사용 가능
+		3. 사용 방법
+			import 패키지명.클래스명
+			import 패키지명.*
+			해서, 클래스명 참조변수 = new 생성자명();
+			or
+			패키지명.클래스명 참조 = new 패키지명.생성자명();
+			ps) 클래스명은 동일하고 패키지명이 다른 객체를 함께 사용할 떄는 위와 같이 패키지명까지 나열된 형식으로 객체를 생성하여야 한다.
+		
+============================================(난이도*****)(3차원적)
+7. static/final 의 개념 이해와 활용
+	class Person{
+		String name; p.name
+		static kind; Person.kind
+	}
+	기본변수 : 참조변수(reference) - 객체 종속
+	static 변수 : 객체 공유 - 클래스 변수
+	ex) 롯데월드타워의 도면비용을 서울/부산/제주도도 동일(static변수 - class변수), 
+		각 위치에 건물 부지비용이나 이 건물의 사용자등은 일반 참조변수 (객체종속 변수)
+		
+		# final
+		1. 필드 : 객체에 따라서 변경하지는 않는 데이터
+			참조변수에 초기화되면 변경되지 않는다.
+			class Person{
+				final String name;
+				static final String KIND="인류";
+				Person(String name){
+					this.name = name;
+				}
+			}
+			Person p01 = new Person("김길동");//객체마다 다른 변수를 초기화
+			Person p02 = new Person("홍길동");
+			p01.name = "신길동"; // 에러발생
+			p02.name = "오길동"; // 에러발생
+			Person.KIND : 상수로 클래스단위로 변경불가하다.
+		2. 클래스명앞
+			final class Puppy{}
+			더이상 상속이 불가능한 클래스를 정의할 때, 사용된다;
+			class Dog01 extends Puppy{}(X)
+		3. 메서드명앞
+			class Messenger{
+				final void showMsg(){}
+			}
+			class ShowMesseger extends Messenger{
+				void showMsg(){} // 재정의(overriding이 안된다.)
+			}
+			 
+8. 객체 vs 객체 관계
+	1:1 : 연관관계에서 단일 데이터를 가져와서 사용할 때, 주로 이용된다
+		ex) 쇼핑몰에서 회원 관리 리스트 중에 하나를 클릭해서 데이터 내용을 확인할 때.
+		class Man{
+			private Woman woman;
+			
+			public void setWoman(Woman woman){
+				this.woman = woman;
+			}
+			public void showMyWoman(){
+				if(this.woman!=null){ // 객체가 할당되었을 때
+					this.woman.showInfo();
+				}else{
+					할당되지 않았네요~
+				}
+			}
+		}
+		Man m01 = new Man();
+		m01.setWoman(new Woman(...));
+		m01.showMyWoman();
+	1:다 : DB에서 데이터를 가져와서 한 화면에 출력하거나 사용할 때, 주로 사용되는 형식
+		주로 사용되는 형식
+		ex) 쇼핑몰에서 전체 구매할 물건들을 리스트하여 조회할 때, 활용..
+		class Mart{
+			private String name;
+			private ArrayList<Product> plist;
+			Mart(String name) {
+				this.name = name;
+				this.plist = new ArrayList<Product>();
+			}
+			public void addCart(Product product){
+				this.plist.add(product);
+			}
+			public void showCalcu(){
+			if(this.plist.size()>0){
+				for(Product pro:this.plist){
+					pro.getName(); 
+					pro.getPrice()
+					pro.getCnt();
+				}
+			}else{
+				구매한 물건 없음..
+			}
+		}
+	}
+	
+9. 상속개념이해
+	1) 재사용을 위한 상속
+		상위 클래스는 : 공통적인 속성과 기능을 선언
+		하위 클래스는 개별적인 기능 선언.
+	2) 재정의 처리(overriding) 
+		상위 클래스에서 선언한 메서드의 내용을 하위 클래스가 동일한 이름을 다양한 기능의 내용을 재정의하여 활용할 때,
+		사용된다.
+		class Worker{
+			void working(){
+				일을 하다.
+			}
+			void goHome(){
+				퇴근하다.
+			} // 공통메서드..
+		}
+		class PoliceMan{
+			void working(){
+				super.working(); // 상위 선언된 내용 처리
+				도둑을 잡다.
+			}
+		}
+		class FireMan{
+			void working(){
+				super.working(); // 상위 선언된 내용 처리
+				불을 끄다.
+			}
+			void emergAction(){ // 하위에서만 선언 메서드
+				긴급 출동하다.
+			}
+		}
+	3) 다형성의 개념 이해
+		상위 클래스의 의해 만들어진 메모리에 여러가지 형태의 하위 클래스를 할당하여 처리할 수 있는 것을 말한다.
+		상위 = 하위;
+		Worker w01 = new PoliceMan();
+		Worker w02 = new FireMan();
+		w01.working(); // 재정의 메서드는 하위클래스에서 정의한 내용을 사용한다.
+		w01.goHome(); 상위클래스의 공통 메서드는 사용이 가능
+		w02.emergAction();(X) 상위메모리에 의해 하위가 할당된 경우 하위에서 선언된 내용을 사용할 수 없다.
+		FireMan f01 = new FireMan();
+		f01.emergAction() : 하위 객체로 사용한 경우에는 가능하다. **주의
+		FireMan f02 = (FireMan) w02;
+		상위에 있는 객체를 타입캐스팅해서 하위메모리로 할당하면 하위에서만 정의된 기능메서드를 사용할 수 있다.
+		# 상속관계 메모리구조..
+		
+		상위 : 넓은 메모리
+			하위1 : 작은 메모리
+				
+			하위2 : 작은 메모리
+			하위3 : 작은 메모리
+			
+		상위 넓은 메모리에 상속 받은 작은 하위 객체를 할당할 수 있다.
+		단, 다형성을 처리할 때.
+			1) 재정의하는 메서드 : 하위에서 선언된 기준 처리.
+			2) 상위에만 선언 메서드 : 하위에서 공통 메서드 사용가능
+			3) 하위에만 선언 메서드 : 다형성에 의한 참조변수로 접근이 불가능..
+				접근이 불가능..
+					상위와 공통을 사용할 기능 메서드 아님..
+					순수하게 상속상관없이 사용할 메서드.
+				하위객체로 타입캐스팅해서 하위만 선언된 메서드 사용가능.
+			==> 
+			ArrayList list = new ArrayList();
+			ArrayList<Object> list = new ArrayList<Object>();
+			list.add("안녕");
+			list.add(new int[5]);
+			list.add(new Person());
+			
+			Object : 자바의 모든 객체의 상위 객체.
+				할당은 가능하지만 
+				상위에서 선언되거나, 하위에 재정의하지 않은 내용은 사용이 사용불가능.
+			Object o1 = new String();
+			Object o2 = new int[5];
+				o2[0] (X)			
+			Object o3 = new Person();
+				o3.getName()(X)			
+			Object o4 = new Woman();			
+				o4.getAge()(X)
+				
+			list.get(2).getAge(); (X)
+			Person p = (Person)list.get(2);
+			p.getAge(); (O)
+					
+	4) 추상클래스에 대한 이해와 활용
+		위 오버라이딩과 다형성을 도입해서 상위클래스에서 재정의할 내용을 body({})없이 abstract함으로써 
+		- 추상메서드 선언을 통해 상속 받는 하위 클래스는 반드시 재정희하게끔 하여 메서드 통일성 유지
+		- ex) Larva 추상메서드를 attack()를 선언하면 상속받는 모든 실제클래스는 attack()을 반드시 재정의하게끔 처리한다.
+		- 특징
+			혼자 객체 생성하지 못 한다.
+			추상메서드는 하위에 반드시 재정의하여야 한다.
+			공통메서드 사용..
+	
+	5) interface 사용
+		- 하나의 추상적인 메서드를 가지고 있는 interface를 만들고, 이것을 상속받은 하위클래스에서 재정의해서 사용함으로 
+			다양한 기능 처리를 상위에서 처리할 수 있게 한다.
+			interface Flyway{
+				(public abstract)void fly();
+			}
+			class Wing01 implements Flyway{
+				void fly(){
+					우리 동네를 나르다.
+				}
+			} 
+			class Wing02 implements Flyway{
+				void fly(){
+					우리 나라의 창공을 누비다.
+				}
+			} 
+			class Wing03 implements Flyway{
+				void fly(){
+					세계를 누비다.
+				}
+			} 
+			Flyway f1 = new Wing01(); f1.fly();
+			Flyway f2 = new Wing02(); f2.fly();
+			Flyway f3 = new Wing03(); f3.fly();
+			
+			Robot r1 = new Robot();
+			r1.setFlyway(new Wing01());
+			r1.setFlyway(new Wing02());
+			r1.setFlyway(new Wing03());
+			// 인터페이스에 의해 할당하는 객체를 생성하는 구조로 하면
+			// Robot클래스에 코드 변경이 일어나지 않고, 계속적인 기능의 변경을 처리할 수 있다.
+			- 결합도가 낮고, 응집도가 높은 프로그램 처리.
+			
+			class Robot{
+				private Flyway flyway;
+				
+				public void setFlyway(Flyway flyway){
+					this.flyway = flyway;
+				}
+				public void flying(){
+					if(this.flyway){
+						this.flyway.fly();
+					}else{
+						날개가 장착되지 않음.
+					}
+				}
+				인터페이스의 필드 : 
+				 (public static final) String FUN01 = "상수데이터";
+				1.8~
+				default 기능 메서드 구상메서드 선언사용
+				static 기능 메서드 (인터페이스명.메서드명()) 선언 사용	
+				
+10. 패턴 자바 (난이도가 높아 맛보기만 할 예정.)	
