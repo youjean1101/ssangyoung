@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
+//babo
 public class A03_buy {
 	public static void pCashReceipt(){
 		Scanner sc2 = new Scanner(System.in);
