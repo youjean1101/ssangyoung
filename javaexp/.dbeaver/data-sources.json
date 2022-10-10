@@ -12,7 +12,6 @@
 				"port": "1521",
 				"database": "xe",
 				"url": "jdbc:oracle:thin:@//localhost:1521/xe",
-				"configurationType": "MANUAL",
 				"home": "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server",
 				"type": "dev",
 				"provider-properties": {
