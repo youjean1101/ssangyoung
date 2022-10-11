@@ -15,7 +15,7 @@ AS SELECT empno, ename, job, sal FROM emp;
 SELECT * FROM emp14;
 -- 주소 추가
 ALTER TABLE emp14
-ADD address varchar2(20);
+ADD address varchar2(20); -- 테이블생성시 컬럼의 constraint선언과 동일하게 처리 CONSTRAINT 제약명 PRIMARY KEY 
 -- 기본데이터가 있는 컬럼 추가
 ALTER TABLE emp14
 ADD hiredate DATE default sysdate;
@@ -32,6 +32,9 @@ ADD (
 	bonus NUMBER DEFAULT 0,
 	gender char(1)
 );
+-- ps) 컬럼의 순서 위치를 지정해서 삽입하는 옵션은 없음..
+--		순서를 처리하고 싶으면 임시 복사테이블 만들어서 순서처리 후, 테이블 생성
+
 -- 2개 이상의 컬럼을 추가할 때는 add(컬럼1, 컬럼2, 컬럼3) 형식으로 처리
 SELECT * FROM emp15;
 /*
@@ -96,5 +99,9 @@ SELECT * FROM emp19;
 ALTER TABLE emp19 
 modify (job varchar2(50),
 		ename varchar2(50));
-
-
+/*
+ # 테이블명 변경
+ alter table 기존테이블명 rename to 변경할테이블명
+ */
+ALTER TABLE emp19 RENAME TO newemp19;
+SELECT * FROM newemp19;

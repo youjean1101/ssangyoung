@@ -19,12 +19,18 @@
  		ex) 학번, 주민번호, 사원번호를 중복하지 않아야 한다.
  			- null을 처리가 가능하고, null은 중복이 가능하다.
  	3) primary key : 해당 컬럼 값은 반드시 존재해야 하면 유일해야 한다.
- 		not null과 unique가 결합한 형태
+ 		not null과 unique가 결합된 형태
  		주로 테이블에서 식별해야 할 컬럼 즉, key를 지정할 때 사용되니다.
  	4) foreign key : 한 열과 참조된 테이블의 열간에 외래 키 관계를 설정하고 시행
  		ex) 사원의 테이블의 부서번호는 반드시 부서테이블에 있는 부서번호이어야 한다.
+ */
+SELECT * FROM emp;
+/*
  	5) check : 해당 컬럼에 저장 가능한 데이터 값의 범위나 조건을 지정처리
  		ex) 학생테이블의 학년은 1~4만 데이터로 입력/수정할 수 있다.
+ 		
+ 		check (where조건문 형식)
+ 		
  5. 설정 형식
  	1) 테이블 생성이나 구조 변경시 추가옵션 설정
  		컬럼명 데이터타입 constraint 제약조건명 제약조건
@@ -133,6 +139,7 @@ CREATE TABLE buybook(
 	paycheck varchar2(30),
 	CONSTRAINT buybook_id_isbn_pk PRIMARY key(id,isbn) 
 );
+-- 참조컬럼을 키로 사용하는 경우를 식별관ㄴ계로 설정하는 것을 말한다.
 SELECT * 
 FROM sys.ALL_CONSTRAINTS
 WHERE TABLE_NAME = 'BUYBOOK';

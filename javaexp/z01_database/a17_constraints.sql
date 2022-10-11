@@ -2,8 +2,17 @@
 # check
 1. 특정한 데이터를 조건이나 범위를 지정해서, 해당 범위에 데이터만 입력되도록 처리한 것을 말한다.
 2. 형식
-	컬럼명 데이터유형 constraint 제약명 check (where 조건문 형식 설정)
-	컬럼명 데이터유형 check (where 조건문 형식 설정) 
+	컬럼명 데이터유형 constraint 제약명 check (where 조건문 형식 동일)
+	ex) 'A','B','C'라는 3가지 문자열로된 등급만 입력가능하게 check 처리
+		grade char(1) constraint emp_grade_ck 
+			check( grade in('A','B','C') )
+	ex) 0~100까지 데이터
+		point number(3)	check( point between 0 and 100 )
+	ex) 과목(subject)을 국어, 영어, 수학만 입력하게 정의
+		subject char(6) check( subject in('국어','영어','수학'))
+	주의) check는 null입력은 가능하다.
+	
+	컬럼명 데이터유형 check (where 조건문 형식 설정) 	
  */
 DROP TABLE emp04;
 CREATE TABLE emp04(

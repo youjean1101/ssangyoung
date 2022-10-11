@@ -8,6 +8,45 @@
 4. 각 직원은 근무했던 부서에 대한 근무 기록(기간, 직책)이 있다.
 ~ 월 18:00
 **/
+-- 정답
+/*
+객체 관계 모델링 실습
+
+1. 회사는 네 개의 부서를 운영한다
+	부서(부서번호, 부서이름)
+	deptno(deptno, dname)
+	
+2. 부서는 1명 이상의 직원(직원번호, 직책)을 두고 있다. 각 직원은 하나의 부서에 소속된다.
+	employee(empno, job, deptno) - deptno는 foreign key dept(deptno) 비식별처리
+
+3. 직원은 부양가족(이름, 나이) 있을 수 있다.
+	==> 부양가족(부양가족번호, 이름, 나이, 사원번호)
+	empfamily(efno, ename, age, empno) - empno는 foreign key employee(empno)
+		비식별자 처리
+4. 각 직원은 근무했던 부서에 대한 근무기록(기간, 직책) 이 있다.
+	직책은 사원정보를 통해서 가져올 수 있기 때문에 설정하지 않는다. 기간(startDte, endDte)
+	==> 근무기록(근무기록번호, 사원번호, 부서번호, 시작일, 마지막일)
+	=> hisemploy(hisno, empno, deptno, startDte, endDte) empno, deptno 비식별자처리
+		ex) 1000(홍길동), 10(인사), 2022/01/01, 2022/01/31)
+			1000(홍길동), 20(총무), 2022/02/01, 2022/02/28)
+			1000(홍길동), 10(총무), 2022/03/01, 2022/03/31)
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 CREATE TABLE department(
 		departno varchar2(8) PRIMARY KEY,
 		name varchar2(20) CONSTRAINT department_name_nn NOT null);

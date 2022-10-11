@@ -56,7 +56,14 @@ SELECT ename, sal, dname, e.deptno --공통컬럼만 alias이름 선언한다.(�
 FROM emp e, dept d
 WHERE e.deptno = d.deptno
 AND sal > = 3000;
-SELECT * FROM emp;
+
+SELECT *
+FROM emp e, dept d
+WHERE e.deptno = d.deptno
+AND sal > = 3000;
+-- 조인을 하면, 해당 조인된 구문에 의해 나타날 데이터를 테이블형식
+--으로 그동안 진행한 여러가지 함수, 그룹데이터, 조건문 처리를 할 수 있다.
+
 --ex) 직책이 SALESMAN인 사원의 부서번호, 부서명, 사원명, 직책을 출력하세요.
 SELECT e.deptno 부서번호 ,dname 부서명, ename 사원명, job 직책 
 FROM emp e, dept d
@@ -106,10 +113,12 @@ and ename = 'SMITH';
 	null에 대하여 어Ej한 연산을 적용하더라도 연산 결과는 null로 처리된다.
 	ex) 사원정보와 부서정보 테이블 조인에서 부서번호가 40인 사원정보는 없기에 
 		부서정보 40은 출력되지 않게 된다.
+		* 수강생과 교수 테이블에서 수강신청을 하지 않는 교수의 데이터가 출력되지 않는다.
 2. equi join에서 양측 컬럼 값 중의 하나가 null이지만, 조인 결과로 출력할 필요가 
 	있을때, outer join 사용한다.
 	ex) 사원정보와 부서정보 테이블을 조인하면서, 사원정보가 없는 40번 부서정보도
 		outer join을 이용하면 출력하게 된다.
+		
 3. 기본 형식
 	1) (+) 기호를 사용하여 해당 테이블에 정보가 없을 지라도 표시할 컬럼을 지정하여 처리한다.
 	select 테이블1.컬럼1, 테이블1.공통컬럼, 테이블2.공통컬럼, 테이블2.컬럼1
@@ -122,18 +131,22 @@ SELECT * FROM dept;
 SELECT ename, e.deptno, d.deptno, dname
 FROM emp e, dept d
 WHERE e.deptno(+) = d.deptno;
+-- 부서테이블에 40부서정보와 연결되는 정보가 없어서, equi join으로는 보이지 
+-- 않지만, outer 조인을 하면 부서정보도 확인할 수 있다.
 /*
 # 데이터가 없는 테이블의 outer join시 처리한 내용
 1. nvl 함수 처리
 	없는 데이터에 대하여 nvl함수를 통해 데이터가 없을 표기
+	ex) 합산을 할 때, 없는 데이터도 통계치에 포함될 때는 nvl()을 활용하여 처리한다.
 2. count(),max() 등 그룹함수 처리
 	그룹함수에서는 일반적으로 null을 포함하지 않고 처리가 된다.
 */
 SELECT nvl(ename, '사원정보없음') ename, dname
 FROM emp e, dept d
 WHERE e.deptno(+) = d.deptno;
-
-SELECT dname, count(e.deptno) "사원정보의 건수", count(d.deptno) "부서정보의 건수"
+-- max(nvl(sal,0)) : matching 되는 데이터가 없기에 통계치도 null이 나오는 
+-- 것을 0으로 처리해준다.
+SELECT dname, max(nvl(sal,0)) 부서별최대, count(e.deptno) "사원정보의 건수", count(d.deptno) "부서정보의 건수"
 FROM emp e, dept d
 WHERE e.deptno(+) = d.deptno
 GROUP BY dname;

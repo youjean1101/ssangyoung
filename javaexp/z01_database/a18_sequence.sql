@@ -18,6 +18,36 @@
 	1) 시퀀스명.nextval : 현재 시퀀스번호 출력 다음 시퀀스 넘버링
 	2) 시퀀스명.currval : 현재 시퀀스번호 출력
 	
+7. Sequence의 목적
+ 1. 테이블에 고정형 데이터형식의 primary key를 사용할 때, 가장 많이 활용된다.
+	ex) 게시판1(남자게시판), 게시판2(여자게시판)
+		1				2	3	4
+		5 6 7			8	9	10
+		board01			board02
+	위 내용에 sequence를 만들고
+	create sequence seq_01
+		insert into board01 value(seq_01.nextval, '내용'...);
+		insert into board02 value(seq_01.nextval, '내용'...);
+		insert into board01 value(seq_01.nextval, '내용'...);
+		insert into board01 value(seq_01.nextval, '내용'...);
+ 2. 사원번호등 합성적인 코드에 sequence를 만들 때
+	단과코드+입학년도+학과코드+일련번호
+	H01P040	1000~~
+		stud_seq
+	insert into student('H01P040'||stud_seq.nextval, 
+ 3. create sequence 시퀀스명
+	increment by 증감
+	start with n
+	minvalue n
+	maxvalue n
+	cycle
+	cache 2~
+	시퀀스명.nextval
+	시퀀스명.currval
+ 4. drop sequence 시퀀스명;
+ 5. alter sequence 시퀀스명
+ 	 start with n외에 수정이 가능. - start with를 바꿀려면 drop시키고 다시 생성하여 start with를 지정 처리..
+ 	 
 */
 DROP SEQUENCE seq_01;
 CREATE SEQUENCE seq_01
