@@ -16,7 +16,7 @@
 	부서(부서번호, 부서이름)
 	deptno(deptno, dname)
 	
-2. 부서는 1명 이상의 직원(직원번호, 직책)을 두고 있다. 각 직원은 하나의 부서에 소속된다.
+2. 부서는 1명 이상의 직원(직원번호, 사원명, 직책)을 두고 있다. 각 직원은 하나의 부서에 소속된다.
 	employee(empno, job, deptno) - deptno는 foreign key dept(deptno) 비식별처리
 
 3. 직원은 부양가족(이름, 나이) 있을 수 있다.
@@ -31,22 +31,77 @@
 			1000(홍길동), 20(총무), 2022/02/01, 2022/02/28)
 			1000(홍길동), 10(총무), 2022/03/01, 2022/03/31)
 */
+CREATE TABLE depart(
+	deptno NUMBER(4) PRIMARY KEY,
+	dname varchar2(50)
+);
+INSERT INTO depart VALUES (1000, '회계');
+INSERT INTO depart VALUES (1001, '인사');
+INSERT INTO depart VALUES (1002, '재무');
+SELECT * FROM depart;
+
+CREATE TABLE employee(
+	empno NUMBER(4) PRIMARY KEY,
+	job varchar2(50)
+);
+ALTER TABLE EMPLOYEE
+ADD ename varchar2(50);
+INSERT INTO employee VALUES(7000, '홍길동','대리');
+INSERT INTO employee VALUES(7001, '김길동','사원');
+INSERT INTO employee VALUES(7002, '신길동','과장');
+INSERT INTO employee VALUES(7003, '마혜영','사원');
+
+SELECT * FROM employee;
+
+CREATE TABLE hisemploy(
+	efno number PRIMARY KEY,
+	startdte DATE,
+	enddte DATE,
+	deptno number(4) REFERENCES depart(deptno),
+	empno number(4) REFERENCES employee(empno)
+);
+SELECT * FROM hisemploy;
+SELECT * FROM employee;
+SELECT * FROM depart;
+--1. 2022/01/01, 2022/01/31, 1001(인사), 7000(홍길동) 
+--2. 2022/02/01, 2022/02/28, 1002(총무), 7000(홍길동) 
+--3. 2022/03/31, 2022/03/01, 1001(인사), 7000(홍길동)
+INSERT INTO hisemploy values(1, to_date('2022/01/01','YYYY/MM/DD'),
+						to_date('2022/01/31', 'YYYY/MM/DD'), 1001,7000);
+INSERT INTO hisemploy values(2, to_date('2022/02/01','YYYY/MM/DD'),
+						to_date('2022/02/28', 'YYYY/MM/DD'), 1002,7000);
+INSERT INTO hisemploy values(3, to_date('2022/03/01','YYYY/MM/DD'),
+						to_date('2022/03/31', 'YYYY/MM/DD'), 1001,7000);
+	
+-- empfamily(efno, name, age, empno)
+CREATE TABLE empfamily(
+	efno NUMBER PRIMARY KEY,
+	name varchar2(50),
+	age NUMBER,
+	empno number(4) REFERENCES employee(empno)
+);
+-- 1 이연아 28, 7000
+-- 2 홍마리 5, 7000
+-- 3 홍철수 2, 7000
+INSERT INTO empfamily values(1, '이연아', 28, 7000);
+INSERT INTO empfamily values(2, '홍마리', 5, 7000);
+INSERT INTO empfamily values(3, '홍철수', 2, 7000);
+SELECT * FROM employee;
+SELECT * FROM depart;
+SELECT * FROM hisemploy;
+SELECT * FROM empfamily;
+SELECT *
+FROM employee e, hisemploy h, depart d
+WHERE e.empno = h.empno
+AND h.deptno = d.deptno;
+SELECT *
+FROM employee e, empfamily f
+WHERE e.empno = f.empno;
+
+SELECT * FROM empfamily;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*
 CREATE TABLE department(
 		departno varchar2(8) PRIMARY KEY,
 		name varchar2(20) CONSTRAINT department_name_nn NOT null);
@@ -106,6 +161,6 @@ INSERT INTO workrecord values('AB900001','20201231','사원');
 INSERT INTO workrecord values('AC900002','20170705','사원');
 INSERT INTO workrecord values('AB900000','20211111','사원');
 SELECT * FROM workrecord;
-
+*/
 
 
