@@ -211,7 +211,7 @@ FROM emp e, (SELECT to_char(hiredate,'Q'), max(sal) exsal
          GROUP BY to_char(hiredate,'Q')) ex
 WHERE e.sal = ex.exsal;
 
-SELECT    (select max(sal) 
-      FROM emp 
-      WHERE deptno = e.deptno) "소속부서최고급여", e.*
+SELECT	(select max(sal) 
+     	 FROM emp 
+      	WHERE deptno = e.deptno) "소속부서최고급여", e.*
 FROM emp e;

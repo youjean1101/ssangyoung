@@ -47,7 +47,6 @@ public class A03_DeptDao {
 			if(con!=null) con = null;
 		}
 		System.out.println("종료!!");
-		
 	}
 
 //	select * 

@@ -248,5 +248,47 @@
 				while(next()) 행단위로 이동
 					rs.getString("컬럼"): 열단위로 이동
 		==> 자원해제..
+
+# 데이터베이스의 등록/수정/삭제
+1. 기본 개발 프로세스
+	1) sql 작성
+	2) vo 작성
+	3) 기능 메서드 선언
+		- 연결처리
+		- Connection 객체의 autocommit을 false로 지정
+		- 대화객체 updateQuery
+		- commit()
+		- 예외 처리 rollback
+2. 사원정보 수정
+	1) 복사테이블 만들기
+		create table emp100
+		as select * from emp;
+		alter table emp100
+		modify (
+			job varchar2(50),
+			ename varchar2(50),
+			empno number(4) primary key
+		);
+		sequence 만들기(primary key 설정)
+		create sequence emp100_seq
+			start with 1000
+			minvalue 1000
+			maxvalue 9999;
+	2) sql 작성
+		insert into emp100 values(emp100_seq.nextval, '홍길동', '사원', 7800,
+			to_date('2022/01/01','YYYY/MM/DD'), 3500, 100, 10);
+	3) 입력내용을 기준으로 vo 생성
+		private int empno;
+		private String ename;
+		private String job;
+		private int mgr;
+		private String hiredate;
+		private double sal;
+		private double comm;
+		private int deptno;
+	4) 메서드 선언
+		public void insert(Emp ins){
+		
+		}
 		
 		
