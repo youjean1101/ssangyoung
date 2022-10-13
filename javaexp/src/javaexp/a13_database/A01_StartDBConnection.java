@@ -12,7 +12,7 @@ public class A01_StartDBConnection {
 	public static void setConnection() throws SQLException {
 		// 1. 드라이버 메모리 로딩 : 직접적으로 예외 처리(연결할때 1번만 필요하기 때문에)
 		try {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Class.forName("oracle.jdbc.driver.OracleDriver"); // 메모리로딩
 		System.out.println("드라이버 연결 성공");
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버연결오류(오타확인):"+e.getMessage());

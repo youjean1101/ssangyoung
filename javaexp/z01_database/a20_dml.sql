@@ -37,7 +37,58 @@ UPDATE emp10
  		- 한 개의 컬럼 set 컬럼명 = (결과가 1개인 컬럼 query)
  		- 두개 이상의 컬럼 set(컬럼명,...) = (결과가 2개 이상 컬럼 query)
  -- 부서번호가 10인 사원정보의 급여를 부서정보 20인 사원의 최고급여로 변경 처리
+ # 단일행 수정 subquery
+ update 테이블명
+ 	set 컬럼명 = ( select 컬럼 from 테이블명 )
+ where 조건
+ex) subquery를 통해 얻어진 데이터를 해당 컬럼의 값을 변경
+*/
+-- ex) 최대 급여를 사원번호 @@@에게 할당 처리
+-- 1) 최대급여
+SELECT max(sal)
+FROM emp10;
+-- 2) 사원번호 @@@의 급여의 변경
+SELECT * 
+FROM emp10;
+UPDATE emp10
+	SET sal = (
+		SELECT max(sal)
+		FROM emp10
+	)
+WHERE empno = 7369;
+-- 해당데이터는 항상 입력/수정/삭제에 의해 바뀌고 있는 상황에서 통계치를 처리할려면
+-- subquery 가 필요로 하다.
+
+/*
+ # 다중열 수정 subquery
+ update 테이블명
+ 	set (컬럼1, 컬럼2) = ( select 컬럼1, 컬럼2 from 테이블명)
+ where 조건
+ ex) subquery의 두개 이상 컬럼의 내용을 기준으로 검색된 내용으로 변경 처리.
  */
+ -- ex) 특정 부서의 평균급여 해당 부서와 급여를 변경처리
+--		직책이 SALESMAN의 부서와 급여를 10부서의 평균급여로 변경.
+--		1) subquery 10부서의 평균급여
+SELECT deptno, round(avg(sal))
+FROM EMP10
+WHERE deptno = 10
+GROUP BY deptno;
+-- 2) update 구문의 query를 작성
+SELECT *
+FROM emp10
+WHERE job = 'SALESMAN';
+
+UPDATE emp10
+	SET (deptno, sal) = (
+	SELECT deptno, round(avg(sal))
+	FROM EMP10
+	WHERE deptno = 10
+	GROUP BY deptno
+	)
+WHERE job = 'SALESMAN';
+
+ 
+ -- 부서번호가 10인 사원정보의 급여를 부서정보 20인 사원의 최고급여로 변경 처리
 SELECT ename, sal
 FROM emp10
 WHERE deptno = 10;
