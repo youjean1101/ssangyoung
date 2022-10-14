@@ -2,8 +2,6 @@ package javaexp.a13_database.homework;
 
 import java.sql.Date;
 
-import oracle.sql.DATE;
-
 public class vo_Emp07 {
 	private String ename;
 	private int deptno;

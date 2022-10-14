@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import javaexp.a13_database.vo.Dept;
+import javaexp.a13_database.vo.Emp;
 
 public class A03_DeptDao {
 	//  공통 필드 선언
@@ -21,9 +23,9 @@ public class A03_DeptDao {
 			// 대화객체
 			stmt = con.createStatement();
 			// 결과객체
-			String sql = "SELECT * FROM dept";
+			String sql = "SELECT * FROM dept100";
 			rs = stmt.executeQuery(sql);
-			// while문처리 - 부서번호 출력 select * from dept
+			// while문처리 - 부서번호 출력 select * FROM dept100
 			while(rs.next()) {
 				// String s = ""+25; (O) : 문자열로 다 표현하는 건 가능
 				// int num = "홍길동"; (X)
@@ -50,7 +52,7 @@ public class A03_DeptDao {
 	}
 
 //	select * 
-//	from dept 
+//	FROM dept100 
 //	where dname like '%'||'O'||'%'
 //	AND loc LIKE '%' ||''||'%'	
 //	1. vo 만들기
@@ -61,7 +63,7 @@ public class A03_DeptDao {
 			con = DB.con();
 //			4. 대화 - sql
 			String sql = "select * \r\n"
-					+ "from dept \r\n"
+					+ "FROM dept100 \r\n"
 					+ "where dname like '%'||'"+dname+"'||'%'\r\n"
 					+ "AND loc LIKE '%' ||'"+loc+"'||'%'";
 			stmt = con.createStatement();
@@ -85,7 +87,7 @@ public class A03_DeptDao {
 }
 	
 	//	select * 
-	//	from dept 
+	//	FROM dept100 
 	//	where dname like '%'||'O'||'%'
 	//	AND loc LIKE '%' ||''||'%'	
 	//	1. vo 만들기
@@ -96,7 +98,7 @@ public class A03_DeptDao {
 				con = DB.con();
 	//			4. 대화 - sql
 				String sql = "select * \r\n"
-						+ "from dept \r\n"
+						+ "FROM dept100 \r\n"
 						+ "where dname like '%'||'"+sch.getDname()+"'||'%'\r\n"
 						+ "AND loc LIKE '%' ||'"+sch.getLoc()+"'||'%'";
 				stmt = con.createStatement();
@@ -118,20 +120,49 @@ public class A03_DeptDao {
 				System.out.println("기타예외:"+e.getMessage());
 			}
 	}
+		public void insertDept(Dept ins){
+			String sql = "INSERT INTO dept100\r\n"
+					+ "values("+ins.getDeptno()+",'"+ins.getDname()+"','"+ins.getLoc()+"')";
+			try {
+				con = DB.con();
+				con.setAutoCommit(false);
+				stmt = con.createStatement();
+				stmt.executeUpdate(sql);
+//				int cnt = stmt.executeUpdate(sql);
+//				System.out.println("등록 건수:"+cnt);
+				con.commit();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println("DB 처리:"+e.getMessage());
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					System.out.println("rollback에러:"+e1.getMessage());
+				}
+			} catch(Exception e) {
+				System.out.println("기타 예외:"+e.getMessage());
+			} finally {
+				DB.close(rs, stmt, con);
+			}
+		}
+		
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		// 객체 생성
 		A03_DeptDao dao = new A03_DeptDao();
 		// 부서정보 호출 기능메서드
-		dao.showDepAll();
-		dao.deptSch("SALES", "");
-		try {
-			DB.con();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("접속에러 : "+e.getMessage());
-		}
+//		dao.showDepAll();
+//		dao.deptSch("SALES", "");
+		
+		System.out.println("#dept insert문#");
+		dao.insertDept(new Dept(12,"회계","대전"));
+		dao.deptSch("", "");
+		//외부에서 불러와서 검색된 내용
+		
+		
 	}
 
 }

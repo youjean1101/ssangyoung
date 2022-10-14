@@ -8,6 +8,7 @@ public class Emp {
 	private String job;
 	private int mgr;
 	private Date hiredate;
+	private String hiredateS;
 	private double sal;
 	private double frSal;
 	private double toSal;
@@ -18,6 +19,25 @@ public class Emp {
 		// TODO Auto-generated constructor stub
 	}
 	
+	// 등록시 사용할 생성자..
+	public Emp(String ename, String job, int mgr, String hiredateS, double sal, double comm, int deptno) {
+		super();
+		this.ename = ename;
+		this.job = job;
+		this.mgr = mgr;
+		this.hiredateS = hiredateS;
+		this.sal = sal;
+		this.comm = comm;
+		this.deptno = deptno;
+	}
+
+
+	public Emp(String ename, double sal, int deptno) {
+		this.ename = ename;
+		this.sal = sal;
+		this.deptno = deptno;
+	}
+
 	public Emp(int empno, String ename, String job, double sal, int deptno) {
 		this.empno = empno;
 		this.ename = ename;
@@ -132,6 +152,15 @@ public class Emp {
 	public void setDeptno(int deptno) {
 		this.deptno = deptno;
 	}
+
+	public String getHiredateS() {
+		return hiredateS;
+	}
+
+	public void setHiredateS(String hiredateS) {
+		this.hiredateS = hiredateS;
+	}
+	
 	
 	
 	

@@ -14,9 +14,9 @@ public class DB{
 			Statement stmt, Connection con) {
 
 		try {
-			rs.close();
-			stmt.close();
-			con.close();
+			if(rs!=null) rs.close();
+			if(stmt!=null) stmt.close();
+			if(con!=null) con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("연결 종료 예외 발생:"+e.getMessage());

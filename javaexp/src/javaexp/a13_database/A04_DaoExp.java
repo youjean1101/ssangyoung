@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javaexp.a13_database.vo.Emp;
+import javaexp.a13_database.vo.Person;
 import javaexp.a13_database.vo2.Emp01;
 import javaexp.a13_database.vo2.Emp02;
 import javaexp.a13_database.vo2.Emp03;
@@ -198,6 +200,55 @@ public class A04_DaoExp {
 		}
 		return emp;
 	}
+	private void insertPerson(Person ins) {
+		String sql = "INSERT INTO person values('"+ins.getName()+"',"+ins.getAge()+",'"+ins.getLoc()+"')";
+		try {
+			con = DB.con();
+			con.setAutoCommit(false);
+			stmt = con.createStatement();
+			System.out.println("등록건수:"+stmt.executeUpdate(sql));
+//			stmt.executeUpdate(sql);
+			con.commit();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("DB 처리:"+e.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				System.out.println("rollback에러:"+e1.getMessage());
+			}
+		} catch(Exception e) {
+			System.out.println("기타 예외:"+e.getMessage());
+		} finally {
+			DB.close(rs, stmt, con);
+		}
+	}
+	public void personList() {
+		try {
+			con = DB.con();
+			String sql = "SELECT * FROM person";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				System.out.print(rs.getString("name")+"\t");
+				System.out.print(rs.getInt("age")+"\t");
+				System.out.print(rs.getString("loc")+"\n");
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("기타 sql 처리 예외:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("기타 예외:"+e.getMessage());
+		}finally {
+			DB.close(rs, stmt, con);
+			if(rs!=null) rs=null;
+			if(stmt!=null) stmt=null;
+			if(con!=null) con=null;
+		}
+	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -243,7 +294,9 @@ public class A04_DaoExp {
 		}else {
 			System.out.println("데이터 없음");
 		}
-
+		System.out.println("#person테이블등록#");
+		dao.insertPerson(new Person("홍길동",25,"서울 신림"));
+		dao.personList();
 	}
 
 }

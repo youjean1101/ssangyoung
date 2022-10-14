@@ -25,16 +25,20 @@
 	select, insert, update, delete
 5. 자바의 DB처리 기능 객체와 각 객체별 처리 순서에 대한 이해
 	1) database 서버 접속 객체
-		연결객체(Connection), 대화객체(Statement),
+		연결객체(Connection), 대화객체(Statement ==> PreparedStatement(보안/속도)),
 		결과값처리객체(ResultSet), 자원해제(.close()),
 		예외처리(try{}catch(SQLExpption e){})
 	2) 전역변수로 위 핵심 객체를 선언
 		private Connection con;
 		private Statement stmt;
+		private PreparedStatement pstmt;
 		private ResultSet rs;
 	3) 기능별 메서드 선언
 		public void setConnection(){} - DB연결을 위한 기본 기능메서드
-		// 각 기능별 메서드 선언
+		==> DB.con(), DB.close(con, stmt, rs);
+			접속과 자원해제를 따로 객체로 만들어서 처리.
+		// 각 기능별 메서드 선언(sql ==> select(리턴값), 
+			where, sql에 입력 데이터(매개변수) ==> Vo 클래스 선언)
 		// 사원정보 조회(다중행)
 		public List<Emp> getEmpList(Emp sch){}
 		// 사원정보 조회(단일행)
@@ -45,6 +49,12 @@
 		public void updateEmp(Emp update){}
 		// 사원정보 삭제
 		public void deleteEmp(int empno){}
+		==> 프로젝트
+		DB.con(), DB.close(con,stmt,rs); DB는 하나로 만들고
+		@@@Dao.java => 업무별로 만들어서 조회(다중),조회(단일), 수정, 삭제, 
+			업무별 :	회원관리 member라는 테이블로 진행 ==> 로그인/회원가입/회원리스트
+					물건관리 product ==> 물건리스트, 물건등록, 수정, 삭제
+					구매및배송 product/member ==> 물건리스트, 구매리스트, 장바구니담기 및 리스트, 배송
 		
 # 데이터베이스 연결 처리
 1. 필요한 기본 객체
@@ -123,6 +133,13 @@
 						"FROM emp01" +
 						"WHERE ename LIKE '%'||'"+sch.getEname()+"'||'%'"+
 						"AND job LIKE '%'||'"+sch.getJob+"'||'%'";
+		==>PreparedStatement
+		String sql = 	"SELECT * " +
+						"FROM emp01" +
+						"WHERE ename LIKE '%'||?||'%'"+
+						"AND job LIKE '%'||?||'%'";
+		pstmt.setString(1, sch.getEname());
+		pstmt.setString(2, sch.getJob()); // 매핑
 						
 # 검색조건 처리 및 List로 리턴처리
 1. sql 작성
@@ -235,11 +252,27 @@
 			 	List<Emp2> e = new ArrayList<Emp2>();
 			 	return elist;
 			 }
-			2. 한개의 행의 가져오는 경우(select * from emp where empno = 7780);
+			2. 한개의 행의 가져오는 경우
+			 1) select * from emp where empno = 7780;
 			 public Emp2 getEmpListSch(int empno){
 			 	emp2 e = null;
 			 	
 			 	return e;
+			 }
+			 2) select count(*) from emp;
+			 	select ename from emp where empno = 7790;
+			 	select max(sal) from emp where deptno = 10;
+		 	public int getEmpCnt(int empno){
+		 	int cnt = 0;
+		 	if(rs.next()) cnt = rs.getInt(1);
+		 	return cnt;
+			 }
+			 public String getEmpCnt(int empno){ 
+			 	// select를 통해서 결과값을 받는 데이터 return 유형
+			 	//where조건, sql 구성하는 내용은 매개변수
+			 	String ename = "";
+			 	if(rs.next()) ename = rs.getString(1);
+			 	return ename;
 			 }
 			
 		대화를 통해 의사 전달만(insert, update, delete) ==> commit(), rollback()
@@ -259,7 +292,7 @@
 		- 대화객체 updateQuery
 		- commit()
 		- 예외 처리 rollback
-2. 사원정보 수정
+2. 사원정보 등록/수정/삭제
 	1) 복사테이블 만들기
 		create table emp100
 		as select * from emp;
@@ -290,5 +323,9 @@
 		public void insert(Emp ins){
 		
 		}
-		
+	5) 주요 내용
+		Connection 객체의 autocommit ==> false
+		Statement 객체의 executeUpdate(sql)
+		ResultSet 객체 삭제(사용하지 않음 == while() X)
+		Connection 객체의 commit(), 예외 처리 내용을 rollback()
 		

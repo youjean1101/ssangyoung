@@ -23,7 +23,7 @@ public class A02_EmpDao {
 		try {
 			con = DB.con();
 			// 2) 대화객체 생성		ex) 연결된 내용으로 대화를 시작
-			String sql = "SELECT * FROM emp01";
+			String sql = "SELECT * FROM emp100";
 			stmt = con.createStatement();
 			// 3) 결과객체 받기		ex) 대화의 내용 중에 결과 데이터가 있는 경우 select 
 			//		- while() 통해 결과객체 내용 출력
@@ -34,7 +34,7 @@ public class A02_EmpDao {
 				System.out.println(rs.getString("ename"));
 			}
 			// 4) 자원해제			ex) 전화 끊기
-			DB.close(rs, stmt, con);
+//			DB.close(rs, stmt, con);	// finally 로 이동
 //			rs.close();
 //			stmt.close();
 //			con.close();
@@ -46,6 +46,7 @@ public class A02_EmpDao {
 		} catch(Exception e) {
 			System.out.println("기타 예외:"+e.getMessage());
 		}finally {
+			DB.close(rs, stmt, con);
 			if(rs!=null) rs=null;
 			if(stmt!=null) stmt=null;
 			if(con!=null) con=null;
@@ -59,7 +60,7 @@ public class A02_EmpDao {
 		try {
 			con = DB.con();
 //			2. 대화
-			String sql = "SELECT * FROM emp01\r\n"
+			String sql = "SELECT * FROM emp100\r\n"
 					+ "WHERE ename LIKE '%'||'"+ename+"'||'%'\r\n"
 					+ "AND job LIKE '%'||'"+job+"'||'%'";
 			stmt = con.createStatement();
@@ -77,13 +78,15 @@ public class A02_EmpDao {
 				System.out.print(rs.getInt("deptno")+"\n");
 			}
 //			4. 자원해제 - 예회 처리2
-			DB.close(rs, stmt, con);
+//			DB.close(rs, stmt, con);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("DB처리예외:"+e.getMessage());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("기타예외:"+e.getMessage());
+		}finally {
+			DB.close(rs, stmt, con);
 		}
 
 	}
@@ -98,7 +101,7 @@ public class A02_EmpDao {
 			try {
 				con = DB.con();
 	//			2. 대화
-				String sql = "SELECT * FROM emp01\r\n"
+				String sql = "SELECT * FROM emp100\r\n"
 						+ "WHERE ename LIKE '%'||'"+sch.getEname()+"'||'%'\r\n"
 						+ "AND job LIKE '%'||'"+sch.getJob()+"'||'%'";
 				stmt = con.createStatement();
@@ -116,19 +119,21 @@ public class A02_EmpDao {
 					System.out.print(rs.getInt("deptno")+"\n");
 				}
 	//			4. 자원해제 - 예외 처리2
-				DB.close(rs, stmt, con);
+//				DB.close(rs, stmt, con);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				System.out.println("DB처리예외:"+e.getMessage());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				System.out.println("기타예외:"+e.getMessage());
+			} finally {
+				DB.close(rs, stmt, con);
 			}
 		}
 		// 4. 사원정보 List<Emp> 검색(검색조건 처리 및 List로 리턴 처리)
 //		1) sql ==> VO
 //		SELECT empno, ename, job, mgr, hiredate, sal, comm,deptno
-//		FROM emp01
+//		FROM emp100
 //		WHERE ename LIKE '%'||''||'%'
 //		AND job LIKE '%'||''||'%'
 //		AND sal BETWEEN 1000 AND 2000
@@ -140,10 +145,10 @@ public class A02_EmpDao {
 				con = DB.con();
 			//2. 대화
 				String sql = "SELECT empno, ename, job, mgr, hiredate, sal, comm,deptno\r\n"
-						+ "FROM emp01\r\n"
+						+ "FROM emp100\r\n"
 						+ "WHERE ename LIKE '%'||'" + sch.getEname() + "'||'%'\r\n"
 						+ "AND job LIKE '%'||'" + sch.getJob() + "'||'%'\r\n"
-						+ "AND sal BETWEEN" + sch.getFrSal() + " AND " + sch.getToSal();
+						+ "AND sal BETWEEN '" + sch.getFrSal() + "' AND '" + sch.getToSal()+"'";
 				// ORA-00920 : invalid relational operator 이 에러가
 				// 나는 분들은 아래와 같이 출력해보시면 sql구문의 에러가 보일겁니다.
 				// 적당하게 위 sql 문자열에 띄워쓰기가 필요할 겁니다.
@@ -172,14 +177,50 @@ public class A02_EmpDao {
 			} 
 			return list;
 		}
+	public void insertEmp(Emp insert) {
+		String sql = "insert into emp100 \r\n"
+				+ "values(emp100_seq.nextval, '"+insert.getEname()+"', '"+insert.getJob()+"', "
+				+ insert.getMgr()+",\r\n"
+				+ "to_date('"+insert.getHiredateS()+"','YYYY/MM/DD'), "+insert.getSal()+", "
+				+ insert.getComm()+","+insert.getDeptno()+")";
+		System.out.println("등록 sql");
+		System.out.print(sql);
+		try {
+			con = DB.con();
+			// autocommit : false
+			con.setAutoCommit(false);
+			stmt = con.createStatement();
+			stmt.executeUpdate(sql);
+			int cnt = stmt.executeUpdate(sql);
+			System.out.println("등록 데이터:"+cnt);
+			con.commit();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("DB 처리:"+e.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				System.out.println("rollback에러:"+e1.getMessage());
+			}
+		} catch(Exception e) {
+			System.out.println("기타 예외:"+e.getMessage());
+		} finally {
+			DB.close(rs, stmt, con);
+		}
+		
+	}
 		
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		A02_EmpDao dao = new A02_EmpDao();
+//		dao.insertEmp("");
 //		dao.empListAllPrint();
 //		dao.empSchList("", "");
 //		dao.empSchList("A", "MAN");
 //		dao.empSchList(new Emp("","MAN"));
+		/*
 		Scanner sc = new Scanner(System.in);
 		System.out.print("검색할 사원명:");
 		String ename = sc.nextLine();
@@ -194,7 +235,6 @@ public class A02_EmpDao {
 		System.out.println("직책명:"+job);
 		System.out.println("급여:"+frsal+"~"+tosal);
 		System.out.println("# 검색 결과 #");
-		
 		List<Emp> empList = dao.getEmpSch(new Emp(ename,job,frsal,tosal));
 		//외부에서 불러와서 검색된 내용
 		for(Emp e:empList) {
@@ -202,6 +242,25 @@ public class A02_EmpDao {
 			System.out.print(e.getEname()+"\n");
 			System.out.print(e.getJob()+"\n");
 			System.out.print(e.getSal()+"\n");
-		}
+		*/
+		System.out.println("insert문");
+		Emp ins = new Emp();
+		ins.setComm(100);
+		ins.setDeptno(10);
+		ins.setEname("등록맨");
+		ins.setHiredateS("2022/12/14");
+		ins.setJob("사원");
+		ins.setMgr(7900);
+		ins.setSal(4000);
+		dao.insertEmp(ins);
+		
+			List<Emp> empList = dao.getEmpSch(new Emp("","",1000,5000));
+			//외부에서 불러와서 검색된 내용
+			for(Emp e:empList) {
+				System.out.print(e.getEmpno()+"\t");
+				System.out.print(e.getEname()+"\t");
+				System.out.print(e.getJob()+"\t");
+				System.out.print(e.getSal()+"\n");
+		}		
 	}
 }
