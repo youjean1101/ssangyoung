@@ -119,7 +119,7 @@ public class A02_EmpDao {
 					System.out.print(rs.getInt("deptno")+"\n");
 				}
 	//			4. 자원해제 - 예외 처리2
-//				DB.close(rs, stmt, con);
+//				DB.close(rs, stmt, con); //finally에위치
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				System.out.println("DB처리예외:"+e.getMessage());
@@ -169,12 +169,13 @@ public class A02_EmpDao {
 					list.add(e);	
 				}
 				System.out.println("데이터건수:"+list.size());
-				DB.close(rs, stmt, con);
 			} catch (SQLException e) {
 				System.out.println("DB관련 예외:"+ e.getMessage());
 			} catch (Exception e) {
 				System.out.println("일반예외:"+ e.getMessage());
-			} 
+			} finally {
+				DB.close(rs, stmt, con);
+			}
 			return list;
 		}
 	public void insertEmp(Emp insert) {
@@ -218,7 +219,7 @@ public class A02_EmpDao {
 //		dao.insertEmp("");
 //		dao.empListAllPrint();
 //		dao.empSchList("", "");
-//		dao.empSchList("A", "MAN");
+		dao.empSchList("A", "MAN");
 //		dao.empSchList(new Emp("","MAN"));
 		/*
 		Scanner sc = new Scanner(System.in);
@@ -243,24 +244,23 @@ public class A02_EmpDao {
 			System.out.print(e.getJob()+"\n");
 			System.out.print(e.getSal()+"\n");
 		*/
-		System.out.println("insert문");
-		Emp ins = new Emp();
-		ins.setComm(100);
-		ins.setDeptno(10);
-		ins.setEname("등록맨");
-		ins.setHiredateS("2022/12/14");
-		ins.setJob("사원");
-		ins.setMgr(7900);
-		ins.setSal(4000);
-		dao.insertEmp(ins);
-		
-			List<Emp> empList = dao.getEmpSch(new Emp("","",1000,5000));
-			//외부에서 불러와서 검색된 내용
-			for(Emp e:empList) {
-				System.out.print(e.getEmpno()+"\t");
-				System.out.print(e.getEname()+"\t");
-				System.out.print(e.getJob()+"\t");
-				System.out.print(e.getSal()+"\n");
+//		System.out.println("insert문");
+//		Emp ins = new Emp();
+//		ins.setComm(100);
+//		ins.setDeptno(10);
+//		ins.setEname("등록맨");
+//		ins.setHiredateS("2022/12/14");
+//		ins.setJob("사원");
+//		ins.setMgr(7900);
+//		ins.setSal(4000);
+//		dao.insertEmp(ins);
+//		
+//			List<Emp> empList = dao.getEmpSch(new Emp("","",1000,5000));
+//			//외부에서 불러와서 검색된 내용
+//			for(Emp e:empList) {
+//				System.out.print(e.getEmpno()+"\t");
+//				System.out.print(e.getEname()+"\t");
+//				System.out.print(e.getJob()+"\t");
+//				System.out.print(e.getSal()+"\n");
 		}		
 	}
-}

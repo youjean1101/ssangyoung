@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import javaexp.a13_database.DB;
+import javaexp.a13_database.vo.Emp;
 
 public class A03_1014 {
 	private Connection con;
@@ -154,18 +157,33 @@ public class A03_1014 {
 				DB.close(rs, stmt, con);
 			}
 		}
-		public void memberselect(vo_member100 sel) {
+		
+		/*
+		[1단계:확인] 5. 위 member100테이블을 기준으로 아이디, 패스워드를 입력(Scanner)받아 select문으로 
+		         데이터를 조회하여 로그인 성공 여부를 출력하는 Dao기능메서드를 만드세요.
+		*/
+		
+		public List<vo_member100> memberselect(vo_member100 sel) {
+			List <vo_member100> list = new ArrayList<vo_member100>();
+			
 			String sql = "SELECT * \r\n"
-						+ "FROM member100\r\n"
-						+ "WHERE id = '"+sel.getId()+"'\r\n"
-						+ "AND passwd = '"+sel.getPasswd()+"')";
+					+ "FROM member100\r\n"
+					+ "WHERE id = '"+sel.getId()+"'\r\n"
+					+ "AND passwd = '"+sel.getPasswd()+"'";
 			try {
 				con = DB.con();
-				con.setAutoCommit(false);
 				stmt = con.createStatement();
-				stmt.executeUpdate(sql);
-				con.commit();
-				
+				rs = stmt.executeQuery(sql);
+				while(rs.next()) {
+					list.add( new vo_member100(
+								rs.getString("id"),
+								rs.getString("passwd"),
+								rs.getString("name"),
+								rs.getString("auth"),
+								rs.getInt("point"),
+								rs.getString("makedate")
+							));
+				}
 			} catch (SQLException e) {
 				System.out.println("DB 처리:"+e.getMessage());
 				try {
@@ -178,26 +196,30 @@ public class A03_1014 {
 			} finally {
 				DB.close(rs, stmt, con);
 			}
+			if(list.size()>0) {
+				System.out.println("로그인이 정상적으로 되었습니다.");
+			}else {
+				System.out.println("등록된 회원이 아닙니다.");
+			}
+			return list;
 		}
 		
-		/*
-	[1단계:확인] 5. 위 member100테이블을 기준으로 아이디, 패스워드를 입력(Scanner)받아 select문으로 
-	         데이터를 조회하여 로그인 성공 여부를 출력하는 Dao기능메서드를 만드세요.
-	*/
-
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		A03_1014 dao = new A03_1014();
 		dao.salgradeAllPrint();
 		dao.empdeptAllPrint();
-//		vo_empDept100 a = new vo_empDept100();
 		
-		dao.empdeptInsert(new vo_empDept100(1000, "홍길동", "사원", 7902, "2022-10-14", 3000, 500, 20, "RESEARCH", "인천"));
+//		dao.empdeptInsert(new vo_empDept100(1000, "홍길동", "사원", 7902, "2022-10-14", 3000, 500, 20, "RESEARCH", "인천"));
 		dao.empdeptAllPrint();
 		
 		
-		dao.memberInsert(new vo_member100("admin","1234","홍길동","관리자",200,"2022/10/14"));
+//		dao.memberInsert(new vo_member100("admin","1234","홍길동","관리자",10000,"2022/10/14"));
+//		dao.memberInsert(new vo_member100("himan","5678","마길동","일반",100,"2022/10/13"));
+//		dao.memberInsert(new vo_member100("higirl","9101","이길동","일반",300,"2022/10/12"));
+//		dao.memberInsert(new vo_member100("goodman","1121","김길동","일반",200,"2022/10/11"));
 		dao.memberAllprint();
+//		dao.memberselect(new vo_member100("admin","1234"));
 		
 		Scanner sc = new Scanner(System.in);
 		System.out.print("아이디: ");
@@ -205,9 +227,11 @@ public class A03_1014 {
 		System.out.print("패스워드: ");
 		String passwd = sc.nextLine();
 		
-		
-		
-		dao.memberselect(new vo_member100(id,passwd));
+		List<vo_member100> memberList = dao.memberselect(new vo_member100(id,passwd));
+		for(vo_member100 v:memberList) {
+			System.out.print("회원명: "+v.getName()+"\t");
+			System.out.print("아이디: "+v.getId()+"\t");
+		}
 				
 		
 	}

@@ -209,7 +209,7 @@ class salgrade1000{
 --[1단계:확인] 3. 사원명과 부서명의 통합테이블 EmpDept100 테이블을 복사 만들고, 해당 정보를 메서드를 만들고 데이터를 입력하세요.
 ---  empdept100 테이블에 데이터를 입력하는 문제입니다. 오늘 주로 다룬 내용..
 SELECT * FROM EmpDept100;
-
+DELETE FROM EmpDept100 WHERE ename = '홍길동';
 DROP TABLE EmpDept100;
 
 CREATE TABLE EmpDept100
@@ -247,6 +247,7 @@ CREATE TABLE member100 (
 	point NUMBER,
 	makedate date
 );
+DROP TABLE member100;
 SELECT * FROM member100;
 DELETE  FROM member100 WHERE id = 'admin';
 INSERT INTO member100 values('admin','1234','홍길동','관리자',200,'2022/10/14');
