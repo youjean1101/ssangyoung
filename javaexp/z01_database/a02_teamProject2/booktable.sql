@@ -31,6 +31,9 @@ DELETE FROM bookUser;
  private int rentalcnt;
  
  */
+SELECT * FROM bookUser
+WHERE id = ''
+AND password = '';
 
 --------------------------------------------------------------------------------------------------
 CREATE TABLE call(
