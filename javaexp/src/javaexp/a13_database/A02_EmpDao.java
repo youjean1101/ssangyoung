@@ -199,7 +199,7 @@ public class A02_EmpDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("DB 처리:"+e.getMessage());
-			try {
+			try { // 
 				con.rollback();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
@@ -212,14 +212,93 @@ public class A02_EmpDao {
 		}
 		
 	}
+	/* main()
+	 Emp upt = new Emp();
+	 upt.setEname("오길동"); upt.setJob("대리"); upt.setSal(4200);
+	 upt.setEmpno("1002");
+	 dao.updateEmp(upt);
+	 dao.deleteEmp(7369);
+	 */
 		
+	public void updateEmp(Emp upt) {
+		String sql =  "update emp100\r\n"
+				+ "		set ename = '"+upt.getEname()+"',\r\n"
+				+ "			job = '"+upt.getJob()+"',\r\n"
+				+ "			sal = "+upt.getSal()+"\r\n"
+				+ "		where empno = "+upt.getEmpno();
+		System.out.println("수정 sql");
+		System.out.print(sql);
+		try {
+			con = DB.con();
+			// autocommit : false
+			con.setAutoCommit(false);
+			stmt = con.createStatement();
+			stmt.executeUpdate(sql);
+			int cnt = stmt.executeUpdate(sql);
+			System.out.println("수정 데이터:"+cnt);
+			con.commit();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("DB 처리:"+e.getMessage());
+			try { // 
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				System.out.println("rollback에러:"+e1.getMessage());
+			}
+		} catch(Exception e) {
+			System.out.println("기타 예외:"+e.getMessage());
+		} finally {
+			DB.close(rs, stmt, con);
+		}
+		
+	}
+
+	public void deleteEmp(int empno) {
+		String sql = "delete emp100\r\n"
+				+ "	where empno = "+empno;
+		System.out.println("삭제 sql");
+		System.out.print(sql);
+		try {
+			con = DB.con();
+			// autocommit : false
+			con.setAutoCommit(false);
+			stmt = con.createStatement();
+			stmt.executeUpdate(sql);
+			int cnt = stmt.executeUpdate(sql);
+			System.out.println("삭제 데이터:"+cnt);
+			con.commit();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("DB 처리:"+e.getMessage());
+			try { // 
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				System.out.println("rollback에러:"+e1.getMessage());
+			}
+		} catch(Exception e) {
+			System.out.println("기타 예외:"+e.getMessage());
+		} finally {
+			DB.close(rs, stmt, con);
+		}
+		
+	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		A02_EmpDao dao = new A02_EmpDao();
+		 Emp upt = new Emp();
+		 upt.setEname("오길동"); upt.setJob("대리"); upt.setSal(4200);
+		 upt.setEmpno(1002);
+		 dao.updateEmp(upt);
+//		 dao.deleteEmp(7369);
 //		dao.insertEmp("");
 //		dao.empListAllPrint();
 //		dao.empSchList("", "");
-		dao.empSchList("A", "MAN");
+//		dao.empSchList("A", "MAN");
 //		dao.empSchList(new Emp("","MAN"));
 		/*
 		Scanner sc = new Scanner(System.in);

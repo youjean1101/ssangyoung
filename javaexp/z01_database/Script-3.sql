@@ -234,9 +234,48 @@ WHERE e.deptno = d.deptno;
 --	private String dname;
 --	prvate String loc;
 --}
-
 INSERT INTO EmpDept100 values(1000, '홍길동', '사원', 7902, '2022-10-14', 3000, 500, 20, 'RESEARCH', '인천');
 DELETE FROM EmpDept100 WHERE ename = '홍길동';
+
+-- 정답
+
+CREATE TABLE EmpDept100
+AS SELECT e.*, dname, loc
+FROM emp e, dept d
+WHERE e.deptno = d.deptno;
+SELECT * FROM EmpDept100;
+ALTER TABLE EmpDept100
+MODIFY (
+	ename varchar2(50),
+	job varchar2(50),
+	dname varchar2(50),
+	loc varchar2(50)
+);
+ALTER TABLE EMPDEPT100 
+DROP COLUMN deptno;
+
+CREATE SEQUENCE empdept100_seq
+	START WITH 1000
+	MINVALUE 1000
+	MAXVALUE 9999;
+
+SELECT * FROM empdept100;
+INSERT INTO empdept100 values(empdept100_seq.nextval, '홍길동', '사원', 7566,
+									to_date('20200101','YYYYMMDD'),
+										3500,100, '인사', '서울감남'); 
+/* VO empdept100
+ private int empno;
+ private String ename;
+ private String job;
+ private int mgr;
+ private String hiredateS;
+ private Date hiredate;
+ private double sal;
+ private double comm;
+ private String dname;
+ private Striong loc;
+ */
+
 
 --[1단계:확인] 4. member100(아이디, 패스워드, 이름, 권한, 포인트, 등록일) 만들고, 데이터를 등록 후, 조회하는 메서드를 선언 및 출력하세요.
 CREATE TABLE member100 (
@@ -257,9 +296,48 @@ INSERT INTO member100 values('admin','1234','홍길동','관리자',200,'2022/10
 --private String auth;
 --private int point;
 --private DATE makedate;
+
+-- 정답
+-- 아이디, 패스워드, 이름, 권한, 포인트, 등록일
+CREATE TABLE member100_as(
+	id varchar2(50) PRIMARY KEY,
+	pass varchar2(20),
+	name varchar2(50),
+	auth varchar2(20),
+	point NUMBER,
+	regdate date
+);
+INSERT INTO member100_as values('himan','7777','홍길동','관리자',1000,sysdate);
+
+SELECT * FROM member100_as;
+
+DROP TABLE member100_as;
+
+SELECT * FROM member100_as
+WHERE id LIKE '%'||''||'%'
+OR name LIKE '%'||''||'%';
+--private String id;
+--private String pass;
+--private String name;
+--private String auth;
+--private int point;
+--private DATE segdate;
+
+
 --[1단계:확인] 5. 위 member100테이블을 기준으로 아이디, 패스워드를 입력(Scanner)받아 select문으로 
 --         데이터를 조회하여 로그인 성공 여부를 출력하는 Dao기능메서드를 만드세요.
 SELECT * 
 FROM member100
 WHERE id = 'admin'
 AND passwd = '1234';
+
+SELECT * FROM emp100;
+
+update emp100
+set ename = '홍길동',
+	job = '과장',
+	sal = 6000
+where empno = 7369;
+
+delete emp100
+where empno = 1003;
