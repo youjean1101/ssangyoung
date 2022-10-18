@@ -52,7 +52,7 @@ public class DB{
 		// 1. 메모리 로딩
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			System.out.println("드라이버 로딩 성공");
+//			System.out.println("드라이버 로딩 성공");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("드라이버 에러:"+e.getMessage());
@@ -60,7 +60,7 @@ public class DB{
 		// 2. 연결정보 처리.
 		String info = "jdbc:oracle:thin:@localhost:1521:xe";
 		con = DriverManager.getConnection(info,"scott","tiger");
-		System.out.println("연결성공");
+//		System.out.println("연결성공");
 		return con;
 	}
 

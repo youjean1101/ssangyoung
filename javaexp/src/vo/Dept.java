@@ -1,24 +1,33 @@
 package vo;
 
 public class Dept {
-	private String dept;
+	private int deptno;
 	private String dname;
 	private String loc;
-	
 	public Dept() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Dept(String dept, String dname, String loc) {
-		this.dept = dept;
+	public Dept(int deptno, String dname, String loc) {
+		super();
+		this.deptno = deptno;
 		this.dname = dname;
 		this.loc = loc;
 	}
-	public String getDept() {
-		return dept;
+	public Dept(String dname, String loc) {
+		super();
+		this.dname = dname;
+		this.loc = loc;
 	}
-	public void setDept(String dept) {
-		this.dept = dept;
+	public Dept(int deptno) {
+		super();
+		this.deptno = deptno;
+	}
+	public int getDeptno() {
+		return deptno;
+	}
+	public void setDeptno(int deptno) {
+		this.deptno = deptno;
 	}
 	public String getDname() {
 		return dname;
@@ -32,5 +41,6 @@ public class Dept {
 	public void setLoc(String loc) {
 		this.loc = loc;
 	}
+	
 	
 }

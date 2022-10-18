@@ -330,7 +330,7 @@
 	3) 기능 메서드 선언
 		- 연결처리
 		- Connection 객체의 autocommit을 false로 지정
-		- 대화객체 updateQuery
+		- 대화객체 executeUpdate(sql)
 		- commit()
 		- 예외 처리 rollback
 2. 사원정보 등록/수정/삭제
@@ -394,4 +394,43 @@
 	public void deleteEmp(int empno){}
 4. 기능내용 구현.
 
+# PraparedStatement 객체 처리
+1. 동적 sql(문자열 조합) 구문은 보안적으로 위험한 경우가 많아서 
+이를 위한 대안으로 PreparedStatement 형식으로 데이터를 처리를 한다.
+2. 보안적 필요성
+	1) sql injection의 문제	ps) 구글 sql injection 검색 참고
+		로그인
+		id [' or 1=1-- ]	]
+		pass [7777]
+		[로그인]
+		위 화면과 같이 id에 입력할 내용에 ' or 1=1-- 을 입력하면 sql 삽입이 되어
+		누구나 로그인으 할 수 있는 상황이 되어 버린다.
+		select * 
+		from member
+		where id ='' or 1=1' and pass=''
+	
+3. 속도 이슈
+	오라클 서버는 sql을 실행하면 컴파일 과정을 거쳐서 수행하여 준다.
+	동일한 sql을 다시 실행요청하면 이전에 컴파일 되어있는 내용을 바로 실행시켜 준다.
+	그러므로, 가능한한 동일한 sql을 서버에 전달해주면 컴파일 과정을 거치지 않고 빠른 실행 속도로 처리해준다.
+	1) 기존의 동적 sql
+		select *
+		from emp
+		where empno = 7780;
+		위에서 empno가 변경할 때마다, 다른 sql로 인식되어 재 컴파일 과정을 거친다.
+	2) preparedstatement sql
+		select * 
+		from emp
+		where empno=?
+		일단 변경되는 ?부분을 통해 처리되는 코드를 먼저 보내어 컴파일 시킨 후,
+		추후에 ?에 넣을 데이터를 연결하므로 동일한 코드를 실행해 주어 빠르게 처리해준다.
+4. 기본 형식
+	1) Statement ==> PreparedStatement
+	2) sql 작성 : 매개변수를 모두다 ?로 선언 처리
+		insert into dept values(?,?,?)
+	3) PreparedStatement를 통해 sql 실행
+	4) pstmt.set 데이터 유형(순서, 실제 입력할 데이터)
+		pstmt.setInt(1,ins.getDeptno());
+		pstmt.setString(2,ins.getDname());
+		pstmt.setString(3,ins.getLoc());
 		

@@ -16,6 +16,18 @@ public class Dept {
 		this.dname = dname;
 		this.loc = loc;
 	}
+	
+
+	public Dept(String dname, String loc) {
+		super();
+		this.dname = dname;
+		this.loc = loc;
+	}
+	
+	public Dept(int deptno) {
+		super();
+		this.deptno = deptno;
+	}
 
 	public int getDeptno() {
 		return deptno;

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import javaexp.a13_database.DB;
@@ -14,6 +15,8 @@ public class a01_SignUp {
 	
 		static a01_SignUp dao = new a01_SignUp();
 		static Scanner sc = new Scanner(System.in);
+		static String sLoginout;
+		static String sDoubleId;
 		
 		public static void signUp(){ // 회원가입 함수선언
 			while(true) {
@@ -21,14 +24,30 @@ public class a01_SignUp {
 				String sSignup = sc.nextLine();
 				
 				if(sSignup.toUpperCase().equals("Y")) {
-					System.out.print("☞ 아이디: " ); //중복 확인
-					String sId = sc.nextLine();
+					String sId;
+					while(true) {
+						System.out.print("☞ 아이디: " ); //중복 확인 //select문으로 불러와서 if 조건문걸어서 '해당 아이디는 사용할수 없습니다.' 출력
+						sId = sc.nextLine();
+						dao.doubleIdConfirm(sId);
+						if(sDoubleId.equals("신규")) {
+							System.out.println("[안내메시지] 가입가능한 아이디 입니다.");
+							break;
+						}else {
+							System.out.println("[안내메시지] 이미 존재하는 아이디입니다. 다시 등록해주세요.");
+							continue;
+						}
+					}
 					System.out.print("☞ 패스워드: " ); 
 					String sPassWd = sc.nextLine();
 					System.out.print("☞ 이름: "); 
 					String sUname = sc.nextLine();
-					System.out.print("☞ 주민번호: " ); 
+					System.out.print("☞ 주민번호(- 제외): " ); 
 					String sRrn = sc.nextLine();
+					
+		            String rrnpat = "^\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|[3][01])\\-[1-4][0-9]{6}$";
+		            // 앞에 년도 1개
+		            System.out.println("주민번호 검증 결과:"+sRrn.matches(rrnpat)+"(이상없음)");
+					
 					System.out.print("☞ 주소: " ); 
 					String sAddress = sc.nextLine();
 					System.out.print("☞ 전화번호: " ); 
@@ -51,8 +70,7 @@ public class a01_SignUp {
 						}
 					}
 						
-//					int iUserNo = (int)(Math.random()*9000+1000); // 중복인숫자가 나와서 램덤X
-					int iUserNo = 1021;
+					int iUserNo = 1000;
 					int iCnt = 3; //반영이 안됌
 		//			ins.setRentalcnt();  대여횟수는 대여갯수 반영 - 헬일듯
 					
@@ -62,7 +80,7 @@ public class a01_SignUp {
 					break;
 					
 				} else if(sSignup.toUpperCase().equals("N")) {
-					System.out.println("[안내메시지] 회원가입을 하셔야 도서관 이용이 가능합니다.");
+					System.out.println("[안내메시지] 회원가입을 하셔야 도서관 이용이 가능합니다.\n");
 					break;
 				} else {
 					System.out.println("[안내메시지] Y/N으로 입력해주세요.");
@@ -89,14 +107,14 @@ public class a01_SignUp {
 //				System.out.println("등록성공");
 				
 			} catch (SQLException e) {
-//				System.out.println("DB 처리:"+e.getMessage());
+				System.out.println("DB 처리:"+e.getMessage());
 				try {
 					con.rollback();
 				} catch (SQLException e1) {
-//					System.out.println("rollback에러:"+e1.getMessage());
+					System.out.println("rollback에러:"+e1.getMessage());
 				}
 			} catch(Exception e) {
-//				System.out.println("기타 예외:"+e.getMessage());
+				System.out.println("기타 예외:"+e.getMessage());
 			} finally {
 				DB.close(rs, stmt, con);
 			}
@@ -126,19 +144,31 @@ public class a01_SignUp {
 			}
 		 	return list;
 		 }
-		
-		public boolean login(SignUp sch) {
+	
+		public List<SignUp> login(SignUp idpasswd) {
+				List <SignUp> list = new ArrayList<SignUp>();
 			
-			boolean isLogin = false;
 			String sql ="SELECT * FROM bookUser\r\n"
-						+ "WHERE id = '"+sch.getId()+"'\r\n"
-						+ "AND password = '"+sch.getPassword()+"'";
+						+ "WHERE id = '"+idpasswd.getId()+"'\r\n"
+						+ "AND password = '"+idpasswd.getPassword()+"'";
 			 
 			 try {
 				con=DB.con();
 				stmt = con.createStatement();
 				rs = stmt.executeQuery(sql);
-				isLogin = rs.next();
+				while(rs.next()) {
+					list.add( new SignUp(
+								rs.getInt("userno"),
+								rs.getString("div"),
+								rs.getString("uname"),
+								rs.getString("rrn"),
+								rs.getString("address"),
+								rs.getString("phone_Number"),
+								rs.getString("id"),
+								rs.getString("password"),
+								rs.getInt("rentalcnt")
+							));
+				}
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -154,7 +184,51 @@ public class a01_SignUp {
 			}finally {
 				DB.close(rs, stmt, con);
 			}
-			 return isLogin;
+			if(list.size()>0) {
+				sLoginout = "in";
+			} else {
+				System.out.println("[안내메시지]등록된 회원이 아닙니다. 회원가입을 해주세요.\n");
+				sLoginout = "out";
+			}
+			 return list;
+		}
+			
+		public List<SignUp> doubleIdConfirm(String id) {
+			List <SignUp> list = new ArrayList<SignUp>();
+			
+			String sql ="SELECT * FROM bookUser\r\n"
+					+ "WHERE id = '"+id+"'";
+			
+			
+			try {
+				con=DB.con();
+				stmt = con.createStatement();
+				rs = stmt.executeQuery(sql);
+				
+				while(rs.next()) {
+					list.add(new SignUp(rs.getString("id")));
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println("DB에러:"+e.getMessage());
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					System.out.println("rollback에러:"+e1.getMessage());
+				}
+			}catch(Exception e) {
+				System.out.println("일반에러:"+e.getMessage());
+			}finally {
+				DB.close(rs, stmt, con);
+			}
+			if (list.size()>0) {
+				sDoubleId = "중복";
+			}else {
+				sDoubleId = "신규";
+			}
+			return list;
 		}
 
 	public static void main(String[] args) {
@@ -176,29 +250,27 @@ public class a01_SignUp {
 					break;
 				case 2 :
 					SignUp login = new SignUp();
-					boolean isFirst = true;
-					do {
-						if(!isFirst) {
-							System.out.println("[안내메시지] 없는 회원입니다. 다시 입력해주세요.");
-						}
-						System.out.print("☞ 아이디: ");
-						String id = sc.nextLine();
-						System.out.print("☞ 패스워드: ");
-						String password = sc.nextLine();
-						login.setId(id);
-						login.setPassword(password);
-						isFirst=false;
-						
-					}while(!dao.login(login)); { // do문은 해당 데이터가 false
-						System.out.println("[안내메시지] 로그인 되었습니다.");
+					
+					System.out.print("아이디: ");
+					String id = sc.nextLine();
+					System.out.print("패스워드: ");
+					String passwd = sc.nextLine();
+					
+					List<SignUp> loginList = dao.login(new SignUp(id,passwd));
+					for(SignUp lo:loginList) {
+						System.out.println("[안내메시지]\""+lo.getUname()+"\"님이 정상적으로 로그인 되었습니다.");
+					}
+					if(sLoginout.equals("in")) {
 						System.out.println("[안내메시지] 로그아웃 하시려면 Q!를 입력해주세요.\n"); // 내가 했던대로 고치기
-//						while(true) {
-//							String logout = sc.nextLine();
-//							if(logout.equals("Q!")) {
-//								
-//								break;
-//							}
-//						}
+					
+						while(true) {
+							String logout = sc.nextLine();
+							if(logout.equals("Q!")) {
+								
+								
+								break;
+							}
+						}
 					}
 					break;
 					
@@ -208,10 +280,10 @@ public class a01_SignUp {
 					
 					List<Library> list = dao.librarySelect(sLocalLib);
 					for(Library e:list) { 
-						System.out.println(e.getLoc()+" 지역 도서관: "+e.getLibraryname()+"\n");
+						System.out.println("["+e.getLoc()+" 지역 도서관: "+e.getLibraryname()+"]\n");
 					}
-					break;
-				} 		
+					break; 		
+				}
 			}
 	}
 }

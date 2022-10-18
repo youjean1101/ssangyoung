@@ -13,11 +13,11 @@ CREATE TABLE bookUser(
 SELECT * FROM bookUser;
 DROP TABLE bookUser;
 
-INSERT INTO bookUser values('1000','manager','홍길동','990101-1000000','인천광역시 부평구 삼산동','010-000-0000','himan','1234',10);
-INSERT INTO bookUser values('1234','manager','test','990102-1000000','인천광역시 부평구 삼산동','010-000-0000','test','5678',null);
-INSERT INTO bookUser values('1001','user','김길동','951231-2000000','서울 신림','010-123-0000','goodgirl','9999',2);
-INSERT INTO bookUser values('1002','user','이길동','961021-2000000','부산 마린시티','010-456-0000','higirl','8888',1);
-INSERT INTO bookUser values('1003','user','마길동','970703-1000000','제주도 서귀포시','010-789-0000','goodman','5555',0);
+INSERT INTO bookUser values('9999','manager','홍길동','990101-1000000','인천광역시 부평구 삼산동','010-000-0000','himan','1234',10);
+INSERT INTO bookUser values('9998','manager','test','990102-1000000','인천광역시 부평구 삼산동','010-000-0000','test','5678',null);
+INSERT INTO bookUser values('9997','user','김길동','951231-2000000','서울 신림','010-123-0000','goodgirl','9999',2);
+INSERT INTO bookUser values('9996','user','이길동','961021-2000000','부산 마린시티','010-456-0000','higirl','8888',1);
+INSERT INTO bookUser values('9995','user','마길동','970703-1000000','제주도 서귀포시','010-789-0000','goodman','5555',0);
 DELETE FROM bookUser;
 /*
  private int userno;
@@ -34,6 +34,9 @@ DELETE FROM bookUser;
 SELECT * FROM bookUser
 WHERE id = ''
 AND password = '';
+
+SELECT * FROM bookUser
+WHERE id = '';
 
 --------------------------------------------------------------------------------------------------
 CREATE TABLE call(
