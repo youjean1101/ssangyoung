@@ -107,6 +107,24 @@ INSERT INTO books values('9788968481475','이것이 자바다','한빛미디어'
 INSERT INTO books values('9788966263301','1일 1로그 100일완성 IT지식','인사이트','브라이언 W.커니핸','컴퓨터이론','20000',sysdate,'O','500' );
 INSERT INTO books values('9791163033486','자료구조와 함게 배우는 알고리즘 입문(자바편)','이지스 퍼블리싱','BohYoh Shibata','컴퓨터이론','22000',sysdate,'X','500' );
 DELETE FROM books WHERE isbn = '9791186710777';
+-- o/O를 입력해서 O문자가 포함된 사원명을 검색하고자 할때.
+SELECT ename, job
+FROM emp
+WHERE ename LIKE '%'||upper('o')||'%';
+
+SELECT * FROM books 
+WHERE bname LIKE '%'||'채쌤'||'%';
+/*
+private int isbn;
+private String bname;
+private String publisher;
+private String writer;
+private String genre;
+private int price;
+private String registdate;
+private String rentalwhether;
+private int classno;
+ */
 
 --------------------------------------------------------------------------------------------------
 CREATE TABLE rental(

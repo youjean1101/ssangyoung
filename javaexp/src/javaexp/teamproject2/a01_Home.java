@@ -11,9 +11,9 @@ import java.util.Scanner;
 
 import javaexp.a13_database.DB;
 
-public class a01_SignUp {
+public class a01_Home {
 	
-		static a01_SignUp dao = new a01_SignUp();
+		static a01_Home dao = new a01_Home();
 		static Scanner sc = new Scanner(System.in);
 		static String sLoginout;
 		static String sDoubleId;
@@ -41,17 +41,19 @@ public class a01_SignUp {
 					String sPassWd = sc.nextLine();
 					System.out.print("☞ 이름: "); 
 					String sUname = sc.nextLine();
-					System.out.print("☞ 주민번호(- 제외): " ); 
+					System.out.print("☞ 주민번호(000000-000000): " ); 
 					String sRrn = sc.nextLine();
 					
-		            String rrnpat = "^\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|[3][01])\\-[1-4][0-9]{6}$";
-		            // 앞에 년도 1개
-		            System.out.println("주민번호 검증 결과:"+sRrn.matches(rrnpat)+"(이상없음)");
+//		            String rrnpat = "/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/";
+//		            // 년도 ,월 : 앞자리가 0일때 1~9만 입력(1월~9월)/앞자리가 1일때 0~2만 입력(10~12월), 월 : 0일때 1~9 입력(1~9일),  - 1~4(남/녀)  
+//		            System.out.println("[안내메시지]주민번호 검증 결과: "+sRrn.matches(rrnpat)+"(이상없음)");
 					
 					System.out.print("☞ 주소: " ); 
 					String sAddress = sc.nextLine();
-					System.out.print("☞ 전화번호: " ); 
+					System.out.print("☞ 전화번호(010-0000-0000): " ); 
 					String sPhoneNumber = sc.nextLine();
+//					String phonenumberpat =  " /^01(?:0|1|[6-9])[.-]?(\\\\d{3}|\\\\d{4})[.-]?(\\\\d{4})$/";
+					
 					String sDiv = null;
 					while(true) {
 					System.out.print("☞ 권한(관리자/사용자): " ); 
@@ -93,6 +95,7 @@ public class a01_SignUp {
 		private Statement stmt;
 		private ResultSet rs;
 		
+// ----------------------------------------------회원가입 기능메서드	--------------------------------------------------------------------
 		public void signUpinsert(SignUp ins) {
 			String sql = "INSERT INTO bookUser values('"+ins.getUserno()+"','"+ins.getDiv()+"',"
 					+ "'"+ins.getUname()+"','"+ins.getRrn()+"','"+ins.getAddress()+"',"
@@ -119,7 +122,8 @@ public class a01_SignUp {
 				DB.close(rs, stmt, con);
 			}
 		}
-			
+
+// ---------------------------------------------- 도서관 조회 기능메서드	--------------------------------------------------------------------
 		public List<Library> librarySelect(String loc) {
 		 	List<Library> list = new ArrayList<Library>();
 		 	String sql = "SELECT * FROM library WHERE local = '"+loc+"'";
@@ -144,7 +148,8 @@ public class a01_SignUp {
 			}
 		 	return list;
 		 }
-	
+		
+// ---------------------------------------------- 로그인 기능메서드	--------------------------------------------------------------------
 		public List<SignUp> login(SignUp idpasswd) {
 				List <SignUp> list = new ArrayList<SignUp>();
 			
@@ -192,7 +197,8 @@ public class a01_SignUp {
 			}
 			 return list;
 		}
-			
+
+// ---------------------------------------------- 아이디 중복 조회 기능메서드 --------------------------------------------------------------------			
 		public List<SignUp> doubleIdConfirm(String id) {
 			List <SignUp> list = new ArrayList<SignUp>();
 			
@@ -240,15 +246,15 @@ public class a01_SignUp {
 			System.out.println("2: 로그인");
 			System.out.println("3: 도서관 찾기");
 			
-			a01_SignUp dao = new a01_SignUp();
+			a01_Home dao = new a01_Home();
 			int iHome = sc.nextInt();
 			sc.nextLine(); // int 입력 초기화
 			
 			switch(iHome) {
-				case 1 :
+				case 1 : //회원가입
 					signUp(); // 회원가입 함수 선언
 					break;
-				case 2 :
+				case 2 : //로그인
 					SignUp login = new SignUp();
 					
 					System.out.print("아이디: ");
@@ -274,7 +280,7 @@ public class a01_SignUp {
 					}
 					break;
 					
-				case 3 : 
+				case 3 : // 도서관 찾기
 					System.out.println("☞ 도서관 찾을 지역을 검색하세요.");
 					String sLocalLib = sc.nextLine();
 					
@@ -287,7 +293,7 @@ public class a01_SignUp {
 			}
 	}
 }
-class SignUp{
+class SignUp{ //회원가입 멤버변수
 	 private int userno; //회원번호
 	 private String div; // user/manager구분
 	 private String uname; // 회원이름
@@ -386,7 +392,7 @@ class SignUp{
 	}
 }
 
-class Library{
+class Library{ //도서관 멤버변수
 	private String loc; // 지역
 	private String libraryname; //지역별 도서관
 	public Library() {

@@ -290,15 +290,15 @@ public class A02_EmpDao {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		A02_EmpDao dao = new A02_EmpDao();
-		 Emp upt = new Emp();
-		 upt.setEname("오길동"); upt.setJob("대리"); upt.setSal(4200);
-		 upt.setEmpno(1002);
-		 dao.updateEmp(upt);
+//		 Emp upt = new Emp();
+//		 upt.setEname("오길동"); upt.setJob("대리"); upt.setSal(4200);
+//		 upt.setEmpno(1002);
+//		 dao.updateEmp(upt);
 //		 dao.deleteEmp(7369);
 //		dao.insertEmp("");
 //		dao.empListAllPrint();
 //		dao.empSchList("", "");
-//		dao.empSchList("A", "MAN");
+		dao.empSchList("A", "MAN");
 //		dao.empSchList(new Emp("","MAN"));
 		/*
 		Scanner sc = new Scanner(System.in);
