@@ -56,17 +56,37 @@ DELETE FROM call WHERE;
 
 --------------------------------------------------------------------------------------------------
 CREATE TABLE program(
+	pno NUMBER,
 	pname varchar2(100),
 	ptime date,
 	noticedate varchar2(20),
 	managerno varchar2(10) CONSTRAINT program_managerno_fk REFERENCES bookUser(userno)
 );
+/*
+ private String pname; // 프로그램명
+ private String ptime; // 프로그램시간
+ private String noticedate; // 비고(공지날짜)
+ private String managerno; // 관리자번호
+ */
+SELECT * FROM program 
+WHERE pname LIKE '%'||'북토크'||'%';
 
-select * FROM program;
+select * FROM program
+ORDER by pno;
+
 DROP TABLE program;
 
-INSERT INTO program VALUES('북토크',sysdate,'공지날짜','1000');
-DELETE FROM program WHERE;
+INSERT INTO program VALUES(1,'북토크',sysdate,'공지날짜','1000');
+DELETE FROM program WHERE pno =;
+
+UPDATE program
+	SET pname =
+	SET ptime =
+	SET	noticedate = 
+	SET managerno = 
+	WHERE pno = 11;
+
+
 ---------------------------------------------------------------------------------------------------
 CREATE TABLE classification(
 	classno number(3) PRIMARY key,
@@ -100,6 +120,22 @@ CREATE TABLE books(
 
 select * FROM books;
 DROP TABLE books;
+
+UPDATE books
+	SET ISBN  = ,
+		BNAME  = '',
+		PUBLISHER = '',
+		WRITER = '',
+		GENRE = '',
+		PRICE = ,
+		REGISTDATE = '',
+		RENTALWHETHER ='',
+		CLASSNO =
+	WHERE isbn = 11;
+UPDATE BOOKS 
+	SET isbn = 9791186710777
+	WHERE isbn = 0;
+SELECT * FROM books WHERE isbn=0;
 
 INSERT INTO books values('9791186710777','채쌤의 자바 프로그래밍 핵심','썜즈','채규태','컴퓨터이론','27000',sysdate,'O','500' );
 INSERT INTO books values('9791156645023','데이터베이스 개론과 실습','한빛아카데미','박우창','컴퓨터이론','29000',sysdate,'X','500');

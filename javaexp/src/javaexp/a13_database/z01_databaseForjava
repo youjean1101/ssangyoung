@@ -457,5 +457,19 @@
 	if(pname!=null){
 		pstmt.setString(1, pname);
 	}
-		 
+# preparedstatement 이용
+1. 수정
+2. 삭제
+3. 복잡한 sql 처리
+
+# 처리순서
+1. sql 확인
+	1) 조건문 ?
+	2) vo로 처리할 내용(매개변수)
+2. Vo
+3. 기능메서드 선언(템플릿 복사)
+	1) 변경된 내용 sql
+	2) pstmt.setXXX(...)
+4. main() 확인
+
 		

@@ -171,6 +171,33 @@
 		m01.showMyWoman();
 	1:다 : DB에서 데이터를 가져와서 한 화면에 출력하거나 사용할 때, 주로 사용되는 형식
 		주로 사용되는 형식
+		하나의 객체 안에서 다중으로 여러개의 객체를 사용하는 것을 말한다.
+		# 유형
+		1) 하나의 객체안에서 하나타입의 여러 객체
+			ex) 마트에 물건리스트
+		2) 하나의 객체안에서 여러 개의 객체들
+			ex) 쇼핑몰 안에 구매물품리스트와 회원리스트
+		3)** 하나의 객체안에서 추상클래스로 정의된 여러개의 객체를 할당할 수 있게 선언
+			ex) 컴퓨터 객체안에 부품리스트를 부품이라는 추상클래스를 상속받은 하위 실제부품을 가지는 형태로 다형성이 처리된 내용을 할당하는
+				객체..
+				class Computer{
+					private String comp;
+					private List<Part> parts;
+				}
+				
+				abstract class Part{
+					String kind;
+					abstract void showinfo();
+				}
+				class Cpu extends Part{
+					void showInfo(){
+						kind+"는 성능은 코어가 @@개이고 처리 속도가 @@이다.
+					}
+				}
+				class Ram extends Part{
+					void showInfo(){
+						kind+"는 @@ 메모리를 가지고 있고, 전송 bus속도는 @@이다.
+				
 		ex) 쇼핑몰에서 전체 구매할 물건들을 리스트하여 조회할 때, 활용..
 		class Mart{
 			private String name;

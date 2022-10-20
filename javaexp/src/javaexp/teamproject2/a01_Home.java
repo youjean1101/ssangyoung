@@ -140,9 +140,9 @@ public class a01_Home {
 					System.out.println("[안내 메시지]해당 지역의 도서관 정보는 없습니다.");
 				}
 			} catch (SQLException e) {
-//				System.out.println("DB 관련 예외:"+e.getMessage());
+				System.out.println("DB 관련 예외:"+e.getMessage());
 			} catch (Exception e) {
-//				System.out.println("일반 예외:"+e.getMessage());
+				System.out.println("일반 예외:"+e.getMessage());
 			}finally {
 				DB.close(rs, stmt, con);
 			}
@@ -236,7 +236,7 @@ public class a01_Home {
 			}
 			return list;
 		}
-
+		// ---------------------------------------------- 홈 출력 main() --------------------------------------------------------------------	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
@@ -288,11 +288,16 @@ public class a01_Home {
 					for(Library e:list) { 
 						System.out.println("["+e.getLoc()+" 지역 도서관: "+e.getLibraryname()+"]\n");
 					}
-					break; 		
+					break;
+					
+				default : 
+					System.out.println("[안내메시지] 보기에 있는 숫자만 입력해주세요.");
+					break;
 				}
 			}
 	}
 }
+//---------------------------------------------- 회원가입 멤버변수 --------------------------------------------------------------------	
 class SignUp{ //회원가입 멤버변수
 	 private int userno; //회원번호
 	 private String div; // user/manager구분
@@ -307,7 +312,7 @@ class SignUp{ //회원가입 멤버변수
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public SignUp(int userno,String div, String uname, String rrn, String address, String phone_Number, String id, String password, int rentalcnt) {
 		super();
 		this.userno = userno;	
@@ -391,7 +396,7 @@ class SignUp{ //회원가입 멤버변수
 		this.rentalcnt = rentalcnt;
 	}
 }
-
+//---------------------------------------------- 도서관 멤버변수 --------------------------------------------------------------------	
 class Library{ //도서관 멤버변수
 	private String loc; // 지역
 	private String libraryname; //지역별 도서관

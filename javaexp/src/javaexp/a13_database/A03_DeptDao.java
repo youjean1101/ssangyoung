@@ -4,10 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
 import javaexp.a13_database.vo.Dept;
-import javaexp.a13_database.vo.Emp;
 
 public class A03_DeptDao {
 	//  공통 필드 선언
@@ -149,6 +147,7 @@ public class A03_DeptDao {
 		}
 		
 
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		// 객체 생성
@@ -161,8 +160,5 @@ public class A03_DeptDao {
 		dao.insertDept(new Dept(12,"회계","대전"));
 		dao.deptSch("", "");
 		//외부에서 불러와서 검색된 내용
-		
-		
 	}
-
 }
