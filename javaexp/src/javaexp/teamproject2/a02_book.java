@@ -75,12 +75,14 @@ public class a02_book {
 						System.out.println("대여여부: "+rs.getString("rentalwhether"));
 						System.out.println("분류번호: "+rs.getInt("classno")+"\n");
 					}
+					int cnt = stmt.executeUpdate(sql);
+					if(cnt==0) System.out.println("[안내메시지] 검색하신 도서가 없습니다.");
+					
 				} catch (SQLException e) {
 					System.out.println("DB처리예외:"+e.getMessage());
 				} catch (Exception e) {
 					System.out.println("기타예외:"+e.getMessage());
 				} finally {
-					if(rs==null) System.out.println("[안내메시지] 등록된 도서가 없습니다.");
 					DB.close(rs, stmt, con);
 				}
 	}
@@ -174,7 +176,7 @@ public class a02_book {
 			break;
 			
 		default : 
-			System.out.println("[안내메시지] 보기에 있는 숫자만 입력해주세요.");
+			System.out.println("[안내메시지] 수정할 데이터가 없습니다.");
 			break;
 		}
 
@@ -273,19 +275,11 @@ public class a02_book {
 								DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 								sRegistdate = now.format(dateTimeFormatter); //현재시각
 							}else { // 입력받으면,
-								sRegistdate = sInputRegistdate; //입 력받은 값
+								sRegistdate = sInputRegistdate; //입력받은 값
 							}
 							String sRentalWhether = null;
-//							System.out.print("☞ 대여여부(O/X): "); // 책정보에 쓸필요없는듯...
-//							String sRentalWhether = sc.nextLine();
-//							if(sRentalWhether.toUpperCase().equals("O")) {
-//								
-//							} else if(sRentalWhether.toUpperCase().equals("X")){
-//								
-//							} else {
-//								System.out.println("O/X로 입력해주세요.");
-//							}
-							System.out.print("☞ 분류번호(※입력안할시,0이라도 입력): "); // String으로 입력받아서 null일경우 테이블에 0삽입(Inteager 사용)
+
+							System.out.print("☞ 분류번호(※입력안할시,0이라도 입력): "); 
 							int iclassno = sc.nextInt();
 							
 							dao.bookInsert(new Book(sIsbn, sBookName, sPublisher, sWriter, sGenre, iPrice, sRegistdate, sRentalWhether, iclassno));

@@ -17,7 +17,7 @@ import javaexp.a13_database.vo.Emp;
 public class a03_Program {
 	static a03_Program dao = new a03_Program();
 	static Scanner sc = new Scanner(System.in);
-	static int i = 0;
+	static int i;
 	private PreparedStatement pstmt;
 	private Connection con;
 	private Statement stmt;
@@ -27,7 +27,8 @@ public class a03_Program {
 		public void programListAllPrint() {
 			try {
 				con = DB.con();
-				String sql = "select * FROM program ORDER by pno";
+				String sql = "select * FROM program";
+				
 				stmt = con.createStatement();
 				rs = stmt.executeQuery(sql);
 				System.out.println("프로그램번호\t프로그램이름\t프로그램일정\t프로그램공지날짜\t관리자번호");
@@ -76,20 +77,22 @@ public class a03_Program {
 		}
 //----------------------------------------------주간프로그램 추가 기능메서드--------------------------------------------------------------------	
 		public void programInsert(Program add) {
-			String sql = "INSERT INTO program VALUES(?,?,?,?,?)";
+			String sql = "INSERT INTO program values(pno_seq.nextval,?,?,?,?)";
 		
 			try {
 				con = DB.con();
 				con.setAutoCommit(false);
 				pstmt = con.prepareStatement(sql);
+									
+					pstmt.setString(1, add.getPname());
+					pstmt.setString(2, add.getPtime());
+					pstmt.setString(3, add.getNoticedate());
+					pstmt.setInt(4, add.getManagerno());
 					
-					pstmt.setInt(1,add.getPno());
-					pstmt.setString(2, add.getPname());
-					pstmt.setString(3, add.getPtime());
-					pstmt.setString(4, add.getNoticedate());
-					pstmt.setInt(5, add.getManagerno());
 					System.out.println("[안내메시지] 주간프로그램 추가가 완료되었습니다.");
-
+					
+					rs = pstmt.executeQuery();
+					
 			} catch (SQLException e) {
 				System.out.println("DB 처리:"+e.getMessage());
 				try { 
@@ -100,21 +103,49 @@ public class a03_Program {
 			} catch(Exception e) {
 				System.out.println("기타 예외:"+e.getMessage());
 			} finally {
-				DB.close(rs, stmt, con);
+				DB.close(rs, pstmt, con);
 			}
 		}
+//----------------------------------------------주간프로그램 추가 기능메서드--------------------------------------------------------------------	
+		public void programdelandInsert(Program add) {
+			String sql = "INSERT INTO program values(pno_seq.currval,?,?,?,?);"; // 삭제하고 수정시, 반영해야함....
+		
+			try {
+				con = DB.con();
+				con.setAutoCommit(false);
+				pstmt = con.prepareStatement(sql);
+									
+					pstmt.setString(1, add.getPname());
+					pstmt.setString(2, add.getPtime());
+					pstmt.setString(3, add.getNoticedate());
+					pstmt.setInt(4, add.getManagerno());
+					
+					System.out.println("[안내메시지] 주간프로그램 추가가 완료되었습니다.");
+					
+					rs = pstmt.executeQuery();
+					
+			} catch (SQLException e) {
+				System.out.println("DB 처리:"+e.getMessage());
+				try { 
+					con.rollback();
+				} catch (SQLException e1) {
+					System.out.println("rollback에러:"+e1.getMessage());
+				}
+			} catch(Exception e) {
+				System.out.println("기타 예외:"+e.getMessage());
+			} finally {
+				DB.close(rs, pstmt, con);
+			}
+		}
+
 // ----------------------------------------------주간프로그램 수정 기능메서드--------------------------------------------------------------------
 
 		public void programUpdate(int updatepno, int i,Program upProgram) {
 			String sql =  " UPDATE program\r\n ";
 			
 			switch(i) { 
-			 /* 동적 sql
-			 * 1. sql 구문이 데이터에 따라, 조건에 따라 변경되는 것을 말한다.
-			 * 2. 데이터는 가능한한 ?로 처리하고 preparedStatement에 처리한다.
-			 * 3. 조건문에 따른 내용으 sql조건도 처리하고*/
 			case 1 : 		
-				sql +=  " SET pname ="+upProgram.getPname()+"\r\n "
+				sql +=  " SET pname = '"+upProgram.getPname()+"'\r\n "
 						+ "	WHERE pno = "+updatepno;
 				break;
 				
@@ -208,6 +239,7 @@ public class a03_Program {
 					
 				case 2:
 					while(true) {
+						
 						System.out.println("☞ 프로그램을 추가하시겠습니까?(Y/N)");
 						String sAddProgram = sc.nextLine();
 						if(sAddProgram.toUpperCase().equals("Y")) {
@@ -215,16 +247,13 @@ public class a03_Program {
 							String sPname = sc.nextLine();
 							System.out.print("☞ 프로그램일정: ");
 							String sPtime = sc.nextLine();
-							System.out.print("☞ 비고(공지날짜): ");
+							System.out.print("☞ 공지끝나는날짜: ");
 							String sNoticeDate = sc.nextLine();
 							System.out.print("☞ 관리자번호: ");
 							int iManagerno = sc.nextInt();
-							dao.programInsert(new Program(++i,sPname, sPtime, sNoticeDate,iManagerno));
-//							List<Program> proList = dao.programInsert(new Program(++i,sPname, sPtime, sNoticeDate,iManagerno));
-//							for(Program p:prolist) {
-//							dao.programInsert(new Program(i,sPname, sPtime, sNoticeDate,iManagerno));
-//							}
 							
+							dao.programInsert(new Program(sPname, sPtime, sNoticeDate,iManagerno));
+			
 							break;
 							
 						} else if(sAddProgram.toUpperCase().equals("N")) {
@@ -244,12 +273,12 @@ public class a03_Program {
 					int iUpdateProgram = sc.nextInt();
 					sc.nextLine();
 					
-					Program upp = new Program();
+					Program updateProgramData = new Program();
 				
 					System.out.println("☞ 해당 프로그램의 무엇을 수정하시겠습니까?");
 					System.out.println("1:프로그램명");
 					System.out.println("2:프로그램일정");
-					System.out.println("3:비고(공지날짜)");
+					System.out.println("3:공지끝나는날짜");
 					System.out.println("4:관리자번호");
 					
 					int iProgramUpdateMenu = sc.nextInt();
@@ -259,32 +288,32 @@ public class a03_Program {
 						case 1 : 
 							System.out.print("☞ 변경할 프로그램명: ");
 							String sUpdatePname = sc.nextLine();
-							upp.setPname(sUpdatePname);
-							dao.programUpdate(iUpdateProgram, iProgramMenu, upp);
+							updateProgramData.setPname(sUpdatePname);
+							dao.programUpdate(iUpdateProgram, 1, updateProgramData);
 							System.out.println("[안내메시지] 프로그램명이 변경 완료되었습니다.");
 							break;
 							
 						case 2 : 
 							System.out.print("☞ 변경할 프로그램일정: ");
 							String sUpdatePtime = sc.nextLine();
-							upp.setPtime(sUpdatePtime);
-							dao.programUpdate(iUpdateProgram, iProgramMenu, upp);
+							updateProgramData.setPtime(sUpdatePtime);
+							dao.programUpdate(iUpdateProgram, 2, updateProgramData);
 							System.out.println("[안내메시지] 프로그램 일정이 변경 완료되었습니다.");
 							break;
 							
 						case 3 : 
-							System.out.print("☞ 변경할 비고(공지날짜): ");
+							System.out.print("☞ 변경할 공지끝나는날짜: ");
 							String sUpdatenoticedate = sc.nextLine();
-							upp.setNoticedate(sUpdatenoticedate);
-							dao.programUpdate(iUpdateProgram, iProgramMenu, upp);
-							System.out.println("[안내메시지] 비고(공지날짜)가 변경 완료되었습니다.");
+							updateProgramData.setNoticedate(sUpdatenoticedate);
+							dao.programUpdate(iUpdateProgram, 3, updateProgramData);
+							System.out.println("[안내메시지] 공지끝나는날짜가 변경 완료되었습니다.");
 							break;
 							
 						case 4 : 
 							System.out.print("☞ 변경할 관리자번호: ");
 							int iUpdateManagerno = sc.nextInt();
-							upp.setManagerno(iUpdateManagerno);
-							dao.programUpdate(iUpdateProgram, iProgramMenu, upp);
+							updateProgramData.setManagerno(iUpdateManagerno);
+							dao.programUpdate(iUpdateProgram, 4, updateProgramData);
 							System.out.println("[안내메시지] 관리자 변경이 완료되었습니다.");
 							break;
 						
@@ -314,13 +343,23 @@ class Program{
 	private int pno; //프로그램번호
 	private String pname; // 프로그램명
  	private String ptime; // 프로그램일정
- 	private String noticedate; // 비고(공지날짜)
+ 	private String noticedate; // 공지끝나는날짜
  	private int managerno; // 관리자번호
 	public Program() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	public Program(String pname, String ptime, String noticedate, int managerno) {
+		super();
+		this.pname = pname;
+		this.ptime = ptime;
+		this.noticedate = noticedate;
+		this.managerno = managerno;
+	}
+
+
 	public Program(int pno, String pname, String ptime, String noticedate, int managerno) {
 		super();
 		this.pno = pno;

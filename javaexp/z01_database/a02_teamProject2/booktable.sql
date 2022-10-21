@@ -47,21 +47,42 @@ CREATE TABLE call(
 	callanswer varchar2(4000)
 );
 
-select * FROM call;
+select * FROM CALL WHERE callno = 'A100002';
 DROP TABLE call;
+/*
+ private int iCallno;
+ private int iUserno;
+ private String sCallcontents;
+ private int iManagerno;
+ private String sCallanswer;
+ */
 
-INSERT INTO call VALUES('A100000','1001','재밌는책추천해주세요.','1000','채쌤의 자바책');
-INSERT INTO call VALUES('A100002','1003','공부하기 좋은 책 추천해주세요.','1000','오라클');
+INSERT INTO call VALUES('A100000','9997','재밌는책추천해주세요.','9999','채쌤의 자바책');
+INSERT INTO call VALUES('A100002','9996','공부하기 좋은 책 추천해주세요.','9999','오라클');
 DELETE FROM call WHERE;
 
 --------------------------------------------------------------------------------------------------
 CREATE TABLE program(
-	pno NUMBER,
+	pno NUMBER PRIMARY key,
 	pname varchar2(100),
 	ptime date,
-	noticedate varchar2(20),
+	noticedate date,
 	managerno varchar2(10) CONSTRAINT program_managerno_fk REFERENCES bookUser(userno)
 );
+DROP TABLE program;
+
+CREATE SEQUENCE pno_seq
+		increment by 1
+		start with 1
+		MINVALUE 1
+		MAXVALUE 9999;
+	
+DROP SEQUENCE pno_seq;
+
+SELECT pno_seq.currval pno, 
+		pname,ptime,noticedate, managerno 
+FROM PROGRAM;
+
 /*
  private String pname; // 프로그램명
  private String ptime; // 프로그램시간
@@ -71,20 +92,24 @@ CREATE TABLE program(
 SELECT * FROM program 
 WHERE pname LIKE '%'||'북토크'||'%';
 
-select * FROM program
-ORDER by pno;
+select * FROM program;
 
-DROP TABLE program;
+INSERT INTO program values(pno_seq.nextval,'북토크',sysdate,'20221030','1000');
+INSERT INTO program values(pno_seq.nextval,'중고책바자회',sysdate,'20221231','1000');
+DELETE FROM program WHERE pno ='2';
+// 삭제하면 currval로 추가 되야함.
+INSERT INTO program values(pno_seq.currval,'베스트셀러 작가 강연','20221101','20221101','1000');
+INSERT INTO program values(pno_seq.nextval,'테스트','20221001','20221101','1000');
 
-INSERT INTO program VALUES(1,'북토크',sysdate,'공지날짜','1000');
-DELETE FROM program WHERE pno =;
+DELETE FROM program;
+DELETE FROM program WHERE pno ='1';
+
 
 UPDATE program
-	SET pname =
-	SET ptime =
-	SET	noticedate = 
-	SET managerno = 
-	WHERE pno = 11;
+SET pname = 'book토크'
+WHERE pno =1;
+
+SELECT * FROM program;
 
 
 ---------------------------------------------------------------------------------------------------

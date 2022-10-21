@@ -26,7 +26,7 @@ public class a01_Home {
 				if(sSignup.toUpperCase().equals("Y")) {
 					String sId;
 					while(true) {
-						System.out.print("☞ 아이디: " ); //중복 확인 //select문으로 불러와서 if 조건문걸어서 '해당 아이디는 사용할수 없습니다.' 출력
+						System.out.print("☞ 아이디: " ); //중복 확인 
 						sId = sc.nextLine();
 						dao.doubleIdConfirm(sId);
 						if(sDoubleId.equals("신규")) {
@@ -44,15 +44,10 @@ public class a01_Home {
 					System.out.print("☞ 주민번호(000000-000000): " ); 
 					String sRrn = sc.nextLine();
 					
-//		            String rrnpat = "/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/";
-//		            // 년도 ,월 : 앞자리가 0일때 1~9만 입력(1월~9월)/앞자리가 1일때 0~2만 입력(10~12월), 월 : 0일때 1~9 입력(1~9일),  - 1~4(남/녀)  
-//		            System.out.println("[안내메시지]주민번호 검증 결과: "+sRrn.matches(rrnpat)+"(이상없음)");
-					
 					System.out.print("☞ 주소: " ); 
 					String sAddress = sc.nextLine();
 					System.out.print("☞ 전화번호(010-0000-0000): " ); 
 					String sPhoneNumber = sc.nextLine();
-//					String phonenumberpat =  " /^01(?:0|1|[6-9])[.-]?(\\\\d{3}|\\\\d{4})[.-]?(\\\\d{4})$/";
 					
 					String sDiv = null;
 					while(true) {
@@ -73,14 +68,12 @@ public class a01_Home {
 					}
 						
 					int iUserNo = 1000;
-					int iCnt = 3; //반영이 안됌
-		//			ins.setRentalcnt();  대여횟수는 대여갯수 반영 - 헬일듯
+					int iCnt = 3; // 대여횟수는 연동 후 적용 (임시로 정수 배정)
 					
 					dao.signUpinsert(new SignUp(iUserNo++, sDiv, sUname,sRrn, sAddress, sPhoneNumber ,sId,sPassWd, iCnt));
-//					dao.signUpinsert(new SignUp(iCnt));
 					System.out.println("[안내메시지] 회원가입이 완료되었습니다.");
 					break;
-					
+		
 				} else if(sSignup.toUpperCase().equals("N")) {
 					System.out.println("[안내메시지] 회원가입을 하셔야 도서관 이용이 가능합니다.\n");
 					break;
@@ -107,7 +100,6 @@ public class a01_Home {
 				stmt = con.createStatement();
 				stmt.executeUpdate(sql);
 				con.commit();
-//				System.out.println("등록성공");
 				
 			} catch (SQLException e) {
 				System.out.println("DB 처리:"+e.getMessage());
@@ -254,8 +246,8 @@ public class a01_Home {
 				case 1 : //회원가입
 					signUp(); // 회원가입 함수 선언
 					break;
+					
 				case 2 : //로그인
-					SignUp login = new SignUp();
 					
 					System.out.print("아이디: ");
 					String id = sc.nextLine();
@@ -267,7 +259,7 @@ public class a01_Home {
 						System.out.println("[안내메시지]\""+lo.getUname()+"\"님이 정상적으로 로그인 되었습니다.");
 					}
 					if(sLoginout.equals("in")) {
-						System.out.println("[안내메시지] 로그아웃 하시려면 Q!를 입력해주세요.\n"); // 내가 했던대로 고치기
+						System.out.println("[안내메시지] 로그아웃 하시려면 Q!를 입력해주세요.\n"); 
 					
 						while(true) {
 							String logout = sc.nextLine();
