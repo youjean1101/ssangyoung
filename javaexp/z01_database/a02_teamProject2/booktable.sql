@@ -48,6 +48,8 @@ CREATE TABLE call(
 );
 
 select * FROM CALL WHERE callno = 'A100002';
+select callno,callcontents,callanswer FROM CALL WHERE userno = '9997';
+
 DROP TABLE call;
 /*
  private int iCallno;
@@ -56,10 +58,18 @@ DROP TABLE call;
  private int iManagerno;
  private String sCallanswer;
  */
+SELECT * FROM CALL;
+SELECT callno,userno,callcontents FROM CALL WHERE MANAGERNO is null;
+INSERT INTO CALL VALUES('A100003','9997','사이트가 왜이렇게 어려워요?',null,null);
+
+UPDATE CALL 
+SET managerno = 9999,
+callanswer = '개발이 어려워서 그래요'
+WHERE callno = 'A100003';
 
 INSERT INTO call VALUES('A100000','9997','재밌는책추천해주세요.','9999','채쌤의 자바책');
 INSERT INTO call VALUES('A100002','9996','공부하기 좋은 책 추천해주세요.','9999','오라클');
-DELETE FROM call WHERE;
+DELETE FROM call WHERE callno = 'A100003';
 
 --------------------------------------------------------------------------------------------------
 CREATE TABLE program(
@@ -196,11 +206,19 @@ CREATE TABLE rental(
 	returndate DATE,
 	returnwhether VARCHAR2(20) CONSTRAINT rental_returnwhether_ck check(returnwhether IN('O','X'))
 );
+/*
+private String rentalno;
+private String userno;
+private long isbn;
+private String shipwhether;
+private String renturndate;
+private String returnwhether;
 
+ */
 select * FROM rental;
 DROP TABLE rental;
 
-INSERT INTO rental VALUES('AA100000','1001','9791186710777','O',sysdate,'X');
+INSERT INTO rental VALUES('AA100000','9997','9791186710777','O',sysdate,'X');
 INSERT INTO rental VALUES('AA100001','1002','9788968481475','X',sysdate,'X');
 INSERT INTO rental VALUES('AA100002','1001','9791156645023','X',sysdate,'O');
 INSERT INTO rental VALUES('AA100003','1003','9791163033486','O',sysdate,'X');

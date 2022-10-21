@@ -24,6 +24,28 @@ public class a02_book {
 	private Statement stmt;
 	private ResultSet rs;
 
+// ---------------------------------------------- 도서분류테이블 출력 기능메서드 --------------------------------------------------------------------
+	public void classficationListAllPrint() {
+		String sql = "select * FROM classification";
+		try {
+			con = DB.con();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+					
+			while(rs.next()) {
+				System.out.print(rs.getInt("classno")+":\t");
+				System.out.print(rs.getString("cname")+"\n");
+			}
+
+		} catch (SQLException e) {
+			System.out.println("기타 sql 처리 예외:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("기타 예외:"+e.getMessage());
+		}finally {
+			if(rs==null) System.out.println("[안내메시지] 등록된 분류번호가 없습니다.");
+			DB.close(rs, stmt, con);
+		}
+	}
 // ---------------------------------------------- 도서테이블 출력 기능메서드	--------------------------------------------------------------------
 	public void bookListAllPrint() {
 		String sql = "select * FROM books";
@@ -43,7 +65,7 @@ public class a02_book {
 				System.out.print(rs.getString("rentalwhether")+"\t");
 				System.out.print(rs.getInt("classno")+"\n");
 			}
-
+			
 		} catch (SQLException e) {
 			System.out.println("기타 sql 처리 예외:"+e.getMessage());
 		} catch(Exception e) {
@@ -278,8 +300,9 @@ public class a02_book {
 								sRegistdate = sInputRegistdate; //입력받은 값
 							}
 							String sRentalWhether = null;
-
-							System.out.print("☞ 분류번호(※입력안할시,0이라도 입력): "); 
+							
+							dao.classficationListAllPrint();
+							System.out.print("☞ 분류번호(※위에 보기중에 선택) : "); // 도서분류 조건중에 입력하게끔 조건걸기
 							int iclassno = sc.nextInt();
 							
 							dao.bookInsert(new Book(sIsbn, sBookName, sPublisher, sWriter, sGenre, iPrice, sRegistdate, sRentalWhether, iclassno));
