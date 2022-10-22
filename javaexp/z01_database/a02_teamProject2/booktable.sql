@@ -19,6 +19,8 @@ INSERT INTO bookUser values('9997','user','김길동','951231-2000000','서울 �
 INSERT INTO bookUser values('9996','user','이길동','961021-2000000','부산 마린시티','010-456-0000','higirl','8888',1);
 INSERT INTO bookUser values('9995','user','마길동','970703-1000000','제주도 서귀포시','010-789-0000','goodman','5555',0);
 DELETE FROM bookUser;
+
+SELECT * FROM bookUser WHERE div = 'manager';
 /*
  private int userno;
  private String div;
@@ -47,7 +49,7 @@ CREATE TABLE call(
 	callanswer varchar2(4000)
 );
 
-select * FROM CALL WHERE callno = 'A100002';
+select * FROM CALL WHERE callno = '';
 select callno,callcontents,callanswer FROM CALL WHERE userno = '9997';
 
 DROP TABLE call;
@@ -61,11 +63,22 @@ DROP TABLE call;
 SELECT * FROM CALL;
 SELECT callno,userno,callcontents FROM CALL WHERE MANAGERNO is null;
 INSERT INTO CALL VALUES('A100003','9997','사이트가 왜이렇게 어려워요?',null,null);
+INSERT INTO CALL VALUES('A100004','9995','오메',null,null);
 
+DELETE FROM CALL WHERE callno = 'A100003';
 UPDATE CALL 
 SET managerno = 9999,
 callanswer = '개발이 어려워서 그래요'
 WHERE callno = 'A100003';
+
+UPDATE CALL 
+SET userno = '9995'
+WHERE callno = 'A100003';
+
+UPDATE CALL 
+SET callcontents = '회원 상담수정'
+WHERE callno = 'A100003'
+AND userno = '9997';
 
 INSERT INTO call VALUES('A100000','9997','재밌는책추천해주세요.','9999','채쌤의 자바책');
 INSERT INTO call VALUES('A100002','9996','공부하기 좋은 책 추천해주세요.','9999','오라클');
@@ -124,22 +137,32 @@ SELECT * FROM program;
 
 ---------------------------------------------------------------------------------------------------
 CREATE TABLE classification(
-	classno number(3) PRIMARY key,
+	classno number PRIMARY key,
 	cname varchar2(50)
 );
 select * FROM classification;
 DROP TABLE classification;
 
-INSERT INTO classification VALUES(100,'철학');
-INSERT INTO classification VALUES(200,'종교');
-INSERT INTO classification VALUES(300,'사회과학');
-INSERT INTO classification VALUES(400,'순수과학');
-INSERT INTO classification VALUES(500,'기술과학');
-INSERT INTO classification VALUES(600,'예술');
-INSERT INTO classification VALUES(700,'언어');
-INSERT INTO classification VALUES(800,'문학');
-INSERT INTO classification VALUES(900,'역사');
-DELETE FROM classification WHERE;
+CREATE SEQUENCE classno_seq
+		increment by 100
+		start with 0
+		MINVALUE 0
+		MAXVALUE 100000;
+	
+DROP SEQUENCE classno_seq;
+	
+INSERT INTO classification VALUES(classno_seq.nextval,'총류');
+INSERT INTO classification VALUES(classno_seq.nextval,'철학');
+INSERT INTO classification VALUES(classno_seq.nextval,'종교');
+INSERT INTO classification VALUES(classno_seq.nextval,'사회과학');
+INSERT INTO classification VALUES(classno_seq.nextval,'순수과학');
+INSERT INTO classification VALUES(classno_seq.nextval,'기술과학');
+INSERT INTO classification VALUES(classno_seq.nextval,'예술');
+INSERT INTO classification VALUES(classno_seq.nextval,'언어');
+INSERT INTO classification VALUES(classno_seq.nextval,'문학');
+INSERT INTO classification VALUES(classno_seq.nextval,'역사');
+
+DELETE FROM classification WHERE CLASSNO =1100;
 ----------------------------------------------------------------------------------------------------
 CREATE TABLE books(
 	isbn number(13) PRIMARY key,

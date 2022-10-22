@@ -23,7 +23,42 @@ public class a02_book {
 	private Connection con;
 	private Statement stmt;
 	private ResultSet rs;
-
+// ---------------------------------------------- 도서분류 추가 기능메서드 ------------------------------------------------------------
+	public void classficationInsert(String classficationname) {
+		String sql = "INSERT INTO classification VALUES(classno_seq.nextval,'"+classficationname+"')";
+		try {
+			con = DB.con();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			if(rs != null) System.out.println("[안내메시지] 도서분류 등록이 완료되었습니다.");
+			
+		} catch (SQLException e) {
+			System.out.println("기타 sql 처리 예외:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("기타 예외:"+e.getMessage());
+		}finally {
+			if(rs==null) System.out.println("[안내메시지] 등록된 분류번호가 없습니다.");
+			DB.close(rs, stmt, con);
+		}
+	}
+// ---------------------------------------------- 도서분류 삭제 기능메서드 ------------------------------------------------------------
+	public void classficationDelete(int classficationNo) {
+		String sql = "DELETE FROM classification WHERE CLASSNO = "+classficationNo;
+		try {
+			con = DB.con();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			if(rs != null) System.out.println("[안내메시지] 도서분류 삭제가 완료되었습니다.");
+			
+		} catch (SQLException e) {
+			System.out.println("기타 sql 처리 예외:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("기타 예외:"+e.getMessage());
+		}finally {
+			if(rs==null) System.out.println("[안내메시지] 등록된 분류번호가 없습니다.");
+			DB.close(rs, stmt, con);
+		}
+	}
 // ---------------------------------------------- 도서분류테이블 출력 기능메서드 --------------------------------------------------------------------
 	public void classficationListAllPrint() {
 		String sql = "select * FROM classification";
@@ -260,10 +295,12 @@ public class a02_book {
 			System.out.println("2:도서추가");
 			System.out.println("3:도서수정");
 			System.out.println("4:도서삭제");
+			System.out.println("5:도서분류추가");
+			System.out.println("6:도서분류삭제");
 			int iBookMenu = sc.nextInt();
 			sc.nextLine(); //int 입력 초기화 처리
 			switch(iBookMenu) {
-				case 1:
+				case 1 :
 					System.out.println("☞ 어떤 도서를 조회하겠습니까?");
 					System.out.println("[안내메시지] 도서명으로 검색해주세요!");
 					String sBookChoice = sc.nextLine();
@@ -271,7 +308,7 @@ public class a02_book {
 	
 					break;
 					
-				case 2:
+				case 2 :
 					while(true) {
 						System.out.println("☞ 도서를 추가하시겠습니까?(Y/N)");
 						String sAddBook = sc.nextLine();
@@ -318,7 +355,7 @@ public class a02_book {
 					}
 					break;
 					
-				case 3:
+				case 3 :
 					dao.bookListAllPrint();
 					
 					System.out.println("☞ 다음 중 수정할 도서번호를 입력하세요.");
@@ -421,11 +458,25 @@ public class a02_book {
 				
 					break;
 					
-				case 4:
+				case 4 :
 					dao.bookListAllPrint();
 					System.out.println("☞ 다음 중 삭제할 도서번호를 입력하세요.");
 					int iDeleteBookIsbn = sc.nextInt();
 					dao.bookDelete(iDeleteBookIsbn);
+					break;
+					
+				case 5 :
+					System.out.println("☞ 추가하실 도서분류명을 입력해주세요.");
+					String sClassificationName = sc.nextLine();
+					dao.classficationInsert(sClassificationName);
+					break;
+					
+				case 6 :
+					dao.classficationListAllPrint();
+					System.out.println("☞ 삭제하실 도서분류번호를 입력해주세요.");
+					int delclassificationNo = sc.nextInt();
+					sc.nextLine();
+					dao.classficationDelete(delclassificationNo);
 					break;
 					
 				default : 
