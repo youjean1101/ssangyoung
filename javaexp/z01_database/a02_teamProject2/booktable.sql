@@ -51,7 +51,11 @@ CREATE TABLE call(
 
 select * FROM CALL WHERE callno = '';
 select callno,callcontents,callanswer FROM CALL WHERE userno = '9997';
-
+select * FROM CALL where callno = 'A100003';
+select * FROM CALL where callno = 'A100003';
+select * FROM CALL where callno = 'A100003';
+select * FROM CALL WHERE CALLNO = 'A100003';
+select count(*) FROM CALL WHERE CALLNO = 'A100003';
 DROP TABLE call;
 /*
  private int iCallno;
@@ -115,17 +119,18 @@ FROM PROGRAM;
 SELECT * FROM program 
 WHERE pname LIKE '%'||'북토크'||'%';
 
-select * FROM program;
+select noticedate FROM program ;
 
 INSERT INTO program values(pno_seq.nextval,'북토크',sysdate,'20221030','1000');
 INSERT INTO program values(pno_seq.nextval,'중고책바자회',sysdate,'20221231','1000');
 DELETE FROM program WHERE pno ='2';
-// 삭제하면 currval로 추가 되야함.
+// 삭제하면 currval로 추가 되야함. -> 어쩔수 없음 구멍난채로 해야함
 INSERT INTO program values(pno_seq.currval,'베스트셀러 작가 강연','20221101','20221101','1000');
-INSERT INTO program values(pno_seq.nextval,'테스트','20221001','20221101','1000');
+INSERT INTO program values(pno_seq.nextval,'테스트','20221001','20221022','1000');
 
 DELETE FROM program;
 DELETE FROM program WHERE pno ='1';
+DELETE FROM program WHERE noticedate ='2022-10-22';
 
 
 UPDATE program

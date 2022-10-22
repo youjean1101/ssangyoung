@@ -289,6 +289,7 @@ public class a02_book {
 	// ----------------------------------------------도서출력 main--------------------------------------------------------------------
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+//	public void BookMenu() {
 		while(true) {
 			System.out.println("☞ 도서메뉴를 고르세요.");
 			System.out.println("1:도서조회");

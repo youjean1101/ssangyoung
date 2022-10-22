@@ -5,24 +5,54 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 import javaexp.a13_database.DB;
-import javaexp.a13_database.vo.Dept;
-import javaexp.a13_database.vo.Emp;
 
 public class a03_Program {
 	static a03_Program dao = new a03_Program();
 	static Scanner sc = new Scanner(System.in);
+	static LocalDate now = LocalDate.now(); // 
 	static int i;
 	private PreparedStatement pstmt;
 	private Connection con;
 	private Statement stmt;
 	private ResultSet rs;
-
+	 
+//---------------------------------------------- 주간프로그램 출력 기능메서드	--------------------------------------------------------------------
+//		public void programTime() {
+	public List<Program> programTime(){
+		List<Program> list = new ArrayList<Program>();
+		
+			try {
+				con = DB.con();
+				String sql = "select noticedate FROM program";
+				
+				stmt = con.createStatement();
+				rs = stmt.executeQuery(sql);
+				
+				while(rs.next()) {
+					Program e = new Program(
+								rs.getString("noticedate")							
+							);
+					list.add(e);	
+				}
+			
+			} catch (SQLException e) {
+				System.out.println("기타 sql 처리 예외:"+e.getMessage());
+			} catch(Exception e) {
+				System.out.println("기타 예외:"+e.getMessage());
+			}finally {
+				if(rs==null) System.out.println("[안내메시지] 등록된 프로그램이 없습니다.");
+				DB.close(rs, stmt, con);
+			}
+			return list;
+		}
 //---------------------------------------------- 주간프로그램 출력 기능메서드	--------------------------------------------------------------------
 		public void programListAllPrint() {
 			try {
@@ -218,9 +248,56 @@ public class a03_Program {
 				DB.close(rs, stmt, con);
 			}	
 		}
+// ----------------------------------------------주간프로그램 삭제 기능메서드--------------------------------------------------------------------
+		public void programAutoDelete(String delAutoPro) {
+			String sql = "DELETE FROM program WHERE noticedate ='"+delAutoPro+"'";
+			System.out.println(sql);
+			try {
+				con = DB.con();
+				con.setAutoCommit(false);
+				stmt = con.createStatement();
+				stmt.executeUpdate(sql);
+				con.commit();
+				System.out.println("삭제가 완료되었습니다");
+				
+			} catch (SQLException e) {
+				System.out.println("DB 처리:"+e.getMessage());
+				try { 
+					con.rollback();
+				} catch (SQLException e1) {
+					System.out.println("rollback에러:"+e1.getMessage());
+				}
+			} catch(Exception e) {
+				System.out.println("기타 예외:"+e.getMessage());
+			} finally {
+				DB.close(rs, stmt, con);
+			}	
+		}
 //----------------------------------------------주간프로그램출력 main()--------------------------------------------------------------------	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
+		Date time = new Date();
+		
+	
+		String time1 = format1.format(time); //현재날짜 데이터타입 변경
+
+
+
+		List<Program> proList = dao.programTime();
+		for(Program e:proList) {
+//			String time2 = format1.formate(e.getNoticedate()); // Date 타입에 스트링을 넣으면 안되서 에러발생
+			String time2 = e.getNoticedate().split(" ")[0]; // 공지날짜 데이터타입변경(time2)
+			
+			System.out.println("time1:"+time1);
+			System.out.println("time2:"+time2);
+			if(time1.equals(time2)) {
+				dao.programAutoDelete(time2);
+			}
+//			System.out.println(e.getNoticedate());
+		}
+
+		
 		while(true) {
 			System.out.println("☞ 프로그램 메뉴를 고르세요.");
 			System.out.println("1:프로그램조회");
@@ -374,10 +451,17 @@ class Program{
 		this.pno = pno;
 	}
 	
-	public Program(String pname) {
+	
+public Program(String noticedate) {
 		super();
-		this.pname = pname;
+		this.noticedate = noticedate;
 	}
+
+
+//	public Program(String pname) {
+//		super();
+//		this.pname = pname;
+//	}
 
 	public int getPno() {
 		return pno;

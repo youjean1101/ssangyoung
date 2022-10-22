@@ -231,6 +231,7 @@ public class a01_Home {
 		// ---------------------------------------------- 홈 출력 main() --------------------------------------------------------------------	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		a02_book book = new a02_book();
 		
 		while(true) {
 			System.out.println("☞ 메뉴를 선택해주세요.");
@@ -259,13 +260,31 @@ public class a01_Home {
 						System.out.println("[안내메시지]\""+lo.getUname()+"\"님이 정상적으로 로그인 되었습니다.");
 					}
 					if(sLoginout.equals("in")) {
+						
+						
+						System.out.println("#관리자#");
+						System.out.println("1: 도서등록/수정/삭제");
+						
+						System.out.println("2: 주간프로그램 등록/수정/삭제");
+						System.out.println("3: 상담답변하기");
+						
+						book.BookMenu(); //개꿀
+						
+						
+						System.out.println("#사용자#");
+						System.out.println("1: 도서조회");
+						System.out.println("2: 대여하기");
+						System.out.println("3: 반납하기");
+						System.out.println("4: 상담하기");
+						
+						
 						System.out.println("[안내메시지] 로그아웃 하시려면 Q!를 입력해주세요.\n"); 
+						
 					
 						while(true) {
 							String logout = sc.nextLine();
 							if(logout.equals("Q!")) {
-								
-								
+								// 로그아웃상태
 								break;
 							}
 						}

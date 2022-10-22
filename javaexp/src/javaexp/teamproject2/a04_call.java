@@ -148,7 +148,44 @@ public class a04_call {
 	}
 		
 		
-// ---------------------------------------- 상담 내용 추가(회원) ----------------------------------------------
+	// ---------------------------------------- 상담 내용 조회(관리자 조회) ----------------------------------------------
+	public boolean IscallSelect (String callno) { 
+		
+		boolean bReturn = false;
+		
+		String sql = "SELECT * FROM CALL WHERE CALLNO = '"+callno+"'";
+		
+		try {
+			con = DB.con();
+			con.setAutoCommit(false);
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+//			int nRowCnt = rs.getRow(); // 조회데이터 건수를 반환한다.
+//			
+//			System.out.println(nRowCnt +"/"+callno + "/" +sql);
+			if(rs.next())
+			{
+				int nRowCnt = rs.getRow();
+				if(nRowCnt < 1) {
+					bReturn = false;
+				} else {
+					bReturn = true;
+				}
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("DB처리예외:"+e.getMessage());
+		} catch (Exception e) {
+			System.out.println("기타예외:"+e.getMessage());
+		} finally {
+			DB.close(rs, stmt, con);
+		}
+		
+		System.out.println("bReturn:" + bReturn);
+		return bReturn;
+	}
+
+	// ---------------------------------------- 상담 내용 추가(회원) ----------------------------------------------
 	public void callInsert(Call add) {
 		String sql = "INSERT INTO CALL VALUES(?,?,?,null,null)";
 	
@@ -322,7 +359,7 @@ public class a04_call {
 		}
 	}
 //---------------------------------------- 상담출력 main()문 ----------------------------------------------
-	public static void main(String[] args) {
+public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		while(true) {
 			System.out.println("☞ 관리자/사용자 중 무엇입니까?");
@@ -351,11 +388,20 @@ public class a04_call {
 							continue;
 							
 						case 3:
-							System.out.println("☞ 무슨 상담을 답변하시겠습니까?(상담번호로 입력해주세요.)");
-							dao.callAnswerExpected("null");
-							String sInputCallNo = sc.nextLine();
-							dao.callManagerSelect("선택",new Call(sInputCallNo)); // 상담번호가 없는 상담을 입력할 경우 break;하는법
-							
+							String sInputCallNo;
+							while(true) {
+									System.out.println("☞ 무슨 상담을 답변하시겠습니까?(상담번호로 입력해주세요.)");
+									dao.callAnswerExpected("null");
+									sInputCallNo = sc.nextLine();
+									dao.callManagerSelect("선택",new Call(sInputCallNo)); // 상담번호가 없는 상담을 입력할 경우 break;하는법
+								if(dao.IscallSelect(sInputCallNo)) {
+									break;
+								} else {
+									System.out.println("[안내메시지] 없는 상담번호입니다. 다시 입력해주세요.");
+									continue;
+								}
+							}
+			
 							System.out.println("☞ 상담의 답변 입력해주세요.");
 							String sInputCallAnswer = sc.nextLine();
 							dao.callanswerUpdate("등록",new Call(sInputCallNo,"9999",sInputCallAnswer));
