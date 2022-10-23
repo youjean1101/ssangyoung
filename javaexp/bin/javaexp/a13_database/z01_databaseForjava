@@ -1,0 +1,475 @@
+
+# 자바로 데이터베이스 연동하여 처리하기
+1. 개요
+	자바프로그램을 DB서버의  client로 만들어, 데이터베이스 서버와 연동하여
+	실제 프로그램에서 처리하는 내용으로 조회/등록/수정/삭제 처리를 하는 것을 말한다.
+2. 지식계열화
+	1) 네트웍상 server/client개념 이해
+		- DB 서버 접속을 위한 정보
+		network
+		
+		client <======> Server
+				 ip		port(서비스구분) - 웹서비스, 파일서버, smtp
+				 		db명(XE) - 여러개의 DB를 사용할 때
+				 		사용자(스키마)/패스워드 - 여러개의 계정을 사용
+				 		
+	2) sql에 대한 이해 - 등록/조회/수정/삭제
+	3) 자바의 DB처리 기능 객체와 각 개체별 처리 순서에 대한 이해
+	4) 자바의 DB처리 기능 기능메서드 이해와 실습
+	5) 기능 처리 후, 데이터 내용 확인
+3. 네트웤상 server/client개념 이해(DB서버 접속 정보)
+	1) 서버에 접속계정이 만드어지면,
+	2) DB서버에 client는 jdbc드라이버 설정, 아이디, 패스워드
+		서버 주소, port, DB명, 계정, 비번으로 접속을 할 수 있다.
+4. sql에 대한 이해 - 지금까지 연습한 sql문
+	select, insert, update, delete
+5. 자바의 DB처리 기능 객체와 각 객체별 처리 순서에 대한 이해
+	1) database 서버 접속 객체
+		연결객체(Connection), 대화객체(Statement ==> PreparedStatement(보안/속도)),
+		결과값처리객체(ResultSet), 자원해제(.close()),
+		예외처리(try{}catch(SQLExpption e){})
+	2) 전역변수로 위 핵심 객체를 선언
+		private Connection con;
+		private Statement stmt;
+		private PreparedStatement pstmt;
+		private ResultSet rs;
+	3) 기능별 메서드 선언
+		public void setConnection(){} - DB연결을 위한 기본 기능메서드
+		==> DB.con(), DB.close(con, stmt, rs);
+			접속과 자원해제를 따로 객체로 만들어서 처리.
+		// 각 기능별 메서드 선언(sql ==> select(리턴값), 
+			where, sql에 입력 데이터(매개변수) ==> Vo 클래스 선언)
+		// 사원정보 조회(다중행)
+		public List<Emp> getEmpList(Emp sch){}
+		// 사원정보 조회(단일행)
+		public Emp getEmp(int empno){}
+		// 사원정보 입력
+		public void insertEmp(Emp insert){}
+		// 사원정보 수정
+		public void updateEmp(Emp update){}
+		// 사원정보 삭제
+		public void deleteEmp(int empno){}
+		==> 프로젝트
+		DB.con(), DB.close(con,stmt,rs); DB는 하나로 만들고
+		@@@Dao.java => 업무별로 만들어서 조회(다중),조회(단일), 수정, 삭제, 
+			업무별 :	회원관리 member라는 테이블로 진행 ==> 로그인/회원가입/회원리스트
+					물건관리 product ==> 물건리스트, 물건등록, 수정, 삭제
+					구매및배송 product/member ==> 물건리스트, 구매리스트, 장바구니담기 및 리스트, 배송
+		
+# 데이터베이스 연결 처리
+1. 필요한 기본 객체
+	1) jdbc 드라이버 프로그램 path 잡기
+		- 각 DB서버 회사에서 데이터베이스 연결 및 처리 관련 공통부분을 java로 만들어
+			클래스로 압축한 내용을 가지고 있다.
+			현재 프로젝트에서 진행할 수 있도록 classPath 추가 설정
+	2) class.forName("메인클래스")
+		를 통해서 메모리에 로딩..
+		ex) Class.forName("oracle.jdbc.driver.OracleDriver");
+2. 필수 예외 처리..
+	1) Class.forName() : 컴파일예외 처리.
+		직접적으로 예외 처리(연결할때 1번만 필요하기 때문에) try{}catch
+	2) DriverManager.getConnection(info,"scott","tiger");
+		연결정보 SQLException : 컴파일예외 처리, throws로 예외를 위임처리..
+		
+3. 연결 객체 처리 프로세스
+	1) 연관관계 객체
+		드라이버 메모리로딩 ==> 특정서버에 접속 DriverManager ==>
+		연결객체 Connection ==> 서버와 대화(sql) Statement 
+		선택적 처리 ==> 등록/수정/삭제 ==> 서버에 데이터를 처리 ==> commit, rollback
+				==> 조회(select) ==> 서버에서 sql결과를 ResultSet 통해 전달
+				예시)전화기
+					통신망 ==> 전화(연결) ==> 대화  ==> 돈을빌려줘등 결과값이 필요한 질문 ==> 결과값
+				
+		(조회식) ResultSet : 
+					next() - 행단위로 이동 처리
+					getXXXX("컬럼명"/index-1) - 열단위에 데이터 유형에 맞게 접근
+						XXXX
+						char/varchar2() ==> String 
+						number() ==> int/double
+						date ==> Date
+						컬럼명 : select에 선언된 컬럼명을 지정해서 호출 가능
+								주의 테이블의 컬럼명 아님(X)
+								select empno no ==> no로 설정.
+						1부터 시작하는 index명 : select에서 선언한 순서대로 처리
+							select deptno, sal, ename
+								==> rs.getInt(1) ==> deptno
+								==> rs.getInt(2) ==> sal
+								==> rs.getInt(3) ==> ename
+								
+				while(rs.next()){ ## 데이터가 마지마행까지 행단위로 이동
+					rs.getInt("empno") : 각 행의 empno컬럼의 데이터를 정수형으로 가져옴
+					rs.getString("ename")
+					rs.getDate("hiredate")
+				}
+				if(rs.next()) : 데이터가 한 row일 때, 주로 사용
+								select * from emp where empno = 7780 : key
+				sql = "select count(*) from ...
+				rs.next(); int count = rs.getInt(1);
+				반드시 나오는 단일 변수의 경우...
+				
+								
+				조건으로 바로 데이터가 있는지 여부만 check
+				public boolean login(...){
+					boolean isSuccess = false;
+					String sql = "select * from member where id = @@ and pass
+					isSuccess = rs.next(); // 데이터가 있는지 여부만 확인시
+					return isSuccess;
+				}
+				
+				
+			==> 자원해제 및 예외처리
+				만들어진 단계별 객체 .close() 메모리 해제
+				필수예외에 대한 내용을 try{}catch(SQLException e){} 예외 처리
+				
+
+	Class.forName("") : jdbc 드라이버를 메모리에 로딩
+	DriverManager : getConnetion("접속정보", "계정","비번") static 메서드로 연결을
+		driver ==> 특정한 연결과 mapping
+		Connection 객체를 만들어 준다.
+			리턴을 연결객체를 통해서 처리한다.
+		ex) 전화기를 하면 전화번호 대상과 연결해서 연결된 메모리객체를 Connection에 할당 처리
+		"jdbc:oracle:thin:@localhost:1521:xe"
+		jdbc:oracle:thin: 드라이버 종류
+		@localhost : 특정 ip주소 cf) localhost - 현재 pc에 oracle서버가 구축되어 있을 때는
+			localhost라는 loopback 주소를 사용한다.
+		1521 : oracle 서버의 port
+		xe : oracle DB명
+		
+# 매개변수에 의해 검색의 조건을 처리하는 기능메서드 만들기
+1. 처리순서
+	1) sql 만들어 실행
+		SELECT * FROM emp01
+		WHERE ename LIKE '%'||'A'||'%'
+		AND job LIKE '%'||'ER'||'%'
+	2) sql안에 조건으로 넘길 데이터 유형과 이름 정리
+		ename, job
+		==> String ename, String job
+	3) 기능 메서드에 매개변수 타입 결정
+		데이터유형으로 선언 : schEmp(String ename, String job)
+		객체로 선언 : - vo 객체를 생성(ename, job 포함)
+			schEmp(Emp sch)
+	4) 문자열 sql에 동적문자열로 선언처리
+		- 데이터유형으로 선언
+		String sql = 	"SELECT * " +
+						"FROM emp01" +
+						"WHERE ename LIKE '%'||'"+ename+"'||'%'"+
+						"AND job LIKE '%'||'"+job+"'||'%'";
+		- 객체유형으로 선언
+		String sql = 	"SELECT * " +
+						"FROM emp01" +
+						"WHERE ename LIKE '%'||'"+sch.getEname()+"'||'%'"+
+						"AND job LIKE '%'||'"+sch.getJob+"'||'%'";
+		==>PreparedStatement
+		String sql = 	"SELECT * " +
+						"FROM emp01" +
+						"WHERE ename LIKE '%'||?||'%'"+
+						"AND job LIKE '%'||?||'%'";
+		pstmt.setString(1, sch.getEname());
+		pstmt.setString(2, sch.getJob()); // 매핑
+						
+# 검색조건 처리 및 List로 리턴처리
+1. sql 작성
+	1) 매개변수로 조건처리할 데이터 확인
+		==> ename, job ==> VO로 ename, job 필드 선언, 객체
+	2) 리턴값으로 리턴 List의 단위 데이터 확인
+		String sql = 	"SELECT * " +
+						"FROM emp01" +
+						"WHERE ename LIKE '%'||'"+sch.getEname()+"'||'%'"+
+						"AND job LIKE '%'||'"+sch.getJob+"'||'%'";
+		select * ==> 통해서 나올 데이터를 단위로 객체 선언
+		empno, ename, job, mgr, hiredatem sal, comm, deptno
+		# 리턴값으로 설정하느냐 vs 매개변수로 선언하느냐 구분
+		1. select를 통해서 결과 객체나 결과 변수(int, boolean,...)을 rs로 처리하는 데이터를 결과로 선언해서 리턴값으로 설정.
+		2. sql을 문장을 조합해서 최종 sql을 만들기 위해 필요한 데이터를 
+			매개변수를 통해서 넘겨주게 처리한다.
+			ex1) "select * from emp where sal = "+sch.getSal();
+			ex2) select * decode(deptno, "+d01+", '회계', "+d02+"...
+					이 경우도 select 문에 포함되지만 결과가 아니라 sql문자열을 만들 때, 사용하는 경우도 매개변수나,
+					매개변수+로직으로 처리한다.
+					
+2. VO만들기 : 리턴값을 위한 객체, 매개변수를 처리하기 위한 객체
+		public  리턴값		메서드명(매개변수)
+		
+		==> 저장할 수 있는 단위 VO객체 선언 ==> ArrayList<VO>
+			생성자로 전체데이터를 가져오는 생성자1
+			생성자로 조회조건 가져오는 생성자2
+		class Emp{
+			private int empno;
+			private String ename;
+			private String job;
+			private int mgr;
+			private Date hiredate;
+			private double sal;
+			private double comm;
+			private int deptno;
+			
+3. List 메서드 초기에 선언하고, while()를 통해서 객체 하나씩 생성해서 추가하기
+	리턴할 기능메서드와 매개변수 처리할 내용 선언
+	// Emp sch : 조건으로 처리할 데이터
+	// public List<Emp> : select로 처리할 데이터 리스트화
+	
+	public List<Emp> getEmpListSch(Emp sch){
+		List<Emp> list = new ArrayList<Emp>();
+		
+		return list;
+	}
+	public Emp getEmp(int empno){}
+	public String getEname(int empno){}
+	public boolean login(String id, String pass){}
+	
+4. ResultSet 객체를 통해서 데이터를 가져와서 list에 while문을 통해서 할당.
+	while(rs.next()){
+		list.add(new Emp(rs.getInt("empno"),rs.getString("ename"),...
+		}
+		System.out.println("데이터 건수:"+list.size());
+5. 호출하는 곳에서 향상된 for문으로 처리
+	for(Emp emp:dao.getempListSch(new Emp("","")){
+		System.out.println(emp.getEmpno());
+	}
+	
+# 연습 단계
+1. 전체 프로에 대한 이해
+	0) 사전 지식
+		- 예외 처리(컴파일 예외)
+			try{}catch(ClassNotFoundException)
+			try{}catch(SQLException)
+	1) 연결(Connection) : ex) 전화기 - 통신망(jdbc메모리로딩), 전화번호(ip, port, db, 계정, 비번)
+		메모리로딩 ==> 접근 정보에 따라 특정 서버에 연결
+	2) 대화(Statement) : ex) 상대방과 대화
+		필요한 sql 작업
+			select ename, job, empno
+			from emp
+			where sal between @@ and @@
+			and ename like '%'||''||'%'
+		사용할 vo 생성
+			select에 있는 name, job, empno ==> 받은 객체 선언.
+			==> type과 이름 정하기 ==> 생성자 결정
+			class Emp2{
+				private String ename;
+				private String job;
+				private int empno;
+				public Emp2(String ename, String job, int empno){
+					this.ename = ename;
+					this.job = job;
+					this.empno = empno;
+				}
+			}
+			where 부분에 들어갈 객체 만들기.
+			where sal beween @@ and @@		int frSal, int toSal
+			and ename like '%'||''||'%'		String ename;
+			where 조건에 들어갈 데이터를 확인 vo객체 만들기
+			==> 생성자 선언
+			class EmpSch{
+				private int frSal;
+				private int toSal;
+				private String ename;
+				public EmpSch(int frSal, int toSal, String ename){
+					this.frSal = frSal;
+					this.toSal = toSal;
+					this.ename = ename;
+				}
+			}
+			==> 공통내용이 많으면 통합해서 사용.(select, where)
+			class Emp3{
+				private String ename;
+				private String job;
+				private int empno;
+				private int frSal;
+				private int toSal;
+				public Emp3(int frSal, int toSal, String ename){
+					this.frSal = frSal;
+					this.toSal = toSal;
+					this.ename = ename;
+				}
+				public Emp3(String ename, String job, int empno){
+					this.ename = ename;
+					this.job = job;
+					this.empno = empno;
+				}
+			}
+			기능 메서드 선언..
+			1. 다중행을 가져오는 경우(sql의 결과)
+			 public List<Emp2> getEmpListSch(EmpSch sch){
+			 	List<Emp2> e = new ArrayList<Emp2>();
+			 	return elist;
+			 }
+			2. 한개의 행의 가져오는 경우
+			 1) select * from emp where empno = 7780;
+			 public Emp2 getEmpListSch(int empno){
+			 	emp2 e = null;
+			 	
+			 	return e;
+			 }
+			 2) select count(*) from emp;
+			 	select ename from emp where empno = 7790;
+			 	select max(sal) from emp where deptno = 10;
+		 	public int getEmpCnt(int empno){
+		 	int cnt = 0;
+		 	if(rs.next()) cnt = rs.getInt(1);
+		 	return cnt;
+			 }
+			 public String getEmpCnt(int empno){ 
+			 	// select를 통해서 결과값을 받는 데이터 return 유형
+			 	//where조건, sql 구성하는 내용은 매개변수
+			 	String ename = "";
+			 	if(rs.next()) ename = rs.getString(1);
+			 	return ename;
+			 }
+			
+		대화를 통해 의사 전달만(insert, update, delete) ==> commit(), rollback()
+		대화를 통해 결과를 받는 것(select) 
+		==> ResultSet(next()), getXXX("컬럼명"), getXXX(1))
+				while(next()) 행단위로 이동
+					rs.getString("컬럼"): 열단위로 이동
+		==> 자원해제..
+
+# 데이터베이스의 등록/수정/삭제
+1. 기본 개발 프로세스
+	1) sql 작성 : insert into 테이블 values(데이터1,데이터2....)
+	2) vo 작성 : sql 조합으로 데이터를 위하여 vo 객체 만들기
+	3) 기능 메서드 선언
+		- 연결처리
+		- Connection 객체의 autocommit을 false로 지정
+		- 대화객체 executeUpdate(sql)
+		- commit()
+		- 예외 처리 rollback
+2. 사원정보 등록/수정/삭제
+	1) 복사테이블 만들기
+		create table emp100
+		as select * from emp;
+		alter table emp100
+		modify (
+			job varchar2(50),
+			ename varchar2(50),
+			empno number(4) primary key
+		);
+		sequence 만들기(primary key 설정)
+		create sequence emp100_seq
+			start with 1000
+			minvalue 1000
+			maxvalue 9999;
+	2) sql 작성
+		insert into emp100 values(emp100_seq.nextval, '홍길동', '사원', 7800,
+			to_date('2022/01/01','YYYY/MM/DD'), 3500, 100, 10);
+	3) 입력내용을 기준으로 vo 생성
+		private int empno;
+		private String ename;
+		private String job;
+		private int mgr;
+		private String hiredate;
+		private double sal;
+		private double comm;
+		private int deptno;
+	4) 메서드 선언
+		public void insert(Emp ins){
+			String sql = "insert into emp100 values(emp100_seq.nextval, '"+ins.getEname()+"', '"+ins.getJob()+"', "+ins.getMgr()+",
+			to_date('"+ins.getHiredateS()+"','YYYY/MM/DD'), "+ins.getSal()+", "+ins.getComm+", "+ins.getDeptno+")";
+			날짜형은 일단 문자열로 입력해서 날짜형으로 변경하는 패턴으로 처리한다.
+				to_date('"+ins.getHiredateS()+"','YYYY/MM/DD')
+			sql 조합시 문자열은 ''사이에 "+데이터+"를 숫자형은 바로 "+데이터+"를 처리한다.
+			# 주의
+			1. 에러가 나는 유형 중 하나가, sql이 잘못되거나, sql결과를 rs.getXXX("컬럼")에서 타입이 잘못 선언되거나, 컬럼명이 잘못 된 경우가 많으니
+				1) sql 점검 : System.out.println(sql)
+					를 통해서 sql을 콘솔에 찍어보고, 확인하고, 실제 복사해서 실행까지 해보도록 한다.
+				2) rs.getXXX("컬럼") : 위 sql에 순서에 맞게 데이터 유형이 적절하게 선언되고, 컬럼명이 잘못되어 있는지 확인한다.
+		}
+	5) 주요 내용
+		Connection 객체의 autocommit ==> false
+		Statement 객체의 executeUpdate(sql)
+		ResultSet 객체 삭제(사용하지 않음 == while() X)
+		Connection 객체의 commit(), 예외 처리 내용을 rollback()
+# 수정삭제
+1. sql
+	updata emp100
+		set ename = '',
+			job = '',
+			sal = 7000
+		where empno = 100;
+	delete emp100
+	where empno = 1000;
+2. vo
+	생성자 추가/vo 추가
+3. 기능메서드 선언
+	public void updateEmp(Emp upt){}
+	public void deleteEmp(int empno){}
+4. 기능내용 구현.
+
+# PraparedStatement 객체 처리
+1. 동적 sql(문자열 조합) 구문은 보안적으로 위험한 경우가 많아서 
+이를 위한 대안으로 PreparedStatement 형식으로 데이터를 처리를 한다.
+2. 보안적 필요성
+	1) sql injection의 문제	ps) 구글 sql injection 검색 참고
+		로그인
+		id [' or 1=1--]
+		pass [7777]
+		[로그인]
+		위 화면과 같이 id에 입력할 내용에 ' or 1=1-- 을 입력하면 sql 삽입이 되어
+		누구나 로그인으 할 수 있는 상황이 되어 버린다.
+		select * 
+		from member
+		where id ='' or 1=1' and pass=''
+	
+3. 속도 이슈
+	오라클 서버는 sql을 실행하면 컴파일 과정을 거쳐서 수행하여 준다.
+	동일한 sql을 다시 실행요청하면 이전에 해석 되어있는 내용을 바로 실행시켜 준다.
+	그러므로, 가능한한 동일한 sql을 서버에 전달해주면 SQL해석 과정을 거치지 않고 빠른 실행 속도로 처리해준다.
+	1) 기존의 동적 sql
+		select *
+		from emp
+		where empno = 7780;
+		위에서 empno가 변경할 때마다, 다른 sql로 인식되어 재 컴파일 과정을 거친다.
+	2) preparedstatement sql
+		select * 
+		from emp
+		where empno=?
+		일단 변경되는 ?부분을 통해 처리되는 코드를 먼저 보내어 컴파일 시킨 후,
+		추후에 ?에 넣을 데이터를 연결하므로 동일한 코드를 실행해 주어 빠르게 처리해준다.
+4. 기본 형식
+	1) Statement ==> PreparedStatement
+	2) sql 작성 : 매개변수를 모두다 ?로 선언 처리
+		insert into dept values(?,?,?)		value("+ins.getDeptno()+")
+	3) PreparedStatement를 통해 sql 실행
+	4) pstmt.set 데이터 유형(순서, 실제 입력할 데이터)
+		pstmt.setInt(1,ins.getDeptno());
+		pstmt.setString(2,ins.getDname());
+		pstmt.setString(3,ins.getLoc());
+	# 에러 발생 케이스
+	1. ? 갯수, 타입,순서과 pstmt.set타입(1부터 시작... 데이터)
+		반드시 matching 시켜야 된다. ==> 에러발생 원인
+# ?와 함께 동적 sql을 사용할 때..
+1. 병행을 하는 것을 권유한다.
+	ex) 물건검색에서 일단 전체 조회가 되고, 물품명이 있을 때만, 키워드 검색할 때.
+	조건문에 의한 동적 sql을 권유한다.
+	select *
+	from product
+	where 1=1
+	and pname like '%'||?||'%' ==> null, "" 경우가 있는데...
+		null인 경우에 ""바꾸어서 처리하는 경우도 있지만, 실제 등록된 데이터가 
+		null이 아니거나 공백인 경우가 있을 때는 검색 데이터의 차이가 있다.
+	String sql ="
+		select *
+		from product
+		where 1=1 "; //웬만하면 무조건적으로 써야함
+	if(pname!=null){
+		sql+="and pname like '%'||?'%'";
+	}
+	
+	if(pname!=null){
+		pstmt.setString(1, pname);
+	}
+# preparedstatement 이용
+1. 수정
+2. 삭제
+3. 복잡한 sql 처리
+
+# 처리순서
+1. sql 확인
+	1) 조건문 ?
+	2) vo로 처리할 내용(매개변수)
+2. Vo
+3. 기능메서드 선언(템플릿 복사)
+	1) 변경된 내용 sql
+	2) pstmt.setXXX(...)
+4. main() 확인
+
+		

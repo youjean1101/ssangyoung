@@ -264,7 +264,8 @@ CREATE SEQUENCE rentalno_seq
 	
 DROP SEQUENCE rentalno_seq;
 
-SELECT * FROM rental WHERE isbn=9791186710777;
+SELECT * FROM rental 
+WHERE isbn=9791186710777;
 /*
 private String rentalno;
 private String userno;
@@ -281,11 +282,29 @@ FROM rental r, books b
 where r.isbn=b.isbn
 AND userno = '9997';
 
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791186710777',sysdate,'X',sysdate,'X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9995','9788968481475',sysdate,'X',sysdate,'X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9996','9791156645023',sysdate,'X',sysdate,'X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791163033486',sysdate,'X',sysdate,'X');
-DELETE FROM rental WHERE rentalno = 'AA100002';
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791186710777',sysdate,'X',sysdate+14,'X');
+
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791186710777',sysdate,'X',null,'X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9995','9788968481475',sysdate,'X',null,'X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9996','9791156645023',sysdate,'X',null,'X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791163033486',sysdate,'X',null,'X');
+DELETE FROM rental WHERE rentalno = 'AA1024';
+// sysdate로 입력받으면 삭제가 안됌
+
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9788968481475','20221020','X','20221023','O');
+DELETE FROM rental 
+ WHERE returndate='20221023'
+	AND returnwhether ='O';
+
+
+select * FROM rental;
+
+UPDATE rental
+SET returnwhether ='O',
+ returndate = sysdate 
+WHERE rentalno= 'AA1007'
+AND returndate is NULL 
+AND returnwhether='X';
 
 -------------------------------------------------------------------------------------------------------
 CREATE TABLE ship(

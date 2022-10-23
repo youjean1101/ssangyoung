@@ -214,52 +214,52 @@ public class a02_book {
 	}
 // ----------------------------------------------도서수정 기능메서드--------------------------------------------------------------------
 
-	public void bookUpdate(long updateisbn, int i,Book upbook) {
+	public void bookUpdate(long updateisbn, String updatechoice,Book upbook) {
 		
 		String sql =  " UPDATE books\r\n ";
 
-		switch(i) {
-		case 1 : 		
+		switch(updatechoice) {
+		case "도서번호" : 		
 			sql +=  " SET ISBN ="+upbook.getIsbn()+"\r\n "
 					+ "	WHERE isbn = "+updateisbn;
 			break;
 			
-		case 2 : 
+		case "도서명" : 
 			sql +=  " SET BNAME  = '"+upbook.getBname()+"'\r\n "
 					+ "	WHERE isbn = "+updateisbn;
 			break;
 			
-		case 3 : 
+		case "출판사" : 
 			sql +=  " SET PUBLISHER = '"+upbook.getPublisher()+"'\r\n "
 					+ "	WHERE isbn = "+updateisbn;
 			break;
 			
-		case 4 : 
+		case "저자" : 
 			sql +=  " SET WRITER = '"+upbook.getWriter()+"'\r\n "
 					+ "	WHERE isbn = "+updateisbn;
 			break;
 			
-		case 5 : 
+		case "장르" : 
 			sql +=  " SET GENRE = '"+upbook.getGenre()+"'\r\n "
 					+ "	WHERE isbn = "+updateisbn;
 			break;
 			
-		case 6 : 
+		case "가격" : 
 			sql +=  " SET PRICE = "+upbook.getPrice()+"\r\n "
 					+ "	WHERE isbn = "+updateisbn;
 			break;
 			
-		case 7 :
+		case "등록일자" :
 			sql +=  " SET REGISTDATE = '"+upbook.getsRegistdate()+"'\r\n "
 					+ "	WHERE isbn = "+updateisbn;
 			break;
 			
-		case 8 :
+		case "대여여부" :
 			sql +=  " SET RENTALWHETHER = '"+upbook.getRentalwhether()+"'\r\n "
 					+ "	WHERE isbn = "+updateisbn;
 			break;
 			
-		case 9 :
+		case "분류번호" :
 			sql +=  " SET CLASSNO = "+upbook.getClassno()+"\r\n "
 					+ "	WHERE isbn = "+updateisbn;
 			break;
@@ -426,7 +426,7 @@ public class a02_book {
 							System.out.print("☞ 변경할 도서번호: ");
 							Long iUpdateBookIsbn = sc.nextLong();
 							upb.setIsbn(iUpdateBookIsbn);
-							dao.bookUpdate(iUpdateBook,1,upb);
+							dao.bookUpdate(iUpdateBook,"도서번호",upb);
 							System.out.println("[안내메시지] 도서번호 변경이 완료되었습니다.");
 							break;
 							
@@ -434,7 +434,7 @@ public class a02_book {
 							System.out.print("☞ 변경할 도서명: ");
 							String sUpdateBname = sc.nextLine();
 							upb.setBname(sUpdateBname);
-							dao.bookUpdate(iUpdateBook,2,upb);
+							dao.bookUpdate(iUpdateBook,"도서명",upb);
 							System.out.println("[안내메시지] 도서명 변경이 완료되었습니다.");
 							break;
 							
@@ -442,7 +442,7 @@ public class a02_book {
 							System.out.print("☞ 변경할 출판사: ");
 							String sUpdatePublisher = sc.nextLine();
 							upb.setPublisher(sUpdatePublisher);
-							dao.bookUpdate(iUpdateBook,3,upb);
+							dao.bookUpdate(iUpdateBook,"출판사",upb);
 							System.out.println("[안내메시지] 출판사 변경이 완료되었습니다.");
 							break;
 							
@@ -450,7 +450,7 @@ public class a02_book {
 							System.out.print("☞ 변경할 저자: ");
 							String sUpdateWriter = sc.nextLine();
 							upb.setWriter(sUpdateWriter);
-							dao.bookUpdate(iUpdateBook,4,upb);
+							dao.bookUpdate(iUpdateBook,"저자",upb);
 							System.out.println("[안내메시지] 저자 변경이 완료되었습니다.");
 							break;
 						
@@ -458,7 +458,7 @@ public class a02_book {
 							System.out.print("☞ 변경할 장르: ");
 							String sUpdateGenre = sc.nextLine();
 							upb.setGenre(sUpdateGenre);
-							dao.bookUpdate(iUpdateBook,5,upb);
+							dao.bookUpdate(iUpdateBook,"장르",upb);
 							System.out.println("[안내메시지] 장르 변경이 완료되었습니다.");
 							break;
 							
@@ -466,7 +466,7 @@ public class a02_book {
 							System.out.print("☞ 변경할 가격: ");
 							int iUpdatePrice = sc.nextInt();
 							upb.setPrice(iUpdatePrice);
-							dao.bookUpdate(iUpdateBook,6,upb);
+							dao.bookUpdate(iUpdateBook,"가격",upb);
 							System.out.println("[안내메시지] 가격 변경이 완료되었습니다.");
 							break;
 							
@@ -474,7 +474,7 @@ public class a02_book {
 							System.out.print("☞ 변경할 등록일자: ");
 							String sUpdateRegistdate = sc.nextLine();
 							upb.setsRegistdate(sUpdateRegistdate);
-							dao.bookUpdate(iUpdateBook,7,upb);
+							dao.bookUpdate(iUpdateBook,"등록일자",upb);
 							System.out.println("[안내메시지] 등록일자 변경이 완료되었습니다.");
 							break;
 							
@@ -482,7 +482,7 @@ public class a02_book {
 							System.out.print("☞ 변경할 대여여부: ");
 							String sUpdaterentalwhether = sc.nextLine();
 							upb.setRentalwhether(sUpdaterentalwhether);
-							dao.bookUpdate(iUpdateBook,8,upb);
+							dao.bookUpdate(iUpdateBook,"대여여부",upb);
 							System.out.println("[안내메시지] 대여여부 변경이 완료되었습니다.");
 							break;
 							
@@ -490,7 +490,7 @@ public class a02_book {
 							System.out.print("☞ 변경할 분류번호: ");
 							int sUpdateclassno = sc.nextInt();
 							upb.setClassno(sUpdateclassno);
-							dao.bookUpdate(iUpdateBook,9,upb);
+							dao.bookUpdate(iUpdateBook,"분류번호",upb);
 							System.out.println("[안내메시지] 분류번호 변경이 완료되었습니다.");
 							break;
 							

@@ -17,7 +17,7 @@ import javaexp.a13_database.DB;
 public class a03_Program {
 	static a03_Program dao = new a03_Program();
 	static Scanner sc = new Scanner(System.in);
-	static LocalDate now = LocalDate.now(); // 
+	static LocalDate now = LocalDate.now(); 
 	static int i;
 	private PreparedStatement pstmt;
 	private Connection con;
@@ -195,26 +195,26 @@ public class a03_Program {
 
 // ----------------------------------------------주간프로그램 수정 기능메서드--------------------------------------------------------------------
 
-		public void programUpdate(int updatepno, int i,Program upProgram) {
+		public void programUpdate(int updatepno, String sUpdateChoice,Program upProgram) {
 			String sql =  " UPDATE program\r\n ";
 			
-			switch(i) { 
-			case 1 : 		
+			switch(sUpdateChoice) { 
+			case "프로그램명" : 		
 				sql +=  " SET pname = '"+upProgram.getPname()+"'\r\n "
 						+ "	WHERE pno = "+updatepno;
 				break;
 				
-			case 2 : 
+			case "프로그램일정" : 
 				sql +=  " SET ptime = '"+upProgram.getPtime()+"'\r\n "
 						+ "	WHERE pno = "+updatepno;
 				break;
 				
-			case 3 : 
+			case "공지날짜" : 
 				sql +=  " SET noticedate = '"+upProgram.getNoticedate()+"'\r\n "
 						+ "	WHERE pno = "+updatepno;
 				break;
 				
-			case 4 : 
+			case "관리자번호" : 
 				sql +=  " SET managerno = '"+upProgram.getManagerno()+"'\r\n "
 						+ "	WHERE pno = "+updatepno;
 				break;
@@ -300,8 +300,9 @@ public class a03_Program {
 //----------------------------------------------주간프로그램출력 main()--------------------------------------------------------------------	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
 		// 주간프로그램 공지날짜에 따른 자동 삭제 기능
-		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd"); // 타입을 Date 타입을 yyyy-mm-dd로 변경
+		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd"); // 타입을 Date 타입을 yyyy-mm-dd로 변경
 		Date time = new Date(); // 현재날짜 및 시각
 		
 		String time1 = format1.format(time); //현재날짜 데이터타입 변경
@@ -316,7 +317,7 @@ public class a03_Program {
 			if(time1.equals(time2)) { // 공지날짜가 오늘날짜와 같으면 삭제 진행
 				dao.programAutoDelete(time2);
 			}
-		} 
+		}
 		
 		while(true) {
 			System.out.println("☞ 프로그램 메뉴를 고르세요.");
@@ -386,7 +387,7 @@ public class a03_Program {
 							System.out.print("☞ 변경할 프로그램명: ");
 							String sUpdatePname = sc.nextLine();
 							updateProgramData.setPname(sUpdatePname);
-							dao.programUpdate(iUpdateProgram, 1, updateProgramData);
+							dao.programUpdate(iUpdateProgram, "프로그램명", updateProgramData);
 							System.out.println("[안내메시지] 프로그램명이 변경 완료되었습니다.");
 							break;
 							
@@ -394,7 +395,7 @@ public class a03_Program {
 							System.out.print("☞ 변경할 프로그램일정: ");
 							String sUpdatePtime = sc.nextLine();
 							updateProgramData.setPtime(sUpdatePtime);
-							dao.programUpdate(iUpdateProgram, 2, updateProgramData);
+							dao.programUpdate(iUpdateProgram, "프로그램일정", updateProgramData);
 							System.out.println("[안내메시지] 프로그램 일정이 변경 완료되었습니다.");
 							break;
 							
@@ -402,7 +403,7 @@ public class a03_Program {
 							System.out.print("☞ 변경할 공지끝나는날짜: ");
 							String sUpdatenoticedate = sc.nextLine();
 							updateProgramData.setNoticedate(sUpdatenoticedate);
-							dao.programUpdate(iUpdateProgram, 3, updateProgramData);
+							dao.programUpdate(iUpdateProgram, "공지날짜", updateProgramData);
 							System.out.println("[안내메시지] 공지끝나는날짜가 변경 완료되었습니다.");
 							break;
 							
@@ -410,7 +411,7 @@ public class a03_Program {
 							System.out.print("☞ 변경할 관리자번호: ");
 							int iUpdateManagerno = sc.nextInt();
 							updateProgramData.setManagerno(iUpdateManagerno);
-							dao.programUpdate(iUpdateProgram, 4, updateProgramData);
+							dao.programUpdate(iUpdateProgram, "관리자번호", updateProgramData);
 							System.out.println("[안내메시지] 관리자 변경이 완료되었습니다.");
 							break;
 						
