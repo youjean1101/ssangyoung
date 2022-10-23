@@ -51,11 +51,8 @@ CREATE TABLE call(
 
 select * FROM CALL WHERE callno = '';
 select callno,callcontents,callanswer FROM CALL WHERE userno = '9997';
-select * FROM CALL where callno = 'A100003';
-select * FROM CALL where callno = 'A100003';
-select * FROM CALL where callno = 'A100003';
-select * FROM CALL WHERE CALLNO = 'A100003';
-select count(*) FROM CALL WHERE CALLNO = 'A100003';
+select count(*) cnt FROM CALL;
+
 DROP TABLE call;
 /*
  private int iCallno;
@@ -64,10 +61,20 @@ DROP TABLE call;
  private int iManagerno;
  private String sCallanswer;
  */
+
+CREATE SEQUENCE call_seq
+		increment by 1
+		start with 10000
+		MINVALUE 10000
+		MAXVALUE 100000;
+	
+DROP SEQUENCE classno_seq;
+
 SELECT * FROM CALL;
 SELECT callno,userno,callcontents FROM CALL WHERE MANAGERNO is null;
-INSERT INTO CALL VALUES('A100003','9997','사이트가 왜이렇게 어려워요?',null,null);
+INSERT INTO CALL VALUES('A'||call_seq.nextval,'9997','사이트가 왜이렇게 어려워요?',null,null);
 INSERT INTO CALL VALUES('A100004','9995','오메',null,null);
+SELECT count(*) cnt FROM CALL WHERE CALLNO = '12ㄷ';
 
 DELETE FROM CALL WHERE callno = 'A100003';
 UPDATE CALL 
@@ -76,8 +83,9 @@ callanswer = '개발이 어려워서 그래요'
 WHERE callno = 'A100003';
 
 UPDATE CALL 
-SET userno = '9995'
-WHERE callno = 'A100003';
+SET managerno = '9999',
+callanswer = '왜케어려움'
+WHERE callno = 'A10001';
 
 UPDATE CALL 
 SET callcontents = '회원 상담수정'
@@ -86,6 +94,8 @@ AND userno = '9997';
 
 INSERT INTO call VALUES('A100000','9997','재밌는책추천해주세요.','9999','채쌤의 자바책');
 INSERT INTO call VALUES('A100002','9996','공부하기 좋은 책 추천해주세요.','9999','오라클');
+INSERT INTO call VALUES('A100005','9996','테스트1.',null,null);
+INSERT INTO call VALUES('A100006','9996','테스트2.',null,null);
 DELETE FROM call WHERE callno = 'A100003';
 
 --------------------------------------------------------------------------------------------------

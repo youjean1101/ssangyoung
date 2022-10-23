@@ -67,9 +67,10 @@ public class A06_PareparedDao {
 			pstmt.setInt(1, d.getDeptno());
 			pstmt.setString(2, d.getDname());
 			pstmt.setString(3, d.getLoc());
+			
 			System.out.println("등록건수:"+pstmt.executeUpdate());
 			con.commit();
-			
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("DB에러: "+e.getMessage());
@@ -230,12 +231,12 @@ public class A06_PareparedDao {
 //		// 10 ==> 55, 인사, 부산
 //		dao.UpdateDept(10, new Dept(55, "인사", "부산"));
 //		
-//		dao.insertDept(new Dept(11,"총무","부산"));
-//		for(Dept d: dao.getDeptList(new Dept("",""))) {
-//			System.out.print(d.getDeptno()+"\t");
-//			System.out.print(d.getDname()+"\t");
-//			System.out.print(d.getLoc()+"\n");
-//		}
+		dao.insertDept(new Dept(11,"총무","부산"));
+		for(Dept d: dao.getDeptList(new Dept("",""))) {
+			System.out.print(d.getDeptno()+"\t");
+			System.out.print(d.getDname()+"\t");
+			System.out.print(d.getLoc()+"\n");
+		}
 	}
 }
 // ex) 부서 등록 처리(PreparedStatement)

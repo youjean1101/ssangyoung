@@ -61,16 +61,12 @@ public class a04_call {
 				con.setAutoCommit(false);
 				stmt = con.createStatement();
 				rs = stmt.executeQuery(sql);
-				System.out.println(" # 내가 신청했던 상담정보 #");
-				
+			
 				while(rs.next()) {
 						System.out.println("상담번호: "+rs.getString("callno"));
 						System.out.println("상담내용: "+rs.getString("callcontents"));
-						System.out.println("상담답변관리자번호 : "+rs.getString("managerno"));
 						System.out.println("상담답변: "+rs.getString("callanswer")+"\n");
 				};
-				int cnt = stmt.executeUpdate(sql);
-				if(cnt==0) System.out.println("[안내메시지] 등록된 상담이 없습니다.");
 				
 			} catch (SQLException e) {
 				System.out.println("DB처리예외:"+e.getMessage());
@@ -81,7 +77,7 @@ public class a04_call {
 			}
 	}
 // ---------------------------------------- 상담 내용 조회(관리자 조회) ----------------------------------------------
-	public void callManagerSelect(String wherewhether,Call callno) { 
+	public void callManagerSelect(String wherewhether,ManagerCall callno) { 
 		switch(wherewhether) {
 			case "전체" :
 				String sql = "select * FROM CALL";
@@ -114,7 +110,7 @@ public class a04_call {
 			
 				
 			case "선택" :
-				String sql2 = "select * FROM CALL where callno = '"+callno.getsCallno()+"'";
+				String sql2 = "select * FROM CALL where callno = '"+callno.getsMgCallno()+"'";
 				
 				try {
 					con = DB.con();
@@ -129,8 +125,6 @@ public class a04_call {
 						System.out.println("상담답변관리자번호 : "+rs.getString("managerno"));
 						System.out.println("상담답변: "+rs.getString("callanswer")+"\n");
 					};
-					int cnt = stmt.executeUpdate(sql2);
-					if(cnt==0) System.out.println("[안내메시지] 수정요청하신 상담이 없습니다. 상담번호를 정확히 입력해주세요.");
 					
 				} catch (SQLException e) {
 					System.out.println("DB처리예외:"+e.getMessage());
@@ -160,13 +154,11 @@ public class a04_call {
 			con.setAutoCommit(false);
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
-//			int nRowCnt = rs.getRow(); // 조회데이터 건수를 반환한다.
-//			
-//			System.out.println(nRowCnt +"/"+callno + "/" +sql);
+
 			if(rs.next())
 			{
-				int nRowCnt = rs.getRow();
-				if(nRowCnt < 1) {
+				int nRowCnt = rs.getRow(); // 테이블의 행 갯수 변수선언
+				if(nRowCnt < 1) { // 행갯수가 1개라도 있으면 true
 					bReturn = false;
 				} else {
 					bReturn = true;
@@ -180,23 +172,20 @@ public class a04_call {
 		} finally {
 			DB.close(rs, stmt, con);
 		}
-		
-		System.out.println("bReturn:" + bReturn);
-		return bReturn;
+		return bReturn; // 행갯수가 있으면 true를 리턴
 	}
 
 	// ---------------------------------------- 상담 내용 추가(회원) ----------------------------------------------
-	public void callInsert(Call add) {
-		String sql = "INSERT INTO CALL VALUES(?,?,?,null,null)";
+	public void callInsert(UserCall add) {
+		String sql = "INSERT INTO CALL VALUES('A'||call_seq.nextval,?,?,null,null)";
 	
 		try {
 			con = DB.con();
 			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(sql);
 								
-				pstmt.setString(1, add.getsCallno());
-				pstmt.setString(2, add.getsUserno());
-				pstmt.setString(3, add.getsCallcontents());
+				pstmt.setString(1, add.getsUsUserno());
+				pstmt.setString(2, add.getsUsCallcontents());
 				
 				System.out.println("[안내메시지] 회원님의 상담등록이 완료되었습니다.");
 				
@@ -260,24 +249,24 @@ public class a04_call {
 		}
 	}
 // ---------------------------------------- 상담 답변 추가(관리자) ----------------------------------------------
-	public void callanswerUpdate(String inandup,Call add) { // 해당 상담 중 무슨 상담을 답변 및 수정 하시겠습니까? 질문하기
+	public void callanswerUpdate(String inAndUp,ManagerCall add) { // 해당 상담 중 무슨 상담을 답변 및 수정 하시겠습니까? 질문하기
 		String sql = "UPDATE CALL \r\n"
-				+ "SET managerno = ?,\r\n"
-				+ "callanswer = ?\r\n"
-				+ "WHERE callno = ?"; // 상담 추가한 상담번호 선택
+				+ "SET managerno = ? ,\r\n"
+				+ "callanswer = ? \r\n"
+				+ "WHERE callno = ? "; // 상담 추가한 상담번호 선택
 		
 		try {
 			con = DB.con();
 			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(sql);
 			
-			pstmt.setString(1, add.getsManagerno());
-			pstmt.setString(2, add.getsCallanswer());
-			pstmt.setString(3, add.getsCallno());
-			
-			System.out.println("[안내메시지] 관리자님의 상담 답변이 "+inandup+"완료되었습니다.");
+			pstmt.setString(1, add.getsMgManagerno());
+			pstmt.setString(2, add.getsMgCallanswer());
+			pstmt.setString(3, add.getsMgCallno());
 			
 			rs = pstmt.executeQuery();
+			
+			System.out.println("[안내메시지] 관리자님의 상담 답변이 "+inAndUp+"완료되었습니다.");
 			
 		} catch (SQLException e) {
 			System.out.println("DB 처리:"+e.getMessage());
@@ -293,7 +282,7 @@ public class a04_call {
 		}
 	}
 // ---------------------------------------- 상담 수정(회원) ----------------------------------------------
-	public void callContentsUpdate(String upcall,Call update) {
+	public void callContentsUpdate(UserCall update) {
 		String sql = "UPDATE CALL \r\n"
 					+ "SET callcontents = ?\r\n"
 					+ "WHERE callno = ?\r\n" 
@@ -304,17 +293,13 @@ public class a04_call {
 			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(sql);
 			
-			pstmt.setString(1, upcall);
-			pstmt.setString(2, update.getsCallno());
-			pstmt.setString(3, update.getsUserno());
-			
-			System.out.println("[안내메시지] 회원님의 상담 수정이 완료되었습니다.");
+			pstmt.setString(1, update.getsUsCallcontents());
+			pstmt.setString(2, update.getsUsCallno());
+			pstmt.setString(3, update.getsUsUserno());
 			
 			rs = pstmt.executeQuery();
 			
-			int cnt = pstmt.executeUpdate(sql);
-			if(cnt==0) System.out.println("[안내메시지] 등록된 상담이 없습니다.");
-			
+			System.out.println("[안내메시지] 회원님의 상담 수정이 완료되었습니다.");
 			
 		} catch (SQLException e) {
 			System.out.println("DB 처리:"+e.getMessage());
@@ -340,10 +325,6 @@ public class a04_call {
 			rs = stmt.executeQuery(sql);
 			
 			System.out.println("[안내메시지] 요청하신 상담 삭제가 완료되었습니다.");
-			
-			int cnt = stmt.executeUpdate(sql);
-			if(cnt==0) System.out.println("[안내메시지] 등록된 상담이 없습니다.");
-			
 			
 		} catch (SQLException e) {
 			System.out.println("DB 처리:"+e.getMessage());
@@ -380,7 +361,7 @@ public static void main(String[] args) {
 					
 					switch(callManagerMenuChoice) {
 						case 1:
-							dao.callManagerSelect("전체",new Call("")); // 관리자번호 입력받아 쓰기
+							dao.callManagerSelect("전체",new ManagerCall("")); // 관리자번호 입력받아 쓰기
 							continue;
 							
 						case 2:
@@ -389,173 +370,302 @@ public static void main(String[] args) {
 							
 						case 3:
 							String sInputCallNo;
-							while(true) {
-									System.out.println("☞ 무슨 상담을 답변하시겠습니까?(상담번호로 입력해주세요.)");
-									dao.callAnswerExpected("null");
-									sInputCallNo = sc.nextLine();
-									dao.callManagerSelect("선택",new Call(sInputCallNo)); // 상담번호가 없는 상담을 입력할 경우 break;하는법
-								if(dao.IscallSelect(sInputCallNo)) {
+							
+							while(true) { // 상담번호를 정확히 입력하지 않을시, 반복
+								
+								System.out.println("☞ 무슨 상담을 답변하시겠습니까?(상담번호로 입력해주세요.)");
+								dao.callAnswerExpected("null");
+								sInputCallNo = sc.nextLine();
+								dao.callManagerSelect("선택",new ManagerCall(sInputCallNo));  // 입력받은 상담번호 데이터 출력시키기
+								
+								if(dao.IscallSelect(sInputCallNo)==true) { // 입력값의 테이블에 데이터가 있으면, 답변입력란으로 넘어감
 									break;
 								} else {
-									System.out.println("[안내메시지] 없는 상담번호입니다. 다시 입력해주세요.");
-									continue;
+									System.out.println("[안내메시지] 답변요청하신 상담이 없습니다. 상담번호를 정확히 입력해주세요.\n");
 								}
 							}
 			
 							System.out.println("☞ 상담의 답변 입력해주세요.");
 							String sInputCallAnswer = sc.nextLine();
-							dao.callanswerUpdate("등록",new Call(sInputCallNo,"9999",sInputCallAnswer));
+							dao.callanswerUpdate("등록",new ManagerCall(sInputCallNo,"9999",sInputCallAnswer)); // 상담답변 달기(선택한 상담번호,관리자회원번호,상담답변)
 							continue;
 							
 						case 4:
-							dao.callAnswerExpected("not null");
-							System.out.println("☞ 수정할 상담의 상담번호를 입력해주세요.");
-							String sUpInputCallNo = sc.nextLine();
-							System.out.println("☞ 상담의 수정할 답변 입력해주세요.");
+							String sUpInputCallNo;
+							
+							while(true) {
+								dao.callAnswerExpected("not null"); // 상담 답변이 있는 테이블데이터 출력
+								System.out.println("☞ 수정할 상담의 상담번호를 입력해주세요."); 
+								sUpInputCallNo = sc.nextLine();
+								
+								if(dao.IscallSelect(sUpInputCallNo)==true) { // 입력값의 테이블에 데이터가 있으면, 답변입력란으로 넘어감
+									break;
+								} else {
+									System.out.println("[안내메시지] 수정 요청하신 상담번호가 없습니다. 상담번호를 다시 입력해주세요. \n");
+								}
+							}
+							
+							System.out.println("☞ 상담의 수정할 답변 입력해주세요."); 
 							String sUpInputCallAnswer = sc.nextLine();
-							dao.callanswerUpdate("수정",new Call(sUpInputCallNo,"9999",sUpInputCallAnswer));
+							dao.callanswerUpdate("수정",new ManagerCall(sUpInputCallNo,"9999",sUpInputCallAnswer)); //관리자회원번호 넣기
 							continue;
 
 						default:
 							System.out.println("[안내메시지] 보기에 있는 메뉴를 선택해주세요.");
 							break;
 					}
-					
 				break;
 				}
 		break;
 	
 			} else if (sUserAuth.equals("사용자")) {
-				
-				System.out.println("☞ 다음 상담메뉴 중에 무엇을 하시겠습니까?(회원)");
-				System.out.println("1: 내가 등록한 상담 확인하기");
-				System.out.println("2: 상담하기");
-				System.out.println("3: 상담수정하기");
-				System.out.println("4: 상담삭제하기");
-				int callUserMenuChoice = sc.nextInt();
-				sc.nextLine();
-				
-				switch(callUserMenuChoice) {
-				case 1:
-					dao.callUserSelect("9996");
-					continue;
+				while(true) {
+					System.out.println("☞ 다음 상담메뉴 중에 무엇을 하시겠습니까?(회원)");
+					System.out.println("1: 내가 등록한 상담 확인하기");
+					System.out.println("2: 상담하기");
+					System.out.println("3: 상담수정하기");
+					System.out.println("4: 상담삭제하기");
+					int callUserMenuChoice = sc.nextInt();
+					sc.nextLine();
 					
-				case 2:
-					while(true) {
-						System.out.println("상담을 등록하시겠습니까?(Y/N");
-						String sAddCall = sc.nextLine();
-						if(sAddCall.toUpperCase().equals("Y")) {
-							
-							System.out.println("☞ 상담내용을 입력해주세요.");
-							String sInputCallContents = sc.nextLine();
-							
-							
-							dao.callInsert(new Call("A1000006","9995",sInputCallContents));
-							break;
-							
-						} else if(sAddCall.toUpperCase().equals("N")) {
-							break;
-						} else {
-							System.out.println("[안내메시지] Y/N으로 입력해주세요.");
+					switch(callUserMenuChoice) {
+					case 1:
+						System.out.println("# 내가 신청했던 상담정보 #");
+						dao.callUserSelect("9996"); // 회원번호 넣기
+						continue;
+						
+					case 2:
+						while(true) {
+							System.out.println("☞ 상담을 등록하시겠습니까?(Y/N)");
+							String sAddCall = sc.nextLine();
+							if(sAddCall.toUpperCase().equals("Y")) {
+								
+								System.out.println("☞ 상담내용을 입력해주세요.");
+								String sInputCallContents = sc.nextLine();
+								
+								dao.callInsert(new UserCall("9996",sInputCallContents)); // 상담번호 배정
+								break;
+								
+							} else if(sAddCall.toUpperCase().equals("N")) {
+								System.out.println("[뒤로가기]");
+								break;
+							} else {
+								System.out.println("[안내메시지] Y/N으로 입력해주세요.");
+							}
 						}
+						
+						continue;
+						
+					case 3:
+						String sUpdateCallChoice;
+						
+						while(true) {
+							dao.callUserSelect("9996");
+							System.out.println("☞ 수정할 상담의 상담번호를 입력해주세요.");
+							sUpdateCallChoice = sc.nextLine();
+							
+							if(dao.IscallSelect(sUpdateCallChoice)==true) { // 입력값의 테이블에 데이터가 있으면, 답변입력란으로 넘어감
+								break;
+							} else {
+								System.out.println("[안내메시지] 수정 요청하신 상담번호가 없습니다. 상담번호를 다시 입력해주세요. \n");
+							}
+						}
+						System.out.println("☞ 수정할 상담내용을 입력해주세요.");
+						String sUpdateCallContents = sc.nextLine();
+						
+						dao.callContentsUpdate(new UserCall(sUpdateCallChoice,"9996",sUpdateCallContents));
+						continue;
+					
+					case 4:
+						dao.callUserSelect("9996");
+						while(true) {
+							System.out.println("☞ 정말 상담을 삭제하시겠습니까?(Y/N)");
+							String sCallRemoveAnswer = sc.nextLine();
+							if(sCallRemoveAnswer.toUpperCase().equals("Y")) {
+								String sDeleteCallnoChoice;
+								
+								while(true) {
+									System.out.println("☞ 삭제하실 상담번호를 입력해주세요.");
+									sDeleteCallnoChoice = sc.nextLine();
+									
+									if(dao.IscallSelect(sDeleteCallnoChoice)==true) { // 입력값의 테이블에 데이터가 있으면, 답변입력란으로 넘어감
+										break;
+									} else {
+										System.out.println("[안내메시지] 삭제 요청하신 상담번호가 없습니다. 상담번호를 다시 입력해주세요. \n");
+									}
+								}
+								
+								dao.callDelete(sDeleteCallnoChoice);
+								
+								break;
+								
+							} else if (sCallRemoveAnswer.toUpperCase().equals("N")) {
+								System.out.println("[뒤로가기]");
+								break;
+								
+							} else {
+								System.out.println("[안내메시지] Y/N으로 입력해주세요.");
+							}
+						}
+						
+						continue;
+						
+					default :
+						System.out.println("[안내메시지] 보기에 있는 메뉴를 선택해주세요.");
+						break;
 					}
-					
-					continue;
-					
-				case 3:
-					
-					continue;
-				
-				case 4:
-					
-					continue;
-					
-				default :
-					
-					break;
+				break;
 				}
-				dao.callUserSelect(sUserAuth);
+				
 				
 		break;
 				
 			} else {
-				System.out.println("[안내메시지] 관리자/사용자 중에 선택해주세요.");
+				System.out.println("[안내메시지] 보기에 있는 메뉴를 선택해주세요.");
 			}
 		}
 				
 	}
 }
 
-//---------------------------------------- 상담 멤버변수 ----------------------------------------------
-class Call{
-	 private String sCallno;
-	 private String sUserno;
-	 private String sCallcontents;
-	 private String sManagerno;
-	 private String sCallanswer;
-	public Call() {
+//---------------------------------------- 상담 관리자 멤버변수 ----------------------------------------------
+class ManagerCall{
+	 private String sMgCallno;
+	 private String sMgUserno;
+	 private String sMgCallcontents;
+	 private String sMgManagerno;
+	 private String sMgCallanswer;
+	 
+	public ManagerCall() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Call(String sCallno) {
+	public ManagerCall(String sMgCallno, String sMgUserno, String sMgCallcontents, String sMgManagerno,
+			String sMgCallanswer) {
 		super();
-		this.sCallno = sCallno;
+		this.sMgCallno = sMgCallno;
+		this.sMgUserno = sMgUserno;
+		this.sMgCallcontents = sMgCallcontents;
+		this.sMgManagerno = sMgManagerno;
+		this.sMgCallanswer = sMgCallanswer;
 	}
 	
-	public Call(String sCallno, String sManagerno, String sCallanswer) {
+	public ManagerCall(String sMgCallno, String sMgManagerno, String sMgCallanswer) {
 		super();
-		this.sCallno = sCallno;
-		this.sManagerno = sManagerno;
-		this.sCallanswer = sCallanswer;
+		this.sMgCallno = sMgCallno;
+		this.sMgManagerno = sMgManagerno;
+		this.sMgCallanswer = sMgCallanswer;
 	}
 
-	public Call(String sCallno, String sUserno, String sCallcontents, String sManagerno, String sCallanswer) {
+	public ManagerCall(String sMgCallno) {
 		super();
-		this.sCallno = sCallno;
-		this.sUserno = sUserno;
-		this.sCallcontents = sCallcontents;
-		this.sManagerno = sManagerno;
-		this.sCallanswer = sCallanswer;
+		this.sMgCallno = sMgCallno;
 	}
-
-	public String getsCallno() {
-		return sCallno;
+	
+	
+	public String getsMgCallno() {
+		return sMgCallno;
 	}
-
-	public void setsCallno(String sCallno) {
-		this.sCallno = sCallno;
+	public void setsMgCallno(String sMgCallno) {
+		this.sMgCallno = sMgCallno;
 	}
-
-	public String getsUserno() {
-		return sUserno;
+	public String getsMgUserno() {
+		return sMgUserno;
 	}
-
-	public void setsUserno(String sUserno) {
-		this.sUserno = sUserno;
+	public void setsMgUserno(String sMgUserno) {
+		this.sMgUserno = sMgUserno;
 	}
-
-	public String getsCallcontents() {
-		return sCallcontents;
+	public String getsMgCallcontents() {
+		return sMgCallcontents;
 	}
-
-	public void setsCallcontents(String sCallcontents) {
-		this.sCallcontents = sCallcontents;
+	public void setsMgCallcontents(String sMgCallcontents) {
+		this.sMgCallcontents = sMgCallcontents;
 	}
-
-	public String getsManagerno() {
-		return sManagerno;
+	public String getsMgManagerno() {
+		return sMgManagerno;
 	}
-
-	public void setsManagerno(String sManagerno) {
-		this.sManagerno = sManagerno;
+	public void setsMgManagerno(String sMgManagerno) {
+		this.sMgManagerno = sMgManagerno;
 	}
-
-	public String getsCallanswer() {
-		return sCallanswer;
+	public String getsMgCallanswer() {
+		return sMgCallanswer;
 	}
-
-	public void setsCallanswer(String sCallanswer) {
-		this.sCallanswer = sCallanswer;
-	}	
+	public void setsMgCallanswer(String sMgCallanswer) {
+		this.sMgCallanswer = sMgCallanswer;
+	}
+}
+//---------------------------------------- 상담 회원 멤버변수 ----------------------------------------------
+class UserCall{
+	 private String sUsCallno;
+	 private String sUsUserno;
+	 private String sUsCallcontents;
+	 private String sUsManagerno;
+	 private String sUsCallanswer;
+	 
+	public UserCall() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public UserCall(String sUsCallno, String sUsUserno, String sUsCallcontents, String sUsManagerno,
+			String sUsCallanswer) {
+		super();
+		this.sUsCallno = sUsCallno;
+		this.sUsUserno = sUsUserno;
+		this.sUsCallcontents = sUsCallcontents;
+		this.sUsManagerno = sUsManagerno;
+		this.sUsCallanswer = sUsCallanswer;
+	}
+	
+	public UserCall(String sUsCallno, String sUsUserno, String sUsCallcontents) {
+		super();
+		this.sUsCallno = sUsCallno;
+		this.sUsUserno = sUsUserno;
+		this.sUsCallcontents = sUsCallcontents;
+	}
+	
+	public UserCall(String sUsUserno, String sUsCallcontents) {
+		super();
+		this.sUsUserno = sUsUserno;
+		this.sUsCallcontents = sUsCallcontents;
+	}
+	
+	public UserCall(String sUsCallno) {
+		super();
+		this.sUsCallno = sUsCallno;
+	}
+	
+	
+	public String getsUsCallno() {
+		return sUsCallno;
+	}
+	public void setsUsCallno(String sUsCallno) {
+		this.sUsCallno = sUsCallno;
+	}
+	public String getsUsUserno() {
+		return sUsUserno;
+	}
+	public void setsUsUserno(String sUsUserno) {
+		this.sUsUserno = sUsUserno;
+	}
+	public String getsUsCallcontents() {
+		return sUsCallcontents;
+	}
+	public void setsUsCallcontents(String sUsCallcontents) {
+		this.sUsCallcontents = sUsCallcontents;
+	}
+	public String getsUsManagerno() {
+		return sUsManagerno;
+	}
+	public void setsUsManagerno(String sUsManagerno) {
+		this.sUsManagerno = sUsManagerno;
+	}
+	public String getsUsCallanswer() {
+		return sUsCallanswer;
+	}
+	public void setsUsCallanswer(String sUsCallanswer) {
+		this.sUsCallanswer = sUsCallanswer;
+	}
+	
 }

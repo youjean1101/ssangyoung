@@ -268,7 +268,7 @@ public class a01_Home {
 						System.out.println("2: 주간프로그램 등록/수정/삭제");
 						System.out.println("3: 상담답변하기");
 						
-						book.BookMenu(); //개꿀
+//						book.BookMenu(); //개꿀
 						
 						
 						System.out.println("#사용자#");
