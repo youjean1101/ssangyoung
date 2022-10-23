@@ -23,6 +23,38 @@ public class a02_book {
 	private Connection con;
 	private Statement stmt;
 	private ResultSet rs;
+// ---------------------------------------- 도서분류 내용 조회 ----------------------------------------------
+		public boolean IsclassficationSelect (int classno) { 
+			
+			boolean cReturn = false;
+			
+			String sql = "select * FROM classification WHERE classno = '"+classno+"'";
+			
+			try {
+				con = DB.con();
+				con.setAutoCommit(false);
+				stmt = con.createStatement();
+				rs = stmt.executeQuery(sql);
+
+				if(rs.next())
+				{
+					int nRowCnt = rs.getRow(); // 테이블의 행 갯수 변수선언
+					if(nRowCnt < 1) { // 행갯수가 1개라도 있으면 true
+						cReturn = false;
+					} else {
+						cReturn = true;
+					}
+				}
+				
+			} catch (SQLException e) {
+				System.out.println("DB처리예외:"+e.getMessage());
+			} catch (Exception e) {
+				System.out.println("기타예외:"+e.getMessage());
+			} finally {
+				DB.close(rs, stmt, con);
+			}
+			return cReturn; // 행갯수가 있으면 true를 리턴
+		}
 // ---------------------------------------------- 도서분류 추가 기능메서드 ------------------------------------------------------------
 	public void classficationInsert(String classficationname) {
 		String sql = "INSERT INTO classification VALUES(classno_seq.nextval,'"+classficationname+"')";
@@ -340,8 +372,18 @@ public class a02_book {
 							String sRentalWhether = null;
 							
 							dao.classficationListAllPrint();
-							System.out.print("☞ 분류번호(※위에 보기중에 선택) : "); // 도서분류 조건중에 입력하게끔 조건걸기
-							int iclassno = sc.nextInt();
+							
+							int iclassno;
+							while(true) {
+								System.out.print("☞ 분류번호(※위에 보기중에 선택) : "); // 도서분류 조건중에 입력하게끔 조건걸기
+								iclassno = sc.nextInt();
+								
+								if(dao.IsclassficationSelect(iclassno)==true) { // 입력값의 테이블에 데이터가 있으면, 답변입력란으로 넘어감
+									break;
+								} else {
+									System.out.println("[안내메시지] 선택하신 분류번호가 없습니다. 다시 입력해주세요. \n");
+								}
+							}
 							
 							dao.bookInsert(new Book(sIsbn, sBookName, sPublisher, sWriter, sGenre, iPrice, sRegistdate, sRentalWhether, iclassno));
 							break;

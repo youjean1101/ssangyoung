@@ -24,35 +24,59 @@ public class a03_Program {
 	private Statement stmt;
 	private ResultSet rs;
 	 
-//---------------------------------------------- 주간프로그램 출력 기능메서드	--------------------------------------------------------------------
-//		public void programTime() {
-	public List<Program> programTime(){
-		List<Program> list = new ArrayList<Program>();
+//---------------------------------------------- 자동삭제된 주간프로그램 출력 기능메서드	--------------------------------------------------------------------
+	public void deleteProgramSelect(String noticetime){
+		String sql = "SELECT * FROM program WHERE noticedate ='"+noticetime+"'";
 		
 			try {
 				con = DB.con();
-				String sql = "select noticedate FROM program";
-				
 				stmt = con.createStatement();
 				rs = stmt.executeQuery(sql);
 				
 				while(rs.next()) {
-					Program e = new Program(
-								rs.getString("noticedate")							
-							);
-					list.add(e);	
+					System.out.println("\""+rs.getString("pname")+"\"");
+					int nRowCnt = rs.getRow();
+					if(nRowCnt > 0) { 
+						System.out.println("[안내메시지] 위의 주간 프로그램은 공지날짜 지나, 자동 삭제되었습니다.\n");
+					} 
 				}
-			
+				
 			} catch (SQLException e) {
 				System.out.println("기타 sql 처리 예외:"+e.getMessage());
 			} catch(Exception e) {
 				System.out.println("기타 예외:"+e.getMessage());
 			}finally {
-				if(rs==null) System.out.println("[안내메시지] 등록된 프로그램이 없습니다.");
 				DB.close(rs, stmt, con);
 			}
-			return list;
 		}
+//---------------------------------------------- 주간프로그램 출력 기능메서드	--------------------------------------------------------------------
+	public List<Program> programTime(){
+		List<Program> list = new ArrayList<Program>();
+		
+		try {
+			con = DB.con();
+			String sql = "select noticedate FROM program";
+			
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				Program e = new Program(
+						rs.getString("noticedate")							
+						);
+				list.add(e);	
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("기타 sql 처리 예외:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("기타 예외:"+e.getMessage());
+		}finally {
+			if(rs==null) System.out.println("[안내메시지] 등록된 프로그램이 없습니다.");
+			DB.close(rs, stmt, con);
+		}
+		return list;
+	}
 //---------------------------------------------- 주간프로그램 출력 기능메서드	--------------------------------------------------------------------
 		public void programListAllPrint() {
 			try {
@@ -153,6 +177,7 @@ public class a03_Program {
 					System.out.println("[안내메시지] 주간프로그램 추가가 완료되었습니다.");
 					
 					rs = pstmt.executeQuery();
+					System.out.println(sql);
 					
 			} catch (SQLException e) {
 				System.out.println("DB 처리:"+e.getMessage());
@@ -251,14 +276,13 @@ public class a03_Program {
 // ----------------------------------------------주간프로그램 삭제 기능메서드--------------------------------------------------------------------
 		public void programAutoDelete(String delAutoPro) {
 			String sql = "DELETE FROM program WHERE noticedate ='"+delAutoPro+"'";
-			System.out.println(sql);
 			try {
 				con = DB.con();
 				con.setAutoCommit(false);
 				stmt = con.createStatement();
 				stmt.executeUpdate(sql);
 				con.commit();
-				System.out.println("삭제가 완료되었습니다");
+//				System.out.println("[안내메시지]위의 주간 프로그램은 공지날짜 지나, 자동 삭제되었습니다.");
 				
 			} catch (SQLException e) {
 				System.out.println("DB 처리:"+e.getMessage());
@@ -276,27 +300,23 @@ public class a03_Program {
 //----------------------------------------------주간프로그램출력 main()--------------------------------------------------------------------	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
-		Date time = new Date();
+		// 주간프로그램 공지날짜에 따른 자동 삭제 기능
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd"); // 타입을 Date 타입을 yyyy-mm-dd로 변경
+		Date time = new Date(); // 현재날짜 및 시각
 		
-	
 		String time1 = format1.format(time); //현재날짜 데이터타입 변경
-
-
-
+		
+		dao.deleteProgramSelect(time1);
 		List<Program> proList = dao.programTime();
 		for(Program e:proList) {
 //			String time2 = format1.formate(e.getNoticedate()); // Date 타입에 스트링을 넣으면 안되서 에러발생
-			String time2 = e.getNoticedate().split(" ")[0]; // 공지날짜 데이터타입변경(time2)
 			
-			System.out.println("time1:"+time1);
-			System.out.println("time2:"+time2);
-			if(time1.equals(time2)) {
+			String time2 = e.getNoticedate().split(" ")[0]; 
+			// 공지날짜 데이터타입변경(time2) yyyy-mm-dd tt:mm:ss(공지시각타입) 이므로 구분자 띄어쓰기를 넣어 yyyy-mm-dd만 time2로 선언
+			if(time1.equals(time2)) { // 공지날짜가 오늘날짜와 같으면 삭제 진행
 				dao.programAutoDelete(time2);
 			}
-//			System.out.println(e.getNoticedate());
-		}
-
+		} 
 		
 		while(true) {
 			System.out.println("☞ 프로그램 메뉴를 고르세요.");
@@ -309,7 +329,7 @@ public class a03_Program {
 			switch(iProgramMenu) {
 				case 1:
 					System.out.println("☞ 어떤 프로그램을 조회하겠습니까?");
-					System.out.println("[안내메시지] 프로그램명으로 검색해주세요!");
+					System.out.println("\n[안내메시지] 프로그램명으로 검색해주세요!");
 					String sProgramChoice = sc.nextLine();
 					dao.ProgramSelect(sProgramChoice);
 					break;
@@ -402,6 +422,8 @@ public class a03_Program {
 					break;
 					
 				case 4:
+					
+					
 					dao.programListAllPrint();
 					System.out.println("☞ 다음 중 삭제할 프로그램 번호를 입력하세요.");
 					int iDeletePno = sc.nextInt();

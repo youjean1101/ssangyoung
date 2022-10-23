@@ -142,7 +142,7 @@ public class a04_call {
 	}
 		
 		
-	// ---------------------------------------- 상담 내용 조회(관리자 조회) ----------------------------------------------
+// ---------------------------------------- 상담 내용 조회(관리자 조회) ----------------------------------------------
 	public boolean IscallSelect (String callno) { 
 		
 		boolean bReturn = false;
@@ -177,7 +177,7 @@ public class a04_call {
 
 	// ---------------------------------------- 상담 내용 추가(회원) ----------------------------------------------
 	public void callInsert(UserCall add) {
-		String sql = "INSERT INTO CALL VALUES('A'||call_seq.nextval,?,?,null,null)";
+		String sql = "INSERT INTO CALL VALUES('A'||call_seq.nextval,?,?,null,null)"; // 상담번호는 자동으로 배정받고 상담내용만 입력받기
 	
 		try {
 			con = DB.con();

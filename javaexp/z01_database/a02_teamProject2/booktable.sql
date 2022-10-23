@@ -137,11 +137,14 @@ DELETE FROM program WHERE pno ='2';
 // 삭제하면 currval로 추가 되야함. -> 어쩔수 없음 구멍난채로 해야함
 INSERT INTO program values(pno_seq.currval,'베스트셀러 작가 강연','20221101','20221101','1000');
 INSERT INTO program values(pno_seq.nextval,'테스트','20221001','20221022','1000');
+INSERT INTO program values(pno_seq.nextval,'테스트2','20221001','20221023','1000');
+INSERT INTO program values(pno_seq.nextval,'테스트3','20221001','20221023','1000');
+INSERT INTO program values(pno_seq.nextval,'테스트4','20221001','20221023','1000');
 
 DELETE FROM program;
 DELETE FROM program WHERE pno ='1';
 DELETE FROM program WHERE noticedate ='2022-10-22';
-
+SELECT * FROM program WHERE noticedate ='2022-11-01';
 
 UPDATE program
 SET pname = 'book토크'
@@ -155,7 +158,7 @@ CREATE TABLE classification(
 	classno number PRIMARY key,
 	cname varchar2(50)
 );
-select * FROM classification;
+select * FROM classification WHERE classno = '100';
 DROP TABLE classification;
 
 CREATE SEQUENCE classno_seq
@@ -205,18 +208,24 @@ UPDATE books
 		RENTALWHETHER ='',
 		CLASSNO =
 	WHERE isbn = 11;
+
 UPDATE BOOKS 
 	SET isbn = 9791186710777
 	WHERE isbn = 0;
-SELECT * FROM books WHERE isbn=0;
+SELECT * FROM books WHERE isbn=9791186710777;
 
-INSERT INTO books values('9791186710777','채쌤의 자바 프로그래밍 핵심','썜즈','채규태','컴퓨터이론','27000',sysdate,'O','500' );
-INSERT INTO books values('9791156645023','데이터베이스 개론과 실습','한빛아카데미','박우창','컴퓨터이론','29000',sysdate,'X','500');
-INSERT INTO books values('9788968481475','이것이 자바다','한빛미디어','신용권','컴퓨터이론','30000',sysdate,'O','500' );
-INSERT INTO books values('9788966263301','1일 1로그 100일완성 IT지식','인사이트','브라이언 W.커니핸','컴퓨터이론','20000',sysdate,'O','500' );
-INSERT INTO books values('9791163033486','자료구조와 함게 배우는 알고리즘 입문(자바편)','이지스 퍼블리싱','BohYoh Shibata','컴퓨터이론','22000',sysdate,'X','500' );
+INSERT INTO books values('9791186710777','채쌤의 자바 프로그래밍 핵심','썜즈','채규태','컴퓨터이론','27000',sysdate,'X','100' );
+INSERT INTO books values('9791156645023','데이터베이스 개론과 실습','한빛아카데미','박우창','컴퓨터이론','29000',sysdate,'X','100');
+INSERT INTO books values('9788968481475','이것이 자바다','한빛미디어','신용권','컴퓨터이론','30000',sysdate,'X','100' );
+INSERT INTO books values('9788966263301','1일 1로그 100일완성 IT지식','인사이트','브라이언 W.커니핸','컴퓨터이론','20000',sysdate,'X','100' );
+INSERT INTO books values('9791163033486','자료구조와 함게 배우는 알고리즘 입문(자바편)','이지스 퍼블리싱','BohYoh Shibata','컴퓨터이론','22000',sysdate,'X','100' );
 DELETE FROM books WHERE isbn = '9791186710777';
 -- o/O를 입력해서 O문자가 포함된 사원명을 검색하고자 할때.
+select * FROM books;
+UPDATE BOOKS 
+ SET rentalwhether = 'O'
+ WHERE isbn = '9791186710777';
+
 SELECT ename, job
 FROM emp
 WHERE ename LIKE '%'||upper('o')||'%';
@@ -240,10 +249,22 @@ CREATE TABLE rental(
 	rentalno varchar2(20) PRIMARY key,
 	userno varchar2(10) CONSTRAINT rental_userno_fk REFERENCES bookUser(userno),
 	isbn NUMBER(13) CONSTRAINT rental_isbn_fk REFERENCES books(isbn) CONSTRAINT rental_isbn_uq UNIQUE,
+	rentaldate DATE,
 	shipwhether varchar2(20) CONSTRAINT rental_shipwhether_ck check(shipwhether IN('O','X')),
 	returndate DATE,
 	returnwhether VARCHAR2(20) CONSTRAINT rental_returnwhether_ck check(returnwhether IN('O','X'))
 );
+DROP TABLE rental;
+
+CREATE SEQUENCE rentalno_seq
+		increment by 1
+		start with 1000
+		MINVALUE 1000
+		MAXVALUE 100000;
+	
+DROP SEQUENCE rentalno_seq;
+
+SELECT * FROM rental WHERE isbn=9791186710777;
 /*
 private String rentalno;
 private String userno;
@@ -251,15 +272,19 @@ private long isbn;
 private String shipwhether;
 private String renturndate;
 private String returnwhether;
-
  */
 select * FROM rental;
-DROP TABLE rental;
 
-INSERT INTO rental VALUES('AA100000','9997','9791186710777','O',sysdate,'X');
-INSERT INTO rental VALUES('AA100001','1002','9788968481475','X',sysdate,'X');
-INSERT INTO rental VALUES('AA100002','1001','9791156645023','X',sysdate,'O');
-INSERT INTO rental VALUES('AA100003','1003','9791163033486','O',sysdate,'X');
+
+SELECT rentalno,userno,r.isbn,b.bname,shipwhether,returndate,returnwhether
+FROM rental r, books b
+where r.isbn=b.isbn
+AND userno = '9997';
+
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791186710777',sysdate,'X',sysdate,'X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9995','9788968481475',sysdate,'X',sysdate,'X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9996','9791156645023',sysdate,'X',sysdate,'X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791163033486',sysdate,'X',sysdate,'X');
 DELETE FROM rental WHERE rentalno = 'AA100002';
 
 -------------------------------------------------------------------------------------------------------
