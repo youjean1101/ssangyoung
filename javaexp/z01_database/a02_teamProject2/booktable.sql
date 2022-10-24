@@ -287,7 +287,7 @@ INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791186710777',sysd
 INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791186710777',sysdate,'X',null,'X');
 INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9995','9788968481475',sysdate,'X',null,'X');
 INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9996','9791156645023',sysdate,'X',null,'X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791163033486',sysdate,'X',null,'X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791163033486',sysdate,'X','20221024','O');
 DELETE FROM rental WHERE rentalno = 'AA1024';
 // sysdate로 입력받으면 삭제가 안됌
 
@@ -297,7 +297,9 @@ DELETE FROM rental
 	AND returnwhether ='O';
 
 
-select * FROM rental;
+select * FROM rental
+WHERE RETURNWHETHER = 'O'
+AND returndate IS not null;
 
 UPDATE rental
 SET returnwhether ='O',

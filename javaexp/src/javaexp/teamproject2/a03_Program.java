@@ -319,7 +319,7 @@ public class a03_Program {
 			}
 		}
 		
-		while(true) {
+		while(true) { //관리자/사용자 구분
 			System.out.println("☞ 프로그램 메뉴를 고르세요.");
 			System.out.println("1:프로그램조회");
 			System.out.println("2:프로그램추가");

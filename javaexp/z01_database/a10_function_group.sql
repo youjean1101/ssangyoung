@@ -8,7 +8,7 @@
 	from 테이블명
 	[where]
 	group by 그룹컬럼
-	having 그룹함수를 적용한 결과를 조건 처리
+	having 그룹함수를 적용한 결과를 조건 처리 //순서 where => group by ==> having 에 맞게! (having은 그룹의 조건)
 3. 그룹함수의 종류
 	1) count() : 데이터의 건수, 행의 갯수
 	2) max() : null을 제외한 모든 행의 최대값

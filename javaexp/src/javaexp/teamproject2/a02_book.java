@@ -323,7 +323,7 @@ public class a02_book {
 		// TODO Auto-generated method stub
 //	public void BookMenu() {
 		while(true) {
-			System.out.println("☞ 도서메뉴를 고르세요.");
+			System.out.println("☞ 도서메뉴를 고르세요."); //관리자/사용자 구분
 			System.out.println("1:도서조회");
 			System.out.println("2:도서추가");
 			System.out.println("3:도서수정");
