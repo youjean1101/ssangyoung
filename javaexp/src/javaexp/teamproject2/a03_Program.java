@@ -53,9 +53,11 @@ public class a03_Program {
 	public List<Program> programTime(){
 		List<Program> list = new ArrayList<Program>();
 		
+		String sql = "select noticedate FROM program";
+		
 		try {
 			con = DB.con();
-			String sql = "select noticedate FROM program";
+			
 			
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);

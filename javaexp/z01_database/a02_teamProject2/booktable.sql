@@ -22,10 +22,10 @@ CREATE SEQUENCE userno_seq
 DROP SEQUENCE classno_seq;
 
 INSERT INTO bookUser values(userno_seq.nextval,'manager','홍길동','990101-1000000','인천광역시 부평구 삼산동','010-000-0000','himan','1234',10);
-INSERT INTO bookUser values(userno_seq.nextval,'9998','manager','test','990102-1000000','인천광역시 부평구 삼산동','010-000-0000','test','5678',null);
-INSERT INTO bookUser values(userno_seq.nextval,'9997','user','김길동','951231-2000000','서울 신림','010-123-0000','goodgirl','9999',2);
-INSERT INTO bookUser values(userno_seq.nextval,'9996','user','이길동','961021-2000000','부산 마린시티','010-456-0000','higirl','8888',1);
-INSERT INTO bookUser values(userno_seq.nextval,'9995','user','마길동','970703-1000000','제주도 서귀포시','010-789-0000','goodman','5555',0);
+INSERT INTO bookUser values(userno_seq.nextval,'manager','test','990102-1000000','인천광역시 부평구 삼산동','010-000-0000','test','5678',null);
+INSERT INTO bookUser values(userno_seq.nextval,'user','김길동','951231-2000000','서울 신림','010-123-0000','goodgirl','9999',2);
+INSERT INTO bookUser values(userno_seq.nextval,'user','이길동','961021-2000000','부산 마린시티','010-456-0000','higirl','8888',1);
+INSERT INTO bookUser values(userno_seq.nextval,'user','마길동','970703-1000000','제주도 서귀포시','010-789-0000','goodman','5555',0);
 DELETE FROM bookUser;
 
 SELECT * FROM bookUser WHERE div = 'manager';
@@ -83,7 +83,7 @@ DROP SEQUENCE classno_seq;
 
 SELECT * FROM CALL;
 SELECT callno,userno,callcontents FROM CALL WHERE MANAGERNO is null;
-INSERT INTO CALL VALUES('A'||call_seq.nextval,'9997','사이트가 왜이렇게 어려워요?',null,null);
+INSERT INTO CALL VALUES('A'||call_seq.nextval,'1000','사이트가 왜이렇게 어려워요?',null,null);
 INSERT INTO CALL VALUES('A100004','9995','오메',null,null);
 SELECT count(*) cnt FROM CALL WHERE CALLNO = '12ㄷ';
 
@@ -204,6 +204,19 @@ CREATE TABLE books(
 	rentalwhether varchar(20) CONSTRAINT books_rentalwhether_ck check(rentalwhether IN('O','X')),
 	classno number(3) CONSTRAINT books_classno_fk REFERENCES classification(classno)
 );
+SELECT * FROM books 
+WHERE rentalwhether = 'X';
+SELECT * FROM books 
+WHERE isbn = '';
+SELECT * FROM books 
+WHERE publisher = '';
+SELECT * FROM books 
+WHERE writer = '';
+SELECT * FROM books 
+WHERE classno = '';
+SELECT * FROM books 
+WHERE registdate LIKE '18/03%';
+
 
 select * FROM books;
 DROP TABLE books;
@@ -230,6 +243,8 @@ INSERT INTO books values('9791156645023','데이터베이스 개론과 실습','
 INSERT INTO books values('9788968481475','이것이 자바다','한빛미디어','신용권','컴퓨터이론','30000',sysdate,'X','100' );
 INSERT INTO books values('9788966263301','1일 1로그 100일완성 IT지식','인사이트','브라이언 W.커니핸','컴퓨터이론','20000',sysdate,'X','100' );
 INSERT INTO books values('9791163033486','자료구조와 함게 배우는 알고리즘 입문(자바편)','이지스 퍼블리싱','BohYoh Shibata','컴퓨터이론','22000',sysdate,'X','100' );
+INSERT INTO books values('100000000000','테스트','쌍용','유자','컴퓨터','2000','20180320','X','100');
+
 DELETE FROM books WHERE isbn = '9791186710777';
 -- o/O를 입력해서 O문자가 포함된 사원명을 검색하고자 할때.
 select * FROM books;
@@ -261,9 +276,10 @@ CREATE TABLE rental(
 	userno varchar2(10) CONSTRAINT rental_userno_fk REFERENCES bookUser(userno),
 	isbn NUMBER(13) CONSTRAINT rental_isbn_fk REFERENCES books(isbn) CONSTRAINT rental_isbn_uq UNIQUE,
 	rentaldate DATE,
-	shipwhether varchar2(20) CONSTRAINT rental_shipwhether_ck check(shipwhether IN('O','X')),
+	rentalshipwhether varchar2(20) CONSTRAINT rental_rentalshipwhether_ck check(rentalshipwhether IN('O','X')),
 	returndate DATE,
-	returnwhether VARCHAR2(20) CONSTRAINT rental_returnwhether_ck check(returnwhether IN('O','X'))
+	returnwhether VARCHAR2(20) CONSTRAINT rental_returnwhether_ck check(returnwhether IN('O','X')),
+	returnshipwhether VARCHAR2(20) CONSTRAINT rental_returnshipwhether_ck check(returnshipwhether IN('O','X'))
 );
 DROP TABLE rental;
 
@@ -277,6 +293,10 @@ DROP SEQUENCE rentalno_seq;
 
 SELECT * FROM rental 
 WHERE isbn=9791186710777;
+
+SELECT * FROM rental
+WHERE userno ='1001'
+AND returnwhether = 'X';
 /*
 private String rentalno;
 private String userno;
@@ -301,12 +321,12 @@ WHERE returndate = '20221024';
 
 
 
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791186710777','20221012','X',sysdate+14,'X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1001','9791186710777','20221012','X',sysdate+14,'X');
 
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791186710777','20221010','X',null,'X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9995','9788968481475','20221014','X',null,'X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9996','9791156645023','20221020','X',null,'X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791163033486','20221001','X','20221024','O');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1001','9791186710777','20221010','X',null,'X','X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1004','9788968481475','20221014','X',null,'X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1006','9791156645023','20221020','X',null,'X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1007','9791163033486','20221001','X','20221024','O');
 
 SELECT * FROM rental;
 

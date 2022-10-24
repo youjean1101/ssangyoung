@@ -89,9 +89,9 @@ public class a04_call {
 					
 					while(rs.next()) {
 						System.out.println("상담번호: "+rs.getString("callno"));
-						System.out.println("상담신청회원번호: "+rs.getInt("userno"));
+						System.out.println("상담신청회원번호: "+rs.getString("userno"));
 						System.out.println("상담내용: "+rs.getString("callcontents"));
-						System.out.println("상담답변관리자번호 : "+rs.getInt("managerno"));
+						System.out.println("상담답변관리자번호 : "+rs.getString("managerno"));
 						System.out.println("상담답변: "+rs.getString("callanswer")+"\n");
 					};
 					int cnt = stmt.executeUpdate(sql);
@@ -120,9 +120,9 @@ public class a04_call {
 					
 					while(rs.next()) {
 						System.out.println("상담번호: "+rs.getString("callno"));
-						System.out.println("상담신청회원번호: "+rs.getInt("userno"));
+						System.out.println("상담신청회원번호: "+rs.getString("userno"));
 						System.out.println("상담내용: "+rs.getString("callcontents"));
-						System.out.println("상담답변관리자번호 : "+rs.getInt("managerno"));
+						System.out.println("상담답변관리자번호 : "+rs.getString("managerno"));
 						System.out.println("상담답변: "+rs.getString("callanswer")+"\n");
 					};
 					
@@ -429,91 +429,91 @@ public static void main(String[] args) {
 					sc.nextLine();
 					
 					switch(callUserMenuChoice) {
-					case 1:
-						System.out.println("# 내가 신청했던 상담정보 #");
-						dao.callUserSelect("9996"); // 회원번호 넣기
-						continue;
+						case 1:
+							System.out.println("# 내가 신청했던 상담정보 #");
+							dao.callUserSelect("9996"); // 회원번호 넣기
+							continue;
 						
-					case 2:
-						while(true) {
-							System.out.println("☞ 상담을 등록하시겠습니까?(Y/N)");
-							String sAddCall = sc.nextLine();
-							if(sAddCall.toUpperCase().equals("Y")) {
-								
-								System.out.println("☞ 상담내용을 입력해주세요.");
-								String sInputCallContents = sc.nextLine();
-								
-								dao.callInsert(new UserCall("9996",sInputCallContents)); // 상담번호 배정
-								break;
-								
-							} else if(sAddCall.toUpperCase().equals("N")) {
-								System.out.println("[뒤로가기]");
-								break;
-							} else {
-								System.out.println("[안내메시지] Y/N으로 입력해주세요.");
-							}
-						}
-						
-						continue;
-						
-					case 3:
-						String sUpdateCallChoice;
-						
-						while(true) {
-							dao.callUserSelect("9996");
-							System.out.println("☞ 수정할 상담의 상담번호를 입력해주세요.");
-							sUpdateCallChoice = sc.nextLine();
-							
-							if(dao.IscallSelect(sUpdateCallChoice)==true) { // 입력값의 테이블에 데이터가 있으면, 답변입력란으로 넘어감
-								break;
-							} else {
-								System.out.println("[안내메시지] 수정 요청하신 상담번호가 없습니다. 상담번호를 다시 입력해주세요. \n");
-							}
-						}
-						System.out.println("☞ 수정할 상담내용을 입력해주세요.");
-						String sUpdateCallContents = sc.nextLine();
-						
-						dao.callContentsUpdate(new UserCall(sUpdateCallChoice,"9996",sUpdateCallContents));
-						continue;
-					
-					case 4:
-						dao.callUserSelect("9996");
-						while(true) {
-							System.out.println("☞ 정말 상담을 삭제하시겠습니까?(Y/N)");
-							String sCallRemoveAnswer = sc.nextLine();
-							if(sCallRemoveAnswer.toUpperCase().equals("Y")) {
-								String sDeleteCallnoChoice;
-								
-								while(true) {
-									System.out.println("☞ 삭제하실 상담번호를 입력해주세요.");
-									sDeleteCallnoChoice = sc.nextLine();
+						case 2:
+							while(true) {
+								System.out.println("☞ 상담을 등록하시겠습니까?(Y/N)");
+								String sAddCall = sc.nextLine();
+								if(sAddCall.toUpperCase().equals("Y")) {
 									
-									if(dao.IscallSelect(sDeleteCallnoChoice)==true) { // 입력값의 테이블에 데이터가 있으면, 답변입력란으로 넘어감
-										break;
-									} else {
-										System.out.println("[안내메시지] 삭제 요청하신 상담번호가 없습니다. 상담번호를 다시 입력해주세요. \n");
-									}
+									System.out.println("☞ 상담내용을 입력해주세요.");
+									String sInputCallContents = sc.nextLine();
+									
+									dao.callInsert(new UserCall("9996",sInputCallContents)); // 상담번호 배정
+									break;
+									
+								} else if(sAddCall.toUpperCase().equals("N")) {
+									System.out.println("[뒤로가기]");
+									break;
+								} else {
+									System.out.println("[안내메시지] Y/N으로 입력해주세요.");
 								}
-								
-								dao.callDelete(sDeleteCallnoChoice);
-								
-								break;
-								
-							} else if (sCallRemoveAnswer.toUpperCase().equals("N")) {
-								System.out.println("[뒤로가기]");
-								break;
-								
-							} else {
-								System.out.println("[안내메시지] Y/N으로 입력해주세요.");
 							}
-						}
+							
+							continue;
+							
+						case 3:
+							String sUpdateCallChoice;
+							
+							while(true) {
+								dao.callUserSelect("9996");
+								System.out.println("☞ 수정할 상담의 상담번호를 입력해주세요.");
+								sUpdateCallChoice = sc.nextLine();
+								
+								if(dao.IscallSelect(sUpdateCallChoice)==true) { // 입력값의 테이블에 데이터가 있으면, 답변입력란으로 넘어감
+									break;
+								} else {
+									System.out.println("[안내메시지] 수정 요청하신 상담번호가 없습니다. 상담번호를 다시 입력해주세요. \n");
+								}
+							}
+							System.out.println("☞ 수정할 상담내용을 입력해주세요.");
+							String sUpdateCallContents = sc.nextLine();
+							
+							dao.callContentsUpdate(new UserCall(sUpdateCallChoice,"9996",sUpdateCallContents));
+							continue;
 						
-						continue;
-						
-					default :
-						System.out.println("[안내메시지] 보기에 있는 메뉴를 선택해주세요.");
-						break;
-					}
+						case 4:
+							dao.callUserSelect("9996");
+							while(true) {
+								System.out.println("☞ 정말 상담을 삭제하시겠습니까?(Y/N)");
+								String sCallRemoveAnswer = sc.nextLine();
+								if(sCallRemoveAnswer.toUpperCase().equals("Y")) {
+									String sDeleteCallnoChoice;
+									
+									while(true) {
+										System.out.println("☞ 삭제하실 상담번호를 입력해주세요.");
+										sDeleteCallnoChoice = sc.nextLine();
+										
+										if(dao.IscallSelect(sDeleteCallnoChoice)==true) { // 입력값의 테이블에 데이터가 있으면, 답변입력란으로 넘어감
+											break;
+										} else {
+											System.out.println("[안내메시지] 삭제 요청하신 상담번호가 없습니다. 상담번호를 다시 입력해주세요. \n");
+										}
+									}
+									
+									dao.callDelete(sDeleteCallnoChoice);
+									
+									break;
+									
+								} else if (sCallRemoveAnswer.toUpperCase().equals("N")) {
+									System.out.println("[뒤로가기]");
+									break;
+									
+								} else {
+									System.out.println("[안내메시지] Y/N으로 입력해주세요.");
+								}
+							}
+							
+							continue;
+							
+						default :
+							System.out.println("[안내메시지] 보기에 있는 메뉴를 선택해주세요.");
+							break;
+						}		
 				break;
 				}
 				

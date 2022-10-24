@@ -22,12 +22,130 @@ public class a05_rental {
 	private Statement stmt;
 	private ResultSet rs;
 	 
+// ---------------------------------------------- 대여가능한 도서 출력 기능메서드--------------------------------------------------------------------
+			public void rentalpossibleBook() {
+				String sql = "SELECT * FROM books WHERE rentalwhether ='X' ";
+				try {
+					con = DB.con();
+					stmt = con.createStatement();
+					rs = stmt.executeQuery(sql);
+					System.out.println("도서번호\t도서명\t출판사\t저자\t장르\t가격\t등록일자\t대여여부\t분류번호");
+					while(rs.next()) {
+						System.out.print(rs.getLong("isbn")+"\t");
+						System.out.print(rs.getString("bname")+"\t");
+						System.out.print(rs.getString("publisher")+"\t");
+						System.out.print(rs.getString("writer")+"\t");
+						System.out.print(rs.getString("genre")+"\t");
+						System.out.print(rs.getInt("price")+"\t");
+						System.out.print(rs.getString("registdate")+"\t");
+						System.out.print(rs.getString("rentalwhether")+"\t");
+						System.out.print(rs.getInt("classno")+"\n");
+					}
+					
+				} catch (SQLException e) {
+					System.out.println("기타 sql 처리 예외:"+e.getMessage());
+				} catch(Exception e) {
+					System.out.println("기타 예외:"+e.getMessage());
+				}finally {
+					if(rs==null) System.out.println("[안내메시지] 등록된 도서가 없습니다.");
+					DB.close(rs, stmt, con);
+				}
+			}
+// ---------------------------------------------- 도서테이블 출력 기능메서드	--------------------------------------------------------------------
+		public void bookListAllPrint() {
+			String sql = "select * FROM books";
+			try {
+				con = DB.con();
+				stmt = con.createStatement();
+				rs = stmt.executeQuery(sql);
+				System.out.println("도서번호\t도서명\t출판사\t저자\t장르\t가격\t등록일자\t대여여부\t분류번호");
+				while(rs.next()) {
+					System.out.print(rs.getLong("isbn")+"\t");
+					System.out.print(rs.getString("bname")+"\t");
+					System.out.print(rs.getString("publisher")+"\t");
+					System.out.print(rs.getString("writer")+"\t");
+					System.out.print(rs.getString("genre")+"\t");
+					System.out.print(rs.getInt("price")+"\t");
+					System.out.print(rs.getString("registdate")+"\t");
+					System.out.print(rs.getString("rentalwhether")+"\t");
+					System.out.print(rs.getInt("classno")+"\n");
+				}
+				
+			} catch (SQLException e) {
+				System.out.println("기타 sql 처리 예외:"+e.getMessage());
+			} catch(Exception e) {
+				System.out.println("기타 예외:"+e.getMessage());
+			}finally {
+				if(rs==null) System.out.println("[안내메시지] 등록된 도서가 없습니다.");
+				DB.close(rs, stmt, con);
+			}
+		}
+// ---------------------------------------------- 도서조회 기능메서드	--------------------------------------------------------------------
+		public void bookIndexSelect(String Indexmenu,Book index) {
+			
+			String sql = "SELECT * FROM books \r\n";
+					
+			switch(Indexmenu) {
+			case "도서명" : 
+				sql += "WHERE bname LIKE '%'||'"+index.getBname()+"'||'%'";
+				break;
+				
+			case "도서번호" : 
+				sql += "WHERE isbn = '"+index.getIsbn()+"'";
+				break;
+				
+			case "출판사" : 
+				sql += "WHERE publisher = '"+index.getPublisher()+"'";
+				break;
+				
+			case "저자" : 
+				sql += "WHERE writer = '"+index.getWriter()+"'";
+				break;
+				
+			case "분류번호" : 
+				sql += "WHERE classno ='"+index.getClassno()+"'";
+				break;
+				
+			case "등록일자(년/월)" : 
+				sql += "WHERE registdate LIKE '"+index.getsRegistdate()+"%'";
+				break;
+				
+			default :
+				System.out.println("[안내메시지] 보기에 있는 검색메뉴를 고르세요.");
+			
+			}
+					
+				try {
+						con = DB.con();
+						stmt = con.createStatement();
+						rs = stmt.executeQuery(sql);
+
+						while(rs.next()) {
+							System.out.println("도서번호: "+rs.getLong("isbn"));
+							System.out.println("도서명: "+rs.getString("bname"));
+							System.out.println("출판사: "+rs.getString("publisher"));
+							System.out.println("저자: "+rs.getString("writer"));
+							System.out.println("장르: "+rs.getString("genre"));
+							System.out.println("가격: "+rs.getInt("price"));
+							System.out.println("등록일자: "+rs.getString("registdate"));
+							System.out.println("대여여부: "+rs.getString("rentalwhether"));
+							System.out.println("분류번호: "+rs.getInt("classno")+"\n");
+						}
+						int cnt = stmt.executeUpdate(sql);
+						if(cnt==0) System.out.println("[안내메시지] 검색하신 도서가 없습니다.");
+						
+					} catch (SQLException e) {
+						System.out.println("DB처리예외:"+e.getMessage());
+					} catch (Exception e) {
+						System.out.println("기타예외:"+e.getMessage());
+					} finally {
+						DB.close(rs, stmt, con);
+					}
+		}
 // ---------------------------------------------- 연체자 정보 조회 기능메서드 --------------------------------------------------------------------			
 	public List<SignUp> delayUserPush(int userno) {
 	 	List<SignUp> list = new ArrayList<SignUp>();
-	
-//	public void delayUserPush(SignUp delayUserinfo){
-				
+					
 				String sql ="SELECT * FROM bookUser\r\n"
 						+ "WHERE userno = '"+userno+"'";
 				
@@ -210,6 +328,41 @@ public class a05_rental {
 			}
 			return list;
 	}
+//------------------------------------------------------- 회원 미반납 정보 출력(배송 반납 처리 신청) ------------------------------------------------
+		public void notReturnAllPrint(String userno) { 
+			String sql = "SELECT * FROM rental\r\n"
+						+ "WHERE userno ='"+userno+"'\r\n"
+						+ "AND returnwhether = 'X'";
+						
+			try {
+				con = DB.con();
+				con.setAutoCommit(false);
+				stmt = con.createStatement();
+				rs = stmt.executeQuery(sql);
+				
+				while(rs.next()) {
+					System.out.println("대여번호: "+rs.getString("rentalno"));
+					System.out.println("회원번호: "+rs.getString("userno"));
+					System.out.println("도서번호: "+rs.getLong("isbn"));
+					System.out.println("대여날짜: "+rs.getString("rentaldate"));
+					System.out.println("배송여부: "+rs.getString("shipwhether"));
+					System.out.println("반납일자: "+rs.getString("returndate"));
+					System.out.println("반납여부: "+rs.getString("returnwhether")+"\n");
+				};
+				
+				int cnt = stmt.executeUpdate(sql);
+				if (cnt < 1) { // 테이블에 데이터가 없을 경우
+					System.out.println("[안내메시지] 대여정보가 없습니다.");
+				}
+
+			} catch (SQLException e) {
+				System.out.println("DB처리예외:"+e.getMessage());
+			} catch (Exception e) {
+				System.out.println("기타예외:"+e.getMessage());
+			} finally {
+				DB.close(rs, stmt, con);
+			}
+		}
 	
 //------------------------------------------------------- 회원대여정보 전체조회(반납/미반납 구분) 기능메서드(관리자) ------------------------------------------------
 	public void rentalAllPrint(String sReturnUpDown) { 
@@ -267,7 +420,7 @@ public class a05_rental {
 	
 //--------------------------------------------------------- 대여테이블 데이터 생성 기능메서드 ----------------------------------------------------
 	public void rentalInsert(Rental add) {
-		String sql = "INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,?,?,?,?,?,?);"; 
+		String sql = "INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,?,?,?,?,?,?)"; 
 	
 		try {
 			con = DB.con();
@@ -391,6 +544,8 @@ public class a05_rental {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+	
+		
 		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd"); // 타입을 Date 타입을 yyyy-mm-dd로 변경
 		Date time = new Date(); // 현재날짜 및 시각
 
@@ -402,8 +557,8 @@ public class a05_rental {
 				while(true) {
 					System.out.println("☞ 다음 대여 메뉴 중 선택해주세요.");
 					System.out.println("1: 대여조회");
-					System.out.println("2: 대여삭제하기");
-					System.out.println("3: 사용자 반납등록하기(관리자)");
+					System.out.println("2: 대여정보 삭제하기");
+					System.out.println("3: 사용자 반납등록하기(관리자)"); // 가서 책반납
 					System.out.println("4: 연체자 조회"); // 연체시, 문자전송(대여못하게하기) // 대여날짜 +14일 이면 대여자에게 문자전송 [web발신전송] 
 														// -> 시간남으면 대여못하게하기 (회원번호로 설정)
 					int iRentalMenuChoice = sc.nextInt();
@@ -568,7 +723,6 @@ public class a05_rental {
 									System.out.println("[안내메시지] Y/N으로 입력해주세요.");
 								}
 							}
-							
 							break;
 							
 						default:
@@ -578,11 +732,164 @@ public class a05_rental {
 				
 				
 			} else if (auth.equals("사용자")) {
-				System.out.println("☞ 다음 대여 메뉴 중 선택해주세요.");
-				System.out.println("1: 도서조회");
-				System.out.println("2: 대여하기");
-				System.out.println("3: 대여취소하기");
-				System.out.println("4: 대여조회하기");
+				while(true) {
+					System.out.println("☞ 다음 대여 메뉴 중 선택해주세요.");
+					System.out.println("1: 도서전체조회");
+					System.out.println("2: 도서검색하기");
+					System.out.println("3: 대여하기");
+					System.out.println("4: 반납 배송 신청하기(회원)");
+					System.out.println("5: 대여조회하기");
+					int rentalUserMenu = sc.nextInt();
+					sc.nextLine();
+					
+					Book index = new Book();
+					
+					switch(rentalUserMenu) {
+						case 1 :
+							dao.bookListAllPrint();
+							break;
+							
+						case 2 : 
+							System.out.println("☞ 도서의 무엇을 검색하시겠습니까?");
+							System.out.println("1: 도서명 ");
+							System.out.println("2: ISBN(도서번호)");
+							System.out.println("3: 출판사");
+							System.out.println("4: 저자");
+							System.out.println("5: 분류번호");
+							System.out.println("6: 등록일자(년/월)");
+							int iIndexChoice = sc.nextInt();
+							sc.nextLine();
+							switch(iIndexChoice) {
+								case 1:
+									System.out.println("☞ 검색하실 도서명을 입력해주세요.");
+									String sIndexBname = sc.nextLine();
+									index.setBname(sIndexBname);
+									System.out.println("[안내메시지] 도서명 검색 결과");
+									dao.bookIndexSelect("도서명", index);
+									break;
+									
+								case 2:
+									System.out.println("☞ 검색하실 도서번호를 입력해주세요.");
+									long lIndexISBN = sc.nextLong();
+									index.setIsbn(lIndexISBN);
+									System.out.println("[안내메시지] 도서번호 검색 결과");
+									dao.bookIndexSelect("도서번호", index);
+									break;
+									
+								case 3:
+									System.out.println("☞ 검색하실 출판사를 입력해주세요.");
+									String sIndexPublisher = sc.nextLine();
+									index.setPublisher(sIndexPublisher);
+									System.out.println("[안내메시지] 출판사 검색 결과");
+									dao.bookIndexSelect("출판사", index);
+									break;
+									
+								case 4:
+									System.out.println("☞ 검색하실 저자를 입력해주세요.");
+									String sIndexWriter = sc.nextLine();
+									index.setWriter(sIndexWriter);
+									System.out.println("[안내메시지] 저자 검색 결과");
+									dao.bookIndexSelect("저자", index);
+									break;
+									
+								case 5:
+									System.out.println("☞ 검색하실 분류번호를 입력해주세요.");
+									int iIndexClassno = sc.nextInt();
+									sc.nextLine();
+									index.setClassno(iIndexClassno);
+									System.out.println("[안내메시지] 분류번호 검색 결과");
+									dao.bookIndexSelect("분류번호", index);
+									break;
+									
+								case 6:
+									System.out.println("☞ 검색하실 등록일자을 입력해주세요.(년(yy)/월(mm))");
+									String sIndexRegistdate = sc.nextLine();
+									index.setsRegistdate(sIndexRegistdate);
+									System.out.println("[안내메시지] 등록일자 검색 결과");
+									dao.bookIndexSelect("등록일자(년/월)", index);
+									break;
+									
+								default :
+									System.out.println("[안내메시지] 보기에 있는 메뉴를 선택해주세요.");
+							
+							}
+							
+							break;
+							
+						case 3 :
+							dao.rentalpossibleBook(); // 대여가능한 책 출력
+							long lRentalIsbn;
+							while(true) {
+								System.out.println("☞ 대여하실 도서의 도서번호를 입력 해주세요.");
+								lRentalIsbn = sc.nextLong();
+								
+								if(dao.IsRentalSelect("isbn", new Rental(lRentalIsbn))==true) {
+									break;
+									
+								} else {
+									System.out.println("[안내메시지] 도서관에 없는 책입니다. 도서번호를 정확히 입력해주세요.");
+								}
+							}
+							
+							String shipwhether;
+							while(true) {
+								System.out.println("☞ 배달신청을 하시겠습니까?(Y/N)");
+								String shipwhetherchoice = sc.nextLine();
+								if(shipwhetherchoice.toUpperCase().equals("Y")) {
+									shipwhether = "O";
+									break;
+								} else if (shipwhetherchoice.toUpperCase().equals("N")) {
+									shipwhether = "X";
+									break;
+								} else {
+									System.out.println("[안내메시지] Y/N으로 입력해주세요.");
+								}
+							}
+								
+								dao.rentalInsert(new Rental("1001",lRentalIsbn,sCurrentTime,shipwhether,null,"X"));
+							
+							
+							break;
+							
+						case 4 :
+							while(true) {
+								System.out.println("☞ 책을 반납하시겠습니까?(Y/N)");
+								String returnUserup = sc.nextLine();
+								
+								if(returnUserup.toUpperCase().equals("Y")) {
+									dao.notReturnAllPrint("1000");
+									while(true) {
+										System.out.println("☞ 반납하실 반납 번호를 입력해주세요.");
+										String returnUserRentalno =sc.nextLine();
+										
+										if(dao.IsRentalSelect("rentalno", new Rental(returnUserRentalno)) == true){
+											dao.returnupUpdate(new Rental(returnUserRentalno,sCurrentTime,"O"));
+											break;
+										} else {
+											System.out.println("[안내메시지] 없는 대여번호입니다. 대여번호를 정확히 다시 입력해주세요.");
+										}
+									}
+									break; // 책반납여부 break;
+									
+								} else if(returnUserup.toUpperCase().equals("N")) {
+									System.out.println("[뒤로가기]");
+									break;
+									
+								} else {
+									System.out.println("[안내메시지] Y/N으로 입력해주세요.");
+								}
+							}
+							break;
+							
+						case 5 : 
+							dao.notReturnAllPrint("1001");
+							break;
+							
+						default :
+							System.out.println("[안내메시지] 보기에 있는 메뉴를 선택해주세요.");
+					}
+					break;
+				}
 			} else {
 				System.out.println("[안내메시지]관리자/사용자 중에 선택해주세요.");
 			}
@@ -638,6 +945,18 @@ class Rental {
 		this.sRenturndate = sRenturndate;
 		this.sReturnwhether = sReturnwhether;
 		this.sBname = sBname;
+	}
+	
+
+	public Rental(String sUserno, long lIsbn, String sRentaldate, String sShipwhether, String sRenturndate,
+			String sReturnwhether) {
+		super();
+		this.sUserno = sUserno;
+		this.lIsbn = lIsbn;
+		this.sRentaldate = sRentaldate;
+		this.sShipwhether = sShipwhether;
+		this.sRenturndate = sRenturndate;
+		this.sReturnwhether = sReturnwhether;
 	}
 
 	public String getsRentalno() {

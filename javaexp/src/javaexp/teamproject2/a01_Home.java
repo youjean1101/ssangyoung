@@ -1,6 +1,7 @@
 package javaexp.teamproject2;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -63,20 +64,18 @@ public class a01_Home {
 							
 						}else {
 							System.out.println("[안내메시지]권한은 관리자/사용자로 입력하세요.");
-							continue;
 						}
 					}
 						
-					String iUserNo = "1000";
 					int iCnt = 3; // 대여횟수는 연동 후 적용 (임시로 정수 배정)
 					
-					dao.signUpinsert(new SignUp(iUserNo, sDiv, sUname,sRrn, sAddress, sPhoneNumber ,sId,sPassWd, iCnt));
-					System.out.println("[안내메시지] 회원가입이 완료되었습니다.");
+					dao.signUpinsert(new SignUp(sDiv, sUname,sRrn, sAddress, sPhoneNumber ,sId,sPassWd, iCnt));
 					break;
 		
 				} else if(sSignup.toUpperCase().equals("N")) {
 					System.out.println("[안내메시지] 회원가입을 하셔야 도서관 이용이 가능합니다.\n");
 					break;
+					
 				} else {
 					System.out.println("[안내메시지] Y/N으로 입력해주세요.");
 					continue;
@@ -87,18 +86,27 @@ public class a01_Home {
 		private Connection con;
 		private Statement stmt;
 		private ResultSet rs;
+		private PreparedStatement pstmt;
 		
 // ----------------------------------------------회원가입 기능메서드	--------------------------------------------------------------------
-		public void signUpinsert(SignUp ins) {
-			String sql = "INSERT INTO bookUser values('"+ins.getUserno()+"','"+ins.getDiv()+"',"
-					+ "'"+ins.getUname()+"','"+ins.getRrn()+"','"+ins.getAddress()+"',"
-					+ "'"+ins.getPhone_Number()+"','"+ins.getId()+"',"
-					+ "'"+ins.getPassword()+"',"+ins.getRentalcnt()+")";
+		public void signUpinsert(SignUp useradd) {
+			String sql = "INSERT INTO bookUser values(userno_seq.nextval,?,?,?,?,?,?,?,?)";
 			try {
 				con = DB.con();
 				con.setAutoCommit(false);
-				stmt = con.createStatement();
-				stmt.executeUpdate(sql);
+				pstmt = con.prepareStatement(sql);
+					
+					pstmt.setString(1, useradd.getDiv());
+					pstmt.setString(2, useradd.getUname());
+					pstmt.setString(3, useradd.getRrn());
+					pstmt.setString(4, useradd.getAddress());
+					pstmt.setString(5, useradd.getPhone_Number());
+					pstmt.setString(6, useradd.getId());
+					pstmt.setString(7, useradd.getPassword());
+					pstmt.setInt(8, useradd.getRentalcnt());
+					System.out.println("[안내메시지] 회원등록이 완료되었습니다.");
+					
+				rs = pstmt.executeQuery();
 				con.commit();
 				
 			} catch (SQLException e) {
@@ -111,7 +119,7 @@ public class a01_Home {
 			} catch(Exception e) {
 				System.out.println("기타 예외:"+e.getMessage());
 			} finally {
-				DB.close(rs, stmt, con);
+				DB.close(rs, pstmt, con);
 			}
 		}
 

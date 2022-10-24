@@ -208,7 +208,7 @@ public class a02_book {
 		} catch(Exception e) {
 			System.out.println("기타 예외:"+e.getMessage());
 		} finally {
-			DB.close(rs, stmt, con);
+			DB.close(rs, pstmt, con);
 		}
 		
 	}
@@ -434,6 +434,7 @@ public class a02_book {
 							System.out.print("☞ 변경할 도서명: ");
 							String sUpdateBname = sc.nextLine();
 							upb.setBname(sUpdateBname);
+							System.out.println(upb);
 							dao.bookUpdate(iUpdateBook,"도서명",upb);
 							System.out.println("[안내메시지] 도서명 변경이 완료되었습니다.");
 							break;
