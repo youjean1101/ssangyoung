@@ -89,9 +89,9 @@ public class a04_call {
 					
 					while(rs.next()) {
 						System.out.println("상담번호: "+rs.getString("callno"));
-						System.out.println("상담신청회원번호: "+rs.getString("userno"));
+						System.out.println("상담신청회원번호: "+rs.getInt("userno"));
 						System.out.println("상담내용: "+rs.getString("callcontents"));
-						System.out.println("상담답변관리자번호 : "+rs.getString("managerno"));
+						System.out.println("상담답변관리자번호 : "+rs.getInt("managerno"));
 						System.out.println("상담답변: "+rs.getString("callanswer")+"\n");
 					};
 					int cnt = stmt.executeUpdate(sql);
@@ -120,9 +120,9 @@ public class a04_call {
 					
 					while(rs.next()) {
 						System.out.println("상담번호: "+rs.getString("callno"));
-						System.out.println("상담신청회원번호: "+rs.getString("userno"));
+						System.out.println("상담신청회원번호: "+rs.getInt("userno"));
 						System.out.println("상담내용: "+rs.getString("callcontents"));
-						System.out.println("상담답변관리자번호 : "+rs.getString("managerno"));
+						System.out.println("상담답변관리자번호 : "+rs.getInt("managerno"));
 						System.out.println("상담답변: "+rs.getString("callanswer")+"\n");
 					};
 					

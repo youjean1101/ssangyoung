@@ -141,7 +141,7 @@ public class a03_Program {
 					pstmt.setString(1, add.getPname());
 					pstmt.setString(2, add.getPtime());
 					pstmt.setString(3, add.getNoticedate());
-					pstmt.setInt(4, add.getManagerno());
+					pstmt.setString(4, add.getManagerno());
 					
 					System.out.println("[안내메시지] 주간프로그램 추가가 완료되었습니다.");
 					
@@ -172,7 +172,7 @@ public class a03_Program {
 					pstmt.setString(1, add.getPname());
 					pstmt.setString(2, add.getPtime());
 					pstmt.setString(3, add.getNoticedate());
-					pstmt.setInt(4, add.getManagerno());
+					pstmt.setString(4, add.getManagerno());
 					
 					System.out.println("[안내메시지] 주간프로그램 추가가 완료되었습니다.");
 					
@@ -348,7 +348,7 @@ public class a03_Program {
 							System.out.print("☞ 공지끝나는날짜: ");
 							String sNoticeDate = sc.nextLine();
 							System.out.print("☞ 관리자번호: ");
-							int iManagerno = sc.nextInt();
+							String iManagerno = sc.nextLine();
 							
 							dao.programInsert(new Program(sPname, sPtime, sNoticeDate,iManagerno));
 			
@@ -409,7 +409,7 @@ public class a03_Program {
 							
 						case 4 : 
 							System.out.print("☞ 변경할 관리자번호: ");
-							int iUpdateManagerno = sc.nextInt();
+							String iUpdateManagerno = sc.nextLine();
 							updateProgramData.setManagerno(iUpdateManagerno);
 							dao.programUpdate(iUpdateProgram, "관리자번호", updateProgramData);
 							System.out.println("[안내메시지] 관리자 변경이 완료되었습니다.");
@@ -423,7 +423,6 @@ public class a03_Program {
 					break;
 					
 				case 4:
-					
 					
 					dao.programListAllPrint();
 					System.out.println("☞ 다음 중 삭제할 프로그램 번호를 입력하세요.");
@@ -444,14 +443,14 @@ class Program{
 	private String pname; // 프로그램명
  	private String ptime; // 프로그램일정
  	private String noticedate; // 공지끝나는날짜
- 	private int managerno; // 관리자번호
+ 	private String managerno; // 관리자번호
 	public Program() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
 	
-	public Program(String pname, String ptime, String noticedate, int managerno) {
+	public Program(String pname, String ptime, String noticedate, String managerno) {
 		super();
 		this.pname = pname;
 		this.ptime = ptime;
@@ -460,7 +459,7 @@ class Program{
 	}
 
 
-	public Program(int pno, String pname, String ptime, String noticedate, int managerno) {
+	public Program(int pno, String pname, String ptime, String noticedate, String managerno) {
 		super();
 		this.pno = pno;
 		this.pname = pname;
@@ -475,16 +474,11 @@ class Program{
 	}
 	
 	
-public Program(String noticedate) {
+	public Program(String noticedate) {
 		super();
 		this.noticedate = noticedate;
 	}
 
-
-//	public Program(String pname) {
-//		super();
-//		this.pname = pname;
-//	}
 
 	public int getPno() {
 		return pno;
@@ -512,10 +506,10 @@ public Program(String noticedate) {
 	public void setNoticedate(String noticedate) {
 		this.noticedate = noticedate;
 	}
-	public int getManagerno() {
+	public String getManagerno() {
 		return managerno;
 	}
-	public void setManagerno(int managerno) {
+	public void setManagerno(String managerno) {
 		this.managerno = managerno;
 	} 
 	

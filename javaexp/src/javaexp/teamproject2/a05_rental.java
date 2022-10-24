@@ -22,9 +22,89 @@ public class a05_rental {
 	private Statement stmt;
 	private ResultSet rs;
 	 
+// ---------------------------------------------- 연체자 정보 조회 기능메서드 --------------------------------------------------------------------			
+	public List<SignUp> delayUserPush(int userno) {
+	 	List<SignUp> list = new ArrayList<SignUp>();
 	
+//	public void delayUserPush(SignUp delayUserinfo){
+				
+				String sql ="SELECT * FROM bookUser\r\n"
+						+ "WHERE userno = '"+userno+"'";
+				
+				try {
+					con=DB.con();
+					stmt = con.createStatement();
+					rs = stmt.executeQuery(sql);
+					
+					while(rs.next()) {
+						SignUp s = new SignUp(rs.getString("userno"),
+												rs.getString("div"),
+												rs.getString("uname"),
+												rs.getString("rrn"),
+												rs.getString("address"),
+												rs.getString("phone_number"),
+												rs.getString("id"),
+												rs.getString("password"),
+												rs.getInt("rentalcnt")
+												);
+						list.add(s);
+					}
+					
+					while(rs.next()) {
+						System.out.println("회원번호: "+rs.getString("userno"));
+						System.out.println("회원이름: "+rs.getString("uname"));
+						System.out.println("회원전화번호: "+rs.getString("phone_number"));
+						System.out.println("회원아이디: "+rs.getString("id"));
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					System.out.println("DB에러:"+e.getMessage());
+					try {
+						con.rollback();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						System.out.println("rollback에러:"+e1.getMessage());
+					}
+				}catch(Exception e) {
+					System.out.println("일반에러:"+e.getMessage());
+				}finally {
+					DB.close(rs, stmt, con);
+				}
+				return list;
+			}
+//---------------------------------------------- 대여날짜 조회 기능메서드	--------------------------------------------------------------------
+	public void delayreturn(){
+		String sql = "SELECT * FROM rental \r\n"
+				+ "WHERE (sysdate-rentaldate) >= 14\r\n" // 현재날짜가 14일이상이고, 반납일자가 입력되지 않을 때,
+				+ "AND (rentaldate-returndate) IS NULL\r\n"
+				+ "OR (returndate-rentaldate) >= 14";	// 또는, 대여기간이 14일 넘었을때,
+		
+			try {
+				con = DB.con();
+				stmt = con.createStatement();
+				rs = stmt.executeQuery(sql);
+				
+				while(rs.next()) {
+					System.out.println("대여번호: "+rs.getString("rentalno"));
+					System.out.println("회원번호: "+rs.getString("userno"));
+					System.out.println("도서번호: "+rs.getLong("isbn"));
+					System.out.println("대여날짜: "+rs.getString("rentaldate"));
+					System.out.println("배송여부: "+rs.getString("shipwhether"));
+					System.out.println("반납일자: "+rs.getString("returndate"));
+					System.out.println("반납여부: "+rs.getString("returnwhether")+"\n");
+				}
+				
+			} catch (SQLException e) {
+				System.out.println("기타 sql 처리 예외:"+e.getMessage());
+			} catch(Exception e) {
+				System.out.println("기타 예외:"+e.getMessage());
+			}finally {
+				DB.close(rs, stmt, con);
+			}
+		}
 //----------------------------------------------------------- 도서번호 및 대여번호 조회(true/false) 기능메서드 (조건걸어서 insert할예정)------------------------------------------------------------------------------------
-	public boolean IsIsbnSelect (String whatselect, Rental sel) { 
+	public boolean IsRentalSelect (String whatselect, Rental sel) { 
 		
 		boolean bReturn = false;
 		
@@ -38,6 +118,11 @@ public class a05_rental {
 			case "rentalno" :
 				sql	+= "WHERE rentalno = '"+sel.getsRentalno()+"'";
 				break;
+			
+			case "returnwhether" :
+				sql	+= "WHERE RETURNWHETHER ='O' AND RETURNDATE IS not null AND USERNO = ";
+				break;
+				
 			default :
 				System.out.println("[안내메시지]검색할 조건을 정확히 입력해주세요.\n");
 		}
@@ -163,6 +248,13 @@ public class a05_rental {
 				System.out.println("반납일자: "+rs.getString("returndate"));
 				System.out.println("반납여부: "+rs.getString("returnwhether")+"\n");
 			};
+			
+			int cnt = stmt.executeUpdate(sql);
+			if (cnt < 1) { // 테이블에 데이터가 없을 경우
+				System.out.println("[안내메시지] 대여정보가 없습니다.");
+			}
+
+			
 			
 		} catch (SQLException e) {
 			System.out.println("DB처리예외:"+e.getMessage());
@@ -359,7 +451,7 @@ public class a05_rental {
 									while(true) {
 										System.out.println("☞ 삭제하실 대여번호를 입력해주세요.");
 										String sRemoveRentalno = sc.nextLine();
-										if(dao.IsIsbnSelect("rentalno", new Rental(sRemoveRentalno)) == true){
+										if(dao.IsRentalSelect("rentalno", new Rental(sRemoveRentalno)) == true){
 											dao.rentalMgrDelete(sRemoveRentalno);
 											break;
 										} else {
@@ -391,7 +483,7 @@ public class a05_rental {
 										System.out.println("☞ 반납하실 반납 번호를 입력해주세요.");
 										String returnrentalno =sc.nextLine();
 										
-										if(dao.IsIsbnSelect("rentalno", new Rental(returnrentalno)) == true){
+										if(dao.IsRentalSelect("rentalno", new Rental(returnrentalno)) == true){
 											dao.returnupUpdate(new Rental(returnrentalno,sCurrentTime,"O"));
 											break;
 										} else {
@@ -412,6 +504,70 @@ public class a05_rental {
 							break; //case break
 							
 						case 4:
+							dao.delayreturn();
+							while(true) {
+								System.out.println("☞ 연체자에게 반납을 독촉하겠습니까?(Y/N)");
+								String sDelayUserPush = sc.nextLine();
+								if(sDelayUserPush.toUpperCase().equals("Y")) {
+									
+									int pushUserno;
+									while(true) {
+										System.out.println("☞ 어떤 회원에게 독촉하시겠습니까?(회원번호 입력)");
+										pushUserno = sc.nextInt();
+										sc.nextLine();
+										
+										if(dao.IsRentalSelect("returnwhether",new Rental(pushUserno))==true) { // 입력값의 테이블에 데이터가 있으면, 답변입력란으로 넘어감
+											break;
+										} else {
+											System.out.println("[안내메시지] 요청하신 회원은 반납하였습니다. \n");
+										}
+									}
+									List<SignUp> relayRentalList = dao.delayUserPush(pushUserno);
+									for(SignUp userinfo1:relayRentalList) {
+										System.out.println("회원번호: "+userinfo1.getUserno());
+										System.out.println("회원이름: "+userinfo1.getUname());
+										System.out.println("회원전화번호: "+userinfo1.getPhone_Number());
+										System.out.println("회원아이디: "+userinfo1.getId());
+									}
+									while(true) {
+										System.out.println("☞ 문자를 전송하시겠습니까?(Y/N)");
+										String sMessagePush = sc.nextLine();
+										
+										if(sMessagePush.toUpperCase().equals("Y")) {
+											
+											List<SignUp> relaySmsList = dao.delayUserPush(pushUserno);
+											for(SignUp userinfo2:relayRentalList) {
+												System.out.println("[Web 발신] \""+userinfo2.getUname()+"("+userinfo2.getPhone_Number()+")\"에게 반납 독촉 문자가 전송되었습니다.");
+											}
+											break;
+		
+										} else if(sMessagePush.toUpperCase().equals("N")) {
+											System.out.println("[안내메시지] 미반납자에게 반납독촉 우편을 전송하시기 바랍니다.");
+											
+											List<SignUp> relaypostList = dao.delayUserPush(pushUserno);
+											for(SignUp userinfo3:relaypostList) {
+												System.out.println("미반납자 이름:"+userinfo3.getUname());
+												System.out.println("미반납자 주소:"+userinfo3.getAddress());
+												System.out.println("미반납자 전화번호:"+userinfo3.getPhone_Number());
+											}
+											System.out.println("[뒤로가기]");
+											break;
+											
+										} else {
+											System.out.println("[안내메시지] Y/N으로 입력해주세요.");
+										}
+									}
+								
+									break;
+									
+								} else if (sDelayUserPush.toUpperCase().equals("N")) {
+									System.out.println("[뒤로가기]");
+									break;
+									
+								} else {
+									System.out.println("[안내메시지] Y/N으로 입력해주세요.");
+								}
+							}
 							
 							break;
 							

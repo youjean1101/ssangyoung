@@ -67,10 +67,10 @@ public class a01_Home {
 						}
 					}
 						
-					int iUserNo = 1000;
+					String iUserNo = "1000";
 					int iCnt = 3; // 대여횟수는 연동 후 적용 (임시로 정수 배정)
 					
-					dao.signUpinsert(new SignUp(iUserNo++, sDiv, sUname,sRrn, sAddress, sPhoneNumber ,sId,sPassWd, iCnt));
+					dao.signUpinsert(new SignUp(iUserNo, sDiv, sUname,sRrn, sAddress, sPhoneNumber ,sId,sPassWd, iCnt));
 					System.out.println("[안내메시지] 회원가입이 완료되었습니다.");
 					break;
 		
@@ -155,7 +155,7 @@ public class a01_Home {
 				rs = stmt.executeQuery(sql);
 				while(rs.next()) {
 					list.add( new SignUp(
-								rs.getInt("userno"),
+								rs.getString("userno"),
 								rs.getString("div"),
 								rs.getString("uname"),
 								rs.getString("rrn"),
@@ -228,7 +228,7 @@ public class a01_Home {
 			}
 			return list;
 		}
-		// ---------------------------------------------- 홈 출력 main() --------------------------------------------------------------------	
+// ---------------------------------------------- 홈 출력 main() --------------------------------------------------------------------	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		a02_book book = new a02_book();
@@ -310,7 +310,7 @@ public class a01_Home {
 }
 //---------------------------------------------- 회원가입 멤버변수 --------------------------------------------------------------------	
 class SignUp{ //회원가입 멤버변수
-	 private int userno; //회원번호
+	 private String userno; //회원번호
 	 private String div; // user/manager구분
 	 private String uname; // 회원이름
 	 private String rrn; // 회원주민번호
@@ -324,7 +324,7 @@ class SignUp{ //회원가입 멤버변수
 		// TODO Auto-generated constructor stub
 	}
 
-	public SignUp(int userno,String div, String uname, String rrn, String address, String phone_Number, String id, String password, int rentalcnt) {
+	public SignUp(String userno,String div, String uname, String rrn, String address, String phone_Number, String id, String password, int rentalcnt) {
 		super();
 		this.userno = userno;	
 		this.div = div;
@@ -337,6 +337,19 @@ class SignUp{ //회원가입 멤버변수
 		this.rentalcnt = rentalcnt;
 	}
 	
+	public SignUp(String div, String uname, String rrn, String address, String phone_Number, String id, String password,
+			int rentalcnt) {
+		super();
+		this.div = div;
+		this.uname = uname;
+		this.rrn = rrn;
+		this.address = address;
+		this.phone_Number = phone_Number;
+		this.id = id;
+		this.password = password;
+		this.rentalcnt = rentalcnt;
+	}
+
 	public SignUp(String id, String password) {
 		super();
 		this.id = id;
@@ -352,10 +365,10 @@ class SignUp{ //회원가입 멤버변수
 		this.rentalcnt = rentalcnt;
 	}
 
-	public int getUserno() {
+	public String getUserno() {
 		return userno;
 	}
-	public void setUserno(int userno) {
+	public void setUserno(String userno) {
 		this.userno = userno;
 	}
 	public String getDiv() {

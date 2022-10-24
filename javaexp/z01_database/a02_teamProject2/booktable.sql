@@ -13,11 +13,19 @@ CREATE TABLE bookUser(
 SELECT * FROM bookUser;
 DROP TABLE bookUser;
 
-INSERT INTO bookUser values('9999','manager','홍길동','990101-1000000','인천광역시 부평구 삼산동','010-000-0000','himan','1234',10);
-INSERT INTO bookUser values('9998','manager','test','990102-1000000','인천광역시 부평구 삼산동','010-000-0000','test','5678',null);
-INSERT INTO bookUser values('9997','user','김길동','951231-2000000','서울 신림','010-123-0000','goodgirl','9999',2);
-INSERT INTO bookUser values('9996','user','이길동','961021-2000000','부산 마린시티','010-456-0000','higirl','8888',1);
-INSERT INTO bookUser values('9995','user','마길동','970703-1000000','제주도 서귀포시','010-789-0000','goodman','5555',0);
+CREATE SEQUENCE userno_seq
+		increment by 1
+		start with 1000
+		MINVALUE 1000
+		MAXVALUE 100000;
+	
+DROP SEQUENCE classno_seq;
+
+INSERT INTO bookUser values(userno_seq.nextval,'manager','홍길동','990101-1000000','인천광역시 부평구 삼산동','010-000-0000','himan','1234',10);
+INSERT INTO bookUser values(userno_seq.nextval,'9998','manager','test','990102-1000000','인천광역시 부평구 삼산동','010-000-0000','test','5678',null);
+INSERT INTO bookUser values(userno_seq.nextval,'9997','user','김길동','951231-2000000','서울 신림','010-123-0000','goodgirl','9999',2);
+INSERT INTO bookUser values(userno_seq.nextval,'9996','user','이길동','961021-2000000','부산 마린시티','010-456-0000','higirl','8888',1);
+INSERT INTO bookUser values(userno_seq.nextval,'9995','user','마길동','970703-1000000','제주도 서귀포시','010-789-0000','goodman','5555',0);
 DELETE FROM bookUser;
 
 SELECT * FROM bookUser WHERE div = 'manager';
@@ -39,6 +47,9 @@ AND password = '';
 
 SELECT * FROM bookUser
 WHERE id = '';
+
+SELECT * FROM bookUser
+WHERE userno = '9995';
 
 --------------------------------------------------------------------------------------------------
 CREATE TABLE call(
@@ -282,13 +293,39 @@ FROM rental r, books b
 where r.isbn=b.isbn
 AND userno = '9997';
 
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791186710777',sysdate,'X',sysdate+14,'X');
+SELECT * FROM rental 
+WHERE rentaldate = '20221024';
 
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791186710777',sysdate,'X',null,'X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9995','9788968481475',sysdate,'X',null,'X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9996','9791156645023',sysdate,'X',null,'X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791163033486',sysdate,'X','20221024','O');
-DELETE FROM rental WHERE rentalno = 'AA1024';
+SELECT * FROM rental 
+WHERE returndate = '20221024';
+
+
+
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791186710777','20221012','X',sysdate+14,'X');
+
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791186710777','20221010','X',null,'X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9995','9788968481475','20221014','X',null,'X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9996','9791156645023','20221020','X',null,'X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9791163033486','20221001','X','20221024','O');
+
+SELECT * FROM rental;
+
+SELECT * FROM rental 
+WHERE (sysdate-rentaldate) >= 14
+AND (rentaldate-returndate) IS NULL
+OR (returndate-rentaldate) >= 14;
+
+SELECT userno FROM rental
+WHERE (sysdate-rentaldate) >= 14
+AND (rentaldate-returndate) IS NULL
+OR (returndate-rentaldate) >= 14;
+
+
+SELECT * FROM rental 
+WHERE RETURNWHETHER ='O' AND RETURNDATE IS not NULL
+AND USERNO ='9997';
+
+DELETE FROM rental WHERE rentalno = 'AA1000';
 // sysdate로 입력받으면 삭제가 안됌
 
 INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'9997','9788968481475','20221020','X','20221023','O');
