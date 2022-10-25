@@ -240,6 +240,9 @@ public class a01_Home {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		a02_book book = new a02_book();
+		a03_Program program = new a03_Program();
+		a04_call call = new a04_call();
+		a05_rental rental = new a05_rental();
 		
 		while(true) {
 			System.out.println("☞ 메뉴를 선택해주세요.");
@@ -265,18 +268,46 @@ public class a01_Home {
 					
 					List<SignUp> loginList = dao.login(new SignUp(id,passwd));
 					for(SignUp lo:loginList) {
-						System.out.println("[안내메시지]\""+lo.getUname()+"\"님이 정상적으로 로그인 되었습니다.");
+						System.out.println("[안내메시지]\""+lo.getUname()+"\"님이 정상적으로 로그인 되었습니다.\n");
 					}
 					if(sLoginout.equals("in")) {
 						
+						// 관리자 조건걸기 (회원테이블에서 div ='manager'/'user' if문으로 찾기)
 						
 						System.out.println("#관리자#");
 						System.out.println("1: 도서등록/수정/삭제");
-						
 						System.out.println("2: 주간프로그램 등록/수정/삭제");
 						System.out.println("3: 상담답변하기");
+						System.out.println("4: 대여조회/배달조회/");
+						System.out.println("[안내메시지] 로그아웃 하시려면 Q!를 입력해주세요.\n"); 
 						
-//						book.BookMenu(); //개꿀
+						int iManagerMenu = sc.nextInt();
+						sc.nextLine();
+						switch(iManagerMenu) {
+							case 1:
+								//도서
+								book.BookMenu("관리자"); 
+								break;
+								
+							case 2: 
+								//주간프로그램
+								program.ProgramMenu("관리자");
+								break;
+								
+							case 3:
+								// 상담
+								call.CallMenu("관리자");
+								break;
+								
+							case 4:
+								//대여조회
+								rental.RentalMenu("관리자");
+								break;
+								
+							default :
+								System.out.println("[안내메시지]보기에 있는 메뉴번호를 입력해주세요");
+						}
+						
 						
 						
 						System.out.println("#사용자#");
@@ -284,10 +315,35 @@ public class a01_Home {
 						System.out.println("2: 대여하기");
 						System.out.println("3: 반납하기");
 						System.out.println("4: 상담하기");
-						
-						
+						System.out.println("5: 회원삭제하기");
 						System.out.println("[안내메시지] 로그아웃 하시려면 Q!를 입력해주세요.\n"); 
+						int iUserMenu = sc.nextInt();
+						sc.nextLine();
 						
+						switch(iUserMenu) {
+						case 1:
+							// 도서
+							book.BookMenu("사용자"); 
+							break;
+							
+						case 2: 
+							// 대여
+							program.ProgramMenu("사용자");
+							break;
+							
+						case 3:
+							// 반납
+							call.CallMenu("사용자");
+							break;
+							
+						case 4:
+							//상담
+							rental.RentalMenu("사용자");
+							break;
+							
+						default :
+							System.out.println("[안내메시지]보기에 있는 메뉴번호를 입력해주세요");
+					}
 					
 						while(true) {
 							String logout = sc.nextLine();

@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import javaexp.a13_database.DB;
-import javaexp.a13_database.vo.Emp;
 
 public class a04_call {
 	static a04_call dao = new a04_call();
@@ -340,15 +339,15 @@ public class a04_call {
 		}
 	}
 //---------------------------------------- 상담출력 main()문 ----------------------------------------------
-public static void main(String[] args) {
+//public static void main(String[] args) {
 		// TODO Auto-generated method stub
+	public void CallMenu(String auth) {
 		while(true) {
-			System.out.println("☞ 관리자/사용자 중 무엇입니까?");
-			String sUserAuth = sc.nextLine(); //일단 입력받고 나중에 적용시키기
-//			dao.getbookUserDiv(sUserAuth); // 출력
+//			System.out.println("☞ 관리자/사용자 중 무엇입니까?");
+//			String sUserAuth = sc.nextLine(); //일단 입력받고 나중에 적용시키기
 			
 			
-			if(sUserAuth.equals("관리자")) {
+			if(auth.equals("관리자")) {
 				
 				while(true) {
 					System.out.println("☞ 다음 상담메뉴 중에 무엇을 하시겠습니까?(관리자)");
@@ -418,7 +417,7 @@ public static void main(String[] args) {
 				}
 		break;
 	
-			} else if (sUserAuth.equals("사용자")) {
+			} else if (auth.equals("사용자")) {
 				while(true) {
 					System.out.println("☞ 다음 상담메뉴 중에 무엇을 하시겠습니까?(회원)");
 					System.out.println("1: 내가 등록한 상담 확인하기");

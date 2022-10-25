@@ -145,8 +145,8 @@ select noticedate FROM program ;
 INSERT INTO program values(pno_seq.nextval,'북토크',sysdate,'20221030','1000');
 INSERT INTO program values(pno_seq.nextval,'중고책바자회',sysdate,'20221231','1000');
 DELETE FROM program WHERE pno ='2';
-// 삭제하면 currval로 추가 되야함. -> 어쩔수 없음 구멍난채로 해야함
-INSERT INTO program values(pno_seq.currval,'베스트셀러 작가 강연','20221101','20221101','1000');
+--// 삭제하면 currval로 추가 되야함. -> 어쩔수 없음 구멍난채로 해야함
+--INSERT INTO program values(pno_seq.currval,'베스트셀러 작가 강연','20221101','20221101','1000');
 INSERT INTO program values(pno_seq.nextval,'테스트','20221001','20221022','1000');
 INSERT INTO program values(pno_seq.nextval,'테스트2','20221001','20221023','1000');
 INSERT INTO program values(pno_seq.nextval,'테스트3','20221001','20221023','1000');
@@ -161,7 +161,8 @@ UPDATE program
 SET pname = 'book토크'
 WHERE pno =1;
 
-SELECT * FROM program;
+SELECT * FROM program
+ORDER BY ptime;
 
 
 ---------------------------------------------------------------------------------------------------
@@ -206,8 +207,13 @@ CREATE TABLE books(
 );
 SELECT * FROM books 
 WHERE rentalwhether = 'X';
-SELECT * FROM books 
-WHERE isbn = '';
+SELECT * FROM books;
+
+SELECT * 
+FROM books
+WHERE isbn = '9788966263301'
+AND rentalwhether = 'X';
+
 SELECT * FROM books 
 WHERE publisher = '';
 SELECT * FROM books 
@@ -217,6 +223,8 @@ WHERE classno = '';
 SELECT * FROM books 
 WHERE registdate LIKE '18/03%';
 
+UPDATE books
+SET rentalwhether = 'X';
 
 select * FROM books;
 DROP TABLE books;
@@ -236,6 +244,7 @@ UPDATE books
 UPDATE BOOKS 
 	SET isbn = 9791186710777
 	WHERE isbn = 0;
+
 SELECT * FROM books WHERE isbn=9791186710777;
 
 INSERT INTO books values('9791186710777','채쌤의 자바 프로그래밍 핵심','썜즈','채규태','컴퓨터이론','27000',sysdate,'X','100' );
@@ -307,6 +316,9 @@ private String returnwhether;
  */
 select * FROM rental;
 
+SELECT isbn FROM rental
+WHERE rentalno = ''; 
+
 
 SELECT rentalno,userno,r.isbn,b.bname,shipwhether,returndate,returnwhether
 FROM rental r, books b
@@ -319,14 +331,26 @@ WHERE rentaldate = '20221024';
 SELECT * FROM rental 
 WHERE returndate = '20221024';
 
+SELECT isbn FROM rental
+where returnwhether = 'X';
 
+UPDATE rental
+SET returnwhether = 'O',
+ 	returndate ='20221025',
+ 	returnshipwhether ='O'
+WHERE rentalno= 'AA1016'
+AND returndate is NULL
+AND returnwhether='X';
+
+SELECT * FROM books
+WHERE isbn = '9788966263301';
 
 INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1001','9791186710777','20221012','X',sysdate+14,'X');
 
 INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1001','9791186710777','20221010','X',null,'X','X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1004','9788968481475','20221014','X',null,'X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1006','9791156645023','20221020','X',null,'X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1007','9791163033486','20221001','X','20221024','O');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1004','9788968481475','20221014','X',null,'X','X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1006','9791156645023','20221020','X',null,'X','X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1003','9791163033486','20221001','X','20221024','O','O');
 
 SELECT * FROM rental;
 
@@ -358,6 +382,20 @@ select * FROM rental
 WHERE RETURNWHETHER = 'O'
 AND returndate IS not null;
 
+SELECT rentalno FROM rental 
+WHERE userno ='1003'
+AND rentalshipwhether = 'O';
+
+SELECT * FROM rental 
+WHERE userno ='1003'
+AND returnshipwhether = 'O';
+
+UPDATE rental 
+SET rentalshipwhether = 'O'
+WHERE userno = '1003';
+
+DELETE FROM rental;
+
 UPDATE rental
 SET returnwhether ='O',
  returndate = sysdate 
@@ -368,17 +406,44 @@ AND returnwhether='X';
 -------------------------------------------------------------------------------------------------------
 CREATE TABLE ship(
 	shipno varchar2(20) PRIMARY key,
-	shipdate DATE not null,
-	rentalno varchar2(20) CONSTRAINT ship_rentalno_fk REFERENCES rental(rentalno),
-	managerno varchar2(10) CONSTRAINT ship_managerno_fk REFERENCES bookUser(userno)
+	rentalshipdate DATE,
+	returnshipdate DATE,
+	rentalno varchar2(20) CONSTRAINT ship_rentalno_fk REFERENCES rental(rentalno) CONSTRAINT ship_rentalno_uq UNIQUE,
+	userno varchar2(10) CONSTRAINT ship_userno_fk REFERENCES bookuser(userno)
 );
+/*
+private String shipno
+private String rentalshipdate
+private String returnshipdate
+private String rentalno
+private String userno
+ */
 
-select * FROM ship;
+select s.*,r.*
+FROM ship s,rental r
+WHERE s.RENTALNO = r.RENTALNO
+AND s.userno = '1001';
+
 DROP TABLE ship;
+DELETE FROM ship;
+CREATE SEQUENCE shipno_seq
+		increment by 1
+		start with 1000
+		MINVALUE 1000
+		MAXVALUE 100000;
+	
+DROP SEQUENCE shipno_seq;
+SELECT * FROM rental;
+SELECT * FROM ship;
 
-INSERT INTO ship values('ABC1000',sysdate+2,'AA100001','1000');
-INSERT INTO ship values('ABC1003',sysdate+2,'AA100003','1000');
-DELETE FROM ship WHERE;
+UPDATE SHIP 
+SET returnshipdate ='20221110'
+WHERE rentalno = 'AA1000';
+
+INSERT INTO ship values('ABC'||shipno_seq.nextval,sysdate+2,NULL,'AA1017','1001');
+
+INSERT INTO ship values('ABC'||shipno_seq.nextval,sysdate+2,NULL,'AA100003','1000');
+DELETE FROM ship WHERE shipno = 'ABC1021';
 
 ---------------------------------------------------------------------------------------------------
 CREATE TABLE library(
@@ -420,7 +485,10 @@ select * FROM call;
 select * FROM program;
 select * FROM classification;
 select * FROM books;
+UPDATE books SET RENTALWHETHER ='X';
 select * FROM rental;
+
+DELETE FROM rental;
 select * FROM ship;
 select * FROM library;
 

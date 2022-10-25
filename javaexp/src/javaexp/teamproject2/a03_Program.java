@@ -83,7 +83,8 @@ public class a03_Program {
 		public void programListAllPrint() {
 			try {
 				con = DB.con();
-				String sql = "select * FROM program";
+				String sql = "SELECT * FROM program\r\n"
+							+ "ORDER BY pno";
 				
 				stmt = con.createStatement();
 				rs = stmt.executeQuery(sql);
@@ -300,142 +301,173 @@ public class a03_Program {
 			}	
 		}
 //----------------------------------------------주간프로그램출력 main()--------------------------------------------------------------------	
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		// 주간프로그램 공지날짜에 따른 자동 삭제 기능
-		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd"); // 타입을 Date 타입을 yyyy-mm-dd로 변경
-		Date time = new Date(); // 현재날짜 및 시각
+	public void ProgramMenu(String auth) {
+//		System.out.println("☞ 관리자/사용자 중 무엇입니까?");
+//		String auth = sc.nextLine();
 		
-		String time1 = format1.format(time); //현재날짜 데이터타입 변경
-		
-		dao.deleteProgramSelect(time1);
-		List<Program> proList = dao.programTime();
-		for(Program e:proList) {
-//			String time2 = format1.formate(e.getNoticedate()); // Date 타입에 스트링을 넣으면 안되서 에러발생
+		if(auth.equals("관리자")) {
 			
-			String time2 = e.getNoticedate().split(" ")[0]; 
-			// 공지날짜 데이터타입변경(time2) yyyy-mm-dd tt:mm:ss(공지시각타입) 이므로 구분자 띄어쓰기를 넣어 yyyy-mm-dd만 time2로 선언
-			if(time1.equals(time2)) { // 공지날짜가 오늘날짜와 같으면 삭제 진행
-				dao.programAutoDelete(time2);
+			// 주간프로그램 공지날짜에 따른 자동 삭제 기능
+			SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd"); // 타입을 Date 타입을 yyyy-mm-dd로 변경
+			Date time = new Date(); // 현재날짜 및 시각
+			
+			String time1 = format1.format(time); //현재날짜 데이터타입 변경
+			
+			dao.deleteProgramSelect(time1);
+			List<Program> proList = dao.programTime();
+			for(Program e:proList) {
+	//			String time2 = format1.formate(e.getNoticedate()); // Date 타입에 스트링을 넣으면 안되서 에러발생
+				
+				String time2 = e.getNoticedate().split(" ")[0]; 
+				// 공지날짜 데이터타입변경(time2) yyyy-mm-dd tt:mm:ss(공지시각타입) 이므로 구분자 띄어쓰기를 넣어 yyyy-mm-dd만 time2로 선언
+				if(time1.equals(time2)) { // 공지날짜가 오늘날짜와 같으면 삭제 진행
+					dao.programAutoDelete(time2);
+				}
 			}
-		}
-		
-		while(true) { //관리자/사용자 구분
-			System.out.println("☞ 프로그램 메뉴를 고르세요.");
-			System.out.println("1:프로그램조회");
-			System.out.println("2:프로그램추가");
-			System.out.println("3:프로그램수정");
-			System.out.println("4:프로그램삭제");
-			int iProgramMenu = sc.nextInt();
-			sc.nextLine(); //int 입력 초기화 처리
-			switch(iProgramMenu) {
-				case 1:
-					System.out.println("☞ 어떤 프로그램을 조회하겠습니까?");
-					System.out.println("\n[안내메시지] 프로그램명으로 검색해주세요!");
-					String sProgramChoice = sc.nextLine();
-					dao.ProgramSelect(sProgramChoice);
-					break;
-					
-				case 2:
-					while(true) {
-						
-						System.out.println("☞ 프로그램을 추가하시겠습니까?(Y/N)");
-						String sAddProgram = sc.nextLine();
-						if(sAddProgram.toUpperCase().equals("Y")) {
-							System.out.print("☞ 프로그램명: ");
-							String sPname = sc.nextLine();
-							System.out.print("☞ 프로그램일정: ");
-							String sPtime = sc.nextLine();
-							System.out.print("☞ 공지끝나는날짜: ");
-							String sNoticeDate = sc.nextLine();
-							System.out.print("☞ 관리자번호: ");
-							String iManagerno = sc.nextLine();
-							
-							dao.programInsert(new Program(sPname, sPtime, sNoticeDate,iManagerno));
 			
-							break;
+			while(true) { //관리자/사용자 구분
+				System.out.println("☞ 프로그램 메뉴를 고르세요.");
+				System.out.println("1:프로그램조회");
+				System.out.println("2:프로그램추가");
+				System.out.println("3:프로그램수정");
+				System.out.println("4:프로그램삭제");
+				int iProgramMenu = sc.nextInt();
+				sc.nextLine(); //int 입력 초기화 처리
+				switch(iProgramMenu) {
+					case 1:
+						System.out.println("☞ 어떤 프로그램을 조회하겠습니까?");
+						System.out.println("\n[안내메시지] 프로그램명으로 검색해주세요!");
+						String sProgramChoice = sc.nextLine();
+						dao.ProgramSelect(sProgramChoice);
+						break;
+						
+					case 2:
+						while(true) {
 							
-						} else if(sAddProgram.toUpperCase().equals("N")) {
-							System.out.println("[뒤로가기]\n");
-			break;
-						} else {
-							System.out.println("[안내메시지] Y/N으로 입력해주세요.");
-					continue;
+							System.out.println("☞ 프로그램을 추가하시겠습니까?(Y/N)");
+							String sAddProgram = sc.nextLine();
+							if(sAddProgram.toUpperCase().equals("Y")) {
+								System.out.print("☞ 프로그램명: ");
+								String sPname = sc.nextLine();
+								System.out.print("☞ 프로그램일정: ");
+								String sPtime = sc.nextLine();
+								System.out.print("☞ 공지끝나는날짜: ");
+								String sNoticeDate = sc.nextLine();
+								System.out.print("☞ 관리자번호: ");
+								String iManagerno = sc.nextLine();
+								
+								dao.programInsert(new Program(sPname, sPtime, sNoticeDate,iManagerno));
+				
+								break;
+								
+							} else if(sAddProgram.toUpperCase().equals("N")) {
+								System.out.println("[뒤로가기]\n");
+				break;
+							} else {
+								System.out.println("[안내메시지] Y/N으로 입력해주세요.");
+						continue;
+							}
 						}
-					}
-					break;
-					
-				case 3:
-					dao.programListAllPrint();
-					
-					System.out.println("☞ 다음 중 수정할 프로그램번호를 입력하세요.");
-					int iUpdateProgram = sc.nextInt();
-					sc.nextLine();
-					
-					Program updateProgramData = new Program();
-				
-					System.out.println("☞ 해당 프로그램의 무엇을 수정하시겠습니까?");
-					System.out.println("1:프로그램명");
-					System.out.println("2:프로그램일정");
-					System.out.println("3:공지끝나는날짜");
-					System.out.println("4:관리자번호");
-					
-					int iProgramUpdateMenu = sc.nextInt();
-					sc.nextLine();
-					
-					switch(iProgramUpdateMenu) {
-						case 1 : 
-							System.out.print("☞ 변경할 프로그램명: ");
-							String sUpdatePname = sc.nextLine();
-							updateProgramData.setPname(sUpdatePname);
-							dao.programUpdate(iUpdateProgram, "프로그램명", updateProgramData);
-							System.out.println("[안내메시지] 프로그램명이 변경 완료되었습니다.");
-							break;
-							
-						case 2 : 
-							System.out.print("☞ 변경할 프로그램일정: ");
-							String sUpdatePtime = sc.nextLine();
-							updateProgramData.setPtime(sUpdatePtime);
-							dao.programUpdate(iUpdateProgram, "프로그램일정", updateProgramData);
-							System.out.println("[안내메시지] 프로그램 일정이 변경 완료되었습니다.");
-							break;
-							
-						case 3 : 
-							System.out.print("☞ 변경할 공지끝나는날짜: ");
-							String sUpdatenoticedate = sc.nextLine();
-							updateProgramData.setNoticedate(sUpdatenoticedate);
-							dao.programUpdate(iUpdateProgram, "공지날짜", updateProgramData);
-							System.out.println("[안내메시지] 공지끝나는날짜가 변경 완료되었습니다.");
-							break;
-							
-						case 4 : 
-							System.out.print("☞ 변경할 관리자번호: ");
-							String iUpdateManagerno = sc.nextLine();
-							updateProgramData.setManagerno(iUpdateManagerno);
-							dao.programUpdate(iUpdateProgram, "관리자번호", updateProgramData);
-							System.out.println("[안내메시지] 관리자 변경이 완료되었습니다.");
-							break;
+						break;
 						
-						default :
-							System.out.println("[안내메시지] 보기에 있는 메뉴를 선택해주세요.");
-							break;	
-					}
-				
-					break;
+					case 3:
+						dao.programListAllPrint();
+						
+						System.out.println("☞ 다음 중 수정할 프로그램번호를 입력하세요.");
+						int iUpdateProgram = sc.nextInt();
+						sc.nextLine();
+						
+						Program updateProgramData = new Program();
 					
-				case 4:
+						System.out.println("☞ 해당 프로그램의 무엇을 수정하시겠습니까?");
+						System.out.println("1:프로그램명");
+						System.out.println("2:프로그램일정");
+						System.out.println("3:공지끝나는날짜");
+						System.out.println("4:관리자번호");
+						
+						int iProgramUpdateMenu = sc.nextInt();
+						sc.nextLine();
+						
+						switch(iProgramUpdateMenu) {
+							case 1 : 
+								System.out.print("☞ 변경할 프로그램명: ");
+								String sUpdatePname = sc.nextLine();
+								updateProgramData.setPname(sUpdatePname);
+								dao.programUpdate(iUpdateProgram, "프로그램명", updateProgramData);
+								System.out.println("[안내메시지] 프로그램명이 변경 완료되었습니다.");
+								break;
+								
+							case 2 : 
+								System.out.print("☞ 변경할 프로그램일정: ");
+								String sUpdatePtime = sc.nextLine();
+								updateProgramData.setPtime(sUpdatePtime);
+								dao.programUpdate(iUpdateProgram, "프로그램일정", updateProgramData);
+								System.out.println("[안내메시지] 프로그램 일정이 변경 완료되었습니다.");
+								break;
+								
+							case 3 : 
+								System.out.print("☞ 변경할 공지끝나는날짜: ");
+								String sUpdatenoticedate = sc.nextLine();
+								updateProgramData.setNoticedate(sUpdatenoticedate);
+								dao.programUpdate(iUpdateProgram, "공지날짜", updateProgramData);
+								System.out.println("[안내메시지] 공지끝나는날짜가 변경 완료되었습니다.");
+								break;
+								
+							case 4 : 
+								System.out.print("☞ 변경할 관리자번호: ");
+								String iUpdateManagerno = sc.nextLine();
+								updateProgramData.setManagerno(iUpdateManagerno);
+								dao.programUpdate(iUpdateProgram, "관리자번호", updateProgramData);
+								System.out.println("[안내메시지] 관리자 변경이 완료되었습니다.");
+								break;
+							
+							default :
+								System.out.println("[안내메시지] 보기에 있는 메뉴를 선택해주세요.");	
+						}
 					
-					dao.programListAllPrint();
-					System.out.println("☞ 다음 중 삭제할 프로그램 번호를 입력하세요.");
-					int iDeletePno = sc.nextInt();
-					dao.programDelete(iDeletePno);
-					break;
-					
-				default : 
-					System.out.println("[안내메시지] 보기에 있는 숫자만 입력해주세요.");
-					break;
+						break;
+						
+					case 4:
+						
+						dao.programListAllPrint();
+						System.out.println("☞ 다음 중 삭제할 프로그램 번호를 입력하세요.");
+						int iDeletePno = sc.nextInt();
+						dao.programDelete(iDeletePno);
+						break;
+						
+					default : 
+						System.out.println("[안내메시지] 보기에 있는 숫자만 입력해주세요.");
+						break;
+				}
 			}
+			
+		} else if(auth.equals("사용자")) {
+			while(true) {
+				System.out.println("☞ 이벤트 메뉴를 고르세요");
+				System.out.println("1: 주간프로그램 조회");
+				System.out.println("2: 독서왕 조회");
+				int iEventMenuChoice = sc.nextInt();
+				sc.nextLine();
+				
+				switch(iEventMenuChoice) {
+					case 1:
+						dao.programListAllPrint();
+						// 주간프로그램 조회
+						break;
+					case 2:
+						// 독서왕 조회
+						break;
+						
+					default :
+						System.out.println("[안내메시지] 보기에 있는 숫자만 입력해주세요.");	
+				}
+			}
+			
+		} else {
+			System.out.println("[안내메시지] 보기에 있는 메뉴를 선택해주세요.");
 		}
 	}
 }
