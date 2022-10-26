@@ -20,6 +20,97 @@ public class a05_rental {
 	private Connection con;
 	private Statement stmt;
 	private ResultSet rs;
+	
+// ---------------------------------------------대여/연체 갯수 업데이트-----------------------------------------	
+	public void rentalAndOverdueCntUpdate(String userno,SignUp update) {
+		String sql = "UPDATE BOOKUSER \r\n"
+					+ "SET rentalcnt = ?,\r\n"
+					+ "overduecnt = ?\r\n"
+					+ "WHERE USERNO = ?\r\n"
+					+ "AND div = 'user'"; 
+	
+		try {
+			con = DB.con();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(sql);
+								
+				pstmt.setInt(1, update.getRentalcnt());
+				pstmt.setInt(2, update.getOverduecnt());
+				pstmt.setString(3, userno);
+				
+				rs = pstmt.executeQuery();
+				con.commit();
+				
+		} catch (SQLException e) {
+			System.out.println("DB 처리:"+e.getMessage());
+			System.out.println("[안내메시지] 대여/연체 갯수 반영이 안되었습니다. 관리자에게 문의하세요.");
+			try { 
+				con.rollback();
+			} catch (SQLException e1) {
+				System.out.println("rollback에러:"+e1.getMessage());
+			}
+		} catch(Exception e) {
+			System.out.println("기타 예외:"+e.getMessage());
+		} finally {
+			DB.close(rs, pstmt, con);
+		}
+	}
+
+// ---------------------------------------------대여갯수 조회-----------------------------------------
+	public int rentalcnt(String userno) {
+		String sql = "SELECT count(*) rentalcnt FROM rental\r\n"
+				+ "WHERE userno = '"+userno+"'";
+		
+		int rentalcnt = 0; 
+		
+		try {
+			con = DB.con();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				rentalcnt = rs.getInt("rentalcnt");
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("기타 sql 처리 예외:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("기타 예외:"+e.getMessage());
+		}finally {
+			if(rs==null) System.out.println("[안내메시지] 등록된 도서가 없습니다.");
+			DB.close(rs, stmt, con);
+		}
+		return rentalcnt;
+	}	
+	
+// ---------------------------------------------연체갯수 조회-----------------------------------------
+	public int overduecnt(String userno) {
+		String sql = "SELECT count(*) overduecnt FROM rental \r\n"
+				+ "WHERE userno = '"+ userno +"'\r\n"
+				+ "AND (((sysdate-rentaldate) >= 14\r\n"
+				+ "AND (rentaldate-returndate) IS NULL)\r\n"
+				+ "OR (returndate-rentaldate) >= 14)";
+		
+		int overduecnt = 0; 
+		
+		try {
+			con = DB.con();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				overduecnt = rs.getInt("overduecnt");
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("기타 sql 처리 예외:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("기타 예외:"+e.getMessage());
+		}finally {
+			if(rs==null) System.out.println("[안내메시지] 등록된 도서가 없습니다.");
+			DB.close(rs, stmt, con);
+		}
+		return overduecnt;
+	}	
+	
 // --------------------------------------------- 반납 배달 날짜 데이터 넣기-----------------------------------------
 	public void returnDelieveryUpdate(Delivery add) {
 		String sql = "UPDATE SHIP \r\n"
@@ -134,11 +225,24 @@ public class a05_rental {
 				return list;
 			}
 // --------------------------------------------- 배달 테이블 데이터 조회-----------------------------------------
-	public void deliveryPrint(String userno) {
+	public void deliveryPrint(String shipUserMgr, String userno) {
 		String sql = "select s.*,r.*\r\n"
 				+ "FROM ship s,rental r\r\n"
-				+ "WHERE s.RENTALNO = r.RENTALNO\r\n"
-				+ "AND s.userno = '"+userno+"'";
+				+ "WHERE s.RENTALNO = r.RENTALNO\r\n";
+				
+		switch(shipUserMgr) {
+			case "전체" :
+				break;
+				
+			case "사용자" :
+				sql += "AND s.userno = '"+userno+"'";
+				break;
+				
+			default :
+				System.out.println("[안내메시지] 조회할 사용자/전체 중 고르세요.");
+		}
+				
+		
 		try {
 			con = DB.con();
 			stmt = con.createStatement();
@@ -797,7 +901,7 @@ public class a05_rental {
 //-------------------------------------------------출력 기능메서드 main()문----------------------------------------
 //	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-	public void RentalMenu(String auth) {
+	public void RentalMenu(String auth, String userno) {
 		
 		while(true) {
 //			System.out.println("☞ 관리자/사용자 중 무엇입니까?");
@@ -983,6 +1087,7 @@ public class a05_rental {
 							}
 							break;
 						case 5: 
+							dao.deliveryPrint("전체", userno);
 							// 배달서비스 신청 조회 ==> 대여테이블과 배달테이블 조인해서 조회  
 							break;
 							
@@ -1104,7 +1209,7 @@ public class a05_rental {
 									System.out.println("[안내메시지] Y/N으로 입력해주세요.");
 								}
 							}
-							dao.rentalInsert(new Rental("1001",lRentalIsbn,shipwhether,"X","X"));
+							dao.rentalInsert(new Rental(userno,lRentalIsbn,shipwhether,"X","X"));
 							
 							List<Rental> rentalisbnlist = dao.rentalIsbnPrint();
 							for(Rental r:rentalisbnlist) {
@@ -1115,10 +1220,10 @@ public class a05_rental {
 							} 
 							
 							if (shipwhether.equals("O")) {
-								List<Rental> rentaldeliverylist = dao.delieveryAddInfo("대여배달","1001");
+								List<Rental> rentaldeliverylist = dao.delieveryAddInfo("대여배달",userno);
 								
 								for(Rental r2:rentaldeliverylist) {
-								dao.rentalDelieveryInsert(new Delivery(r2.getsRentalno(),"1001")); // 대여테이블 번호 입력
+								dao.rentalDelieveryInsert(new Delivery(r2.getsRentalno(),userno)); // 대여테이블 번호 입력
 								}
 							}
 							break;
@@ -1130,7 +1235,7 @@ public class a05_rental {
 								String returnUserup = sc.nextLine();
 								
 								if(returnUserup.toUpperCase().equals("Y")) {
-									dao.notReturnAllPrint("미반납","1001");
+									dao.notReturnAllPrint("미반납",userno);
 									String returnUserRentalno;
 									while(true) {
 										System.out.println("☞ 반납하실 반납 번호를 입력해주세요.");
@@ -1148,9 +1253,9 @@ public class a05_rental {
 										dao.bookWhetherAdd("X",r.getlIsbn());
 									}
 									
-									List<Rental> returnshiplist = dao.delieveryAddInfo("반납배달","1001");
+									List<Rental> returnshiplist = dao.delieveryAddInfo("반납배달",userno);
 									for(Rental r : returnshiplist ) {
-									dao.returnDelieveryUpdate(new Delivery(r.getsRentalno(),"1001")); // 대여테이블 번호 입력
+									dao.returnDelieveryUpdate(new Delivery(r.getsRentalno(),userno)); // 대여테이블 번호 입력
 									}
 					
 									break; // 책반납여부 break;
@@ -1167,12 +1272,12 @@ public class a05_rental {
 							
 						case 5 : 
 							// 반납 조회
-							dao.notReturnAllPrint("전체","1001");
+							dao.notReturnAllPrint("전체",userno);
 							break;
 							
 						case 6:
 							// 배달서비스 신청조회
-							dao.deliveryPrint("1001");
+							dao.deliveryPrint("사용자",userno);
 							break;
 							
 						default :
@@ -1185,6 +1290,7 @@ public class a05_rental {
 			}
 			break; // 관리자/사용자 선택
 		}
+		dao.rentalAndOverdueCntUpdate(userno, new SignUp(dao.rentalcnt(userno),dao.overduecnt(userno)));
 	}
 
 }

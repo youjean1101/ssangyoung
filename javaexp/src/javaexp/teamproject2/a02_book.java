@@ -665,7 +665,7 @@ public class a02_book {
 // ----------------------------------------------도서출력 main--------------------------------------------------------------------
 //	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-	public void BookMenu(String auth) {
+	public void BookMenu(String auth, String userno) {
 //		System.out.println("☞ 관리자/사용자 중 무엇인가요?");
 //		String auth = sc.nextLine();
 		if(auth.equals("관리자")) {
@@ -986,7 +986,7 @@ public class a02_book {
 								System.out.println("[안내메시지] Y/N으로 입력해주세요.");
 							}
 						}
-						dao.rentalInsert(new Rental("1001",lRentalIsbn,shipwhether,"X","X"));
+						dao.rentalInsert(new Rental(userno,lRentalIsbn,shipwhether,"X","X"));
 						
 						List<Rental> rentalisbnlist = dao.rentalIsbnPrint();
 						for(Rental r:rentalisbnlist) {
@@ -997,10 +997,10 @@ public class a02_book {
 						} 
 						
 						if (shipwhether.equals("O")) {
-							List<Rental> rentaldeliverylist = dao.delieveryAddInfo("대여배달","1001");
+							List<Rental> rentaldeliverylist = dao.delieveryAddInfo("대여배달",userno);
 							
 							for(Rental r2:rentaldeliverylist) {
-							dao.rentalDelieveryInsert(new Delivery(r2.getsRentalno(),"1001")); // 대여테이블 번호 입력
+							dao.rentalDelieveryInsert(new Delivery(r2.getsRentalno(),userno)); // 대여테이블 번호 입력
 							}
 						}
 						break;

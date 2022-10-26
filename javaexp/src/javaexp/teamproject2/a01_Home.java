@@ -44,6 +44,9 @@ public class a01_Home {
 					String sUname = sc.nextLine();
 					System.out.print("☞ 주민번호(000000-000000): " ); 
 					String sRrn = sc.nextLine();
+					if (dao.IsRNNSelect(sRrn)==true) {
+						System.out.println("[안내메시지] 등록 되어있는 주민등록번호입니다. 다시 입력하시거나,회원이신지 아이디 찾기를 해주세요.");
+					}
 					
 					System.out.print("☞ 주소: " ); 
 					String sAddress = sc.nextLine();
@@ -90,7 +93,7 @@ public class a01_Home {
 		
 // ----------------------------------------------회원가입 기능메서드	--------------------------------------------------------------------
 		public void signUpinsert(SignUp useradd) {
-			String sql = "INSERT INTO bookUser values(userno_seq.nextval,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO bookUser values(userno_seq.nextval,?,?,?,?,?,?,?,0,0)";
 			try {
 				con = DB.con();
 				con.setAutoCommit(false);
@@ -103,7 +106,6 @@ public class a01_Home {
 					pstmt.setString(5, useradd.getPhone_Number());
 					pstmt.setString(6, useradd.getId());
 					pstmt.setString(7, useradd.getPassword());
-					pstmt.setInt(8, useradd.getRentalcnt());
 					System.out.println("[안내메시지] 회원등록이 완료되었습니다.");
 					
 				rs = pstmt.executeQuery();
@@ -197,6 +199,25 @@ public class a01_Home {
 			}
 			 return list;
 		}
+// ---------------------------------------------- 회원삭제 기능메서드 --------------------------------------------------------------------
+		public void UserDelete(String userno) {
+			String sql = "DELETE FROM bookUser WHERE userno='" + userno + "'";
+			try {
+				con = DB.con();
+				stmt = con.createStatement();
+				rs = stmt.executeQuery(sql);
+				if(rs != null) System.out.println("[안내메시지] 회원 삭제가 완료되었습니다.");
+				
+			} catch (SQLException e) {
+				System.out.println("기타 sql 처리 예외:"+e.getMessage());
+//				System.out.println("[안내메시지] 회원삭제가 정상적으로 되지않았습니다. 관리자에게 문의바랍니다.");
+			} catch(Exception e) {
+				System.out.println("기타 예외:"+e.getMessage());
+			}finally {
+				if(rs==null) System.out.println("[안내메시지] 회원삭제가 정상적으로 되지않았습니다. 관리자에게 문의바랍니다.");
+				DB.close(rs, stmt, con);
+			}
+		}
 
 // ---------------------------------------------- 아이디 중복 조회 기능메서드 --------------------------------------------------------------------			
 		public List<SignUp> doubleIdConfirm(String id) {
@@ -236,6 +257,71 @@ public class a01_Home {
 			}
 			return list;
 		}
+//-----------------------------------------------주민등록 중복 조회--------------------------------------
+	   public boolean IsRNNSelect(String rrn) { 
+	         
+	         boolean bReturn = false;
+	         String sql = "SELECT * FROM bookuser WHERE rrn = '"+ rrn +"'";
+	         
+	         try {
+	            con = DB.con();
+	            con.setAutoCommit(false);
+	            stmt = con.createStatement();
+	            rs = stmt.executeQuery(sql);
+	   
+	            if(rs.next())
+	            {
+	               int nRowCnt = rs.getRow(); // 테이블의 행 갯수 변수선언
+	               if(nRowCnt < 1) { // 행갯수가 1개라도 있으면 true
+	                  bReturn = false;
+	               } else {
+	                  bReturn = true;
+	               }
+	            }
+	            
+	         } catch (SQLException e) {
+	            System.out.println("DB처리예외:"+e.getMessage());
+	         } catch (Exception e) {
+	            System.out.println("기타예외:"+e.getMessage());
+	         } finally {
+	            DB.close(rs, stmt, con);
+	         }
+	         return bReturn; // 행갯수가 있으면 true를 리턴   
+	   }
+// ------------------------------------------- 아이디 조회-------------------------------------------------------
+	  public void findID(String name,String phonenumber) {
+			
+			String sql ="SELECT * FROM bookuser\r\n"
+					+ "WHERE uname = '"+name+"'\r\n"
+					+ "AND phone_number = '"+phonenumber+"'";
+			
+			try {
+				con=DB.con();
+				stmt = con.createStatement();
+				rs = stmt.executeQuery(sql);
+				
+				while(rs.next()) {
+					System.out.println("[안내메시지]"+rs.getString("uname")+"님의 ID는 "+rs.getString("id")+" 입니다."); 
+				}
+				if(rs == null) System.out.println("[안내메시지] 입력하신 정보의 회원이 없습니다. 이름과 전화번호(010-000-0000)를 정확히 입력해주세요. ");
+				//수정하기
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println("DB에러:"+e.getMessage());
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					System.out.println("rollback에러:"+e1.getMessage());
+				}
+			}catch(Exception e) {
+				System.out.println("일반에러:"+e.getMessage());
+			}finally {
+				DB.close(rs, stmt, con);
+			}	
+		}
 // ---------------------------------------------- 홈 출력 main() --------------------------------------------------------------------	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -248,7 +334,8 @@ public class a01_Home {
 			System.out.println("☞ 메뉴를 선택해주세요.");
 			System.out.println("1: 회원가입");
 			System.out.println("2: 로그인");
-			System.out.println("3: 도서관 찾기");
+			System.out.println("3: 아이디 찾기");
+			System.out.println("4: 도서관 찾기");
 			
 			a01_Home dao = new a01_Home();
 			int iHome = sc.nextInt();
@@ -266,96 +353,139 @@ public class a01_Home {
 					System.out.print("패스워드: ");
 					String passwd = sc.nextLine();
 					
+					String sLoginDiv = null;
+					String sLoginUserno = null;
+					
 					List<SignUp> loginList = dao.login(new SignUp(id,passwd));
 					for(SignUp lo:loginList) {
 						System.out.println("[안내메시지]\""+lo.getUname()+"\"님이 정상적으로 로그인 되었습니다.\n");
+						sLoginDiv = lo.getDiv();
+						sLoginUserno = lo.getUserno();
 					}
 					if(sLoginout.equals("in")) {
-						
-						// 관리자 조건걸기 (회원테이블에서 div ='manager'/'user' if문으로 찾기)
-						
-						System.out.println("#관리자#");
-						System.out.println("1: 도서등록/수정/삭제");
-						System.out.println("2: 주간프로그램 등록/수정/삭제");
-						System.out.println("3: 상담답변하기");
-						System.out.println("4: 대여조회/배달조회/");
-						System.out.println("[안내메시지] 로그아웃 하시려면 Q!를 입력해주세요.\n"); 
-						
-						int iManagerMenu = sc.nextInt();
-						sc.nextLine();
-						switch(iManagerMenu) {
-							case 1:
-								//도서
-								book.BookMenu("관리자"); 
-								break;
+						if(sLoginDiv.equals("manager")) {
+							// 관리자 조건걸기 (회원테이블에서 div ='manager'/'user' if문으로 찾기)
+							while(true) {
+								System.out.println("#관리자#");
+								System.out.println("1: 도서 조회/등록/수정/삭제");
+								System.out.println("2: 주간프로그램 조회/등록/수정/삭제");
+								System.out.println("3: 상담답변하기");
+								System.out.println("4: 대여/배달/연체자 조회");
+								System.out.println("5: 로그아웃");
 								
-							case 2: 
-								//주간프로그램
-								program.ProgramMenu("관리자");
-								break;
-								
-							case 3:
-								// 상담
-								call.CallMenu("관리자");
-								break;
-								
-							case 4:
-								//대여조회
-								rental.RentalMenu("관리자");
-								break;
-								
-							default :
-								System.out.println("[안내메시지]보기에 있는 메뉴번호를 입력해주세요");
-						}
-						
-						
-						
-						System.out.println("#사용자#");
-						System.out.println("1: 도서조회");
-						System.out.println("2: 대여하기");
-						System.out.println("3: 반납하기");
-						System.out.println("4: 상담하기");
-						System.out.println("5: 회원삭제하기");
-						System.out.println("[안내메시지] 로그아웃 하시려면 Q!를 입력해주세요.\n"); 
-						int iUserMenu = sc.nextInt();
-						sc.nextLine();
-						
-						switch(iUserMenu) {
-						case 1:
-							// 도서
-							book.BookMenu("사용자"); 
-							break;
-							
-						case 2: 
-							// 대여
-							program.ProgramMenu("사용자");
-							break;
-							
-						case 3:
-							// 반납
-							call.CallMenu("사용자");
-							break;
-							
-						case 4:
-							//상담
-							rental.RentalMenu("사용자");
-							break;
-							
-						default :
-							System.out.println("[안내메시지]보기에 있는 메뉴번호를 입력해주세요");
-					}
-					
-						while(true) {
-							String logout = sc.nextLine();
-							if(logout.equals("Q!")) {
-								// 로그아웃상태
+								int iManagerMenu = sc.nextInt();
+								sc.nextLine();
+								switch(iManagerMenu) {
+									case 1:
+										//도서
+										book.BookMenu("관리자",sLoginUserno); 
+										break;
+										
+									case 2: 
+										//주간프로그램
+										program.ProgramMenu("관리자",sLoginUserno);
+										break;
+										
+									case 3:
+										// 상담
+										call.CallMenu("관리자",sLoginUserno);
+										break;
+										
+									case 4:
+										//대여조회
+										rental.RentalMenu("관리자",sLoginUserno);
+										break;
+										
+									case 5:
+										//로그아웃
+										while(true) {
+											System.out.println("[안내메시지] 로그아웃을 하시려면 Q!를 입력해주세요.");
+											String logout = sc.nextLine();
+											if(logout.equals("Q!")) {
+												// 로그아웃상태
+												break; // 사용자로 넘어감 -> 회원가입 메뉴로 돌아가야함
+											}
+										}
+										break;
+										
+									default :
+										System.out.println("[안내메시지]보기에 있는 메뉴번호를 입력해주세요");
+								}
 								break;
 							}
+						
+						} else if(sLoginDiv.equals("user")) {
+						// 로그인한 계정이 user일경우
+						while(true) {
+							System.out.println("#사용자#");
+							System.out.println("1: 도서조회");
+							System.out.println("2: 대여/반납하기");
+							System.out.println("3: 상담하기");
+							System.out.println("4: 회원삭제하기");
+							System.out.println("5: 공지사항");
+							System.out.println("6: 로그아웃");
+							int iUserMenu = sc.nextInt();
+							sc.nextLine();
+							
+							switch(iUserMenu) {
+								case 1:
+									// 도서
+									book.BookMenu("사용자",sLoginUserno); 
+									break;
+									
+								case 2: 
+									// 대여/반납
+									rental.RentalMenu("사용자",sLoginUserno);
+									break;
+									
+								case 3:
+									// 상담
+									call.CallMenu("사용자",sLoginUserno);
+									break;
+									
+								case 4:
+									// 회원삭제
+									dao.UserDelete(sLoginUserno);
+									break;
+									
+								case 5:
+									//공지사항
+									program.ProgramMenu("사용자",sLoginUserno);
+									break;
+									
+								case 6:
+									//로그아웃
+									while(true) {
+										System.out.println("[안내메시지] 로그아웃을 하시려면 Q!를 입력해주세요.");
+										String logout = sc.nextLine();
+										if(logout.equals("Q!")) {
+											// 로그아웃상태
+											break;
+										}
+									}
+									break;
+												
+								default :
+									System.out.println("[안내메시지]보기에 있는 메뉴번호를 입력해주세요");
+							}
 						}
+					} else {
+						System.out.println("[안내메시지] 관리자/사용자의 구분이 되지 않습니다. 관리자에게 문의하세요.");
 					}
+						break;
+				}
 					break;
 					
-				case 3 : // 도서관 찾기
+				case 3 : // 아이디 찾기
+					System.out.println("# 개인정보확인 #");
+					System.out.print("☞ 이름 : ");
+					String findIDName = sc.nextLine();
+					System.out.print("☞ 전화번호:");
+					String findIDCallNumber = sc.nextLine();
+					dao.findID(findIDName, findIDCallNumber);
+					break;
+					
+				case 4 :  //도서관 찾기
 					System.out.println("☞ 도서관 찾을 지역을 검색하세요.");
 					String sLocalLib = sc.nextLine();
 					
@@ -383,10 +513,29 @@ class SignUp{ //회원가입 멤버변수
 	 private String id; // 회원아이디
 	 private String password; // 회원패스워드
 	 private int rentalcnt; // 회원대여횟수
+	 private int overduecnt; // 연체횟수
+	 
 	public SignUp() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+
+	public SignUp(String userno, String div, String uname, String rrn, String address, String phone_Number, String id,
+			String password, int rentalcnt, int overduecnt) {
+		super();
+		this.userno = userno;
+		this.div = div;
+		this.uname = uname;
+		this.rrn = rrn;
+		this.address = address;
+		this.phone_Number = phone_Number;
+		this.id = id;
+		this.password = password;
+		this.rentalcnt = rentalcnt;
+		this.overduecnt = overduecnt;
+	}
+
 
 	public SignUp(String userno,String div, String uname, String rrn, String address, String phone_Number, String id, String password, int rentalcnt) {
 		super();
@@ -427,6 +576,12 @@ class SignUp{ //회원가입 멤버변수
 	
 	public SignUp(int rentalcnt) {
 		this.rentalcnt = rentalcnt;
+	}
+
+	public SignUp(int rentalcnt, int overduecnt) {
+		super();
+		this.rentalcnt = rentalcnt;
+		this.overduecnt = overduecnt;
 	}
 
 	public String getUserno() {
@@ -482,6 +637,12 @@ class SignUp{ //회원가입 멤버변수
 	}
 	public void setRentalcnt(int rentalcnt) {
 		this.rentalcnt = rentalcnt;
+	}
+	public int getOverduecnt() {
+		return overduecnt;
+	}
+	public void setOverduecnt(int overduecnt) {
+		this.overduecnt = overduecnt;
 	}
 }
 //---------------------------------------------- 도서관 멤버변수 --------------------------------------------------------------------	

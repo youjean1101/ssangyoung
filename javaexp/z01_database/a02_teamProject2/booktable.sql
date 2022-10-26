@@ -7,10 +7,22 @@ CREATE TABLE bookUser(
 	phone_Number char(13),
 	id varchar2(20) CONSTRAINT bookUser_id_uq UNIQUE,
 	password varchar2(20) not null,
-	rentalcnt NUMBER
+	rentalcnt NUMBER,
+	overduecnt NUMBER
 );
+SELECT * FROM bookuser WHERE rrn = '990101-1000000';
 
-SELECT * FROM bookUser;
+SELECT * FROM bookuser
+WHERE uname = '김길동'
+AND phone_number = '010-123-0000';
+
+SELECT * FROM (
+SELECT * FROM bookuser
+WHERE overduecnt < 1
+AND div = 'user'
+ORDER BY rentalcnt DESC)
+WHERE rownum<=3;
+
 DROP TABLE bookUser;
 
 CREATE SEQUENCE userno_seq
@@ -21,12 +33,25 @@ CREATE SEQUENCE userno_seq
 	
 DROP SEQUENCE classno_seq;
 
-INSERT INTO bookUser values(userno_seq.nextval,'manager','홍길동','990101-1000000','인천광역시 부평구 삼산동','010-000-0000','himan','1234',10);
-INSERT INTO bookUser values(userno_seq.nextval,'manager','test','990102-1000000','인천광역시 부평구 삼산동','010-000-0000','test','5678',null);
-INSERT INTO bookUser values(userno_seq.nextval,'user','김길동','951231-2000000','서울 신림','010-123-0000','goodgirl','9999',2);
-INSERT INTO bookUser values(userno_seq.nextval,'user','이길동','961021-2000000','부산 마린시티','010-456-0000','higirl','8888',1);
-INSERT INTO bookUser values(userno_seq.nextval,'user','마길동','970703-1000000','제주도 서귀포시','010-789-0000','goodman','5555',0);
+SELECT div,userno FROM bookuser
+WHERE id = 'himan'
+AND password ='1234';
+
+DELETE FROM bookUser WHERE userno='1003';
+
+INSERT INTO bookUser values(userno_seq.nextval,'manager','홍길동','990101-1000000','인천광역시 부평구 삼산동','010-000-0000','himan','1234',0,0);
+INSERT INTO bookUser values(userno_seq.nextval,'manager','test','990102-1000000','인천광역시 부평구 삼산동','010-000-0000','test','5678',0,0);
+INSERT INTO bookUser values(userno_seq.nextval,'user','김길동','951231-2000000','서울 신림','010-123-0000','goodgirl','9999',8,3);
+INSERT INTO bookUser values(userno_seq.nextval,'user','이길동','961021-2000000','부산 마린시티','010-456-0000','higirl','8888',9,1);
+INSERT INTO bookUser values(userno_seq.nextval,'user','마길동','970703-1000000','제주도 서귀포시','010-789-0000','goodman','5555',3,0);
 DELETE FROM bookUser;
+
+UPDATE BOOKUSER 
+SET rentalcnt = 1,
+overduecnt = 3
+WHERE USERNO ='1022'
+AND div = 'user';
+
 
 SELECT * FROM bookUser WHERE div = 'manager';
 /*
@@ -82,8 +107,9 @@ CREATE SEQUENCE call_seq
 DROP SEQUENCE classno_seq;
 
 SELECT * FROM CALL;
+SELECT * FROM bookuser;
 SELECT callno,userno,callcontents FROM CALL WHERE MANAGERNO is null;
-INSERT INTO CALL VALUES('A'||call_seq.nextval,'1000','사이트가 왜이렇게 어려워요?',null,null);
+INSERT INTO CALL VALUES('A'||call_seq.nextval,'1024','사이트가 왜이렇게 어려워요?',null,null);
 INSERT INTO CALL VALUES('A100004','9995','오메',null,null);
 SELECT count(*) cnt FROM CALL WHERE CALLNO = '12ㄷ';
 
@@ -103,10 +129,10 @@ SET callcontents = '회원 상담수정'
 WHERE callno = 'A100003'
 AND userno = '9997';
 
-INSERT INTO call VALUES('A100000','9997','재밌는책추천해주세요.','9999','채쌤의 자바책');
-INSERT INTO call VALUES('A100002','9996','공부하기 좋은 책 추천해주세요.','9999','오라클');
-INSERT INTO call VALUES('A100005','9996','테스트1.',null,null);
-INSERT INTO call VALUES('A100006','9996','테스트2.',null,null);
+INSERT INTO call VALUES('A100000','1027','재밌는책추천해주세요.','1025','채쌤의 자바책');
+INSERT INTO call VALUES('A100002','1027','공부하기 좋은 책 추천해주세요.','1025','오라클');
+INSERT INTO call VALUES('A100005','1029','테스트1.',null,null);
+INSERT INTO call VALUES('A100006','1028','테스트2.',null,null);
 DELETE FROM call WHERE callno = 'A100003';
 
 --------------------------------------------------------------------------------------------------
@@ -140,17 +166,18 @@ FROM PROGRAM;
 SELECT * FROM program 
 WHERE pname LIKE '%'||'북토크'||'%';
 
-select noticedate FROM program ;
+select * FROM program ;
+SELECT * FROM program WHERE pno = 1;
 
-INSERT INTO program values(pno_seq.nextval,'북토크',sysdate,'20221030','1000');
-INSERT INTO program values(pno_seq.nextval,'중고책바자회',sysdate,'20221231','1000');
+INSERT INTO program values(pno_seq.nextval,'북토크',sysdate,'20221030','1025');
+INSERT INTO program values(pno_seq.nextval,'중고책바자회',sysdate,'20221231','1025');
 DELETE FROM program WHERE pno ='2';
 --// 삭제하면 currval로 추가 되야함. -> 어쩔수 없음 구멍난채로 해야함
 --INSERT INTO program values(pno_seq.currval,'베스트셀러 작가 강연','20221101','20221101','1000');
-INSERT INTO program values(pno_seq.nextval,'테스트','20221001','20221022','1000');
-INSERT INTO program values(pno_seq.nextval,'테스트2','20221001','20221023','1000');
-INSERT INTO program values(pno_seq.nextval,'테스트3','20221001','20221023','1000');
-INSERT INTO program values(pno_seq.nextval,'테스트4','20221001','20221023','1000');
+INSERT INTO program values(pno_seq.nextval,'테스트','20221001','20221022','1025');
+INSERT INTO program values(pno_seq.nextval,'테스트2','20221001','20221023','1025');
+INSERT INTO program values(pno_seq.nextval,'테스트3','20221001','20221023','1025');
+INSERT INTO program values(pno_seq.nextval,'테스트4','20221001','20221023','1025');
 
 DELETE FROM program;
 DELETE FROM program WHERE pno ='1';
@@ -345,19 +372,37 @@ AND returnwhether='X';
 SELECT * FROM books
 WHERE isbn = '9788966263301';
 
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1001','9791186710777','20221012','X',sysdate+14,'X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1027','9791186710777','20221012','X',sysdate+14,'X');
 
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1001','9791186710777','20221010','X',null,'X','X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1004','9788968481475','20221014','X',null,'X','X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1006','9791156645023','20221020','X',null,'X','X');
-INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1003','9791163033486','20221001','X','20221024','O','O');
-
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1028','9791156645023','20221010','X',null,'X','X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1029','9788968481475','20221014','X',null,'X','X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1027','9788966263301','20221020','X',null,'X','X');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1029','9791163033486','20221001','X','20221024','O','O');
+INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1028','100000000000','20210909','X',null,'X','X');
+SELECT * FROM bookuser;
+SELECT * FROM books;
 SELECT * FROM rental;
 
-SELECT * FROM rental 
+SELECT count(*) rentalcnt FROM rental
+WHERE userno = '1020';
+
+SELECT count(*) overduecnt FROM rental 
 WHERE (sysdate-rentaldate) >= 14
 AND (rentaldate-returndate) IS NULL
 OR (returndate-rentaldate) >= 14;
+
+SELECT userno 
+FROM rental 
+WHERE userno IN(
+	SELECT userno
+	from rental
+	WHERE userno ='1010');
+
+SELECT count(*) overduecnt FROM rental 
+WHERE userno = '1010'
+AND (((sysdate-rentaldate) >= 14
+AND (rentaldate-returndate) IS NULL)
+OR (returndate-rentaldate) >= 14);
 
 SELECT userno FROM rental
 WHERE (sysdate-rentaldate) >= 14
@@ -487,6 +532,12 @@ select * FROM classification;
 select * FROM books;
 UPDATE books SET RENTALWHETHER ='X';
 select * FROM rental;
+
+DROP TABLE bookuser;
+DROP TABLE CALL;
+DROP TABLE program;
+DROP TABLE rental;
+DROP TABLE ship;
 
 DELETE FROM rental;
 select * FROM ship;

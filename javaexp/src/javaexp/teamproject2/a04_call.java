@@ -341,7 +341,7 @@ public class a04_call {
 //---------------------------------------- 상담출력 main()문 ----------------------------------------------
 //public static void main(String[] args) {
 		// TODO Auto-generated method stub
-	public void CallMenu(String auth) {
+	public void CallMenu(String auth, String userno) {
 		while(true) {
 //			System.out.println("☞ 관리자/사용자 중 무엇입니까?");
 //			String sUserAuth = sc.nextLine(); //일단 입력받고 나중에 적용시키기
@@ -386,7 +386,7 @@ public class a04_call {
 			
 							System.out.println("☞ 상담의 답변 입력해주세요.");
 							String sInputCallAnswer = sc.nextLine();
-							dao.callanswerUpdate("등록",new ManagerCall(sInputCallNo,"9999",sInputCallAnswer)); // 상담답변 달기(선택한 상담번호,관리자회원번호,상담답변)
+							dao.callanswerUpdate("등록",new ManagerCall(sInputCallNo,userno,sInputCallAnswer)); // 상담답변 달기(선택한 상담번호,관리자회원번호,상담답변)
 							continue;
 							
 						case 4:
@@ -406,7 +406,7 @@ public class a04_call {
 							
 							System.out.println("☞ 상담의 수정할 답변 입력해주세요."); 
 							String sUpInputCallAnswer = sc.nextLine();
-							dao.callanswerUpdate("수정",new ManagerCall(sUpInputCallNo,"9999",sUpInputCallAnswer)); //관리자회원번호 넣기
+							dao.callanswerUpdate("수정",new ManagerCall(sUpInputCallNo,userno,sUpInputCallAnswer)); //관리자회원번호 넣기
 							continue;
 
 						default:
@@ -430,7 +430,7 @@ public class a04_call {
 					switch(callUserMenuChoice) {
 						case 1:
 							System.out.println("# 내가 신청했던 상담정보 #");
-							dao.callUserSelect("9996"); // 회원번호 넣기
+							dao.callUserSelect(userno); // 회원번호 넣기
 							continue;
 						
 						case 2:
@@ -442,7 +442,7 @@ public class a04_call {
 									System.out.println("☞ 상담내용을 입력해주세요.");
 									String sInputCallContents = sc.nextLine();
 									
-									dao.callInsert(new UserCall("9996",sInputCallContents)); // 상담번호 배정
+									dao.callInsert(new UserCall(userno,sInputCallContents)); // 상담번호 배정
 									break;
 									
 								} else if(sAddCall.toUpperCase().equals("N")) {
@@ -459,7 +459,7 @@ public class a04_call {
 							String sUpdateCallChoice;
 							
 							while(true) {
-								dao.callUserSelect("9996");
+								dao.callUserSelect(userno);
 								System.out.println("☞ 수정할 상담의 상담번호를 입력해주세요.");
 								sUpdateCallChoice = sc.nextLine();
 								
@@ -472,11 +472,11 @@ public class a04_call {
 							System.out.println("☞ 수정할 상담내용을 입력해주세요.");
 							String sUpdateCallContents = sc.nextLine();
 							
-							dao.callContentsUpdate(new UserCall(sUpdateCallChoice,"9996",sUpdateCallContents));
+							dao.callContentsUpdate(new UserCall(sUpdateCallChoice,userno,sUpdateCallContents));
 							continue;
 						
 						case 4:
-							dao.callUserSelect("9996");
+							dao.callUserSelect(userno);
 							while(true) {
 								System.out.println("☞ 정말 상담을 삭제하시겠습니까?(Y/N)");
 								String sCallRemoveAnswer = sc.nextLine();
@@ -515,8 +515,6 @@ public class a04_call {
 						}		
 				break;
 				}
-				
-				
 		break;
 				
 			} else {
