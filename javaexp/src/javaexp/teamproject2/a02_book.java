@@ -248,8 +248,7 @@ public class a02_book {
 		boolean bReturn = false;
 		String sql = "SELECT * \r\n"
 					+ "FROM books\r\n"
-					+ "WHERE isbn = '" + isbn + "'\r\n"
-					+ "AND rentalwhether = 'X'";
+					+ "WHERE isbn = '" + isbn + "'";
 		
 		try {
 			con = DB.con();
@@ -635,7 +634,7 @@ public class a02_book {
 		}
 	}
 // ----------------------------------------------도서삭제 기능메서드--------------------------------------------------------------------
-	public void bookDelete(int delisbn) {
+	public void bookDelete(long delisbn) {
 		String sql = "DELETE FROM books WHERE isbn = " + delisbn;
 	
 		try {
@@ -748,9 +747,19 @@ public class a02_book {
 					case 3 :
 						dao.bookListAllPrint();
 						
-						System.out.println("☞ 다음 중 수정할 도서번호를 입력하세요.");
-						long iUpdateBook = sc.nextLong();
-						sc.nextLine();
+						long iUpdateBook;
+						while(true) {
+							System.out.println("☞ 다음 중 수정할 도서번호를 입력하세요.");
+							iUpdateBook = sc.nextLong();
+							sc.nextLine();
+							
+							if(dao.IsBookSelect(iUpdateBook)==true) {
+								break;
+							} else {
+								System.out.println("[안내메시지] 도서관에 없는 도서번호입니다. 도서번호를 정확히 입력해주세요.");
+							}
+						}
+						
 						
 						Book upb = new Book();
 					
@@ -851,8 +860,18 @@ public class a02_book {
 						
 					case 4 :
 						dao.bookListAllPrint();
-						System.out.println("☞ 다음 중 삭제할 도서번호를 입력하세요.");
-						int iDeleteBookIsbn = sc.nextInt();
+						long iDeleteBookIsbn;
+						
+						while(true) {
+							System.out.println("☞ 다음 중 삭제할 도서번호를 입력하세요.");
+							iDeleteBookIsbn = sc.nextInt();
+							if(dao.IsBookSelect(iDeleteBookIsbn)==true) {
+								break;
+							} else {
+								System.out.println("[안내메시지] 도서관에 없는 도서번호입니다. 도서번호를 정확히 입력해주세요.");
+							}
+						}
+						
 						dao.bookDelete(iDeleteBookIsbn);
 						break;
 						
@@ -1048,7 +1067,7 @@ class Book{
 		this.bname = bname;
 	}
 
-	public Book(int isbn) {
+	public Book(long isbn) {
 		super();
 		this.isbn = isbn;
 	}

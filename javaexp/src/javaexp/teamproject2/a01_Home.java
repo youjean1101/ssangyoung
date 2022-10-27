@@ -358,7 +358,7 @@ public class a01_Home {
 					
 					List<SignUp> loginList = dao.login(new SignUp(id,passwd));
 					for(SignUp lo:loginList) {
-						System.out.println("[안내메시지]\""+lo.getUname()+"\"님이 정상적으로 로그인 되었습니다.\n");
+						System.out.println("[안내메시지]"+lo.getDiv()+"인 \""+lo.getUname()+"\"님이 정상적으로 로그인 되었습니다.\n");
 						sLoginDiv = lo.getDiv();
 						sLoginUserno = lo.getUserno();
 					}
