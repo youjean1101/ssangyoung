@@ -42,11 +42,13 @@ public class a03_Program {
 				while(rs.next()) {
 					System.out.println("TOP"+rs.getRow()+" 독서왕의 정보");
 					System.out.println("이름:"+rs.getString("uname"));
-					System.out.println("아이디:"+rs.getString("id")+"\n");
+					System.out.println("아이디:"+rs.getString("id"));
+					System.out.println("대여횟수:"+rs.getInt("rentalcnt"));
+					System.out.println("연체횟수:"+rs.getInt("overduecnt")+"\n");
 				}
-				System.out.println("☆★TOP3에겐 소정의 선물이 준비되어 있습니다.(상품 : 스타벅스 아메이카노 상품권)");
-				System.out.println("상품을 못받으신 분은 다음기회에 도전하시길 바랄게요~~☆★\n");
-				System.out.println("※ 공지 : 연체가 3번미만이신 분은 이벤트에 참여할 수 없습니다.");
+				System.out.println("☆★TOP3에겐 소정의 선물이 준비되어 있습니다.(상품 : 스타벅스 아메리카노 상품권)");
+				System.out.println("상품을 못받으신 분은 다음기회에 도전하시길 바랄게요~~☆★");
+				System.out.println("※ 공지 : 연체가 3번이상이신 분은 이벤트에 참여할 수 없습니다.\n");
 				
 			} catch (SQLException e) {
 				System.out.println("기타 sql 처리 예외:"+e.getMessage());

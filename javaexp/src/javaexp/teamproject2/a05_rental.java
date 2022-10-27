@@ -112,10 +112,8 @@ public class a05_rental {
 	}	
 	
 // --------------------------------------------- 반납 배달 날짜 데이터 넣기-----------------------------------------
-	public void returnDelieveryUpdate(Delivery add) {
-		String sql = "UPDATE SHIP \r\n"
-				+ "SET returnshipdate = sysdate+2\n"
-				+ "WHERE rentalno = ?"; 
+	public void returnDelieveryUpdate(Delivery add,String userno) {
+		String sql = "INSERT INTO ship values('ABC'||shipno_seq.nextval,NULL,sysdate+2, ?, ?)"; 
 	
 		try {
 			con = DB.con();
@@ -123,8 +121,9 @@ public class a05_rental {
 			pstmt = con.prepareStatement(sql);
 								
 				pstmt.setString(1, add.getsRentalno());
+				pstmt.setString(2, userno);
 				
-//				System.out.println("[안내메시지] 회원님의 반납배달등록이 완료되었습니다.\n");
+				System.out.println("[안내메시지] 회원님의 반납배달등록이 완료되었습니다.\n");
 				
 				rs = pstmt.executeQuery();
 				
@@ -154,7 +153,7 @@ public class a05_rental {
 			pstmt.setString(1, add.getsRentalno());
 			pstmt.setString(2, add.getsUserno());
 			
-//			System.out.println("[안내메시지] 회원님의 대여배달등록이 완료되었습니다.\n");
+			System.out.println("[안내메시지] 회원님의 대여배달등록이 완료되었습니다.\n");
 			
 			rs = pstmt.executeQuery();
 			
@@ -1238,7 +1237,7 @@ public class a05_rental {
 									dao.notReturnAllPrint("미반납",userno);
 									String returnUserRentalno;
 									while(true) {
-										System.out.println("☞ 반납하실 반납 번호를 입력해주세요.");
+										System.out.println("☞ 반납하실 대여번호를 입력해주세요.");
 										returnUserRentalno =sc.nextLine();
 										
 										if(dao.IsRentalSelect("rentalno", new Rental(returnUserRentalno)) == true){
@@ -1255,7 +1254,7 @@ public class a05_rental {
 									
 									List<Rental> returnshiplist = dao.delieveryAddInfo("반납배달",userno);
 									for(Rental r : returnshiplist ) {
-									dao.returnDelieveryUpdate(new Delivery(r.getsRentalno(),userno)); // 대여테이블 번호 입력
+									dao.returnDelieveryUpdate(new Delivery(r.getsRentalno()),userno); // 대여테이블 번호 입력
 									}
 					
 									break; // 책반납여부 break;

@@ -643,6 +643,7 @@ public class a02_book {
 			stmt = con.createStatement();
 			stmt.executeUpdate(sql);
 			con.commit();
+			System.out.println("[안내메시지] 도서삭제가 완료되었습니다.");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -721,10 +722,10 @@ public class a02_book {
 								
 								int iclassno;
 								while(true) {
-									System.out.print("☞ 분류번호(※위에 보기중에 선택) : "); // 도서분류 조건중에 입력하게끔 조건걸기
+									System.out.print("☞ 분류번호(※위에 보기중에 선택) : "); 
 									iclassno = sc.nextInt();
 									
-									if(dao.IsclassficationSelect(iclassno)==true) { // 입력값의 테이블에 데이터가 있으면, 답변입력란으로 넘어감
+									if(dao.IsclassficationSelect(iclassno)==true) { 
 										break;
 									} else {
 										System.out.println("[안내메시지] 선택하신 분류번호가 없습니다. 다시 입력해주세요. \n");
@@ -790,7 +791,6 @@ public class a02_book {
 								System.out.print("☞ 변경할 도서명: ");
 								String sUpdateBname = sc.nextLine();
 								upb.setBname(sUpdateBname);
-								System.out.println(upb);
 								dao.bookUpdate(iUpdateBook,"도서명",upb);
 								System.out.println("[안내메시지] 도서명 변경이 완료되었습니다.");
 								break;

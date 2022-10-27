@@ -42,7 +42,7 @@ public class a01_Home {
 					String sPassWd = sc.nextLine();
 					System.out.print("☞ 이름: "); 
 					String sUname = sc.nextLine();
-					System.out.print("☞ 주민번호(000000-000000): " ); 
+					System.out.print("☞ 주민번호(000000-0000000): " ); 
 					String sRrn = sc.nextLine();
 					if (dao.IsRNNSelect(sRrn)==true) {
 						System.out.println("[안내메시지] 등록 되어있는 주민등록번호입니다. 다시 입력하시거나,회원이신지 아이디 찾기를 해주세요.");
@@ -364,7 +364,7 @@ public class a01_Home {
 					}
 					if(sLoginout.equals("in")) {
 						if(sLoginDiv.equals("manager")) {
-							// 관리자 조건걸기 (회원테이블에서 div ='manager'/'user' if문으로 찾기)
+		
 							while(true) {
 								System.out.println("#관리자#");
 								System.out.println("1: 도서 조회/등록/수정/삭제");
@@ -402,7 +402,7 @@ public class a01_Home {
 											System.out.println("[안내메시지] 로그아웃을 하시려면 Q!를 입력해주세요.");
 											String logout = sc.nextLine();
 											if(logout.equals("Q!")) {
-												// 로그아웃상태
+												System.out.println("[안내메시지] 로그아웃되었습니다.");
 												break; // 사용자로 넘어감 -> 회원가입 메뉴로 돌아가야함
 											}
 										}
@@ -411,7 +411,7 @@ public class a01_Home {
 									default :
 										System.out.println("[안내메시지]보기에 있는 메뉴번호를 입력해주세요");
 								}
-								break;
+//								break;
 							}
 						
 						} else if(sLoginDiv.equals("user")) {
@@ -460,6 +460,7 @@ public class a01_Home {
 										String logout = sc.nextLine();
 										if(logout.equals("Q!")) {
 											// 로그아웃상태
+											System.out.println("[안내메시지] 로그아웃이 되었습니다.");
 											break;
 										}
 									}
@@ -472,7 +473,7 @@ public class a01_Home {
 					} else {
 						System.out.println("[안내메시지] 관리자/사용자의 구분이 되지 않습니다. 관리자에게 문의하세요.");
 					}
-						break;
+					break;
 				}
 					break;
 					
@@ -498,8 +499,10 @@ public class a01_Home {
 				default : 
 					System.out.println("[안내메시지] 보기에 있는 숫자만 입력해주세요.");
 					break;
+					
 				}
-			}
+			} 
+			
 	}
 }
 //---------------------------------------------- 회원가입 멤버변수 --------------------------------------------------------------------	

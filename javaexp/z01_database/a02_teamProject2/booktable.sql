@@ -47,11 +47,11 @@ INSERT INTO bookUser values(userno_seq.nextval,'user','마길동','970703-100000
 DELETE FROM bookUser;
 
 UPDATE BOOKUSER 
-SET rentalcnt = 1,
-overduecnt = 3
-WHERE USERNO ='1022'
+SET rentalcnt = 87,
+overduecnt = 2
+WHERE USERNO ='1029'
 AND div = 'user';
-
+SELECT * FROM BOOKUSER b ;
 
 SELECT * FROM bookUser WHERE div = 'manager';
 /*
@@ -70,7 +70,7 @@ SELECT * FROM bookUser
 WHERE id = ''
 AND password = '';
 
-SELECT * FROM bookUser
+SELECT * FROM bookUser;
 WHERE id = '';
 
 SELECT * FROM bookUser
@@ -157,6 +157,9 @@ SELECT pno_seq.currval pno,
 		pname,ptime,noticedate, managerno 
 FROM PROGRAM;
 
+SELECT * FROM program
+WHERE noticedate = to_char(sysdate,'YYYY-MM-DD');
+
 /*
  private String pname; // 프로그램명
  private String ptime; // 프로그램시간
@@ -168,16 +171,20 @@ WHERE pname LIKE '%'||'북토크'||'%';
 
 select * FROM program ;
 SELECT * FROM program WHERE pno = 1;
-
+DELETE FROM program;
 INSERT INTO program values(pno_seq.nextval,'북토크',sysdate,'20221030','1025');
 INSERT INTO program values(pno_seq.nextval,'중고책바자회',sysdate,'20221231','1025');
+INSERT INTO program values(pno_seq.nextval,'쌍용학원 팀프로젝트2(도서관리)','20221028','20221028','1025');
+
 DELETE FROM program WHERE pno ='2';
+SELECT * FROM BOOKUSER b ;
 --// 삭제하면 currval로 추가 되야함. -> 어쩔수 없음 구멍난채로 해야함
 --INSERT INTO program values(pno_seq.currval,'베스트셀러 작가 강연','20221101','20221101','1000');
 INSERT INTO program values(pno_seq.nextval,'테스트','20221001','20221022','1025');
 INSERT INTO program values(pno_seq.nextval,'테스트2','20221001','20221023','1025');
 INSERT INTO program values(pno_seq.nextval,'테스트3','20221001','20221023','1025');
 INSERT INTO program values(pno_seq.nextval,'테스트4','20221001','20221023','1025');
+INSERT INTO program values(pno_seq.nextval,'테스트4','20221001','20221027','1025');
 
 DELETE FROM program;
 DELETE FROM program WHERE pno ='1';
@@ -235,7 +242,7 @@ CREATE TABLE books(
 SELECT * FROM books 
 WHERE rentalwhether = 'X';
 SELECT * FROM books;
-
+DELETE FROM books;
 SELECT * 
 FROM books
 WHERE isbn = '9788966263301'
@@ -310,7 +317,7 @@ private int classno;
 CREATE TABLE rental(
 	rentalno varchar2(20) PRIMARY key,
 	userno varchar2(10) CONSTRAINT rental_userno_fk REFERENCES bookUser(userno),
-	isbn NUMBER(13) CONSTRAINT rental_isbn_fk REFERENCES books(isbn) CONSTRAINT rental_isbn_uq UNIQUE,
+	isbn NUMBER(13) CONSTRAINT rental_isbn_fk REFERENCES books(isbn),
 	rentaldate DATE,
 	rentalshipwhether varchar2(20) CONSTRAINT rental_rentalshipwhether_ck check(rentalshipwhether IN('O','X')),
 	returndate DATE,
@@ -327,7 +334,7 @@ CREATE SEQUENCE rentalno_seq
 	
 DROP SEQUENCE rentalno_seq;
 
-SELECT * FROM rental 
+SELECT * FROM rental;
 WHERE isbn=9791186710777;
 
 SELECT * FROM rental
@@ -382,6 +389,7 @@ INSERT INTO rental VALUES('AA'||rentalno_seq.nextval,'1028','100000000000','2021
 SELECT * FROM bookuser;
 SELECT * FROM books;
 SELECT * FROM rental;
+
 
 SELECT count(*) rentalcnt FROM rental
 WHERE userno = '1020';
@@ -440,6 +448,9 @@ SET rentalshipwhether = 'O'
 WHERE userno = '1003';
 
 DELETE FROM rental;
+DELETE FROM ship;
+UPDATE books
+SET rentalwhether = 'X';
 
 UPDATE rental
 SET returnwhether ='O',
@@ -453,9 +464,11 @@ CREATE TABLE ship(
 	shipno varchar2(20) PRIMARY key,
 	rentalshipdate DATE,
 	returnshipdate DATE,
-	rentalno varchar2(20) CONSTRAINT ship_rentalno_fk REFERENCES rental(rentalno) CONSTRAINT ship_rentalno_uq UNIQUE,
+	rentalno varchar2(20) CONSTRAINT ship_rentalno_fk REFERENCES rental(rentalno),
 	userno varchar2(10) CONSTRAINT ship_userno_fk REFERENCES bookuser(userno)
 );
+
+
 /*
 private String shipno
 private String rentalshipdate
@@ -468,6 +481,17 @@ select s.*,r.*
 FROM ship s,rental r
 WHERE s.RENTALNO = r.RENTALNO
 AND s.userno = '1001';
+
+SELECT * FROM rental;
+SELECT * FROM ship;
+
+INSERT INTO ship values('ABC'||shipno_seq.nextval,NULL,sysdate+2,'AA1000','1029');
+
+UPDATE SHIP
+SET returnshipdate = sysdate+2
+WHERE rentalno = 'AA1001';
+
+				
 
 DROP TABLE ship;
 DELETE FROM ship;
@@ -484,8 +508,8 @@ SELECT * FROM ship;
 UPDATE SHIP 
 SET returnshipdate ='20221110'
 WHERE rentalno = 'AA1000';
-
-INSERT INTO ship values('ABC'||shipno_seq.nextval,sysdate+2,NULL,'AA1017','1001');
+SELECT * FROM BOOKUSEr;
+INSERT INTO ship values('ABC'||shipno_seq.nextval,sysdate+2,NULL,'AA1044','1029');
 
 INSERT INTO ship values('ABC'||shipno_seq.nextval,sysdate+2,NULL,'AA100003','1000');
 DELETE FROM ship WHERE shipno = 'ABC1021';
