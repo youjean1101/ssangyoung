@@ -172,11 +172,11 @@ WHERE pname LIKE '%'||'북토크'||'%';
 select * FROM program ;
 SELECT * FROM program WHERE pno = 1;
 DELETE FROM program;
-INSERT INTO program values(pno_seq.nextval,'북토크',sysdate,'20221030','1025');
-INSERT INTO program values(pno_seq.nextval,'중고책바자회',sysdate,'20221231','1025');
-INSERT INTO program values(pno_seq.nextval,'쌍용학원 팀프로젝트2(도서관리)','20221028','20221028','1025');
-
-DELETE FROM program WHERE pno ='2';
+INSERT INTO program values(pno_seq.nextval,'북토크',sysdate,'20221030','1031');
+INSERT INTO program values(pno_seq.nextval,'중고책바자회',sysdate,'20221231','1031');
+INSERT INTO program values(pno_seq.nextval,'쌍용학원 팀프로젝트2(도서관리)','20221028','20221028','1031');
+SELECT * FROM bookuser;
+DELETE FROM program;
 SELECT * FROM BOOKUSER b ;
 --// 삭제하면 currval로 추가 되야함. -> 어쩔수 없음 구멍난채로 해야함
 --INSERT INTO program values(pno_seq.currval,'베스트셀러 작가 강연','20221101','20221101','1000');
@@ -567,4 +567,6 @@ DELETE FROM rental;
 select * FROM ship;
 select * FROM library;
 
+select * FROM program;
+SELECT * FROM bookuser ORDER BY rentalcnt desc;
 

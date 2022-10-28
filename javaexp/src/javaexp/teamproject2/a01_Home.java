@@ -329,8 +329,11 @@ public class a01_Home {
 		a03_Program program = new a03_Program();
 		a04_call call = new a04_call();
 		a05_rental rental = new a05_rental();
+		boolean logout = true;
+		
 		
 		while(true) {
+//		do {
 			System.out.println("☞ 메뉴를 선택해주세요.");
 			System.out.println("1: 회원가입");
 			System.out.println("2: 로그인");
@@ -398,14 +401,15 @@ public class a01_Home {
 										
 									case 5:
 										//로그아웃
-										while(true) {
-											System.out.println("[안내메시지] 로그아웃을 하시려면 Q!를 입력해주세요.");
-											String logout = sc.nextLine();
-											if(logout.equals("Q!")) {
-												System.out.println("[안내메시지] 로그아웃되었습니다.");
-												break; // 사용자로 넘어감 -> 회원가입 메뉴로 돌아가야함
-											}
-										}
+//										logout = false;
+//										while(true) {
+//											System.out.println("[안내메시지] 로그아웃을 하시려면 Q!를 입력해주세요.");
+//											logout = sc.nextLine();
+//											if(logout.equals("Q!")) {
+//												System.out.println("[안내메시지] 로그아웃되었습니다.");
+//												break; // 사용자로 넘어감 -> 회원가입 메뉴로 돌아가야함
+//											}
+//										}
 										break;
 										
 									default :
@@ -455,15 +459,16 @@ public class a01_Home {
 									
 								case 6:
 									//로그아웃
-									while(true) {
-										System.out.println("[안내메시지] 로그아웃을 하시려면 Q!를 입력해주세요.");
-										String logout = sc.nextLine();
-										if(logout.equals("Q!")) {
-											// 로그아웃상태
-											System.out.println("[안내메시지] 로그아웃이 되었습니다.");
-											break;
-										}
-									}
+//									logout = false;
+//									while(true) {
+//										System.out.println("[안내메시지] 로그아웃을 하시려면 Q!를 입력해주세요.");
+//										logout = sc.nextLine();
+//										if(logout.equals("Q!")) {
+//											// 로그아웃상태
+//											System.out.println("[안내메시지] 로그아웃이 되었습니다.");
+//											break;
+//										}
+//									}
 									break;
 												
 								default :
@@ -475,7 +480,7 @@ public class a01_Home {
 					}
 					break;
 				}
-					break;
+//					break;
 					
 				case 3 : // 아이디 찾기
 					System.out.println("# 개인정보확인 #");
@@ -501,7 +506,9 @@ public class a01_Home {
 					break;
 					
 				}
-			} 
+			
+			}
+//		while(logout=false);
 			
 	}
 }
