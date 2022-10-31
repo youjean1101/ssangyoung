@@ -463,11 +463,11 @@ public class a02_book {
 			con = DB.con();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
-			System.out.println("도서번호\t도서명\t출판사\t저자\t장르\t가격\t등록일자\t대여여부\t분류번호");
+			System.out.println("도서번호\t\t\t도서명\t\t\t\t출판사\t\t저자\t장르\t가격\t등록일자\t대여여부\t분류번호");
 			while(rs.next()) {
-				System.out.print(rs.getLong("isbn")+"\t");
-				System.out.print(rs.getString("bname")+"\t");
-				System.out.print(rs.getString("publisher")+"\t");
+				System.out.print(rs.getLong("isbn")+"\t\t");
+				System.out.print(rs.getString("bname")+"\t\t\t\t");
+				System.out.print(rs.getString("publisher")+"\t\t");
 				System.out.print(rs.getString("writer")+"\t");
 				System.out.print(rs.getString("genre")+"\t");
 				System.out.print(rs.getInt("price")+"\t");

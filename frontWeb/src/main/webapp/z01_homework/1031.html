@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>지금 해야할 학습사이트</title>
+</head>
+<body>
+<!-- 
+[1단계:확인] 5. https://browse.gmarket.co.kr/search?keyword=사과
+ 위 url 주소의 구성요소가 의미하는 바를 기술하고, 이것이 localhost로 전환되었을 처리 내용을 기술하세요.
+ 
+ http : 통신프로토콜(네트워크 언어 중 하나) html을 효과적으로 전송하기 위한 네트워크 언어 
+ ex) ftp, smtp, telnet, svn, ...
+ browse.gmarket.co.kr : 도메인기관에서 발급한 도메인 주소
+ 도메인기관 : 하단에 ip형식의 주소를 영문/한글 이름의 주소로 변환 처리해준다.
+  => (예를들어 gmarcket의 도메인을 ip로 나타낼때)http://192.168.172.3:7080/search?keyword=사과
+ 192.168.172.3 : 고유의 ip주소를 가지고 있어서 그 아이피 주소를 통해서 특정한 서버에 접속한다.
+	7080 : 서버가 하나의 서비스만 지원하는 것이 아니라, 여러서비스를 지원하기
+					 위하여 구분하는 port를 숫자로 지정해서 처리하는 것을 말한다.
+				 ex) 하나의 컴퓨터 서버에서 오라클 서비스도 지원하고 웹서비스1, 웹서비스2 등
+				 	여러가지 서비스를 지원할 수 있게 해준다. 그래서 동일한 port 이름을 사용하면
+				 	충돌이 일어나기에 구분해주어야 한다.
+ search?keyword=사과 : 클라이언트가 사과를 검색하여 웹서버를 호출
+ http://localhost:8080/search?keyword=사과 : 로그인(id/password)하라고 뜸.
+ 로그인이 안되면 Unauthorized 경고창 발생
+ (localhost : 현재 pc에서 서버와 클라이언트 둘다 사용해서 개발된 내용을 확인할 때, 사용하는 loopback주소를 말한다.
+			127.0.0.1도 같은 의미이다.)
+				 	
+[1단계:확인] 5. web05 웹 다이나믹 프로젝트  톰켓웹서버(5001,5080 )를 설정하여 
+초기화면 안녕하세요 로딩되서 웹서버환경과 프로젝트를 연동하여 실행하고, 캡쳐해서 과제 제출시 함께 발송하세요.
+- 5번 문제는 가능한한 ppt로 깔끔하게 추후에도 보고 처리할 수있을 정도록 정리 부탁드립니다.
+
+[1단계:확인] 8. 지금 해야할 학습 사이트를 오늘 배운 구성 코드로 작성해보세요
+database, java, html 타이틀, 내용설명, 핵심 키워드 색상 변경, p, div, span 활용
+
+[1단계:확인] 11. 이미지를 링크하여 화면에 출력하세요.
+ -->
+ <h1 align = "center"> 학습 사이트</h1>
+ <h2>database</h2>
+ 
+ <div style = "background-color:yellow;padding:20px;">
+ <p>
+데이터베이스는 <span style = "color:red">데이터를 체계적으로 관리</span>할 수 있도록 해주는 소프트웨어로 거의 모든 프로그램은 어떠한 형태로든 데이터베이스를 사용하고 있다고 볼 수 있다. 예를 들면 스마트폰의 주소록이나 메모 응용프로그램의 각종 정보들은 스마트폰에 내장된 SQLite 라는 데이터베이스를 사용하거나 네트워크를 통해 원격 서버의 데이터베이스를 연동해 동작한다.
+ </p>
+ </div>
+ 
+ 
+ <h2>java</h2>
+ <div style = "background-color:yellow;padding:20px;">
+ <p>
+ 자바(Java)는 썬 마이크로시스템즈의 제임스 고슬링과 다른 연구원들이 개발한 <span style = "color:red">객체 지향적 프로그래밍 언어</span>이다
+ </p>
+
+ <p>
+ 객체 지향 프로그래밍(Object-Oriented Programming, OOP)은 컴퓨터 프로그래밍의 패러다임의 하나이다. 객체 지향 프로그래밍은 컴퓨터 프로그램을 명령어의 목록으로 보는 시각에서 벗어나 여러 개의 독립된 단위, 즉 "객체"들의 모임으로 파악하고자 하는 것이다. <span style = "color:red">각각의 객체는 메시지를 주고받고, 데이터를 처리할 수 있다.</span>
+</p>
+</div>
+
+ <h2>html</h2>
+ <div style = "background-color:yellow;padding:20px;">
+ <p>
+ HTML(Hypertext Markup Language)은 웹 페이지와 그 내용을 <span style = "color:red">구조화하기 위해</span> 사용하는 코드입니다. 예를 들면, 컨텐트는 여러 개의 문단, 글 머리 목록이 구조화된 것이거나 사진이나 데이터 테이블일 수도 있습니다. 제목과 같이 이 글은 HTML과 그 기능에 대한 기본적인 이해를 제공할 것입니다.
+ </p>
+ </div>
+ 
+ 
+  <img src = "https://i.pinimg.com/736x/80/13/26/80132683fc0b61cc253348aa25f8d8e1.jpg"
+  	width="100" height="100">
+ 
+</body>
+</html>
