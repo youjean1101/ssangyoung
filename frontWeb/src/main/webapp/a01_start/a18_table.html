@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	td{text-align:center;}/*css로 글자들을 중앙정렬 td에는 align속성이 없음*/
+	th{background-color:yellow;color:green;border-bottom:1px double black;}
+	tr:hover{background-color:tomato;}
+	td, th{border-collapse:collapse;}
+	
+</style>
+</head>
+<body>
+<!-- 
+# 테이블 기타 속성
+1. align : 전체 화면대비 정렬
+2. width="%" : 전체 화면대비 테이블의 폭을 %로 처리
+ -->
+<table align="center" cellpadding="5" cellspacing="1" border="1" width="80%" >
+ 		<col width="15%"><col width="15%"><col width="10%"><col width="15%">
+ 		<tr><th>사원번호</th><th>사원명</th><th>직책</th><th>관리자번호</th><th>입사일</th><th>급여</th><th>보너스</th><th>부서번호</th></tr>
+ 		<tr><td>7369</td><td>SMITH</td><td>CLERK</td><td>7902</td><td>1980-12-17 00:00:00.000</td><td>800</td><td> </td><td>20</td></tr>
+ 		<tr><td>7499</td><td>ALLEN</td><td>SALESMAN</td><td>7698</td><td>1981-02-20 00:00:00.000</td><td>1600</td><td>300</td><td>30</td></tr>
+ 		<tr><td>7521</td><td>WARD</td><td>SALESMAN</td><td>7698</td><td>1981-02-22 00:00:00.000</td><td>1250</td><td>500</td><td>30</td></tr>
+ </table>
+</body>
+</html>

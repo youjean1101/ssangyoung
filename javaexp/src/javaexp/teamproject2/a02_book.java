@@ -864,7 +864,7 @@ public class a02_book {
 						
 						while(true) {
 							System.out.println("☞ 다음 중 삭제할 도서번호를 입력하세요.");
-							iDeleteBookIsbn = sc.nextInt();
+							iDeleteBookIsbn = sc.nextLong();
 							if(dao.IsBookSelect(iDeleteBookIsbn)==true) {
 								break;
 							} else {

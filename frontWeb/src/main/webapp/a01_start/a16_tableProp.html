@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 
+# 테이블의 기본 속성
+1. border : 테이블의 cell의 굵기를 설정한다.
+	- 설정하지 않으면 cell 자체가 나타나지 않음.
+2. width/height : 테이블의 넓이와 높이를 처리해준다.
+3. <col width=""> : column단위의 넓이를 처리해준다.
+ -->
+ <table border="5" width="200" height="100">
+ 	<col width="33%">
+ 	<col width="33%">
+ 	<col width="34%">
+ 	<tr><td>물건명</td><td>가격</td><td>갯수</td></tr>
+ </table>
+ <!-- ex) 2X2 테이블을 만들고 넓이와 높이는 200/200으로 처리
+ 			각 cell 안에서 과일명 4개를 입력하고, cell 간격은 동일하게 되게 처리하세요. -->
+ 			
+ 	<table border="3" width="200" height="200">
+ 		<col width = "50%">
+ 		<col width = "50%">
+ 		<tr><td align="center">사과</td><td align="center">딸기</td></tr>
+ 		<tr><td align="center">바나나</td><td align="center">포도</td></tr>
+ 	</table>
+ <!-- 
+ 1. td 속성
+ 	1) colspan : 열을 합칠 때 사용된다.
+ 		colspan="2" : 열을 합친 갯수를 속성값으로 설정
+ 	2) rowspqn : 행을 합칠 때 사용된다.
+ 		rowspan = "2" : 행을 합친 갯수를 속성값으로 설정
+  -->
+ 	<table border="1" width="300" height="300">
+ 		<col width = "25%">
+ 		<col width = "25%">
+ 		<col width = "25%">
+ 		<col width = "25%">
+ 		<tr><td colspan="2">사과</td><td>바나나</td><td rowspan = "2">포도</td></tr>
+ 		<tr><td rowspan = "2">사과</td><td colspan="2" rowspan = "2">딸기</td></tr>
+ 		<tr><td>딸기</td></tr>
+ 		<tr><td colspan="4">사과</td></tr>
+ 	</table>
+ 	<!-- 
+ 	ex1) 2X2 테이블 만들고 상단의 2셀을 가로로 합치고 출력하세요
+ 	ex2) 2X2 테이블 만들고 왼쪽 2개의 셀을 세로로 합치고 출력하세요
+ 	ex3) 3X3 테이블 만들고 중앙에 있는 3개 셀을 가로로 합치고 출력하세요
+ 	ex4) 3X3 테이블 만들고 가장 왼쪽에 있는 3개 셀을 세로로  합치고 출력하세요
+ 	 -->
+ 	 <table border="1" width="150" height="150">
+ 	 	<cor width="50%">
+ 	 	<cor width="50%">
+ 	 	<tr><td colspan="2"></td></tr>
+ 	 	<tr><td></td><td></td></tr>	 
+ 	 </table>
+ 	 
+ 	 <table border="1" width="150" height="150">
+ 	 	<cor width="50%">
+ 	 	<cor width="50%">
+ 	 	<tr><td rowspan = "2"></td><td></td></tr>
+ 	 	<tr><td></td></tr>	 
+ 	 </table>
+ 	 
+ 	 <table border="1" width="150" height="150">
+ 	 	<cor width="33%">
+ 	 	<cor width="33%">
+ 	 	<cor width="34%">
+ 	 	<tr><td></td><td></td><td></td></tr>
+ 	 	<tr><td colspan="3"></td></tr>	 
+ 	 	<tr><td></td><td></td><td></td></tr> 
+ 	 </table>
+ 	 
+ 	 <table border="1" width="150" height="150">
+ 	 	<cor width="33%">
+ 	 	<cor width="33%">
+ 	 	<cor width="34%">
+ 	 	<tr><td rowspan = "3"></td><td></td><td></td></tr>
+ 	 	<tr><td></td><td></td></tr>	 
+ 	 	<tr><td></td><td></td></tr> 
+ 	 </table>
+ 	 <h2>중앙 cell 합치기</h2>
+ 	 <table border="1" width="200" height="200">
+ 	 <col width="25%">
+ 	 <col width="25%">
+ 	 <col width="25%">
+ 	 <col width="25%">
+ 		<tr><td></td><td></td><td></td><td></td></tr>
+ 	 	<tr><td></td><td colspan="2" rowspan = "2"></td><td></td></tr>	 
+ 	 	<tr><td></td><td></td></tr>
+ 	 	<tr><td></td><td></td><td></td><td></td></tr>
+ 	 </table>
+</body>
+</html>

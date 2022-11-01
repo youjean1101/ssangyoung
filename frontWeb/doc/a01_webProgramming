@@ -25,6 +25,11 @@
 				 ex) 하나의 컴퓨터 서버에서 오라클 서비스도 지원하고 웹서비스1, 웹서비스2 등
 				 	여러가지 서비스를 지원할 수 있게 해준다. 그래서 동일한 port 이름을 사용하면
 				 	충돌이 일어나기에 구분해주어야 한다.
+			/frontWeb : context명으로 프로젝트 이름으로 설정하는 경우가 많다.
+						기본적으로 url주소창으에 포함되어서 처리된다.
+						Servers\Tomcat v10.0 Server at localhost-config\server.xml
+						파일에 path 속성에 영향을 미친다.
+				 	
 			/prj01/index.jsp?
 				\frontWeb\src\main\webapp가
 				http://192.168.172.3:7080/frontWeb가 동일한 위치를 말한다.
@@ -33,6 +38,8 @@
 			id=himan&pass=7777
 				서버에 특정한 페이지에 요청값을 넘길 때, 사용하는 방식 : 
 				query string 이라고 한다.
+				
+				
 		http://localhost:7080/prj01/id=himan&pass=7777
 			localhost : 현재 pc에서 서버와 클라이언트 둘다 사용해서
 			개발된 내용을 확인할 때, 사용하는 loopback주소를 말한다.
@@ -77,7 +84,10 @@
 		- css
 		- js
 	3) back end 언어
-		- jsp
+		- jsp ==> servlet.java ==>servlet.class 
+			==> 자바코드가 처리되어 최종적으로 html 만들어 client에게 html을 넘겨준다.
+			
+		
 		- spring frame work
 	4) 기타
 		- ajax

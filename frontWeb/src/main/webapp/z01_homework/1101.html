@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	td{text-align:center;}
+	th{background-color:yellow;color:green;border-bottom:1px double black;}
+	tr:hover{background-color:tomato;}
+	td, th{border-collapse:collapse;}
+	
+</style>
+</head>
+<body>
+<!-- 
+
+[1단계:코드] 2. 과일의 종류를 상대적/절대적 경로에 1개씩 이미지를 넣고, 호출하여 출력하세요.
+
+[1단계:코드] 4. 학원 출석시 등원 진행 순서를 정렬리스트로 로마자 V 부터 처리해보세요.
+
+[1단계:코드] 5. dl/ol/ul중첩리스트 태그를 활용하여 학교/반/번호와이름의 3단계 계층 구조의 데이터를 표현하세요.
+1단계:코드] 7. 테이블 cell 합치기 연습
+                1) 3X3 테이블에 중앙에 세로로 3개셀 합치기 처리 
+                2) 4X4 테이블에 가장 왼쪽 셀  2개셀씩 세로로 합치기 처리 
+                3) 10X10 테이블에 모두의 마블과 같이 중앙에는 비우고 상/하,좌/우 셀만있게 만드세요.
+[1단계:코드] 8. 회원정보 테이블을 번호, 아이디, 패스워드, 이름, 포인트, 권한 형식으로 3명 데이터를 표현하세요.
+                간격, 넓이 등 오늘 배운 속성 활용
+ -->
+ 상대적 경로 : <img src="musket.png" width="200" height="200" alt="이미지 없음"/><br>
+ 절대적 경로 : <img src="/a00_img/tomato.jpg" width="150" height="200" alt="이미지 없음"/><br>
+  
+  	<h2>학원 출석시 등원 진행 순서</h2>
+	 	<ol type="I" start="V" >
+	 		<li>Zoom접속</li>
+	 		<li>신호전송(입실)
+	 		<li>Zoom캡쳐
+	 		<li>수업진행
+	 	</ol>
+	 	
+	 <h2>학교/반/번호와이름</h2>
+	 	<dl>
+	 		<li> 학교
+		 		<ul>
+			 		<li> 홍익중학교
+					 		<ul type = "square">
+					 			<li>1반</li>
+					 				<ol type="1" start="1">
+							 				<li>1번 홍길동
+							 				<li>2번 김길동
+							 				<li>3번 마길동
+						 			</ol>
+					 			<li>2반
+					 				<ol type="1" start="1">
+							 				<li>1번 홍길동
+							 				<li>2번 김길동
+							 				<li>3번 마길동
+						 			</ol>
+					 			<li>3반
+					 				<ol type="1" start="1">
+							 				<li>1번 홍길동
+							 				<li>2번 김길동
+							 				<li>3번 마길동
+						 			</ol>
+			 				</ul>
+			 	</ul>
+		</dl>
+		
+<!--  1) 3X3 테이블에 중앙에 세로로 3개셀 합치기 처리 
+2) 4X4 테이블에 가장 왼쪽 셀  2개셀씩 세로로 합치기 처리 
+                3) 10X10 테이블에 모두의 마블과 같이 중앙에는 비우고 상/하,좌/우 셀만있게 만드세요.
+ 		-->
+
+	<h2>3X3 테이블에 중앙에 세로로 3개셀 합치기 처리</h2>
+ 	 <table border="1" width="200" height="200">
+ 	 <col width="33%">
+ 	 <col width="33%">
+ 	 <col width="34%">
+ 		<tr><td></td><td rowspan="3"></td><td></td></tr>
+ 		<tr><td></td><td></td></tr>
+ 		<tr><td></td><td></td></tr>
+ 	 </table>
+ 	 
+ 	<h2>4X4 테이블에 가장 왼쪽 셀  2개셀씩 세로로 합치기 처리</h2>
+ 	 <table border="1" width="200" height="200">
+ 	 <col width="25%">
+ 	 <col width="25%">
+ 	 <col width="25%">
+ 	 <col width="25%">
+ 		<tr><td rowspan="2"></td><td></td><td></td><td></td></tr>
+ 		<tr><td></td><td></td><td></td></tr>
+ 		<tr><td rowspan="2"></td><td></td><td></td><td></td></tr>
+ 		<tr><td></td><td></td><td></td></tr>
+ 	 </table>
+ 	 
+ 	<h2>10X10 테이블에 모두의 마블과 같이 중앙에는 비우고 상/하,좌/우 셀만있게 만드세요.</h2>
+	 <table border="1" width="200" height="200">
+ 	 <col width="10%">
+ 	 <col width="10%">
+ 	 <col width="10%">
+ 	 <col width="10%">
+ 	 <col width="10%">
+ 	 <col width="10%">
+ 	 <col width="10%">
+ 	 <col width="10%">
+ 	 <col width="10%">
+ 	 <col width="10%">
+ 		<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+ 		<tr><td></td><td colspan="8" rowspan = "8"></td><td></td></tr>
+ 		<tr><td></td><td></td></tr>
+ 		<tr><td></td><td></td></tr>
+ 		<tr><td></td><td></td></tr>
+ 		<tr><td></td><td></td></tr>
+ 		<tr><td></td><td></td></tr>
+ 		<tr><td></td><td></td></tr>
+ 		<tr><td></td><td></td></tr>
+ 		<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+ 	 </table>
+ 	 
+ 	<h2>회원정보 테이블을 번호, 아이디, 패스워드, 이름, 포인트, 권한 형식으로 3명 데이터를 표현하세요.
+            간격, 넓이 등 오늘 배운 속성 활용</h2>
+      <table align="center" cellpadding="5" cellspacing="1" border="1" width="80%" >
+ 		<col width="15%"><col width="15%"><col width="10%"><col width="15%">
+ 		<tr><th>번호</th><th>아이디</th><th>패스워드</th><th>이름</th><th>포인트</th><th>권한</th></tr>
+ 		<tr><td>1</td><td>himan</td><td>1234</td><td>홍길동</td><td>200</td><td>관리자</td></tr>
+ 		<tr><td>2</td><td>goodgirl</td><td>0000</td><td>정길순</td><td>300</td><td>이용자</td></tr>
+ 		<tr><td>3</td><td>higirl</td><td>9999</td><td>이길명</td><td>150</td><td>이용자</td></tr>
+ 	  </table>
+
+	 
+</body>
+</html>
