@@ -19,6 +19,7 @@ public class a02_book {
 	static a02_book dao = new a02_book();
 	static Scanner sc = new Scanner(System.in);
 	static LocalDate now = LocalDate.now();
+	static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	private PreparedStatement pstmt;
 	private Connection con;
 	private Statement stmt;
@@ -463,17 +464,20 @@ public class a02_book {
 			con = DB.con();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
-			System.out.println("도서번호\t\t\t도서명\t\t\t\t출판사\t\t저자\t장르\t가격\t등록일자\t대여여부\t분류번호");
+//			System.out.println("도서번호\t\t\t도서명\t\t\t\t\t출판사\t\t저자\t장르\t가격\t등록일자\t대여여부\t분류번호");
+			System.out.println("도서번호\t\t\t도서명");
 			while(rs.next()) {
 				System.out.print(rs.getLong("isbn")+"\t\t");
-				System.out.print(rs.getString("bname")+"\t\t\t\t");
-				System.out.print(rs.getString("publisher")+"\t\t");
-				System.out.print(rs.getString("writer")+"\t");
-				System.out.print(rs.getString("genre")+"\t");
-				System.out.print(rs.getInt("price")+"\t");
-				System.out.print(rs.getString("registdate")+"\t");
-				System.out.print(rs.getString("rentalwhether")+"\t");
-				System.out.print(rs.getInt("classno")+"\n");
+				System.out.print(rs.getString("bname")+"\n");
+				/*
+				 * System.out.print(rs.getString("publisher")+"\t\t\t");
+				 * System.out.print(rs.getString("writer")+"\t");
+				 * System.out.print(rs.getString("genre")+"\t");
+				 * System.out.print(rs.getInt("price")+"\t");
+				 * System.out.print(rs.getString("registdate")+"\t");
+				 * System.out.print(rs.getString("rentalwhether")+"\t");
+				 * System.out.print(rs.getInt("classno")+"\n");
+				 */
 			}
 			
 		} catch (SQLException e) {
@@ -694,7 +698,7 @@ public class a02_book {
 							String sAddBook = sc.nextLine();
 							if(sAddBook.toUpperCase().equals("Y")) {
 								System.out.print("☞ 도서번호: ");
-								int sIsbn = sc.nextInt();
+								long sIsbn = sc.nextLong();
 								sc.nextLine();
 								System.out.print("☞ 도서명: ");
 								String sBookName = sc.nextLine();
@@ -711,7 +715,7 @@ public class a02_book {
 								String sInputRegistdate = sc.nextLine();
 								String sRegistdate;
 								if (sInputRegistdate=="") { //입력을 안받으면,
-									DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+									
 									sRegistdate = now.format(dateTimeFormatter); //현재시각
 								}else { // 입력받으면,
 									sRegistdate = sInputRegistdate; //입력받은 값

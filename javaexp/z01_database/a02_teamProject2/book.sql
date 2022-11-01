@@ -288,7 +288,7 @@ INSERT INTO books values('9788966263301','1일 1로그 100일완성 IT지식','�
 INSERT INTO books values('9791163033486','자료구조와 함게 배우는 알고리즘 입문(자바편)','이지스 퍼블리싱','BohYoh Shibata','컴퓨터이론','22000',sysdate,'X','100' );
 INSERT INTO books values('100000000000','테스트','쌍용','유자','컴퓨터','2000','20180320','X','100');
 
-DELETE FROM books WHERE isbn = '9791186710777';
+DELETE FROM books WHERE isbn = '100000000000';
 -- o/O를 입력해서 O문자가 포함된 사원명을 검색하고자 할때.
 select * FROM books;
 UPDATE BOOKS 
