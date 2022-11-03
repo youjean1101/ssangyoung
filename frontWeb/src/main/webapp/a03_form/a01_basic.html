@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 
+# 웹폼
+1. 웹폼
+	1) 웹페이지에서 사용자 입력을 받는 폼
+	2) 로그인, 등록, 검색, 예약, 쇼핑 등
+2. 폼 요소
+	1) 폼을 만드는 다양한 태그
+	2) <input, textarea, select> 등
+# 우선 시작해보자.
+1. 로그인 폼 만들어 보기
+
+ -->
+ <h3>로그인 폼</h3>
+ <hr>
+ <!-- action : 서버단에 있는 요청값을 처리해줄 자바프로그램을 지정한다. -->
+ <form action="a02_rev.jsp">
+ 	사용자 아이디 : <input type="text" name="id01" size="15" value=""><br>
+ 	비 밀 번 호 : <input type="password" name="pass01" size="15" value="">
+ 	<input type="submit" value="로그인(변경)">
+ 	<!-- 
+ 	type submit는 버튼형태로 이것을 클릭시, action으로 지정된 곳에 데이터를 
+ 	전송해주는 역할을 한다.
+ 	 -->
+ </form>
+ <!-- 
+ 	물건명 : [	]
+ 	구매갯수 : [	]
+ 	[구매] ==> 눌렀을 때, a03_show.jsp로 물건명과 구매갯수가 출력되게 하세요.
+  -->
+  <h3>구매 폼</h3>
+  <hr>
+  <form action="a03_show.jsp">
+  	물 건 명 : <input type = "text" name="product"/><br>
+  	구 매 갯 수 : <input type = "number" name="count"/>
+  	<input type="submit" value ="구매"/>
+  </form>
+</body>
+</html>

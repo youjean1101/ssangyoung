@@ -4,10 +4,26 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	td{text-align:center;}/*css로 글자들을 중앙정렬 td에는 align속성이 없음*/
-	th{background-color:yellow;color:green;border-bottom:1px double black;}
+	td{text-align:center;}
+	/*css로 글자들을 중앙정렬 td에는 align속성이 없음
+	ps) 일반적으로 기본으로 중앙정렬을 하면 가독성이 좋고, 보다 세밀하게 하려면
+	cellpadding옵션과 함께, 코드성 데이터는 중앙정렬, 일반 문자열 데이터는 
+	왼쪽 정렬, 숫자형 데이터의 경우 오른쪽 정렬을 처리한다.
+	
+	*/
+	th{background-color:yellow;color:green;
+		border-bottom:2px double blue;}
 	tr:hover{background-color:tomato;}
-	td, th{border-collapse:collapse;}
+	table{border-collapse:collapse;}
+	/*
+	border : 2px double blue;
+		테두리에 대한 옵션을 굵기, 종류, 색상으로 설정함.
+		border-bottom : 해당 th의 하단 부분에만 설정 옵션을 처리할 때, 활용된다.
+	
+	테이블의 cell의 border는 2중의 2D형식의 라인이 default로 이것을
+	한줄로 할려면 css를 table 속성을 border-collapse로 collapse
+	처리하여야 한다.
+	*/
 	
 </style>
 </head>

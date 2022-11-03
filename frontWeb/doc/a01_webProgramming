@@ -86,8 +86,6 @@
 	3) back end 언어
 		- jsp ==> servlet.java ==>servlet.class 
 			==> 자바코드가 처리되어 최종적으로 html 만들어 client에게 html을 넘겨준다.
-			
-		
 		- spring frame work
 	4) 기타
 		- ajax

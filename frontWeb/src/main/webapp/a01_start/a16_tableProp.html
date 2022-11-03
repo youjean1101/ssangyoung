@@ -11,8 +11,13 @@
 	- 설정하지 않으면 cell 자체가 나타나지 않음.
 2. width/height : 테이블의 넓이와 높이를 처리해준다.
 3. <col width=""> : column단위의 넓이를 처리해준다.
+4. align : 전체 화면 대비 이 테이블의 정렬 위치
+ps) width 속성은 기본적으로 px, pt 단위등으로 설정하기도 하고,
+	% 상대범위단위로 설정한다.
+	table : 전체화면되면 상대적 크기 설정.
+	
  -->
- <table border="5" width="200" height="100">
+ <table align="center" border="5" width="200" height="100">
  	<col width="33%">
  	<col width="33%">
  	<col width="34%">
@@ -29,10 +34,18 @@
  	</table>
  <!-- 
  1. td 속성
+ 	td의 요소를 보통 cell이라고 하는 cell을 병합시켜서 설정할 때,
+ 	사용하는 옵션이다.
+ 	col : 컬럼
+ 	span : 확장
  	1) colspan : 열을 합칠 때 사용된다.
  		colspan="2" : 열을 합친 갯수를 속성값으로 설정
  	2) rowspqn : 행을 합칠 때 사용된다.
  		rowspan = "2" : 행을 합친 갯수를 속성값으로 설정
+ 	# 병합이 필요한 처리순서
+ 	1. 우선 기본 @@X@@ 셀을 만들어 출력
+ 	2. 병합할 td에 옵션을 colspan/rowspan을 처리하고
+ 	3. 이로인해 필요없는 td를 삭제 처리한다.
   -->
  	<table border="1" width="300" height="300">
  		<col width = "25%">

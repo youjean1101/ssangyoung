@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	/* 속성이 id로 설정된 것은 #아이디명으로 접근 및 선택*/
+	/* 초기에 link 색상*/
+	#css01:link{
+		color:pink;
+		font-size:150%;
+		text-decoration:none;
+		background-color:navy;
+	}
+	/* 하이퍼링크는 기본적으로 underline이 되어있는데,
+		css 설정으로 변경이 가능하다.*/
+	/* 초기에 방문 후 link 색상*/
+	#css01:visited{
+		color:orange;
+	}
+	/* 마우스 클릭하고 있을 때, 이동 직전*/
+	#css01:active{
+		color:navy;
+	}
+
+</style>
+
+</head>
+<body>
+<!-- 
+# 하이퍼링크 텍스트의 색상
+1. 하이퍼링크는 상태에 따라서 색상이 바뀌어 진단.
+	1) 링크 텍스트의 처음 색 - 밑줄과 함께 blue
+	2) 방문 후 링크의 색 - purple
+	3) 마우스 링크를 누르고 있는 동안(active link) - red
+2. 링크 색 변경 가능
+	1) css3를 이용하여 링크 색 지정 가능
+	
+ -->
+ <h2>링크 만들기</h2>
+ <hr>
+ <ul>
+ 	<li><a href="http://www.naver.com">네이버</a>
+ 	<li><a href="http://www.w3schools.com">w3school</a>
+ 	<li><a href="a01_hyperLink.html">내부페이지</a>
+ 	<li><a href="\a01_start\a12_img.html">(이동X)내부페이지</a>
+ 	<li><a id="css01" href="\a01_start\a12_img.html">(이동X)내부페이지</a>
+ </ul>
+<!-- 
+ex) a07_linkColorExp.html
+	a01_start\a07_poem.html 기준으로 절대 주소로 링크하되
+	초기 색상, 링크 후 색상, 클릭시 색상을 빨/파/노로 변경하여 출력되게 하세요.
+	
+ -->
+
+</body>
+</html>

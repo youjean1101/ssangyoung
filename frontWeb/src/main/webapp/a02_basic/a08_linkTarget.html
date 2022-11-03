@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 
+# 하이퍼링크의 target 속성
+1. target 속성에 따라서 새로운 창, 계층 구조의 부모 창, 특정한 frame 변경
+	등을 link로 처리할 수 있다.
+2. 속성값
+	1) _blank : 새로운 윈도우 창 로딩하면서 페이지 출력
+	2) _self : 현재 윈도우 창에서 변경(default)
+	3) _parent : 부모 윈도우 창을 변경
+	4) _top : 브라우저 윈도를 변경 처리..
+ -->
+ 	<h2>링크의 target 속성 활용</h2>
+	<hr>
+	<ul>
+		<li><a href="http://www.w3.org" target="_blank">W3C(새 윈도우)</a>
+		<li><a href="http://www.etnews.com" target="_self">전자신문(현재 윈도우)</a>
+		<li><a href="http://www.naver.com" target="_parents">네이버(부모 윈도우)</a>
+		<li><a href="http://www.mk.co.kr" target="_top">매일경제신문(브라우저 윈도우)</a>
+		<li><a href="http://www.mk.co.kr" target="frame01">매일경제</a>
+		<li><a href="http://www.etnews.co.kr" target="frame01">전자신문</a>
+		<li><a href="a01_hyperLink.html" target="frame01">내부페이지</a>
+		
+	</ul>
+	<iframe name="frame01" width="100%" height="50%"></iframe>
+	<!-- 
+	a09_linkExp.html
+	list로 메뉴1~메뉴5까지 설정하고, iframe으로 설정된 특정한 위치에 
+	해당 페이지로 변경되게 처리하세요.
+	 -->
+	 
+</body>
+</html>

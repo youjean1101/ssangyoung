@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h2>1. 온라인 쇼핑몰에 있는 내용과 같이 특정한 물품 2개 이미지와 함께 상세 설명 내용과 함께 표시되는
+	            형식으로 테이블(3X3)을 구성하여 출력하세요
+	           no  물품이미지 물품정보(물품명/가격/기타정보표기)</h2>
+	<table align ="center">
+		<caption align="left">온라인 쇼핑몰</caption>
+				<tr><th>no</th><th>물품이미지</th><th>물품정보(물품명/가격/기타정보표기)</th></tr>
+				<tbody>
+						<tr>
+							<th>1</th>
+							<th><img src="keyboard.jpg" width="100" heigh="100"></th>
+							<th>키보드/30000원/무소음이라 품절대란이니 빨리 구매하세요.</th>
+						</tr>
+						
+						<tr>
+							<th>2</th>
+							<th><img src="macbook.jpg" width="100" heigh="100"></th>
+							<th>맥북에어M1/1500000원/개발에 가성비 좋은 노트북이지만 개발입문자에게 비추.</th>
+						</tr>
+						
+						<tr>
+							<th>3</th>
+							<th><img src="riding.jpg" width="100" heigh="100"></th>
+							<th>자전거/150000원/비싼건 도둑맞으니 적당한 가격에 구매하세요.</th>
+						</tr>
+		
+				</tbody>
+	</table>
+	           
+	<h2>3. 정렬리스트로 목차 3가지를 만들고 해당 목차에 이동하는 페이지 안에 특정 위치로 이동했다가 다시 돌아 올수 있게 처리하세요.</h2>
+	<ol type="1">
+		<li><a href="1102_comeback.html">목차1</a>
+		<li><a href="1102_comeback.html">목차2</a>
+		<li><a href="1102_comeback.html">목차3</a>
+	</ol>
+	
+	<h2>4. 테이블 안에 이미지를 포함시켜서, 해당 이미지를 클릭시 링크된 내용이 출력되게 처리해보세요.
+	           (내부, 외부, 내부에 특정 위치)</h2>
+	  <table>
+	  	<tr>이미지 링크</tr>
+	  	<hr>
+	  		<body>
+	  		<tr>
+	  			내부 : <a href="1102_apple.html"><img src="apple.jpg" width="100" heigh="100"></a>
+	  		</tr>
+	  		<tr>
+	  			외부 : <a href="\1102_banana.html"><img src="banana.jpg" width="100" heigh="100"></a>
+	  		</tr>
+	  		<tr>
+	  			내부 : <a href="1102_train.html"><img src="train.jpg" width="100" heigh="100"></a>
+	  		</tr>
+	  		</body>
+	  </table>
+	
+	<h2>7. 전체페이지,상단페이지,왼쪽페이지,메인페이지(위쪽/아래쪽페이지)를 하나의 폴드에서 만들어
+	           페이지를 파일로 만들고, 왼쪽페이지에서 _blank, _self, 프레임명 호출로 링크 확인을하고,
+	           메인페이지 안에 아래쪽페이지에서 _parent, _top 옵션으로 구분하여 링크페이지가 열리는 것을 확인하세요.
+	</h2>
+	
+	<iframe src="\1102_page\all.html" name="all" width="100%" height="500"></iframe>
+	<iframe src="\1102_page\top.html" name="top" width="25%" height="500"></iframe>
+	<iframe src="\1102_page\left.html" name="left" width="25%" height="500"></iframe>
+	<iframe src="\1102_page\main.html" name="main" width="70%" height="500"></iframe>
+	
+	
+	
+	<h2>8. 다운로드할 자료를 webapp 하위에 z01_download 폴드에 위치시키고, 다운로드 리스트를 3개
+	          만든 후, 다운로드가 되게 처리하세요.</h2>
+	 <ol>
+		<li><a href="\z01_download\1102_homework.html" download>누르면 돈 나온다.</a>
+		<li><a href="\z01_download\mungmung.jpg" download>강아지</a>
+		<li><a href="\z01_download\mungmung2.jpg" download>똥강아지</a>
+	 </ol>
+	 
+	 <h2>10. 회원등록 form으로 아이디 패스워드 회원명 포인트 권한을 input으로 만들고, 등록버튼을 
+         클릭시, 다음페이지에서 입력된 내용을 출력하는 프로그램을 만드세요.</h2>
+         <form action="1102_member_sign_up.jsp">
+ 		아이디 : <input type="text" name="id"><br>
+ 		패스워드 : <input type="password" name="pass">
+ 		회원명 : <input type="text" name="name">
+ 		포인트권한 : <input type="text" name="pointauth">
+ 		<input type="submit" value="회원등록">
+ 		
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 
+# 하이퍼링크 만들기
+1. <a> 태그의 href 속성을 이용하여 하이퍼링크 작성
+2. 하이퍼링크(hyperlink)란?
+	1) 다른 html 페이지의 연결 고리
+		- 같은 웹 사이트의 다른 html 페이지
+		- 다른 웹 사이트의 html 페이지 모두 연결 가능
+	2) 하이퍼링크는 텍스트나 이미지로 작성
+3. 항해(navigator)
+	1) 하이퍼링크를 따라 다른 웹페이지를 방문하는 것
+4. 기본 형식
+	<a href="url|url#앵커이름|#앵커이름" target="대상 윈도우|frame"/>링크문자</a>
+	1) url : 외부 또는 내부 자원에 대한 주소 호출
+		- 외부 : www.naver.com 와 같이 웹서버를 외부에서 접근이 가능한 사이트 자원
+		- 내부 : 절대주소/상대주소를 이용하여 현재 서버와 연결된 자원을 접근하는 것
+	2) #앵커이름 : 해당 페이지는 특정한 위치를 id="앵커명"으로 속성을 정해서
+		해당 위치로 이동하게 하는 것을 말한다.
+		페이지가 길고 양이 많을 때, 특정한 위치로 바로 이동하여 해당 내용을 살펴볼 수 있다.
+	3) target : 링크가 된 자원을 로딩하는 방식을 말한다.
+		기본적으로 전체 페이지가 대체되는 데, 특정한 경우에는 새로운 윈도우 창이나,
+		현재 페이지에서 특정한 부분만 변경되는 경우가 있다.
+ -->
+ 	<h2>페이지 이동</h2>
+ 	<h3>현재 폴드 페이지 이동</h3>
+ 	<a href="a02_showPage.html">페이지 이동!!</a>
+ 	<h3>외부 페이지 이동</h3>
+ 	<a href="http://www.naver.com">네이버 이동!!</a>
+ 	<!-- 
+ 	ex) 정렬리스트안에 link 페이지를 설정하여
+ 		a03_page.html로 이동했다가 다시 돌아올 수 있게 하고,
+ 		두번째는 http://www.w3schools.com 페이지를 이동하여 처리될 수 있게 하세요..
+ 	 -->	
+ 	 <h3>페이지 이동(정렬형식과 함께)</h3>
+ 	<ol type="A">
+		 	<li><a href="a03_page.html">내부페이지 이동!!</a>
+		 	<li><a href="a03_page.html">내부페이지 이동!!</a>
+		 	<li><a href="a03_page.html">내부페이지 이동!!</a>
+		 	<li><a href="a03_page.html">내부페이지 이동!!</a>
+		 	<li><a href="http://www.w3schools.com">w3school 외부이동!!</a>
+		 	<li><a href="http://www.w3schools.com">w3school 외부이동!!</a>
+		 	<li><a href="http://www.w3schools.com">w3school 외부이동!!</a>
+		 	<li><a href="http://www.w3schools.com">w3school 외부이동!!</a>
+	</ol>
+ 	 <h3 id="main01">페이지 이동(정렬형식과 함께)</h3>
+ 	<ol type="I">
+		 	<li><a href="/a01_start/a01_tag_basic.html">절대 주소 이동!!</a>
+		 	<li><a href="#go01">앵커로 이동 처리</a>
+		 	<li><a href="a03_page.html">내부페이지 이동!!</a>
+		 	<li><a href="a03_page.html">내부페이지 이동!!</a>
+		 	<li><a href="http://www.w3schools.com">w3school 외부이동!!</a>
+		 	<li><a href="http://www.w3schools.com">w3school 외부이동!!</a>
+		 	<li><a href="http://www.w3schools.com">w3school 외부이동!!</a>
+		 	<li><a href="http://www.w3schools.com">w3school 외부이동!!</a>
+	</ol>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<h2 id="go01">앵커로 이동된 곳</h2>
+	<a href="#main01">다시 초기 화면으로 이동</a>
+	<!-- 
+	ex) 절대 주소로 a03_page.html로 이동하고, 아이디값을 하단에 특정한 위치에 
+		설정하여 내부적으로 이동하게 처리하세요.. -->
+		<h3 id="main02">페이지 이동</h3>
+		<a href="#go02">앵커로 이동 처리</a>
+		<a href="/a02_basic/a03_page.html">내부페이지 이동!!</a>
+		
+		<h2 id="go02">앵커로 이동된 곳</h2>
+		<a href="#main02">다시 초기 화면으로 이동</a>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	/*
+	태그명:link - 모든 a 태그에 적용시, 선택자로 처리
+	# 아이디명 - id명으로 지정된 내용을 적용 시, 선택자로 처리.
+		.클래스 - class명으로 지정된 내용을 적용시, 선택자로 처리 
+	*/
+	a:link{
+		color:red;
+		text-decoration:none;
+		}
+		
+	a:visited{
+		color:blue;
+		}
+		
+	a:active{
+		color:yellow;
+		}
+</style>
+</head>
+<body>
+<!-- 
+ex) a07_linkColorExp.html
+	a01_start\a07_poem.html 기준으로 절대 주소로 링크하되
+	초기 색상, 링크 후 색상, 클릭시 색상을 빨/파/노로 변경하여 출력되게 하세요.
+	
+ -->
+ <a href = "\a01_start\a07_poem.html">김소월 시보기</a> 
+</body>
+</html>
