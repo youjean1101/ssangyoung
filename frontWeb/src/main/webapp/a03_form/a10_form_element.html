@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- 
+	# 폼요소
+	0. 기본형식
+		<태그명 type="">
+	1. input 태그
+		1) 대부분은 input 태그로 시작하여 type의 속성에 따라 나타난다.
+		2) type 속성
+			text : 한줄 텍스트 입령 창 ex) <input type="text">
+			password : 암호 입력을 위한 한줄 텍스트 입력창
+				ex) 회원등록
+					<input type="password" name="pass"/>
+					<input type="password" name="passFrm"/>
+					
+			button : 단순버튼
+			hidden : 데이터는 보이지 않지만 전송할 필요가 있을 때, 활용
+				ex) 기능 버튼 등록/수정/삭제이 있지만, 요청값에 의해서 해당 내용을 전송해야할 때, 활용된다.
+					즉, 요청값이 표시가 되지는 않지만 그 요청값이 프로세스에 따라 보이지 않게 전송될 때
+					활용된다.
+				하나의 form으로 여러개의 frame선택
+				물건명:[	]
+				가격:[	]
+				갯수:[	]
+				[등록][조회][수정]
+					
+			image : 이미지버튼
+			checkbox : 체크박스(다중선택) []
+			ratio : 라디오박스(단인선택) ()
+			file : 파일 선택
+			image : 이미지 버튼
+			month|week|date|time|datatime-local : 년,월,일,시간등의 입력창
+			number|range : 스핀 버튼과 슬라이드 바로 편리한 숫자 입력창
+			color : 색상 선택 창
+			email|url|tel|search : 이메일, url, 전화번호, 검색키워드 등 형식 검사 기능을 가진
+				텍스트 입력 창
+			submit : form 전체 데이터를 서버에 전송하는 버튼
+			reset : form 전체 데이터를 입력 중, 초기화가 필요할 때, 클릭시 초기화 처리 버튼		
+	2. select 태그
+		1) 기본형식
+			<select name="">
+				<option select name="">
+				<option value=""></option>
+		2) 선택 형식으로 처리할 수 있는 요소 객체
+	3. button
+		1) 기본형식
+			<button type="button|submit|reset">버튼의 레이블</button>
+			주의) button 태그의 default type이 submit이기에 설정하지 않고, 버튼을 클릭하면
+			서버로 전송되어 모든 데이터가 초기화된다.
+		2) 버튼 모양 요소객체
+	4. textarea
+		1) 기본형식
+			<textarea cols="10" rows="20"></textarea>
+		2) 여러줄 텍스트 입력 창
+	 -->
+	 <input><br>
+<!-- 
+# 텍스트 입력
+1. input type="text|password" 속성1="속성값" 속성2="속성값"
+2. 기타 속성
+	1) name="요소이름" : 서버에 전송시 요청 key로 사용된다. javascript에서도 선택자로 활용
+	2) maxlength="입력할 수 있는 최대 문자갯수 지정"
+	3) size="화면에 보이는 문자입력 크기 지정"
+		ps) 화면에 입력 넓이 크기가 한정되어 처리되기 때문에
+			css로 설정해서 변경하여야 한다.
+			<input style="width:20px" /> 
+	4) value="초기값으로 설정한 문자열 지정" : 입력하는 데이터를 value 속성에 데이터로 
+		할당된다. 이 value값의 내용을 서버에 전송시 요청 value로 사용된다.
+		입력되는 값 ==> value값으로 할당 ==> submit 버튼이 클릭되는 시점에 현재
+		입력된 value값을 name="key" value="입력값"전송을 한다.
+		key=입력값
+	5) placeholder : 실제 데이터가 입력된게 아니라, 해당 항목에 대한 설명을 표시할 때 활용한다.
+					클릭하는 순간 설명내용은 사라진다.
+ -->
+ 	기본문자열: <input type="text" placeholder="입력하세요."/><br>
+ 	패스워드입력: <input type="password" placeholder="패스워드 입력"/><br>
+ 	입력 최대크기설정: <input type="text" maxlength="5"/><br>
+ 	보이는 크기설정: <input type="text" size="5"/><br>
+ 	초기값/실제전달되는값: <input type="text" value="안녕하세요"/><br>
+ 	서버로 전송시 name/value이 혼합되어 전송:
+ 	<input type="text" name="msg" value="반갑습니다."/>
+ 	==> msg=반갑습니다.<br>
+ 	<br>
+	 <!-- ex) form에 포함해서 물건명(7자) 가격(4자) 갯수(2자) 입력이 가능 및 화면도 보이게
+	 		처리하여 submit 클릭시, pname=사과&price=5000&cnt=10이 처리되도록
+	 		form 요소객체를 구현하세요.  
+	 		a10_form_element.html?pname=사과&price=3000&cnt=2
+	 		html로는 요청값을 받지는 못하지만 위와 같이 submit로 전송되는 모습을 볼 수 있다.-->
+	 <form>
+	 	물건명 : <input type="text" name="pname" size="7" maxlength="7"/><br>
+	 	가격 : <input type="text" name="price" size="4" maxlength="4"/><br>
+	 	갯수 : <input type="text" name="cnt" size="2" maxlength="2" style="width:15px;"/><br>
+	 	<!-- 기본 태그의 속성의 한계를 css가 보완해주고 있다. -->
+	 	<input type="submit"/>
+	 </form>
+	 
+<!-- 
+# 여러 줄의 문자열 입력창 textarea
+1. 기본 형식
+	<textarea 속성="속성값" ... ></textarea>
+2. 속성
+	1) cols : 열 갯수
+	2) rows : 행 갯수 - 텍스트 입력창의 크기로 가로세로 문자 수(영어를 기준)
+	3) name : 요소 이름
+ -->
+ 	<form>
+ 		자소서 내용: <br>
+ 		<textarea name="intro"
+ 			cols="20" rows="5">이곳에 자기소개서 작성</textarea><br>
+ 		<input type="submit"/>
+ 	</form>
+ <!-- ex) 작성자(10), 암호(8), 내용(여러 줄 입력) 형식으로 데이터를 입력하는 form을
+ 작성하세요. -->
+ 	<style>
+ 		table{border-collapse:collapse;}
+ 	</style>
+ 	<h2>등록게시물</h2>
+ 	<form>
+	 	<table border="1">
+		 	<col width="30%">
+		 	<col width="70%">
+		 	<tbody>
+		 	<!-- 
+		 	# placeholder : 데이터가 입력되지 않았을 때, 해당 내용에 대한 설명
+		 		내용을 초기에 설정할 수 있다. 데이터가 입력되는 순간 사라진다.
+		 	 -->
+			 	<tr><th>작성자</th><td><input type="text" name="writer" size="19" maxlengh="10"
+			 	placeholder="작성자입력!!"/></td></tr>
+			 	<tr><th>암호</th><td><input type="password" name="pass" size="19" maxlengh="8"/></td></tr>
+			 	<tr><th>내용</th><td><textarea name="content" placeholder="내용을 입력합니다."
+			 			cols="20" rows="10"></textarea><br>
+			 			<!-- default 데이터는 태그 시작과 끝 사이에 입력한다. -->
+			 	<tr><td colspan="2" style="text-align:center;">
+			 	<input type="submit"value="등록"/></td></tr>
+		 	</tbody>
+	 	</table>
+ 	</form>
+ 
+</body>
+</html>

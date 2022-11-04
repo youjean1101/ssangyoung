@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h2>3. 구매할 도서명과 출판사 도서가격을 입력하고 post방식으로 전송하고 출력 하세요.</h2>
+	<form action="1103_3번.jsp" method="post" target="frame">
+		도서명: <input type="text" name="bookname"/><br>
+		출판사: <input type="text" name="publisher"/><br>
+		도서가격: <input type="text" name="price"/><br>
+		<input type="submit" value="구매">
+	</form>
+	<iframe name="frame" width="50%" height="200"></iframe>
+
+	
+	
+	<h2>5. form/frame 3개씩을 만들어 과일가게, 옷가게, 컴퓨터가게에 해당 frame과 jsp 파일을 만들어 입력 정보 각각 전송하세요.</h2>
+		
+		<h3>과일가게 상품등록</h3>
+		<form action="1103_5번_과일.jsp" method="post" target="frame1" name="fruit">
+			과일명:<input type="text" name="fruitname"><br>
+			가격:	<input type="text" name="fruitprice">
+			<input type="submit" value="등록">
+		</form>
+		<iframe name="frame1" width="50%" height="150"></iframe>
+		
+		<h3>옷가게 상품등록</h3>
+		<form action="1103_5번_옷.jsp" method="post" target="frame2" name="cloth">
+			옷종류:<input type="text" name="clothdiv"><br>
+			가격:	<input type="text" name="clothprice">
+			<input type="submit" value="등록">
+		</form>
+		<iframe name="frame2" width="50%" height="150"></iframe>
+		
+		<h3>컴퓨터가게 상품등록</h3>
+		<form action="1103_5번_컴퓨터.jsp" method="post" target="frame3" name="computer">
+			컴퓨터명:<input type="text" name="computername"><br>
+			가격:	<input type="text" name="computerprice">
+			<input type="submit" value="등록">
+		</form>
+		<iframe name="frame3" width="50%" height="150"></iframe>
+		
+	<h2>8. 로그인 화면을 테이블 안에 자리수를 입력제한을 하고, 테이블에 크기에 맞추어 표현하세요.</h2>
+		<style>
+		th{background-color:yellow;}
+		</style>
+		
+		<form>
+			<table border="1">
+				<tr>
+				<th>로그인</th><td><input type="text" name="id" size="10" maxlenght="10"></td>
+				</tr>
+				<tr>
+				<th>패스워드</th><td><input type="password" name="pass"size="10" maxlenght="10"></td>
+				</tr>
+			</table>
+			<input type="submit" value="로그인">
+		</form>
+	
+	<h2>9. input의 속성을 적절하게 이용하여 테이블 안에 form 요소객체를 만들어 회원등록 폼을 만들어 보세요.
+                (회원아이다, 패스워드/패스워드확인, 이름, 메일주소, 주소, 성별, 자기소개서 )</h2>
+          <form method="post">
+          	회원아이디: <input type="text" name="memberid" size="8" maxlenght="8"><br>
+          	패스워드: <input type="password" name="memberpass" size="10" maxlenght="10"><br>
+          	패스워드확인: <input type="password" name="memberpass2" size="10" maxlenght="10"><br>
+          	이름: <input type="text" name="membername" size="5" maxlenght="5"><br>
+          	메일주소: <input type="text" name="membermail" size="20" maxlenght="20"><br>
+          	주소: <input type="text" name="memberaddress" size="40" maxlenght="40"><br>
+          	성별: <input type="text" name="membergender" size="2" maxlenght="2"><br>
+          	자기소개서:<textarea name="memberintro"
+ 							cols="20" rows="10">*성장과정
+ 												*성격의장단점
+ 												*사회경험
+ 												*입사후포부 </textarea><br>
+          	<input type="submit" value="회원등록">
+          </form>
+    
+    <style>
+    	table{border-collapse:collpase;cellpadding:5px;}
+    	th, td{border:1px solid black;text-align:center;}
+    	input, textarea{width:"95%"}	
+    </style>
+    <h3>정답</h3> 
+    	<h2 align="center">회원가입</h2>
+    	<table align="center" width="70%" border>
+    		<col width="30%">
+    		<col width="70%">
+    		<tbody>
+    			<tr><th>아이디</th>
+    			<td><input type="text" name="id1" maxlength="20"/></td></tr>
+    		</tbody>
+    	</table>
+        
+	<h2>10. datalist를 활용하여 커피점에서 커피의 종류를 표시하고, 주문갯수를 1~10까지 표시하여 
+                 버튼클릭시, 주문한 내용을 서버에 요청값으로 처리되게 하세요. </h2>
+        <form action="1103_10번_coffee.jsp" method="post" target="coffeeframe">
+        	<ol type="1" start="1">
+	        	<li>주문:<input type="text" name="order1" list="coffees" size="8">
+	        		갯수:<input type="text" name="ordercnt1" list="coffeecnt" size="2">
+	        		
+	        	<li>주문:<input type="text" name="order2" list="coffees" size="8">
+	        		갯수:<input type="text" name="ordercnt2" list="coffeecnt" size="2">
+	        		
+	        	<li>주문:<input type="text" name="order3" list="coffees" size="8">
+	        		갯수:<input type="text" name="ordercnt3" list="coffeecnt" size="2">
+        	</ol>
+        	<button type="submit" onclick="alert('커피 주문이 완료되었습니다!')">주문</button>
+        	
+        	<datalist id="coffees">
+        		<option value="아메리카노">
+        		<option value="카페라떼">
+        		<option value="모카라떼">
+        		<option value="돌체라떼">
+        		<option value="아이스티">
+        		<option value="복숭아에이드">
+        		<option value="자몽에이드">
+        		<option value="요거트스무디">
+        		<option value="딸기스무디">
+        		<option value="복숭아스무디">
+        	</datalist>
+        	<datalist id="coffeecnt">
+        		<option value="1">
+        		<option value="2">
+        		<option value="3">
+        		<option value="4">
+        		<option value="5">
+        		<option value="6">
+        		<option value="7">
+        		<option value="8">
+        		<option value="9">
+        		<option value="10">
+        	</datalist>
+        </form>
+        <iframe name="coffeeframe" width="50%" height="300"></iframe>
+</body>
+</html>

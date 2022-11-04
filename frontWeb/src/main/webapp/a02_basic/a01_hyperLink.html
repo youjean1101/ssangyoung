@@ -13,10 +13,13 @@
 		- 같은 웹 사이트의 다른 html 페이지
 		- 다른 웹 사이트의 html 페이지 모두 연결 가능
 	2) 하이퍼링크는 텍스트나 이미지로 작성
+		<a href=""><img></a>
+		대부분 아이콘을 통해서 특정 페이지를 이동하게 처리한다.
+		
 3. 항해(navigator)
 	1) 하이퍼링크를 따라 다른 웹페이지를 방문하는 것
 4. 기본 형식
-	<a href="url|url#앵커이름|#앵커이름" target="대상 윈도우|frame"/>링크문자</a>
+	<a href="url|url#앵커이름|#앵커이름" target="대상 윈도우|frame|target옵션"/>링크문자</a>
 	1) url : 외부 또는 내부 자원에 대한 주소 호출
 		- 외부 : www.naver.com 와 같이 웹서버를 외부에서 접근이 가능한 사이트 자원
 		- 내부 : 절대주소/상대주소를 이용하여 현재 서버와 연결된 자원을 접근하는 것
@@ -50,8 +53,20 @@
 	</ol>
  	 <h3 id="main01">페이지 이동(정렬형식과 함께)</h3>
  	<ol type="I">
+ 			<!-- 
+ 			# 절대주소
+ 			1. context path의 기준 위치가 물리적으로 webapp 하위경로이기에
+ 				해당 위치를 기준으로 이미지가 특정한 페이지를 경로로 접근할 수 있다.
+ 				ex) href="/a01_start/a01_tag_basic.html"
+ 				context path가 "/"로 이 물리적으로 webapp하위를 기준으로 
+ 					a01_start폴드 하위에 a01_tag_basic.html를 접근해서 사용하고 있다.
+ 			 -->
 		 	<li><a href="/a01_start/a01_tag_basic.html">절대 주소 이동!!</a>
 		 	<li><a href="#go01">앵커로 이동 처리</a>
+		 	<li><a href="/a01_start/a01_tag_basic.html#go01">앵커로 이동 처리</a>
+		 	<!-- 페이지명#아이디명 : 해당페이지에 태그가 id로 설정되어 있는 곳에 접근한다.
+		 		ex) <h1 id="go01">
+		 	 -->
 		 	<li><a href="a03_page.html">내부페이지 이동!!</a>
 		 	<li><a href="a03_page.html">내부페이지 이동!!</a>
 		 	<li><a href="http://www.w3schools.com">w3school 외부이동!!</a>

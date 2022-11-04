@@ -7,8 +7,22 @@
 <body>
 <h2>2개의 윈도우를 가집니다.(하위 iframe 포함)</h2>
 <hr>
-<iframe src="leftframe.html" name="left" width="25%" height="500"></iframe>
-<iframe src="rightframe.html" name="right" width="70%" height="500"></iframe>
+<!-- 
+				최상위 윈도우(a01_topPage.html) (모든 프레임의 top)
+	
+	left 프레임(leftframe.html)	right 프레임(rightframe2.html)
+	
+							upper프레임(a02_sub.html)	lower프레임(http://www.mk.co.kr)
+							
+1. parent
+	left 프레임과 right 프레임은 최상위 윈도우가 parent이자 top 프레임이다.
+	upper 프레임과 lower 프레임은 right 프레임인 parent이다.
+2. top
+	모든 프레임은 최상위 윈도우가 top 이다.
+	 -->
+	 
+<iframe src="leftframe.html" name="left" width="30%" height="500"></iframe>
+<iframe src="rightframe2.html" name="right" width="60%" height="500"></iframe>
 
 </body>
 </html>

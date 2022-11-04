@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 
+# form 작성
+1. 폼 태그 form 태그로 둘러싸는 모양
+	<form name="fo" method="get|post" action="페이지"
+		target ="프레임단위|새로운 윈도우">
+		<input type="submit">
+		<input type="reset">
+	</form>
+2. 속성
+	1) name : 폼의 이름을 지정
+	2) action
+		1) 폼 데이터를 처리할 웹 서버 응용프로그램(jsp, php, asp등등)으로
+			요청값을 서버단(백엔드)에서 받을 수 있다.
+			ps) action을 설정하지 않을 떄는 현재 페이지를 요청하며 이 요청값을 처리하기 위해서는 현재 페이지가 jsp등 웹 어플리케이션 
+				프로그램일 때, 가능하다.
+		2) submit 버튼을 클릭하면 브라우저는 action에 지정한 웹서버
+			응용프로그램을 실행한다.
+			submit로 인해서 모든 form하위의 요소객체 name="key"
+			value="val"	key=val 형태로 서버에 요청을 한다.
+			
+			
+	3) method 속성
+		1) 폼 데이터를 웹서버로 전송하는 방식
+		2) 전송 방식 내용
+			default : get 방식으로 설정하지 않으면 이방식인데 url 주소
+				창에 요청값을 key=value 형식으로 보이게 한다.
+				ex) url주소에 페이지명?key=val
+			post : 설정을 하면 url 주소창에는 보이지 않지만 내부적으로 
+				요청값을 key=value 형식으로 전송한다. 요청값이 많고
+				보이지 않게 처리할 때 주로 사용된다.
+				ex) url주소 페이지명
+				ps) post방식을 했을 때는 요청값을 받는 jsp페이지에서 요청값이 한글일 때는 
+				한글 encoding을 처리해 주어야 한다.
+				request.setCharacterEncoding("utf-8");
+	4) target
+		1) frame단위나 새로운 윈도우 창에 전송할 떄, frame 처리시
+			설정했는 옵션을 활용해서 처리한다. 
+			default 즉 설정하지 않을 때 _self
+			프레임명, _top, _parent, _blank(새로운 윈도우 창에 form데이터 전송)
+	5) enctype
+		1) 폼 데이터를 웹서버로 전송할 때, 암호화 방식이 필요한 경우에 사용된다.
+			파일 전송시도 binary데이터를 보내야 했기에 이 부분을 속성을 설정한다.
+			- 주로 첨부파일을 서버에 전송할 때, 사용된다.
+ -->
+ 	<h3>검색(get방식)</h3>
+ 	<form><!-- method를 설정하지 않으면 get방식
+ 		a04_formProp.html?sch=사과
+ 		action을 지정하지 않으면 현재 페이지를 요청한다.
+ 	 -->
+ 		검색할 내용 :<input type="text" name="sch"/>
+ 		<input type="submit" value="검색" />
+ 	</form>
+ 	<h3>검색(post방식)</h3>
+ 	<form action="a05_rev.jsp" method="post">
+ 		검색할 내용 :<input type="text" name="sch"/>
+ 		<input type="submit" value="검색" />
+ 	</form>
+ 	
+	<!-- 
+	ex) 물건명과 가격을 입력하여, 물건 등록이라는 submit버튼 클릭시
+		a06_rev.jsp에서 해당 정보를 받게 하세요.(post방식으로 처리)
+	 -->
+	 <h3>물건등록(post)</h3>
+	 <form action="a06_rev.jsp" method="post" target="frame01">
+	 	물건명: <input type="text" name="pname" /><br>
+	 	가격: <input type="text" name="price" /><br>
+	 	<input type="submit" value="물건등록" />
+	 </form>
+	 <iframe name="frame01" 
+	 srcdoc="<html><h2>여기에 물품정보 출력</h2></html>" 
+	 width="50%" height="100"></iframe>
+	 
+	 <!-- ex) 회원 아이디와 패스워드를 입력해서 a07_loginResult.jsp frame02에서 출력되게 하세요 -->
+	 <h2>로그인</h2>
+	 <form action ="a07_loginResult.jsp" methos="post" target="frame02">
+	 	아이디: <input type="text" name="id"/><br>
+	 	패스워드: <input type="password" name="passwd"/><br>
+	 	<input type="submit" value="로그인"/>
+	 </form>
+	 <iframe name ="frame02"
+	 srcdoc="<html><h3>로그인 결과</h3></html>"
+	 width="80%" height="200"></iframe>
+</body>
+</html>
