@@ -78,19 +78,52 @@
           </form>
     
     <style>
-    	table{border-collapse:collpase;cellpadding:5px;}
-    	th, td{border:1px solid black;text-align:center;}
+    	table{border-collapse:collpase;}
+    	td{text-align:center;}
+    	th{background-collapse:yellow;}
     	input, textarea{width:"95%"}	
     </style>
     <h3>정답</h3> 
     	<h2 align="center">회원가입</h2>
-    	<table align="center" width="70%" border>
+    	<table cellpadding="5px" align="center" border>
     		<col width="30%">
     		<col width="70%">
     		<tbody>
     			<tr><th>아이디</th>
-    			<td><input type="text" name="id1" maxlength="20"/></td></tr>
+    			<td><input type="text" name="id1" maxlength="20" placeholder="아이디를 입력(1~20)"/></td></tr>
+    			
+    			<tr><th>패스워드</th>
+    			<td><input type="password" name="pass" maxlength="16" placeholder="패스워드를 입력(8~16)"/></td></tr>
+    			
+    			<tr><th>패스워드 확인</th>
+    			<td><input type="password" name="pssFrm" maxlength="16" placeholder="패스워드확인입력"/></td></tr>
+    			
+    			<tr><th>이름</th>
+    			<td><input type="text" name="name1" maxlength="20" placeholder="이름를 입력(1~20)"/></td></tr>
+    			
+    			<tr><th>성별</th>
+    			<td><input type="text" name="gender1" maxlength="20" placeholder="성별 입력" list="genders"/>
+    				<datalist id="genders">
+    					<option value="남자">
+    					<option value="여자">
+    				</datalist>
+    			</td></tr>
+    			
+    			<tr><th>메일주소</th>
+    			<td><input type="text" name="email1" placeholder="XXX@XXX.com 형식 입력"/></td></tr>
+    			
+    			<tr><th>주소</th>
+    			<td><textarea name="address1" rows="5" placeholder="주소 입력"></textarea></td></tr>
+    			
+    			<tr><th>자기소개서</th>
+    			<td><textarea name="intro1" rows="5" placeholder="자기 소개서 입력"></textarea></td></tr>
+    			<tr>
+    				<td colspan="2">
+    					<button>회원 등록</button> 
+    				</td>
+    			</tr>
     		</tbody>
+    		<!-- button은 default가 submit -->
     	</table>
         
 	<h2>10. datalist를 활용하여 커피점에서 커피의 종류를 표시하고, 주문갯수를 1~10까지 표시하여 

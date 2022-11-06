@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 
+# 선택형 입력 : 체크 박스와 라디오 박스
+1. <input type="checkbox">
+	1) 체크박스 만들기
+	2) 동일한 이름의 여러개의 다중 선택이 가능하다
+	3) 요청값으로 전달되는 경우, 체크된 값만 전달된다.
+	
+2. <input type="radio">
+	1) 라디오박스 만들기
+	2) 동일한 name으로 설정하면 하나만 선택이 되어진다.
+		- 하나의 그룹 형성
+	3) 여러개의 name에 동일한 값이 설정되는 경우,
+		check된 단일 값이 요청값으로 전달된다.
+		
+3. 기본 형식
+	<input type="checkbox|ratio"
+			name="요소이름" value="요소값" checked>
+	1) value : 폼 요소가 선택된 상태일 때, 웹서버에 전송되는 값
+	2) checked : 이 속성이 있으면, 초기에 선택 상태로 출력
+	 
+ -->
+<h2>먹고 싶은 것 모두 체크하세요</h2>
+<form>
+	짜장면 <input type="checkbox" name="menu" value="짜장면">
+	짬뽕 <input type="checkbox" name="menu" checked value="짬뽕">
+	탕수육 <input type="checkbox" name="menu" value="탕수육"><br>
+	<input type="submit"/>
+</form>
+<!-- ex) 가고싶은 여행지를 formm에 만들어 동일한 이름으로 설정하여 check로 처리되게 하세요. -->
+<h2>가고싶은 여행를 체크하세요.</h2>
+<form>
+	<input type="checkbox" name="travel" value="거제도">	거제도/
+	<input type="checkbox" name="travel" value="제주도"> 제주도/
+	<input type="checkbox" name="travel" value="통영"> 통영/
+	<input type="checkbox" name="travel" value="백두산"> 백두산/	
+	<input type="checkbox" name="travel" value="해외여행"> 해외여행<br>
+	<input type="submit" />
+</form>
+
+<h3>사는 곳을 check하세요</h3>
+<form>
+	<input type="radio" name="part" checked value="국내">국내/
+	<input type="radio" name="part" value="국외">국외<br>
+	<input type="radio" name="loc" value="서울">서울/
+	<input type="radio" name="loc" checked value="경기">경기/
+	<input type="radio" name="loc" value="강원도">강원도/
+	<input type="radio" name="loc" value="충청도">충청도/
+	<input type="radio" name="loc" value="경상도">경상도/
+	<input type="radio" name="loc" value="전라도">전라도/
+	<input type="radio" name="loc" value="제주도">제주도<br>
+	<input type="submit"/>
+</form>
+<!-- 
+ex) 성별과 오늘의 점심메뉴를 단일 선택할 수 있게 처리하세요.
+ -->
+ <h3>성별선택</h3>
+ <form>
+ 	<input type="radio" name="gender" checked value="남자">남자/
+ 	<input type="radio" name="gender" value="여자">여자<br>
+ <h3>오늘의 점심메뉴 선택</h3>
+ 	<input type="radio" name="launch" checked value="김밥">김밥/
+ 	<input type="radio" name="launch" value="김치찌개">김치찌개/
+ 	<input type="radio" name="launch" value="곰탕">곰탕/
+ 	<input type="radio" name="launch" value="빵">빵<br>
+ 	<input type="submit"/> 	
+ </form>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h2>2. 앞으로 5년간은 년도별 check로 월별은 radio를 만들어 앞으로 년도별 여행 월으로 check해서
+            처리할려고 한다. (년도-다중, 월-단일) 처리하세요.</h2>
+          <form>
+          	<input type="checkbox" name="year" value="2023년"> 2023년
+          	<input type="checkbox" name="year" value="2024년"> 2024년
+          	<input type="checkbox" name="year" value="2025년"> 2025년
+          	<input type="checkbox" name="year" value="2026년"> 2026년
+          	<input type="checkbox" name="year" value="2027년"> 2027년<br>
+          	<input type="radio" name="month" value="1월"> 1월
+          	<input type="radio" name="month" value="2월"> 2월
+          	<input type="radio" name="month" value="3월"> 3월
+          	<input type="radio" name="month" value="4월"> 4월
+          	<input type="radio" name="month" value="5월"> 5월
+          	<input type="radio" name="month" value="6월"> 6월
+          	<input type="radio" name="month" value="7월"> 7월
+          	<input type="radio" name="month" value="8월"> 8월
+          	<input type="radio" name="month" value="9월"> 9월
+          	<input type="radio" name="month" value="10월"> 10월
+          	<input type="radio" name="month" value="11월"> 11월
+          	<input type="radio" name="month" value="12월"> 12월
+          	<input type ="submit">
+          </form>
+          
+	<h2>4. 테이블 안에 컴퓨터 부품별로 사양에 따른 select 박스를 만들되, 항목별로 2개가 보이며 다중 선택이 
+           가능하게 처리하세요.
+           CPU [i5 3.1GHZ] Ram[2]....
+                  [i7 4.1GHZ] Ram[2]
+              [AMD    ]</h2>
+          <style>
+          	th{background-color:yellow;}
+          </style>
+          <h3>컴퓨터 부품별 사양</h3>
+          <form>
+	          <table border>
+	          	<tr>
+	          		<th>cpu</th>
+	          		<td><select name="CPU" size="2" multiple="multiple">
+	          				<option value="i5 3.1GHZ">i5 3.1GHZ</option>
+	          				<option value="i7 4.1GHZ">i5 3.1GHZ</option>
+	          				<option value="i3-9.1GHZ">i5 3.1GHZ</option>
+	          				<option value="i5-10.1GHZ">i5 3.1GHZ</option>
+	          			</select></td>
+	          			
+	          		<th>Ram</th>
+	          		<td><select name="Ram" size="2" multiple="multiple">
+	          				<option value="2">DDR1</option>
+	          				<option value="2">DDR2</option>
+	          				<option value="2">DDR3</option>
+	          				<option value="2">DDR4</option>
+	          			</select></td>
+	      			</tr>
+      			</table>
+      			<input type="submit">
+          </form>
+               
+	<h2> 6. label과 radio로 연결하여 부서명5개를 체크하여 요청값이 부서명을 클릭하고 submit할시
+            해당 check된 부서명이 서버에 전송되게 하세요.</h2>
+		
+			<form action="1104_부서명.jsp" method="post" target="frame">
+				<input type="radio" name="deptname" id="HR" value="인사팀">
+				<label for="HR">인사팀</label>
+				<input type="radio" name="deptname" id="finance" value="재무팀">
+				<label for="HR">재무팀</label>
+				<input type="radio" name="deptname" id="marcketing" value="마케팅팀">
+				<label for="HR">마케팅팀</label>
+				<input type="radio" name="deptname" id="development" value="개발팀">
+				<label for="HR">개발팀</label>
+				<input type="radio" name="deptname" id="design" value="설계팀">
+				<label for="HR">설계팀</label><br>
+				<input type="submit" value="부서명선택">
+			</form>
+			<iframe name="frame" width="50%" hight="300"></iframe>
+		
+</body>
+</html>

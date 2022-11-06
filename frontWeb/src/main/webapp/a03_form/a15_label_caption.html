@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 
+# label로 폼 요소의 캡션 만들기
+1. 캡션이란?
+	ex) 사용자id: <input type="text">
+		캡션			폼요소
+2. label 태그로 캡션과 폼 요소를 한 단위로 묶음
+	1) 캡션 텍스트를 명료하게 하는 장점
+	2) 2가지 방법
+		<label>사용자 id<input="text"></label>
+		<label for="loginID">사용자 아이디</label>
+		<input type="text" id="loginID"/>
+ -->
+ 	<h2>로그인 폼</h2>
+ 	<hr>
+ 	<form name="ko" method="get">
+ 		<label>사용자ID:<input type="text" name="id" size="15"></label><br>
+ 		<label for="pass">비밀번호</label>
+ 		<input id="pass" type="password" name="pass" size="15">
+ 		<input type="submit">
+ 	</form>
+ 	<!-- 
+ 	ex) 물건명과 가격을 위 두가지 형태 캡션처리를 하고 확인하세요.
+ 	 -->
+ 		<h2>물건 구매(label)</h2>
+ 	<hr>
+ 	<form name="ko" method="get">
+ 		<label>물건명:<input type="text" name="product" size="15"></label><br>
+ 		<label for="price">가격</label>
+ 		<input id="price" type="text" name="price">
+ 		<input type="submit" value="구매"/>
+ 	</form>
+ 	<!-- 
+ 	# 선택형 요소에 label 태그 사용
+ 	1. 캡션 텍스트나 이미지를 선택해도 폼요소를 선ㅌ택한 것으로 처리
+ 	 -->
+ 	<form>
+ 		<label>짜장면<input type="radio" name="china" value="짜장면"/></label>
+ 		<label for="china2">짬뽕</label>
+ 		<input type="radio" name="china2" id="china2" value="짬뽕"/>
+ 		<input type="submit"/><br>
+ 	</form>
+ 	<style>
+ 		/*[type=radio]{visibility:hidden;}*/
+ 		.cls{display:none;}
+ 	</style>
+ 	<script>
+ 		function chColor(obj){
+ 			//alert(this.style.backgroundColor);
+ 			obj.style.color="orange";
+ 		}
+ 		
+ 	</script>
+ 	<form>
+ 		<!-- 
+ 		1. radio 부분을 보이지 않게 처리
+ 		2. 레이블을 클릭하면, radio부분은 name값과 함께 check가 되어
+ 			요청값을 넘길 때, 요청 데이터가 전송이 된다.
+ 		3. 주로 이미지나 텍스트 내용만 보이게 하고, 이것을 클릭했을 때, 
+ 			특정한 데이터를 서버에 전송할 때, 활용하는 방식이다.
+ 		 -->
+ 		<label onclick="chColor(this)">짜장면
+ 			<input class="cls" type="radio" name="china4" value="짜장면"/></label>
+ 		<label onclick="chColor(this)" for="china5">짬뽕</label>
+ 			<input  class="cls" type="radio" name="china5" id="china5" value="짬뽕"/>
+ 		<input type="submit"/>
+ 	</form>
+</body>
+</html>
