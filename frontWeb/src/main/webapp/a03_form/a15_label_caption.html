@@ -71,5 +71,32 @@
  			<input  class="cls" type="radio" name="china5" id="china5" value="짬뽕"/>
  		<input type="submit"/>
  	</form>
+ 	
+ 	<style>
+ 		.cls2{display:none;}
+ 	</style>
+ 	
+ 	<script type="text/javascript">
+    function chColor2(obj){
+        var china6 = document.querySelectorAll("[name=china6]")
+        var lb = document.querySelectorAll(".lb")
+        //해당 레이블의 배경색상을 초기
+        lb[0].style.backgroundColor="";
+        lb[1].style.backgroundColor="";
+        console.log(lb[0].style.backgroundColor+":"+china6[0].checked)
+        console.log(lb[1].style.backgroundColor+":"+china6[1].checked)
+        if(china6[0].checked) lb[0].style.backgroundColor="orange";
+        if(china6[1].checked) lb[1].style.backgroundColor="orange";		
+ 	}
+ 	</script>
+ 	
+ 	<form>
+ 		<label class="lb" onclick="chColor2(this)">짜장면
+ 			<input class="cls2" type="radio" name="china6" value="짜장면"/></label><br>
+ 		<label class="lb" onclick="chColor2(this)">짬뽕
+ 			<input  class="cls2" type="radio" name="china6" value="짬뽕"/>
+ 			</label>
+ 		<input type="submit"/>
+ 	</form>
 </body>
 </html>

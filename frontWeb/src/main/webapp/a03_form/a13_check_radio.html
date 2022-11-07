@@ -10,7 +10,17 @@
 1. <input type="checkbox">
 	1) 체크박스 만들기
 	2) 동일한 이름의 여러개의 다중 선택이 가능하다
-	3) 요청값으로 전달되는 경우, 체크된 값만 전달된다.
+	3) 요청값으로 전달되는 경우, *체크된 값만 전달된다.
+		ex) 
+		<input type="text" name="name" value="홍길동"/>
+		<input type="text" name="name" value="김길동"/>
+		<input type="text" name="name" value="신길동"/>
+		<input type="checkbox" name="fruit" value="사과">사과
+		<input type="checkbox" name="fruit" value="바나나" checked>바나나
+		<input type="checkbox" name="fruit" value="딸기" checked>딸기
+		<input type="submit"/>
+		submit버튼을 클릭 시
+		submit버튼을 클릭시, name=홍길동&name=김길동&name=신길동&fruit=바나나&fruit=딸기
 	
 2. <input type="radio">
 	1) 라디오박스 만들기
@@ -56,6 +66,9 @@
 	<input type="radio" name="loc" value="전라도">전라도/
 	<input type="radio" name="loc" value="제주도">제주도<br>
 	<input type="submit"/>
+	<!-- name기준으로 단일 선택하여 check되게 하면 그 check된 값을 전송한다.
+	part=국내&loc=경기
+	 -->
 </form>
 <!-- 
 ex) 성별과 오늘의 점심메뉴를 단일 선택할 수 있게 처리하세요.

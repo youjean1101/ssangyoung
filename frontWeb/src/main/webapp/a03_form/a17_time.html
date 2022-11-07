@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 
+# 시간 정보 입력 폼 요소
+1. <input type="month|week|date|datetime-local">
+	1) 시간 정보만 입력 가능한 폼 요소
+	2) 속성 및 내용
+		month : 년월
+		week : 년/몇번째주
+		date : 년/월/일
+		datatime-local : 해당 나라의 시간
+			년/월/일/오전, 오후/시/분/초/100분의1초
+		time : 시/분
+		time01=2022-11&
+		time02=2022-W44&
+		time03=2022-11-01&
+		time04=2022-11-01T12%3A00&
+		time05=12%3A00
+ -->
+ 	<h2>날짜와 시간 처리</h2>
+ 	<form>
+ 		년/월:<input type="month" name="time01" value="2022-11"/><br>
+ 		년/몇 번째 주:<input type="week" name="time02" value="2022-W44"/><br>
+ 		년/월/일:<input type="date" name="time03" value="2022-11-01"/><br>
+ 		해당 나라의 시간:<input type="datetime-local" name="time04" value="2022-11-01T12:12:32.01"/><br>
+ 		시/분:<input type="time" name="time05" value="12:12"/>
+ 		<input type="submit">
+ 	</form><br>
+ 	<!-- 
+ 	ex) 검색일을 기본으로 올해 1월1일부터 12월31일을 설정하고
+ 			선택으로 오늘부터 일단 말까지 선택해서 요청값을 전달되게 하세요
+ 	시작:[] ~ 종료일:[]
+ 	[검색]
+ 	frDate=2022-11-07&toDate=2022-12-31
+ 	 -->
+ 	 <h2>검색일 처리</h2>
+ 	 <form>
+ 	 시작: <input type="date" name="frDate" value="2022-01-01"/>
+ 	 ~ 종료일: <input type="date" name="toDate" value="2022-12-31"/>
+ 	 <input type="submit" value="검색"/>
+ 	 </form>
+</body>
+</html>

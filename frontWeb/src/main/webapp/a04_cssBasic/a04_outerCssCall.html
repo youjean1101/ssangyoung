@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style type="text/css">
+/*
+# 외부 스타일 시트 파일 불러오기
+1. css 파일에 스타일 시트 저장
+	1) 웹 페이지에서 css3 스타일 시트 파일을 불러 사용
+		- 동일한 스타일 시트를 웹페이지마다 중복 작성 해소
+		- 웹 사이트의 전체 웹 페이지 모양의 일관성 확보
+2. css3 스타일 시트 파일 불러오는 방법 2가지
+	1) link 태그 사용
+		link href="불러올파일(절대경로/상대경로)" type="text/css" href="stylesheet"
+	2) @import 이용
+		@import url(절대/상대경로)
+*/
+	@import url(a00_ourStyle.css);
+</style>
+<link href="a00_myStyle.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+	<h3>안녕하세요</h3>
+<!-- 
+ex) a05_outerCssExp.html
+	a00_style01.css : 배경
+	a00_style02.css : 글자정렬
+ -->
+ <!-- 
+ # css3 규칙과 우선순위
+ 1. css3 스타일은 부모 태그로부터 상속
+ 	1) 부모 태그(부모 요소)
+ 		자신을 둘러싸고 있는 태그
+ 			<table>
+ 				<tr>
+ 					<td>
+ 			td의 부모 태그는 tr이고, tr의 부모태그는 table이다.
+ 	2) 상위에 style은 하위에 상속되어 적용된다.
+ 		<tr style="text-align:center">
+ 			<td>
+ 		상위에 tr에 선언한 css은 모든 하위  td에 적용된다.
+ 2. 태그의 적용 가능 스타일 우선 순위
+ 	1) inline으로 해당 태그에 선언된 style속성이 최우선 순위
+ 	2) 한페이지당 선언한 <style>에 선언된 css
+ 	3) 외부파일로 선언한 <link href="외부파일"> 선언한 태그
+ 	4) 브라우저의 디폴트 스타일..
+ 	
+  -->
+</body>
+</html>

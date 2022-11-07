@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 
+# 폼 요소의 그룹핑 처리..
+1. form 단위로 간단하게 타이틀과 그룹라인을 처리할 수 있다.
+2. 요소객체
+	fieldset : 폼단위 안에 그룹 처리하기
+	legend : 그룹 처리 레이블 설정
+ -->
+ 	<form>
+ 		<fieldset>
+ 			<legend>공통정보</legend>
+ 			아이디 : <input><br>
+ 			패스워드 : <input type="password"><br>
+ 			패스워드확인 : <input type="password"><br>
+ 			권한 : <input><br>
+ 		</fieldset>
+ 		<fieldset>
+ 			<legend>개별정보</legend>
+ 			이름: <input><br>
+ 			나이: <input><br>
+ 			사는곳: <input><br>
+ 		</fieldset>
+ 		<input type="submit" value="등록">
+ 	</form>
+	<!-- 
+	ex) 사원정보(사원번호, 사원명, 관리자번호 ==> 기본정보 
+				직책, 입사일, 보너스, 부서번호 ==> 세부정보로 나누어서 타이틀로 
+				그룹해서 form을 처리해보세요.)
+	 -->
+	 <h2>사원 정보 등록</h2>
+	 <form>
+	 	<fieldset>
+	 		<legend>기본정보</legend>
+			사원번호 : <input type="text" name="empno"><br>
+			사원명 : <input type="text" name="ename"><br>
+			관리자 : <select name="mgr">
+						<option value="1000">홍길동</option>
+						<option value="2000">김길동</option>
+						<option value="3000">신길동</option>
+						<option value="4000">오길동</option>			
+					</select><br> 	
+	 	</fieldset>
+	 	<fieldset>
+	 		<legend>세부정보</legend>
+	 		직책 : <select name="job">
+		 				<option>사원</option>
+		 				<option>대리</option>
+		 				<option>과장</option>
+		 				<option>차장</option>
+		 				<option>부장</option>
+	 				</select><br>
+	 		입사일 : <input type="date" name="hiredate"><br>
+	 		보너스 : <input type="number" name="comm" min="0"
+	 				max="1000" step="100"><br>
+	 		부서번호 : <select name="deptno">
+		 				<option value="10">인사</option>
+		 				<option value="20">재무</option>
+		 				<option value="30">회계</option>
+		 				<option value="40">기획</option>
+	 				</select><br>
+	 	</fieldset>
+	 	<input type="submit" value="등록"/>
+	 </form>
+</body>
+</html>

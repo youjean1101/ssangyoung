@@ -59,6 +59,46 @@
       			</table>
       			<input type="submit">
           </form>
+      <h3>정답</h3>
+      <form>
+      	<table width="30%">
+      		<col width="15%">
+      		<col width="18%">
+      		<col width="15%">
+      		<col width="18%">
+      		<col width="15%">
+      		<col width="18%">
+      		<tr><th>CPU</th>
+      			<td>
+      				<select name="cpu" size="2" multiple="multiple">
+      					<option>i5 3.1GHz</option>
+      					<option>i7 3.6GHz</option>
+      					<option>i9 4.2GHz</option>
+      					<option>AMD 3.5GHz</option>
+      				</select>
+      			</td>
+      				<th>RAM</th>
+      				<td>
+	      				<select name="ram" size="2" multiple="multiple">
+	      					<option>4G</option>
+	      					<option>8G</option>
+	      					<option>16G</option>
+	      					<option>32G</option>
+	      				</select>
+      				</td>
+      			<th>SSD</th>
+	      			<td>
+	      				<select name="ssd" size="2" multiple="multiple">
+		      					<option>120G</option>
+		      					<option>256G</option>
+		      					<option>1T</option>
+		      					<option>2T</option>
+		      			</select>
+	      			</td>
+      			</tr>
+      	</table>
+      	<input type="submit">
+      </form>
                
 	<h2> 6. label과 radio로 연결하여 부서명5개를 체크하여 요청값이 부서명을 클릭하고 submit할시
             해당 check된 부서명이 서버에 전송되게 하세요.</h2>
@@ -78,5 +118,15 @@
 			</form>
 			<iframe name="frame" width="50%" hight="300"></iframe>
 		
+		<h3>정답</h3>
+		<h2>부서를 선택하세요.</h2>
+		<form>
+		<label>인사<input type="radio" name= "dept" value="인사"></label><br>
+		<label>재무<input type="radio" name= "dept" value="재무"></label><br>
+		<label>총무<input type="radio" name= "dept" value="총무"></label><br>
+		<label>아이티<input type="radio" name= "dept" value="아이티"></label><br>
+		<label>기획<input type="radio" name= "dept" value="기획"></label><br>
+		<input type="submit">
+		</form>
 </body>
 </html>
