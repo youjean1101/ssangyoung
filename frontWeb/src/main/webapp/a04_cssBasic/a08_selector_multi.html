@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+# 선택자(selector) 조합하기
+1. 2개 이상의 선택자 조합
+	1) 조합에 적합한 html 태그에만 적용
+2. 자식 선택자(child selector)
+	1) 부모 자식 관계인 두 선택자는 '>' 기호로 조합된다.
+		ex) div > strong{color:dodgerblue;}
+			- div의 직계 자식인 strong에 적용되는 스타일 시트
+3. 자손 선택자(descent selector)
+	1) 자손 관계인 2개 이상의 태그 나열
+	ex) ul strong{color:dodgeblue;}
+		- ul의 자손 strong에 적용되는 스타일 시트
+*/
+	ul strong{color:dodgerblue;}
+	div > strong{background:yellow;}
+	div strong{color:red;}
+	
+/* ex) 클래스1, 클래스2를 각각 속성값을 선언하고, 부모/자식관계에 있는 속성 선언, 상위/하위 자손관계에 있는 
+		속성으로 구별하여 확인하세요.*/
+	.cls01 .cls02{background:pink;}
+	.cls03 > .cls02{color:blue;text-align:center;}
+		
+</style>
+</head>
+
+<body>
+	<div>2학기<strong>학습 내용</strong>
+		<p>
+			안녕하세요 <strong>이번 학기</strong>는 수업이 많이 어려울 예정입니다.		
+		</p>
+	</div>
+	<ul>
+		<li>html5</li>
+		<li><strong>css</strong></li>
+		<li>javascript</li>
+		<li>jquery</li>
+	</ul>
+	
+	<table class="cls01" border="1" width="100" height="200">
+		<tr><td>1</td></tr>
+		<tr><td>2</td></tr>
+		<tr class="cls03"><td class="cls02">3</td></tr>
+		<tr><td>4</td></tr>
+		<tr><td  class="cls02">5</td></tr>
+	</table>
+</body>
+</html>

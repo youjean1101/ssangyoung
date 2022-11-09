@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	[type=number]{background-color:blue; color:white;}
+	[type=date]{background-color:pink; color:red;}
+	[name=ename]{background-color:yellow;}
+	
+	h2:first-letter{text-align:center; font-size:50px;}
+	li:hover{background:yellow; color:red;}
+	
+	.cls01{text-indent:1em; text-align:center}
+	span{text-decoration:underline;color:navy;}
+	
+	h3{
+		font : oblique bold 40px consolas, sans-serif;	
+	}
+	
+</style>
+</head>
+<body>
+	<h1>5. 사원정보등록(사원번호, 사원명, 등 emp 컬럼) 화면에서 속성값을 이용한 선택자를 통해서 
+	글자색상이나 배경색상을 설정하세요. </h1>
+	
+	<form>
+		<fieldset>
+			<legend>사원 정보 등록(파란박스는 숫자로 입력)</legend>
+			사원번호 : <input type="number" name="empno" min="7000" max="9000" value="7000" /><br>
+			사원명 : <input type="text" name="ename" /><br>
+			직책 : <input type="text" name="job" /><br>
+			관리자번호 : <input type="number" name="mgr" min="7000" max="9000" value="7000"/><br>
+			입사일 : <input type="date" name="hiredate"/><br>
+			연봉 : <input type="number" name="sal" min="500" max="9000" step="100" value="500"/><br>
+			보너스 : <input type="number" name="comm" min="10" max="500" step="10" value="10"/><br>
+			부서번호 : <select name="deptno">
+					<option>10</option>
+					<option>20</option>
+					<option>30</option>
+					</select><br>
+		</fieldset>
+			<input type="submit" />
+	</form>
+	<h1>* 7. 인터넷상 가상클래스가 적용된 게시판을 확인하고, 
+	해당 게시판에서 사용하는 가상클래스를 적용하여 게시판을 만들어 보세요.</h1>
+	
+	<h2>약관동의서</h2>
+	<hr>
+	<ul>
+		<li>이용약관
+		<li>위치기반서비스 이용약관
+		<li>개인정보처리방침
+		<li>제휴사등록 서비스 약관
+		<li>이메일 무단수집거부
+	</ul>
+	
+	<h3>정답</h3>
+	<!-- # 테이블에 가상클래스 적용 내용
+	1. : hover, :active
+	2. : nth-child(even) -->
+	<style>
+		table{border-collapse:collapse;}
+		th{background-color:limegreen;color:lightgoldenrodyellow;}
+		th,td{border:1px solid black;text-align:center;}	
+		tr:active{font-size:20pt;}
+		tr:nth-child(even){background-color:teal;color:aquamarine;}
+		tr:hover{color:lavender;background-color:darkviolet;}
+	</style>
+	<table border="1" width="80%">
+		<tr class="header01">
+			<th>사원번호</th><th>사원명</th><th>직책명</th><th>급여</th><th>부서번호</th>
+		</tr>
+		<tr><td>7800</td><td>홍길동</td><td>사원</td><td>3500</td><td>10</td></tr>
+		<tr><td>7800</td><td>홍길동</td><td>사원</td><td>3500</td><td>10</td></tr>
+		<tr><td>7800</td><td>홍길동</td><td>사원</td><td>3500</td><td>10</td></tr>
+		<tr><td>7800</td><td>홍길동</td><td>사원</td><td>3500</td><td>10</td></tr>
+		<tr><td>7800</td><td>홍길동</td><td>사원</td><td>3500</td><td>10</td></tr>
+		<tr><td>7800</td><td>홍길동</td><td>사원</td><td>3500</td><td>10</td></tr>
+	</table>
+	
+	<h1>10. 애국가를 검색해서 절별로 문단을 만들고, 
+	들여쓰기, 중간 강조 글자에 대한 언더바 등 설정하여 출력해세요.</h1>
+	
+	<p class="cls01">
+		동해물과 백두산이 마르고 닳도록
+		하느님이 보우하사 <span>우리나라 만세</span>
+		무궁화 삼천리 화려 강산
+		대한 사람 대한으로 길이 보전하세
+	</p>
+	
+	<p class="cls01">
+	남산 위에 저 소나무 철갑을 두른 듯
+	바람 서리 불변함은 <span>우리 기상</span>일세
+	무궁화 삼천리 화려 강산
+	대한 사람 대한으로 길이 보전하세
+	</p>
+	
+	<p class="cls01">
+	가을 하늘 공활한데 높고 구름 없이
+	밝은 달은 우리 가슴 <span>일편단심</span>일세
+	무궁화 삼천리 화려 강산
+	대한 사람 대한으로 길이 보전하세
+	</p>
+	
+	<p class="cls01">
+	이 기상과 이 맘으로 충성을 다하여
+	괴로우나 즐거우나 <span>나라 사랑</span>하세
+	무궁화 삼천리 화려 강산
+	대한 사람 대한으로 길이 보전하세
+	</p>
+	
+	<h1>13. 지금까지 배운 과목명을 한글로 글자체, 굵기, 크기, 스타일을 설정하여 출력하세요.</h1>
+	
+	<h3>지금까지 배운 과목명<br>(중요도에 따른 글자크기/굵기)</h3>
+	<h4 style="font-style:italic; font-size:400%; font-weight:1000;">자바</h4>
+	<h4 style="font-family:궁서체; font-size:350%;">데이터베이스(오라클)</h4>
+	<h4 style="font-family:굴림체; font-weight:100px; font-size:200%;">웹프로그래밍</h4>
+	<h4 style="font-family:돋움체; font-size:20pt;">씨에스에스</h4>
+
+</body>
+</html>

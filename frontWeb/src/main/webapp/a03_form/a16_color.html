@@ -38,6 +38,19 @@
  		변경된 값을 가지고 있다.
  	document.body.style.background : DOM객체로 현재 화면의 전체 body
  	의 배경색상을 설정한다.
+ 	# DOM : document object model
+ 	1. html로 구성된 모든 내용을 객체화하여 해당 객체의 속성을 변경처리할 수 있다.
+ 	2. 객체 선택
+ 		document.body,document.forms...
+ 		document.querySelector("선택자"): 페이지내 단일 태그
+ 		document.querySelectAll("선택자") : 페이지내 다중 태그
+ 	3. 속성변경
+ 		dom.align = "center"; //기본 속성 변경
+ 		dom.style.color = "blue"; //css 속성 변경
+ 		dom.innerText = "안녕"; // label이 있는 태그 출력 변경
+ 		dom.innerHTML = "<h2>안녕</h2>" // 랜더링할 수 있는 내용 처리 변경
+ 		dom.value = "himan"; // form 하위 요소객체 value값 설정.
+ 		
  	 -->
  	 <!-- 
  	 ex) 색상 요소객체 3개를 만들고, 색상을 빨/주/노를 선택 후 전송하게 하세요.

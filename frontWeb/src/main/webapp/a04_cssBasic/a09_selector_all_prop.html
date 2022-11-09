@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+# 전체 선택자와 속성 선택자
+1. 전체 선택자(universal selector)
+	1) 와일드 문자(*)를 사용하여 모든 태그에 적용시키는 선택자
+	ex) *{color:green;}
+		웹 페이지의 모든 태그에 적용, 텍스트 색을 green으로 칠함
+2. 속성 선택자
+	1) html 태그의 특정 속성(attribute)에 대해 값이 일치한느 태그에만
+		스타일을 적용하는 선택자
+	ex) input[type=text]{color:red;}
+		- type이 속성값이 text인 input 태그에 적용
+		input[name]
+		- input 태그에 name이라는 속성이 있으면 처리
+*/
+	*{color:green;}
+	input[type=text]{background-color:pink;}
+	input[type=password]{background-color:orange;}
+	input[name=himan]{background-color:blue;color:yellow;}
+	input[name]{border:1px double red;}
+	
+	/* ex) 로그인 아이디와 패스워드를 처리하되 id는 속성값이 있으면 배경색 노랑색
+			password 속성값이 있으면 글자색상으로 처리하는 선택자를 선언하세요.*/
+	
+	fieldset *{background-color:pink;}
+	input[name=id]{background-color:yellow;}
+	input[type=password]{color:blue;}
+	
+</style>
+</head>
+<body>
+	<h2>안녕하세요</h2>
+	이름:<input type="text" value="입력된 내용의 배경 색상"/><br>
+	이름2:<input type="text" name="himan" value="입력된 내용의 배경 색상/글자"/><br>
+	패스워드:<input type="password" value="입력된 내용의 배경 색상"/><br>
+	<h2>초록색 세상이네요!!^^</h2>
+	<h2>안녕하세요</h2>
+	
+	<fieldset>
+		<legend>로그인</legend>
+		아이디:<input type="text" name="id"><br>
+		패스워드:<input type="password" name="pass"><br>
+		<input type="submit"/>
+	</fieldset>
+</body>
+</html>

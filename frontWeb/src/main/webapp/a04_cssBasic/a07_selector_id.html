@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+# id 선택자
+1. #으로 시작한느 이름의 선택자
+2. html 태그의 id 속성으로만 지정 가능
+	1) id 속성은 같은 태그에 지정한다.
+		- 보통 페이지에 유일하게 적용할 때, 사용된다.
+3. 형식
+	1) 태그
+		<h2 id="id01">
+	2) 선택자
+		#id01{속성:속성값}
+*/
+	#id01{color:blue;}
+	/* ex) 아이디로 id88로 설정하여
+			특정한 태그에 배경색상과 글자색상을 설정하세요. */
+	#id88{color:orange;background-color:navy;}
+/*
+# id선택자와 class 선택자의 비교
+1. 아이디 선택자
+	1) id 속성의 목적을 각 태그를 유일하게 식별하기 위해서 처리된다.
+		- 동일한 id 속성이 같지 않도록 html파일 작성하는 것이 바람직하다
+		- 자바스크립트 코드에서 id값을 가진 태그 객체를 찾을 때 문제가 된다.
+	2) 적합한 활용
+		id 선택잔느 여러 태그 중 특정 태그에만 css 스타일을 적용할 때, 적합하다.
+2. class 선택자
+	1) 적합한 활용
+		- 여러 태그를 하나의 그룹으로 묶어 단체로 동일한 css 스타일을 적용할 때 적합하다.
+		- class 속성 값이 같은 태그에 모두 css 스타일 적용을 한다.
+	2) 태그의 종류에 관계없이 class 선택자 활용 가능하다.
+*/
+</style>
+</head>
+<body>
+	<h2>안녕하세요</h2>
+	<h2 id="id01">안녕하세요</h2>
+	<h2 id="id01">안녕하세요</h2>
+	<h2 id="id88">안녕하세요</h2>
+	<h2>안녕하세요</h2>
+	<script type="text/javascript">
+		var arry = document.querySelectorAll("#id01"); /*클래스 구분이 안되서 웬만하면 쓰지않기*/
+		arry[0].innerText="변경(id) 선택한 내용";
+		arry[1].innerText="변경(id) 선택한 내용(가능한 id는 유일하게 처리할 때만 쓰기)";
+	</script>
+</body>
+</html>

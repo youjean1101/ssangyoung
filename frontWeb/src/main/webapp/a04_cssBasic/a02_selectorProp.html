@@ -13,13 +13,16 @@
 	span :  선택자(selector)
 		css3 스타일 시트를 html페이지에 적용하도록 만든 이름으로
 		보통 기본적으로 태그명, #아이디명, .클래스명으로 주로 사용된다.
+		ps) 선택자는 js에서 document.querySelector("선택자")와 동일하게 사용되며, 
+				속성=속성값도 동일하게 처리된다.
 	color, font-size : 프로퍼터
 		스타일 속성 이름, 약 200개 정도의 프로퍼티 있음.
 	blue, 20px : 프로퍼티 값
 		스타일 속성에 해당하는 값을 지정
+		ps) dom객체.style.속성 = 속성값
 	# html 문서에서 css3 스타일 시트 만들기
 	1. css스타일 시트 만드는 방법 3가지
-		1) style	/style 태그에 타일 시트 설정
+		1) style	/style 태그에 스타일 시트 설정
 			- 전형적인 스타일 시트 설정
 		2) style 속성에 스타일 시트 작성
 			- <input style="text-align:center;"
@@ -40,7 +43,6 @@
 		text-align:center;
 		color:darkred;
 	}
-	
 	
 </style>
 </head>

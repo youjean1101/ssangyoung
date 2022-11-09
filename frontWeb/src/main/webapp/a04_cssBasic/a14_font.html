@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+# 폰트 제어 css3 프로퍼터
+1. 폰트 패밀리 font-family
+	font-family: Arial, "Times New Roman", Serif;
+				 1순위, 2순위, 3순위
+				 해당 폰트 패밀리 우선 순위 1순위 없으면 2,3 순위로
+				 진행한다.
+2. font-size 글자 크기
+	font-size : 40px; 절대적 크기
+	font-size : medium; 브라우저별 상대적 크기
+	font-size : 1.6em; 기본 글자에서 상대적 비율 설정
+3. font-style 글자의 모양
+	font-style:italic; 기울림체
+4. font-weight 글자의 굵기
+	font-weight:300;	100~900의 점위에서 300정도 굵기
+	font-weight:bold;	굵기 700크기 
+5. font 속성
+	font : 종류 굵기 크기 글자체 를 한번에 설정하는 옵션.
+	font : italic bold 20px consolas
+	
+*/
+	body{
+		font-family:"Times New Roman",Serif;
+		font-size:large;
+	}
+	h3{
+		font : italic bold 40px consolas, sans-serif;	
+	}
+</style>
+</head>
+<body>
+	<h3>Consilas font</h3>
+	<hr>
+	<p style="font-weight:900">font-weight:900</p>
+	<p style="font-weight:100">font-weight:100</p>
+	<p style="font-style:italic">font-style:italic</p>
+	<p style="font-style:oblique">font-style:oblique</p>
+	<p style="font-size:1.5em">font-size:1.5em</p>
+	<!-- 
+	ex) 한글에는 궁서체와 굴림체가 있다. 해당 글자체로 상대적/절대적 크기를 
+	설정하여 출력하세요. -->
+	
+	<h2 style="font-family:궁서체; font-size:200%;">안녕하세요(궁서체)</h2>
+	<h2 style="font-family:굴림체; font-size:20px;">안녕하세요(굴림체)</h2>
+	
+</body>
+</html>

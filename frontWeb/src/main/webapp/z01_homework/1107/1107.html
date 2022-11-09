@@ -3,14 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<style type="text/css">
-		@import url(a00_ourStyle.css);
+	<!-- 절대주소로 설정 -->
+	<link href="\1107\a00_sytle10.css" type="text/css" rel="stylesheet">
+	<style>
+		@import url(a00_sytle11.css);
 	</style>
-	<link href="a00_sytle10.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
-<h2>2. h1를 빨주노초파남보 7가지를 선언하고, 색상 폼에 의해 선택되어 배경색이 변경되게 하세요.</h2>
+<h2>* 2. h1를 빨주노초파남보 7가지를 선언하고, 색상 폼에 의해 선택되어 배경색이 변경되게 하세요.</h2>
 		
 	<form>
 		<h1>빨</h1>
@@ -42,9 +43,18 @@
  	  		onchange="document.querySelectorAll('h1')[6].style.background=this.value"
  	  		/><br>
  	 <input type="submit" value="색상 등록"/>
-	</form>
+	</form><br>
+	
+	<h3>정답</h3>
+	<h1 align="center">빨<input type="color" onchange="document.querySelectorAll('h1')[0].style.background=this.value"/></h1>
+	<h1 align="center">주<input type="color" onchange="document.querySelectorAll('h1')[1].style.background=this.value" /></h1>
+	<h1 align="center">노<input type="color" onchange="document.querySelectorAll('h1')[2].style.background=this.value" /></h1>
+	<h1 align="center">초<input type="color" onchange="document.querySelectorAll('h1')[3].style.background=this.value" /></h1>
+	<h1 align="center">파<input type="color" onchange="document.querySelectorAll('h1')[4].style.background=this.value" /></h1>
+	<h1 align="center">남<input type="color" onchange="document.querySelectorAll('h1')[5].style.background=this.value"/></h1>
+	<h1 align="center">보<input type="color" onchange="document.querySelectorAll('h1')[6].style.background=this.value" /></h1>
 		
-<h2>4. 사원의 정보를 아래와 같이 입력하여 다음 페이지에서 출력되게 처리하세요.
+<h2>* 4. 사원의 정보를 아래와 같이 입력하여 다음 페이지에서 출력되게 처리하세요.
            입사일(년/월/일) : [     ]
            다음프로젝트(년/@주째) : [     ]
             회원룸 예약:
@@ -62,9 +72,24 @@
               시간(@@:@@) :<input type="time" name="reservationtime" value="14:00"/>
  		</fieldset>
  		<input type="submit" />
+ 	</form><br>
+ 	
+ 	<h3>정답</h3>
+ 	
+ 	<h2>사원정보</h2>
+ 	<form action="z02_show.jsp">
+ 		입사일(년/월/일) : <input type ="date" name="hiredate"/><br>
+ 		다음 프로젝트(년/@주째) : <input type="week" name="nextProject"/><br>
+ 		<fieldset>
+	 		<legend>회의룸 예약</legend>
+	 		방번호 : <input type="number" min="1" max="10" name="roomnum"/><br>
+	 		날짜(년/월/일) : <input type="date" name="meetdate"/><br>
+	 		시간(시:분) : <input type="time" name="meettime"/>
+ 		</fieldset>
+ 		<input type="submit"/>
  	</form>
               
-<h2>5. 나이에 따른 할인율을 선택해서 놀이 공원 입장료를 처리하세요.
+<h2>* 5. 나이에 따른 할인율을 선택해서 놀이 공원 입장료를 처리하세요.
            기본 입장료:[   ]
            나이:[   ] ==> number
            할인율:[    ] ==> %표기
@@ -91,7 +116,24 @@
 	 		<br>
 		<input type="submit" value="입장">
 	</form>
-	<iframe name="frame" width=50% height="150"></iframe>
+	<iframe name="frame" width=50% height="150"></iframe><br>
+     
+     <h3>정답</h3>
+  	  <script>
+     	function chRatio(val){
+     		document.querySelector("#shDis").innerText=val;
+     	}
+     </script>
+	
+	<h3>놀이공원 매표소에서</h3>
+     <form>
+     	기본입장료: <input type="number" value="50000" /><br>
+     	나이: <input type="number" min="1" max="100" value="1" /><br>
+     	할인율: <input type="range" min="0" max="100" step="5" 
+     			onchange="chRatio(this.value)" value="0"/>
+     	<span id="shDis"></span>%<br>
+     	<input type="submit" value="입장">
+     </form>
            
 <h2> 6. 회원가입을 일반회원과 관리자를 구분해서 가입화면을 구성(타이틀과 그룹처리)해보세요.
           일반회원 : 아이디 패스워드 이름 나이 포인트 일반주소 
@@ -158,6 +200,9 @@
             해당 파일에서 적용된 내용을 확인하세요.</h2>
         <link href="a00_sytle11.css" type="text/css" rel="stylesheet">
         <h5>외부파일 선언 및 호출</h5>
+        
+        <h3>정답</h3>
+        
         
 </body>
 </html>

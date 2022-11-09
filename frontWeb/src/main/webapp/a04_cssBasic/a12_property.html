@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+# 텍스트를 꾸미는 css3 스타일 시트
+1. text-indent : 길이 | %처리
+	들여쓰기 옵션
+2. text-align : left | right | center | justify
+	정렬 처리 옵션
+3. text-decoration : none | underline | overline | line-through
+	텍스트 꾸미기		없음								사선 처리
+	
+*/
+	h3{text-align:right;}
+	span{text-decoration:line-through;}
+	strong{text-decoration:overline;}
+	.p1{text-indent:3em; text-align:justify} /* 3글자 들어쓰기*/
+	.p2{text-indent:1em; text-align:center} /* 1글자 들어쓰기, 중앙정렬*/
+	
+	.cls01{ text-align:right;text-indent:1em;background-color:yellow;}
+	.cls02{ text-align:center;text-indent:10%;text-decoration:overline;}
+	.cls03{ text-align:justify;text-indent:2em;}
+	span{text-decoration:underline;color:blue;}
+</style>
+	
+</head>
+<body>
+	<a href="">안녕하세요</a>
+	<a href="" style="text-decoration:none;">안녕하세요</a>
+	<h3>텍스트 꾸미기</h3>
+	<p class="p1">html 태그만으로 기존의 워드 프로세스와 같이
+		들여쓰기, 정렬, 공백 간격 등과 같은 세밀한 <span>텍스트 제어</span>
+		를 할 수 없다.</p>
+	<p class="p2">
+		그러나, <strong>스타일 시트</strong>는 이름 가능하게 한다.
+		들여쓰기, 정렬에 대해서 알아본다.
+	</p>
+	
+	<!-- 
+	ex) 위키백과사전 jquery를 검색하여 위 문장관련 옵션을 사용하여 처리해보세요.
+	 -->
+	 <h2>jQuery</h2>
+	 <hr>
+	 <p class="cls01">
+	 <span>jQuery(제이쿼리)</span>는 HTML의 클라이언트 사이드 조작을 단순화 하도록 설계된 크로스 플랫폼의 자바스크립트 라이브러리다. 
+	 존 레식이 2006년 뉴욕 시 바캠프(Barcamp NYC)에서 공식적으로 소개하였다.
+	 </p>
+	<p class="cls02">
+	 <span>jQuery</span>는 MIT 라이선스를 가진 자유 오픈 소프트웨어이다.[2] 
+	 <span>jQuery</span>의 문법은 코드 보기, 문서 객체 모델 찾기, 애니메이션 만들기, 이벤트 제어, Ajax 개발을 쉽게 할 수 있도록 디자인되었다. 
+	 또한, <span>jQuery</span>는 개발자가 플러그인을 개발할 수 있는 기능을 제공한다.
+	 </p>
+	 <p class="cls03">
+	마이크로소프트와 노키아는 자사 플랫폼에 <span>jQuery</span>를 포함하는 계획을 발표한 바 있다.[3] 
+	마이크로소프트는 비주얼스튜디오[4]의 ASP.NET AJAX 프레임워크와 ASP.NET MVC 프레임워크에 적용했고, 
+	노키아는 자사의 런타임 웹 위젯 개발 플랫폼에 통합하였다.[5]
+	 </p>
+</body>
+</html>

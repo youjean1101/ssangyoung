@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+# css3의 표준 단위
+1. 상대적 크기 지정
+	상대적 크기라는 것은 해당 선택자(태그)가 가지고 있는 고유의 font의 기본적인 크기를 기준으로
+	몇 배, 몇 % 지정하여 처리하는 것을 말한다.
+	ex) h1~h6까지 문자열의 기본 태그의 크기가 다르다.
+	1) em : 배수 ex) font-size:3em; 현재 폰트의 3배의 크기
+	2) % : 퍼센터 ex) font-size:500%; 현재 폰트의 500%의 크기
+2. 절대적 크기 지정
+	절대적 크기는 일반적인 길이 측정단위를 기준으로 설정하는 것을 말한다.
+	1) px : 픽셀수 ex) font-size:10px; 10픽셀 크기
+	2) cm : 센티미터 ex) margin-left:5cm; 왼쪽 여백 5cm
+	3) mm : 미리미터 ex) margin-top:20mm; 상단 여백 20mm
+	4) in : 인치 lin = 2.54cm = 96px
+			ex) margin-left:2in;
+	5) pt : 포인터 1pt = lin의 1/72 크기
+			ex) margin-bottom : 20pt;
+	6) pc : 피카소(picaso) 1pc = 12pt
+			ex) font-size:1pc;
+	7) deg : 각도 시계 방향 20도 회전
+			ex) transform:rotate(20deg);
+*/
+</style>
+</head>
+<body>
+	<h1>상대적 크기 확인(기준)</h1>
+	<h1 style="font-size:1em;">상대적 크기 확인 1em</h1>
+	<h1 style="font-size:2em;">상대적 크기 확인 2em</h1>
+	<h1 style="font-size:3em;">상대적 크기 확인 3em</h1>
+	<h1 style="font-size:100%;">상대적 크기 확인 100%</h1>
+	<h1 style="font-size:200%;">상대적 크기 확인 200%</h1>
+	<h1 style="font-size:300%;">상대적 크기 확인 300%</h1>
+	
+	<h2>절대적 크기 확인(기준)</h2>
+	<h2 style="font-size:10px;">h2절대적 크기10px</h2>
+	<h3 style="font-size:10px;">h3절대적 크기10px</h2>
+	<h2 style="font-size:20px;">절대적 크기20px</h2>
+	<h2 style="font-size:1cm;">절대적 크기1cm</h2>
+	<h2 style="font-size:10mm;">절대적 크기10mm</h2>
+	<h2 style="font-size:20pt;">절대적크기20pt</h2>
+</body>
+</html>

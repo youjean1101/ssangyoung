@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+# 색상 처리
+1. 색상 설정 형식
+	1) 색 이름으로 표현 : css3 표준에서는 140개 색의 이름을 정하고 있다.
+		ex) h2{color:blue;}
+	2) 16진수 코드로 표현 : #6A2BE2 ==> 16진수 16진수 16진수로
+		색상 비율 조합
+		ex) h3{color:#6A2BE2}
+	3) 10진수 코드와 rgb()로 표현
+			Red green blue
+		rgb(138, 43, 226)
+		0~255로 RGB 색상 표현: js에서 색상값을 호출하면 이 형식으로 호출된다.
+		ex) h4{color:rgb(138,43,226)};
+2. 색 관련 css3 프로퍼터
+	1) 내용
+		coloe : 글자 색상
+		background-color : 배경색상
+		border-color : 테두리 색상
+		border-width: 테두리의 굵기
+		border-style: 테두리의 모양
+		border : 굵기 모양 색상;
+*/
+	h1{border-color:red;
+		border-width:1px;
+		border-style:double;}
+	h2{border:1px solid rgb(138,43,226);}
+	
+</style>
+</head>
+<body>
+	<h1>테두리 색상 확인할까??</h1>
+	<h2>테두리 색상 확인할까??</h2>
+</body>
+</html>
