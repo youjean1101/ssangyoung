@@ -24,20 +24,21 @@ div #spade-2{
 }
 
 div #spade-3{
-	top:50px;right:70px;
+	top:50px;right:80px;
 	z-index:2;
 }
 
 div #spade-7{
-	top:50px;right:90px;
+	top:50px;right:110px;
 	z-index:3;
 }
 
 div #spade-A{
-	top:50px;right:110px;
+	top:50px;right:140px;
 	z-index:4;
 }
-#spade-2:focus, #spade-3:focus, #spade-7:focus, #spade-A:focus{
+
+#spacde-A:active{
 	overflow:hidden;
 }
 
@@ -66,11 +67,105 @@ div #spade-A{
 	
 	
 	<h2>[1단계:확인] 7. 네비게이션 바에서 이미지가 있는 메뉴리스트(좌우)를 만들어 출력하세요. </h2>
+	<style>
+		#navigation{
+		background:grey;
+			width:250px;
+		}
+		#navigation ul{
+			margin:0;
+			padding:0;
+			width:500px;
+		}
+		#navigation ul li{
+			display:inline-block;
+			list-style-type:none;
+			padding:3px 15px;
+		}
+	</style>
+	
+	<nav id="navigation">
+		<ul>
+			<li><a href="javascript:alert('메뉴');" name="left"><img src="\a00_img\navigationBar_left.jpg"></a>
+			<li><a href="javascript:alert('home이동');" name="left"><img src="\a00_img\navigationBar_center.jpg" name="center"></a>
+			<li><a href="javascript:alert('뒤로가기');" name="left"><img src="\a00_img\navigationBar_right.jpg" name="right"></a>
+		</ul>
+	</nav>
 	
 	<h2>[1단계:확인] 9. 부서정보 테이블을 오늘 배운 css 설정하여 화면에 출력하세요. </h2>
+		<style>
+			thead>tr>th{
+			text-align:center;
+			}
+			
+			thead{
+				background:navy;
+				color:yellow;
+			}
+			
+			tbody tr:nth-child(even){
+				background:aliceblue;
+			}
+			
+			tbody tr:hover{
+				background:pink;
+			}
+			
+		</style>
+		
+		<table border>
+			<thead>
+			<tr><th>부서번호</th><th>부서명</th><th>지역</th></tr>
+			</thead>
+			<tbody>
+			<tr><td>10</td><td>RESEARCH</td><td>DALLAS</td></tr>
+			<tr><td>20</td><td>SALES</td><td>CHICAGO</td></tr>
+			<tr><td>30</td><td>OPERATIONS</td><td>BOSTON</td></tr>
+		</tbody>	
+		</table>
 	
 	<h2>[1단계:확인] 11. 부서정보 등록 form을 form관련 css 설정하여 화면에 출력하세요. </h2>
+	<style>
+	label{
+		display:block;
+		padding:10px;
+	}
 	
+	label span{
+		display:inline-block;
+		width:90px;
+		text-align:right;
+		padding:10px;
+	}
+	
+	input{color:blue;
+		border:2px solid skyblue;
+		border-radius:5px;
+	}
+	
+	input[type=text]:focus, input[type=number]:focus{
+		font-size:120%;
+	}
+	
+	input:hover{
+		background:aliceblue;
+	}
+	</style>
+	
+	<form>
+		<label>
+			<span>부서번호</span><input type="number" min="10" max="1000" step="10">
+		</label>
+		<label>
+			<span>부서명</span><input type="text">
+		</label>
+		<label>
+			<span>지역</span><input type="text">
+		</label>
+		<label>
+			<span></span><input type="submit" value="부서정보등록">
+		</label>
+	</form>
 	<h2>[1단계:확인] 12. js의 화면 출력 형식 3가지를 기술하고, 차이점을 검색해보고 정리해보세요.</h2>
 
 </body>
