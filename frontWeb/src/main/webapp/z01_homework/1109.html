@@ -34,9 +34,20 @@
 		background-position:right center;
 		border:6px dotted green;
 	}
+	
+	/* 정답 */
+	div#product{
+		border:1px solid green;
+		width:70%;height:300px;background:yellow;
+		background-image:url('/z01_homework/train.jpg');
+		background-repeat: no-repeat;
+		background-position: right center;
+		background-size: 50% 100%;
+	}
 </style>
 </head>
 <body>
+     	
 	<h2>[1단계:확인] 3. border의 4가지 방향 모두 다른 style과 색상을 설정하여 출력하세요</h2>
 	
 	<h3 class="box1">동</h3>
@@ -45,6 +56,7 @@
 	<h3 class="box4">북</h3>
 	
 	<h2>[1단계:확인] 6. 상품을 소개하는 문자열과 상품이미지를 box에서 문자열과 배경이미지로 처리해보세요.</h2>
+	
 	<div class="box1"><h3>샤인머스캣</h3>
 		 일본 농림수산성<br>
 		 소관 농업·식품<br>
@@ -52,6 +64,17 @@
 		 기구가 번식하고<br>
 		 등록한 포도 품종
 		 </div>
+	
+	<h3>정답</h3>
+	<div id="product">
+		<h2>사과</h2>
+		<p style="width:50%;">
+			사과는 빨간색 과일로 건강을 위지시켜준다.
+			사과는 빨간색 과일로 건강을 위지시켜준다.
+			사과는 빨간색 과일로 건강을 위지시켜준다.
+			사과는 빨간색 과일로 건강을 위지시켜준다.
+		</p>
+	</div>
 	
 	<h2>[1단계:확인] 8. border-radius와 text-shadow, border를 혼합하여 문자열이 버튼이미지 모양이 되게 둥근 테두리로 처리해보세요</h2>
 	<style>
@@ -109,8 +132,9 @@
 	
 	<h2>[1단계:확인] 11. div 하위에 h2를 안녕하세요를 문자 하나하나 마다 inline-block으로 나열하고
        class로 up/down으로 선언 후, 가상클래스로 커서를 위치할 때 마다 위/아래로 움직이게 처리하세요.</h2>
+             
      <style>
-	      div>h2{
+	      div.me>h2{
 	    		display:inline-block;
 	    		border:1px solid green;
 				background:yellow;
@@ -130,12 +154,31 @@
 	      }
      </style>
      
-     <div align="center">
+     <div class="me" align="center">
 	      <h2 class="up">안</h2>
 	      <h2 class="down">녕</h2>
 	      <h2 class="up">하</h2>
 	      <h2 class="down">세</h2>
 	      <h2 class="up">요</h2>
      </div>
+     
+     <h2>정답</h2>
+        <style>
+	     	div.pos01>h4{background:red; color:orange; width:30px;height:30px;
+							display:inline-block; text-align:center;}
+	     	
+	     	h4.down1:hover{position:relative;top:10px;left:10px;background:navy;}
+	     	
+	     	h4.up1:hover{position:relative;bottom:10px;right:10px;background:navy;}
+     	</style>
+     	     
+     	<div class="pos01">
+	     	<h4 class="up1">안</h4>
+	     	<h4 class="down1">녕</h4>
+	     	<h4 class="up1">하</h4>
+	     	<h4 class="down1">세</h4>
+	     	<h4 class="up1">요</h4>
+     	</div>
+       
 </body>
 </html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/* ex) a07_float설정으로 새로운 페이지를 만들어 안녕하세요 각각 문자 div를 만들어 거꾸로 나오게 처리하세요.
+			==> 요세*/
+	
+	div{
+		float:right;
+		border:1px solid blue;
+		width:50px;height:50px;
+		text-alignt:center;
+		padding:45px;
+	}
+/*
+# 화면에서 보이지 않게 처리
+1. visibility:hidden
+*/
+	h3.cls01{
+		visibility:hidden;
+	}
+	
+	h3.cls02{
+		display:none;
+	}
+	
+	img{width:200px;height:200px;float:right;}
+	img#ck01{visibility:hidden;}
+	img#ck02{display:none;}
+	/*
+	ex) 사과 바나나 망고를 출력하되, 사과와 바나나는 각각 visibility, display
+		를 통해서 보이지 않게 처리하세요.
+	*/
+	
+</style>
+</head>
+<body>
+	<img src="\a00_img\apple.jpg" id="ck01" />
+	<img src="\a00_img\banana.jpg" id="ck02"/>
+	<img src="\a00_img\tomato.jpg" />
+
+	<h3>화면 처리내용1</h3>
+	<h3 class="cls01">화면 처리내용2</h3>
+	<h3>화면 처리내용3</h3>
+	<h3 class="cls02">화면 처리내용4</h3>
+	<h3>화면 처리내용5</h3>
+	내용입니다.
+	<div>안</div>
+	<div>녕</div>
+	<div>하</div>
+	<div>세</div>
+	<div>요</div>
+</body>
+</html>

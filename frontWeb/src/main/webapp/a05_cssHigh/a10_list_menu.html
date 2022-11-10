@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+# 스타일을 응용하여 list메뉴만들기
+1. list-style-type을 none으로 설정하고,
+2. a link를 text-decoration:none
+3. 그 외 margin, padding을 활용하여 하이퍼 링크를 통해 메뉴 처리하기.
+4. 처리순서
+	1) 기본 nav 시맨틱 태그하위에 ul/li/a html 태그 처리하기
+	2) ul css 처리
+	3) ul>li css 처리
+	4) ul>li>a css 처리하기
+	5) :hover(가상클래스)를 통한 동적 css 처리하기
+*/
+	#menubar{background:olive;}
+	#menubar ul{/*여백과 패딩 처리*/
+		margin:0;
+		padding:0;
+		width:567px;
+	}
+	#menubar ul li{
+		display:inline-block;
+		list-style-type:none;
+		padding:5px 15px;
+	}
+	#menubar ul li a{
+		color:white;
+		text-decoration:none;
+	}
+	#menubar ul li a:hover{
+		color:violet;
+	}
+</style>
+</head>
+<body>
+<!-- 
+ex) a11_list_menu2.html로 gmarcket의 상단 메뉴를 만들어 보세요.
+
+ -->
+<h2>리스트 메뉴 처리하기.</h2>
+
+<nav id="menubar">
+	<ul>
+		<li><a href="javascript:alert('home이동');">Home</a>
+		<li><a href="a01_display.html">에스프레소</a>
+		<li><a href="javascript:alert('카푸치노이동');">카푸치노</a>
+		<li><a href="#">카페라떼</a>
+		<li><a href="#">FAQ</a>
+	</ul>
+</nav>
+</body>
+</html>

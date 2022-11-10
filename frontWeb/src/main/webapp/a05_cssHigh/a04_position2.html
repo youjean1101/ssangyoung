@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+# 절대위치(absolute) 
+1. 특정 요소를 포함하고 있는 태그기준으로 절대 위치를 설정할 수 있다.
+2. 기본 형식
+	position:absolute;
+	top:@@px;left:@@px;
+	위치 속성은 top/bottom/left/right 모두다 설정할 수 있음. 
+	z-index : 우선순위를 설정하는 옵션을 해당 값에 따라 화면상으로 가장 먼저 보이게 처리한다.
+*/
+	div{width:100px;height:100px;position:absolute;
+		background:green;} 
+		
+	div#div01{
+		top:50px;left:50px;z-index:1;
+	}
+	div #div02{
+		bottom:10px;right:10px;
+		width:30px;height:30px;
+		background:red;
+		z-index:4;
+	}
+	
+	div#div03{
+		top:80px; left:80px;
+		background:skyblue;
+	}
+	
+	div#div03>p{
+		position:absolute;
+		bottom:25px;right:10px;
+		width:50px;height:50px;
+		background:blue;
+		color:white;
+		text-align:center;
+	}
+	/*
+	ex) body 아이디 div03을 만들고 절대 위치로 특정한 위치에 로딩하고, 
+		div03 하위에 p만들어 절대 위치로 특정위치에 로딩되게 하세요.
+	*/
+</style>
+</head>
+<body>
+	<div id="div01">top:100px;<br>left:100px;
+		<div id="div02">
+			
+		</div>
+	</div>
+	
+	<div id="div03">하늘
+		<p>바다</p>
+	</div>
+</body>
+</html>

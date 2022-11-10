@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+# overflow
+1. 지정된 화면의 크기보다 더 많은 내용을 컨테이너형 요소에 포함될 때,
+	처리하는 속성
+2. 속성값
+	hidden : 보이지 않게 처리
+	visible : 넘기에 보이게 처리
+	scroll : 스크롤 해서 보이게 처리
+*/
+div{
+	width:100px;height:100px;border:1px solid green;margin:100px;
+}
+div#opt01{
+	overflow:hidden;
+}
+div#opt02{
+	overflow:visible;
+}
+div#opt03{
+	overflow:scroll;
+}
+
+/*
+	ex) 물건에 대한 설명내용을 hidden과 scroll옵션을 통해서 처리하세요.
+*/
+div#cpu{
+	overflow:hidden;
+}
+div#ram{
+	overflow:scroll;
+}
+p{width:80px;height:80px;border:1px solid blue;margin-bottom:10px;}
+p#cpu{
+	overflow:hidden;
+}
+p#ram{
+	overflow:scroll;
+}
+</style>
+</head>
+<body>
+	<div><h3>기본</h3>안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.</div>
+	<div id="opt01"><h3>hidden</h3>
+		안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.</div>
+	<div id="opt02"><h3>visible</h3>
+		안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.</div>
+	<div id="opt03"><h3>scroll</h3>
+		안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.안녕하세요.</div>
+		
+	<p id="cpu"><h3>CPU</h3>중앙 처리 장치 또는 CPU는 컴퓨터 시스템을 통제하고 프로그램의 연산을 실행 · 처리하는 가장 핵심적인 컴퓨터의 제어 장치, 혹은 그 기능을 내장한 칩이다.</p>
+	<p id="ram"><h3>램</h3>
+	컴퓨터에서 랜덤 액세스 메모리 즉 램은 임의의 영역에 접근하여 읽고 쓰기가 가능한 주기억 장치다. 반도체 회로로 구성되어 있으며 휘발성 메모리다. 흔히 RAM을 ‘읽고 쓸 수 있는 메모리’라는 뜻으로 알고 있는데, 이것은 오해다. </p>
+</body>
+</html>
