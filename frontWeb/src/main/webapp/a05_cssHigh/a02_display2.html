@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+# display:inline
+1. div를 inline으로 수정
+*/
+	div>div{
+		display:inline;
+		border:1px dashed navy;
+	}
+	/*
+	ex) div의 자손 p태그는 inline을로 처리하세요..
+		p태그의 넓이와 높이와 배경색상 지정
+	*/
+	p{display:inline;border:1px solid red; background:green;}
+	p{width:100px;height:100px;}
+</style>
+</head>
+<body>
+	<div style="background:orange">
+		<div>인라인 div1</div>
+		<div>인라인 div2</div>
+		<div>인라인 div3</div>
+	</div>
+	<div style="background:pink">
+		<div>인라인 div1</div>
+		<div>인라인 div2</div>
+		<div>인라인 div3</div>
+	</div>
+		<h3>문단1</h3>
+		<p>자손 p태그 인라인 p1</p>
+		<p>자손 p태그 인라인 p2</p>
+		<p>자손 p태그 인라인 p3</p>
+	<div><h3>문단2</h3>
+		<p>자손 p태그 인라인 p1</p>
+		<p>자손 p태그 인라인 p2</p>
+		<p>자손 p태그 인라인 p3</p>
+	</div>
+<!-- 
+# display:inline-block
+1. div를 인라인 블록 박스로 수정
+ -->
+ <style>
+ 	div div.inblock{
+ 		display:inline-block;
+ 		border:2px dotted orangered;
+ 		background:powderblue;
+ 		margin:10px;
+ 		width:60px;height:80px;
+ 	}
+ </style>
+ 	<h2>인라인 블럭</h2>
+ 	<div style="background:orange">
+ 		<h2>인라인 블럭</h2>
+ 		<div class="inblock">인라인 블럭</div>
+ 		<div class="inblock">인라인 블럭</div>
+ 		<div class="inblock">인라인 블럭</div>
+ 	</div>
+ 	<div style="background:orange">
+ 		<h2>인라인 블럭</h2>
+ 		<div class="inblock">인라인 블럭</div>
+ 		<div class="inblock">인라인 블럭</div>
+ 		<div class="inblock">인라인 블럭</div>
+ 	</div>
+ <!-- 
+ 	ex) div 안에 h2를 선언해서 자손관계에 있으면 h2가 inline-block으로 넓이와
+ 		폭이 설정되게 하세요.
+  -->
+  <style>
+  	div h2{
+  		display:inline-block;
+ 		border:1px solid blue;
+ 		background:navy;
+ 		color:white;
+ 		text-align:center;
+ 		margin:10px;
+ 		width:150px;height:60px;
+  	}
+  </style>
+  <div style="background:grey">
+  	<h3>되눈고얌?</h3>
+  	<h2>안되느겨?</h2>
+  	<h2>안되느겨?</h2>
+  	<h2>안되느겨?</h2>
+  </div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+# 배경 다루기
+1. 배경 색이나 이미지 지정
+	1) background-color : 배경색상
+	2) background-image : 배경이미지 지정..
+		ex) background-image:url("해당이미지(상대/절대주소)")
+2. 배경 이미지의 위치
+	1) background-position : center center;
+		박스 수장에 이미지 출력
+3. 배경 이미지 반복 출력
+	1) background- repeat:repeat-y : 위에서 아래로 이미지 반복 출력
+*/
+
+
+	div.cls01{
+		width:50%;height:300px;
+		background-color:skyblue;
+		background-size:200px 200px;
+		background-image:url("./media/spongebob.png");
+		/* ./media : 현재 폴드에 media 폴드가 있을 때, 접근 처리
+			/media : webapp하위에 media로 절대 경로로 선언.
+			*/
+		background-repeat:no-repeat;
+		/*
+		배경이미지는 default로는 반복되어진다. no-repeat를 통해서 반복을 중단하고, 
+		repeat-x/repeat-y를 통해 반복을 x축과 y축으로 나누어서 처리할 수 있다.
+		*/
+		background-position:top center;
+		/*
+		배경이미지를 top/center/bottom
+				 left/center/right 옵션으로 처리할 수 있다.
+		
+		ex) 좋아하는 배경이미지를 다운받아 해당 내용과 함께 적절할 이미지 위치를 지정시켜
+		출력하세요.
+		*/
+	}
+	
+	div.cls03{
+		width:70%;height:150px;color:white; text-align:center;
+		background-color:black;
+		background-size:200px 200px;
+		background-image:url("./media/background start.jpg");
+		background-repeat:repeat-y;
+		background-position:center center;
+		
+	}
+	
+	
+	div.cls02{
+		width:200px;height:200px;
+		color:blueviolet;font-size:16px;
+	}
+	
+</style>
+</head>
+<body>
+	<div class="cls01">
+		안녕하세요. 배경이미지 연습입니다.
+		안녕하세요. 배경이미지 연습입니다.
+		안녕하세요. 배경이미지 연습입니다.
+		안녕하세요. 배경이미지 연습입니다.
+		안녕하세요. 배경이미지 연습입니다.
+		안녕하세요. 배경이미지 연습입니다.
+		안녕하세요. 배경이미지 연습입니다.
+	</div>
+	
+	<div class="cls02">
+		안녕하세요. 배경이미지 연습입니다.
+		안녕하세요. 배경이미지 연습입니다.
+		안녕하세요. 배경이미지 연습입니다.
+		안녕하세요. 배경이미지 연습입니다.
+	</div>
+	
+	<div class="cls03">
+		Google. 검색하세요.<br>
+		Google. 검색하세요.<br>
+		Google. 검색하세요.<br>
+		Google. 검색하세요.<br>
+		Google. 검색하세요.<br>
+		Google. 검색하세요.<br>
+	</div>
+</body>
+</html>

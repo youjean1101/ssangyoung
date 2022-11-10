@@ -19,15 +19,30 @@ div.box{
 	margin:40px;
 	padding:20px;
 }
-/* p태그 안에 font 태그를 선언하여, 보더의 굵기 형태 색상, 패딩과 머진을 선언하세요. 
+/* 
+	p태그 안에 font 태그를 선언하여, 보더의 굵기 형태 색상, 패딩과 머진을 선언하세요. 
 	<font>반갑습니다</font>
 	p하위에 클래스명이 box2로 있고, 그 자식으로 font가 있으며 속성이 id가 ch01인 것
 	font#ch01{} -> 이것도 됌
 	border-width:20px;
 	border-style:solid;
 	border-color:green;
+	
+	border:1px solid green;
+	
+	border-위치:1px silid green;
+	border-위치-width|style|color
+	위치 : left, right, top, bottom
+		
 */
-	p.box2{}
+	p.box2{height:100p; margin:100px;}
+	
+	/*
+	<p class="box2">
+		<font id="ch01" ==> 를 지칭
+	부모가 p태그이고 class가 box2이며, 태그가 font이고 id가 ch01인 요소
+	*/
+	
 	p.box2 > font#ch01{
 		color:blue;
 		background-color:pink;

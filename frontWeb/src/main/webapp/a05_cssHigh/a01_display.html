@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+# css 고급
+1. 학습목표
+	1) html 태그가 출력하는 위치를 조절할 수 있다.
+	2) 리스트를 예쁘게 꾸밀 수 있다.
+	3) 표를 예쁘게 꾸밀 수 있다.
+	4) 폼을 꾸미고, 사용자의 입력에 반응하게 할 수 있다.
+	5) 애니메이션, 전환(transition), 변환(transform) 효과를 만들 수 있다.
+	
+# 배치
+1. css로 html 태그가 출력되는 위치 지정
+	1) html 태그는 웹 페이지에 작성된 순서와 달리 배치 가능
+	2) 배치 기능의 css3 프로퍼티들
+		1) display
+		2) position
+		3) left, right, top, bottom
+		4) float
+		5) z-index : 구성요소들을 절대 위치로 설정했을 때, 겹치는 내용에 대한 우선순위 설정
+		6) visibility : 화면에서 구성요소를 보이게 하거나, 보이지 않게 처리.
+		7) overflow : 내용물이 지정한 크기보다 더 커질 때, 옵션으로 해당 내용에 대한 처리
+		
+# 블럭 박스와 인라인 박스
+1. html 태그는 인라인 태그와 블록 태그로 나뉜다.
+	- 인라인 태그는 인라인 박스, 블록태그는 블록 박스로 출력
+2. 블록 박스와 인라인 박스의 디폴트 출력 모양
+	블록 박스 : 줄바꿈을 포함하고, 여러 내용을 행단위로 포함시킬 수 있다.
+	인라인 박스 : 줄바꿈을 포함하지 않고 있고, 여러 내용을 행단위로 포함 시킬 수 없고,
+		라인으로만 포함 처리할 수 있다. 
+*/
+</style>
+</head>
+<body>
+	<h2>블록 박스</h2>
+	<div>블럭1</div>
+	<div>블럭2</div>
+	<div>블럭3</div>
+	<h2>인라인 박스</h2>
+	<span>인라인1</span>
+	<span>인라인2</span>
+	<span>인라인3</span>
+<!-- 
+# 박스의 유형 제어 : display
+- 원래 태그가 가지고 있던 block, inline속성을 변경을 하게 해준다.
+ 1. block box(display:block;)
+ 	1) 항상 새 라인에서 시작
+ 	2) 블록 박스 내에만 배치
+ 	3) 옆에 다른 요소 배치 불가능
+ 	4) width,height으로 크기 조절
+	5) padding, border, margin 조절 가능
+	
+ 2. inline box(display:inline;)
+ 	1) 새 라인에서 시작 못함. 라인 안(inline)에 있음
+ 	2) 모든 박스 내 배치 가능
+ 	3) 옆에 다른 요소 배치 가능
+ 	4) width와 height으로 크기 조절 불가능
+ 	5) margin-top, margin-bottom 조절 불가능
+ 	
+  3. inline block box(display:inline-block;)
+  	1) inline의 속성
+  		- 새 라인에서 시작 못함
+  		- 라인 안(inline)에 있음
+  		- 모든 박스 내 채치 가능
+  		- 옆에 다른 요소 배치 가능
+  	2) block 속성
+  		- width와 height 크기 조절 가능
+  		- padding, border, margin의 조절 가능 	
+ -->
+ <style>
+ 	/* display:block
+ 	span을 블록 박스로 수정 */
+ 	span.spanBlock{
+ 		display:block;
+ 		width:100px;
+ 		height:60px;
+ 		background:yellow; border:1px solid blue;
+ 	}
+ 	/* strong class로 blockStrong을 설정하여, blockStrong이 처리되게 하세요.*/
+ 	strong.blockStrong{
+ 		display:block;
+ 		width:100px;
+ 		height:50px;
+ 		background:pink; border:3px solid red;
+ 	}
+ 	
+ </style>
+ 	<br>
+ 	<span>안녕1</span>
+ 	<span>안녕2</span>
+ 	<span>안녕3</span>
+ 	<span class="spanBlock">안녕4</span>
+ 	<span class="spanBlock">안녕5</span>
+ 	<span class="spanBlock">안녕6</span>
+ 	
+ 	<strong>왓1</strong>
+ 	<strong>왓2</strong>
+ 	<strong>왓3</strong>
+ 	<strong class="blockStrong">왓4</strong>
+ 	<strong class="blockStrong">왓5</strong>
+ 	<strong class="blockStrong">왓6</strong>
+</body>
+</html>

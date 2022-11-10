@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+
+	legend{font-size:40px;color:rgb(234,0,0);font-family:"HY견고딕";}
+	
+	input[type=text]{width:300px; height:20px;}
+	
+	input[type=password]{width:300px; height:20px;}
+	
+	input[type=submit]{width:300px; height:50px; font-family:"HY견고딕"; font-size:20px;
+						background-color:rgb(234,0,0); color:white; border:red;}
+	
+	th{font-family:"굴림체"; color:rgb(128,128,128); font-size:10px; text-align:left; font-weight:600;}
+	
+	input[name=double_check]{background-color:white; color:rgb(234,0,0); border:1px solid rgb(234,0,0);}
+	
+	select{width:300px; height:25px;}
+	
+/* 	div{font-family:"굴림체"; color:rgb(128,128,128); font-size:15px; text-align:left; font-weight:600;} */
+	
+</style>
+</head>
+<body>
+	<form align="center">
+		<fieldset>
+			<table align="center">
+				<legend><img src=".\img\CGV_mark.png" width="100" height="45" alt="이미지 없음"/>회원 가입</legend>
+				<tr><th>아이디</th>
+				<td></td></tr>
+				
+				<tr><td><input type="text" name="ID" width=300px height=100px/></td>
+				<td><input type="button" name="double_check" value="중복 확인"
+							onclick="alert('[안내메시지] 가입 가능한 아이디입니다.')"/></td></tr>
+							
+				<tr><th>비밀번호</th>
+				<td></td></tr>
+				
+				<tr><td><input type="password" name="passwd"/><td>
+				<td></td></tr>
+				
+				<tr><th>비밀번호 재확인</th>
+				<td></td></tr>
+				
+				<tr><td><input type="password" name="passwd_check"/></td>
+				<td></td></tr>
+				
+				<tr><th>이름</th>
+				<td></td></tr>
+				
+				<tr><td><input type="text" name="name"/></td>
+				<td></td></tr>
+				
+				<tr><th>성별</th>
+				<td></td></tr>
+				
+				<tr><td><select name="gender"/>
+					<option>남</option>
+					<option>여</option>
+				</select></td>
+				<td></td></tr>
+				
+				<tr><th>본인 확인 이메일</th>
+				<td></td></tr>
+				
+				<tr><td><input type="text" name="email" placeholder="xxx@xxx.com으로 입력"/></td>
+				<td></td></tr>
+				
+				<tr><th>휴대전화</th>
+				<td></td></tr>
+				
+				<tr><td><input type="text" name="phoneNumber" placeholder="010-0000-0000으로 입력"/></td>
+				<td></td></tr>
+				
+			</table>
+		</fieldset>
+		<br>
+		<input type="submit" value="가입하기"/>
+	</form>
+</body>
+</html>

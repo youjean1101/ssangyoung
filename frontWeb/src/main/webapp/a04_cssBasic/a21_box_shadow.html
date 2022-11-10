@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+# 박스 그림자, box-shadow
+1. 박스 전체에 그림자 효과
+2. box-shadow : h-shadow v-shadow 
+				blur-radius spread-radius color |none|insert
+	- spread-radius : 그림자 크기(선택, 디폴트 0)
+	- insert: 음각 박스로 보이게 박스 상단 안쪽(왼쪽과 위쪽)에 그림자 형성
+*/
+	.redBox{
+		box-shadow:10px 20px blue;
+	}
+	.blurBox{
+		box-shadow:10px 10px 5px skyblue;
+	}
+	.multiBox{
+		box-shadow:2px 2px 2px black, 
+					0 0 25px blue, 
+					0 0 5px darkblue;
+	}
+	div{
+		margin:20px;
+		width:150px;
+		height:70px;
+		padding:10px;
+		border:10px solid lightgray;
+		background-image:url("./media/spongebob.png");
+		background-size:150px 100px;
+		background-repeat:no-repeat;
+	}
+	/* p 태그로 선언하여, 좋아하는 캐릭터 다운로드 하여 설정하고, 
+		위 속성 처리하여 출력하세요.*/
+	p{
+		text-align:under;
+		margin:20px;
+		width:150px;
+		height:100px;
+		padding:10px;
+		border:10px solid darkgrey;
+		background-image:url("./media/duck_character.jpg");
+		background-size: 200px 150px;
+		background-repeat:no-repeat;
+		box-shadow:10px 10px 5px green;
+	}
+</style>
+</head>
+<body>
+	<h3>박스 그림자 만들기</h3>
+	<hr>
+	<div class="redBox">뚱이와 함께</div>
+	<div class="blurBox">뚱이와 함께</div>
+	<div class="multiBox">뚱이와 함께</div>
+	
+	<p>피곤스다..</p>
+	<p>피곤스다..</p>
+	<p>피곤스다..</p>
+</body>
+</html>
