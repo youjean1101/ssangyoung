@@ -4,12 +4,90 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-/*
-
-*/
+	
+	#menubar{background:white;}
+	
+	#menubar ul{
+		margin:0;
+		padding:0;
+		width:95em;
+	}
+	
+	#menubar ul li{
+		display:inline-block;
+		list-style-type:none;
+		padding:20px 40px;
+	}
+	
+	#menubar ul li a{
+		color:rgb(51, 51, 51);
+		text-decoration:none;
+		font-weight:600;
+	}
+	
+	#menubar ul li a:hover{
+		color:tomato;
+	}
+	
+	#menubar ul li a#login{
+		color: red;
+	}
+	
+	td{
+		font-size:5pt;
+	}
+	
+	input{
+	width:300px; height:30px;
+	}
+	
+	input[name=logIn]{	background-color:rgb(234,0,0); color:white; 
+						border:red; border-radius:5px;
+						font-family:"HY견고딕"; font-size:20px;}
+						
+	input[name=signUp]{	background-color:white; 
+						color:rgb(234,0,0); 
+						border:1px solid rgb(234,0,0); border-radius:5px;
+						font-family:"HY견고딕"; font-size:20px;}
+	
 </style>
 </head>
 <body>
-	<h2>이동성공</h2>
+	<nav id="menubar">
+		<ul>
+			<li></li>
+			<li><a href="javascript:alert('영화로 이동');">영화</a>
+			<li><a href="javascript:alert('예매로 이동');">예매</a>
+			<li><a href="javascript:alert('스토어로 이동');">스토어</a>
+			<li></li>
+			<li></li>
+			<li><a href="https://www.cgv.co.kr">
+				<img src=".\img\CGV_mark.png" width="170" height="70" alt="이미지 없음"/>
+				</a>
+			<li></li>
+			<li></li>
+			<li><a href="Project3_CGV_Login.html" id="login">로그인</a>
+			<li><a href="javascript:alert('고객센터로 이동');">고객센터</a>
+			<li><a href="javascript:alert('MyCGV로 이동');">MyCGV</a>
+		</ul>
+		<hr>
+		
+		<table>
+				<tr><td></td>
+				<td><a href="http://www.cgv.co.kr/user/login/find-account.aspx">아이디 찾기> </a>
+			 		<a href="http://www.cgv.co.kr/user/login/find-pw.aspx?act=pw"> 비밀번호 찾기></a></td></tr>
+			<form action="loginComplete.jsp">
+				<tr><th><input type="text" name="id"></th></tr>
+				<tr><th><input type="password" name="password"></th></tr>
+				<tr><th><input type="submit" name="logIn" value="로그인"></th></tr>
+			</form>
+			
+			<form action="Project3_CGV_SignUp.html">
+				<tr><th><input type="submit" name="signUp" value="회원가입" ><th></tr>
+			</form>
+			
+			<tr><td>아이디 비밀번호를 입력하신 후, 로그인 버튼을 클릭해주세요.</td></tr>
+		</table>
+	</nav>
 </body>
 </html>

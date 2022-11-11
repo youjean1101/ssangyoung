@@ -8,11 +8,15 @@
 # css3를 표 꾸미기
 1. 적용 주요 옵션
 	1) border : 표 테두리, border-bottom : 하단의 테두리 설정.
-	2) border-collapse:collapse; 중복된 테두리 합치기
+	2) border-collapse:collapse; 중복된 테두리 합치기 테이블에 대한 css 속성
 	3) height/width : th/td의 폭과 넓이 개별적 조정
 	4) padding : 여백설정
 	5) text-align : td 안에 정렬처리
-	6) tr:nth-child(even) : 짝수 행단위 처리
+	6) tr:nth-child(even|odd) : 짝수 행단위 처리
+			nth-child(3n+1) : 3개 단위별로 반복해서 처리할 떄 사용..
+			nth-child(1) : 첫번째에 대한 처리.
+			ex) td:nth-child(1):{text-align:center}
+				tr 밑에 모든 첫번째 td는 정렬을 중앙으로 처리..
 	7) tr:hover : 마우스커서 이동시 처리	
 */
 	table{

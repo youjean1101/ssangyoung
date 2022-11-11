@@ -12,10 +12,16 @@
 2. position 속성값을 이용한 배치 방법
 	1) static : default-normal flow로 처리
 	2) relative : 상대 배치 - 현재 위치를 기준으로 x축/y축을 이동한다.
-	3) absolute : 절대 배치
+	3) absolute : 절대 배치 - 이 요소를 포함하고 있는 부모 요소를 기준으로 절대 위치를 지정 처리.
+		ex) body 밑이면 전체화면 왼쪽 상단의 꼭지점(top,left), 오른쪽 하단 꼭지점(bottom,right)
+			위치 속성에 따라 top, bottom, left, right를 설정하여 처리한다.
+			
+			
 	4) fixed : 고정 배치 - 화면 스크롤 상관없이 특정 위치 고수하는 것
 3. 유동 배치 : float 속성을 이용
 	1) float : left, float:right
+	리스트의 내용에 따라서 왼쪽부터 오른쪽으로 배치
+	오른쪽에서부터 왼쪽으로 배치
 4. position 속성을 사용할 때, 태그의 위치와 크기 설정 옵션
 	1) 위치 설정 : top, bottom, left, right
 			top(위에서 부터 아래로 얼마나 내려오는지)
@@ -33,6 +39,15 @@
 		color:white;
 		background:red;
 	}
+	/*
+	:hover : 마우스 커서가 지나갈 때.
+	:active : 마우스를 클릭한 순간
+	
+	div#car01:active{
+		visiblity:hidden; 공간차지 없어짐.
+		display:none; 공간차지 않고 없어짐.
+	} 
+	*/
 	#down:hover{ /* 마우스 커서를 지나갈 때, 현재 위치에서 상대적 위치로 변경 */
 		position:relative;
 		left:20px; /* 왼쪽으로부터 20px, 위로부터 20px */

@@ -10,7 +10,7 @@
 2. 기본 형식
 	position:absolute;
 	top:@@px;left:@@px;
-	위치 속성은 top/bottom/left/right 모두다 설정할 수 있음. 
+	위치 속성은 top/bottom/left/right 모두 다 설정할 수 있음. 
 	z-index : 우선순위를 설정하는 옵션을 해당 값에 따라 화면상으로 가장 먼저 보이게 처리한다.
 */
 	div{width:100px;height:100px;position:absolute;
@@ -46,6 +46,11 @@
 </style>
 </head>
 <body>
+	<!-- 
+	z-index 우선 순위 처리는 같은 계층레벨에서 가능하다.
+	하위 계층을 포함하고 있으면, 해당 div가 그 자체를 포함하기에
+	우선 순위 설정이 불가능하다.
+	 -->
 	<div id="div01">top:100px;<br>left:100px;
 		<div id="div02">
 			

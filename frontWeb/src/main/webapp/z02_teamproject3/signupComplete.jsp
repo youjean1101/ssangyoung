@@ -11,12 +11,14 @@ h2{text-align:center;}
 
 h3{text-align:center; color:rgb(234,0,0);font-size:20pt;}
 
+
+
 div.box{
 	text-align:center;
-	font-size:15pt;
-	font-weight:200;
+	font-size:20pt;
+	font-weight:500;
 	background:white;
-	border-width:20px;
+	border-width:10px;
 	border-style:solid;
 	border-color:rgb(234,0,0);
 	
@@ -26,8 +28,8 @@ div.box{
 
 table{
 	position:absolute;
-	bottom:15%;
-	right:27%;
+	bottom:10%;
+	right:25%;
 	}
 	
 input[type="button"], input[type="submit"] {
@@ -38,7 +40,7 @@ input[type="button"], input[type="submit"] {
 }
 </style>
 <body>
-	<h2><img src=".\img\CGV_mark.png" width="200px" height="80px" name="cgvmark"></h2>
+	<h2><img src=".\img\CGV_mark.png" width="200px" height="90px" name="cgvmark"></h2>
 	<br>
 	<h3> 회원가입이 완료 되었습니다.</h3>
 	<div class="box">

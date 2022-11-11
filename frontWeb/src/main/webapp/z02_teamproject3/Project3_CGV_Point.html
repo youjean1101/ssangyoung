@@ -4,12 +4,52 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-/*
-
-*/
+	#menubar{background:white;}
+	
+	#menubar ul{
+		margin:0;
+		padding:0;
+		width:95em;
+	}
+	
+	#menubar ul li{
+		display:inline-block;
+		list-style-type:none;
+		padding:20px 40px;
+	}
+	
+	#menubar ul li a{
+		color:black;
+		text-decoration:none;
+	}
+	
+	#menubar ul li a:hover{
+		color:tomato;
+	}
+	#menubar ul li a#login{
+		color: red;
+	}
 </style>
 </head>
 <body>
-
+	<nav id="menubar">
+		<ul>
+			<li></li>
+			<li><a href="javascript:alert('영화로 이동');">영화</a>
+			<li><a href="javascript:alert('예매로 이동');">예매</a>
+			<li><a href="javascript:alert('스토어로 이동');">스토어</a>
+			<li></li>
+			<li></li>
+			<li><a href="https://www.cgv.co.kr">
+				<img src=".\img\CGV_mark.png" width="170" height="70" alt="이미지 없음"/>
+				</a>
+			<li></li>
+			<li></li>
+			<li><a href="Project3_CGV_Login.html" id="login">로그인</a>
+			<li><a href="javascript:alert('고객센터로 이동');">고객센터</a>
+			<li><a href="javascript:alert('MyCGV로 이동');">MyCGV</a>
+		</ul>
+		<hr>
+	</nav>
 </body>
 </html>

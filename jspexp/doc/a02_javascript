@@ -1,0 +1,102 @@
+# 자바스크립트의 지식계열화
+1. 웹에 대한 이해
+2. 웹개발에서 자바스크립트의 위치와 기능
+	1) 서버와의 관계에서 실행 시점
+		- 소스는 서버
+		- 실행을 브라우저에서 실행 (node 등 최근에는 서버에서 실행하여 전달하는 경우도 있음)
+	2) 서버와 프로그램(jsp)과 javascript의 연동
+	3) ajax통해서 비동기적으로 서버에 데이터 받아서 javascript 처리.
+	
+3. 프로그래밍 공통
+	1) 변수 : 데이터 유형이 가변적 - 실제 데이터를 할당하는 순간에 데이터 유형이 결정
+		var, let, const
+		ex) var num01 = 25; var name="홍길동"
+	2) 데이터 유형
+		- 종류 : 숫자형(number), 문자열형(string), 함수형(function), boolean형(true/false), 객체(object)
+		- 형변환 : 자유롭게 데이터 변환이 일어난다.
+			"25" * "3" ==> 75
+			"25" + "3" ==> 253	
+			25+3 ==>28
+			명시적 형변환 함수
+			Number("25") + parseInt("30") + parseFloat("5.5")
+			==> 60.5
+			
+	3) 조건문/반복문
+		if(){}, for(var idx=0;idx<30;idx++){}
+		for(var idx in arry){	// 배열일 때
+			idx, arry[idx]	 idx 0시작하는데 문자열 "0","1"...
+							 arr['0'] arr['1'] arr['2']
+		}
+		for(var prop in obj){	// 객체일 때. var p01= {name:"홍길동", age:25}
+			prop, obj[prop]			prop ==> name, age 
+		}							obj[prop] ==> p01[name], p01[age]
+		배열. forEach(function(idx, obj){});
+		
+	4) 배열형 데이터
+		var arry = [데이터, 데이터2..]
+		 
+4. 함수처리
+	1) 내장형 함수
+		setInterval(반복할 시간, function(){반복할 내용})
+		setTimeout(시간, function(){ 시간이후에 처리할 내용})
+		형변환함수
+	2) 사용자 정의 함수	
+		function 함수명(){}
+		var 함수명 = function(){}
+		
+		함수명();
+		
+5. 객체형 데이터
+	1) 내장형 객체
+		Math 수학적 함수..
+	2) 사용자 정의 객체
+		function 객체명(매개변수1, 매개변수2...){
+			this.속성명 = 매개변수1;
+			this.메서드명 = function(){
+			
+			}
+		}
+		var 참조명 = new 객체명(데이터1, 데이터2);
+		참조명.메서드명();
+		
+		class 객체명{
+			constructor(){
+			
+			}
+			메서드명(){
+			
+			}
+		}
+		
+6. 예외처리
+	exception 예외 처리
+	
+7. DOM객체(화면에서 요소 태그 객체)
+	var 객체명 = document.querySelector("선택자");
+	객체명.속성 = "속성값";
+	var 배열명 = document.querySelectorAll("선택자");
+	배열명[0].속성 = "속성값";
+	ps) 선택자는 css의 선택자 유형을 다 활용할 수 있다. #아이디명, .클래스명, 태그명
+		부터 시작해서, 복합유형, 가상클래스선언형 등등 사용할 수 있다.
+		
+8. BOM객체(frame이나 window형 객체)
+	var win01 = window.open("","",""); 브라우저 창을 기준으로 처리
+	var fram01 = document.querySelector("#frame01");
+	
+9 이벤트 처리
+	function call(){	//이벤트 핸들러 함수
+	
+	}
+	<h1 onclick="call()">
+		on이벤트명
+	// DOM에 속성으로 이벤트를 선언하고 해당 이벤트가 수행될 때, 함수를 할당 처리..	
+	dom객체.onclick=function(){
+	
+	}
+	
+10. 기타 api
+	쿠키, 웹스트로지, 구글 api 등등. 
+11. ajax 처리(**)
+	서버단과 비동기 연계하여 처리하는 ajax 처리
+12. jquery
+13.. vue

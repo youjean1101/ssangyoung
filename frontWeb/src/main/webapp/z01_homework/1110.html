@@ -37,11 +37,16 @@ div #spade-A{
 	top:50px;right:140px;
 	z-index:4;
 }
-
+img#spade-2:active{display:none;}
+img#spade-3:active{display:none;}
+img#spade-7:active{display:none;}
+img#spade-A:active{display:none;}
+/* 
 #spacde-A:active{
 	overflow:hidden;
 }
-
+ */
+ 
 </style>
 </head>
 <body>
@@ -55,7 +60,7 @@ div #spade-A{
 		<li>몸이 10개라도 모자르다...명상할시간이 있으면 좋겠다..
 		
 	</ul>
-	<h2>[1단계:확인] 4. a00_img폴드에 카드 관련 이미지를 오른쪽으로 리스트 보이게 하되 적절하게 겹치게 보이게 하시고 
+	<h2>[1단계:확인]* 4. a00_img폴드에 카드 관련 이미지를 오른쪽으로 리스트 보이게 하되 적절하게 겹치게 보이게 하시고 
 	(z-index 활용) 및 클릭시, 카드가 보이지 않게 처리하세요.</h2>
 	
 	<div>
@@ -65,8 +70,23 @@ div #spade-A{
 		<img src="\a00_img\spade-A.png" id="spade-A">
 	</div>
 	
+	<h3>정답</h3>
+		<style>
+			img.card{width:100px;height:150px;position:absolute;}
+				img#card01{left:0px;top:0px;}
+				img#card02{left:30px;top:30px;}
+				img#card03{left:60px;top:60px;}
+				img#card04{left:90px;top:90px;}
+				img.card:hover{z-index:5;}
+				img.card:active{display:none;}
+		</style>
+		<img class="card" src="\a00_img\spade-2.png" id="card01">
+		<img class="card" src="\a00_img\spade-3.png" id="card02">
+		<img class="card" src="\a00_img\spade-7.png" id="card03">
+		<img class="card" src="\a00_img\spade-A.png" id="card04">
+		<br>
 	
-	<h2>[1단계:확인] 7. 네비게이션 바에서 이미지가 있는 메뉴리스트(좌우)를 만들어 출력하세요. </h2>
+	<h2>[1단계:확인] *7. 네비게이션 바에서 이미지가 있는 메뉴리스트(좌우)를 만들어 출력하세요. </h2>
 	<style>
 		#navigation{
 		background:grey;
@@ -92,6 +112,35 @@ div #spade-A{
 		</ul>
 	</nav>
 	
+	<h3>정답</h3>
+	<style>
+	#menus>ul{
+		padding:5px;
+		list-style-type:none;
+		list-style-image:url('/a00_img/marker.png');
+		list-style-position:inside;
+	}
+	#menus>ul>li{
+		padding:10px;
+		float:left;
+		border:1px solid blue;
+		border-radius:8px;
+	}
+	#menus a{
+		color:gray;
+		text-decoration: none;
+	}
+	</style>
+	<h3>네비게이션 메뉴(왼쪽에서 오른쪽으로 리스트 처리)</h3>
+	<nav id="menus">
+		<ul>
+			<li><a href="#">메뉴1</a></li>
+			<li><a href="#">메뉴2</a></li>
+			<li><a href="#">메뉴3</a></li>
+			<li><a href="#">메뉴4</a></li>		
+		</ul>
+	</nav>
+	<br><br>
 	<h2>[1단계:확인] 9. 부서정보 테이블을 오늘 배운 css 설정하여 화면에 출력하세요. </h2>
 		<style>
 			thead>tr>th{
@@ -124,7 +173,7 @@ div #spade-A{
 		</tbody>	
 		</table>
 	
-	<h2>[1단계:확인] 11. 부서정보 등록 form을 form관련 css 설정하여 화면에 출력하세요. </h2>
+	<h2>[1단계:확인]* 11. 부서정보 등록 form을 form관련 css 설정하여 화면에 출력하세요. </h2>
 	<style>
 	label{
 		display:block;
@@ -166,7 +215,48 @@ div #spade-A{
 			<span></span><input type="submit" value="부서정보등록">
 		</label>
 	</form>
-	<h2>[1단계:확인] 12. js의 화면 출력 형식 3가지를 기술하고, 차이점을 검색해보고 정리해보세요.</h2>
-
+	<h3>정답</h>
+	<style>
+	label.answer{
+		display:block;	
+	}
+	label.answer>span{
+		display:inline-block;
+		width:20%;
+		padding:5px;
+		text-align:center;
+	}
+	input[type=text]{
+		color:navy;
+		border-radius:5px;
+		border:2px solid  skyblue;
+	}
+	input[type=text]:focus{
+		font-size:120;
+	}
+	</style>
+	<h2>부서정보 등록</h2>
+	<form>
+		<label class="answer"><span>부서번호</span>
+			<input type="text" name="deptno1" placeholder="부서번호입력"/></label>
+		<label class="answer"><span>부서명</span>
+			<input type="text" name="dnam1" placeholder="부서명입력"/></label>
+		<label class="answer"><span>부서위치</span>
+			<input type="text" name="loc1" placeholder="부서위치입력"/></label>
+		<label class="answer"><input type="submit" name="submit" value="부서등록"/></label>	
+	</form>
+	
+	<h2>[1단계:확인] 12. js의 화면 출력 형식 3가지를 기술하고, 차이점을 검색해보고 정리해보세요.</h3>
+	<h3>정답</h3>
+	<!-- 
+	alert("안녕하세요"); 화면에 경고창으로 출력
+	document.write("<h2>안녕하세요</h2>"); 기존에 있는 내용을 지우고
+			document.write()를 통해서 화면을 구현 처리..
+		ps) body 밑에 document.querySelector("h1").innerText="안녕하세요" ;
+			DOM객체를 인식해서 해당 요소에 속성값으로 처리가 된다.
+	 	console.log("안녕하세요"); 브라우저에서 console 메뉴에 출력된 내용을 확인할 때, 사용한다.
+	 		js단에 에러 트래킹시 사용된다.
+	 -->
+	
 </body>
 </html>

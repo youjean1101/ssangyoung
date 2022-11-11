@@ -45,10 +45,31 @@
 5. 웹 애플리케이션 작성
 	캔버스 그래픽, 로컬/세션 스토리지 저장, 위치 정보 서비스 등
  */
+ 
+ /*
+ # 자바스크립트의 코드의 위치
+ 1. html 태그의 이벤트 리스터 속성에 작성
+ 	function 이벤트리스너함수(){}
+ 2. script /script 태그에 작성
+ 3. 자바스크립트 파일에 작성
+ 4. url 부분에 작성..
+ */
 
 </script>
 </head>
 <body>
+<h2>이벤트 리스터 속성에 의한 자바스크립트 코드</h2>
+<hr>
+<img src="/a00_img/apple.jpg"
+	onmouseover = "this.src='/a00_img/banana.jpg'"
+	onmouseout = "this.src='/a00_img/tomato.jpg'"
+/>
+<!-- 
+	on 이벤트명 ex) 마우스오버 이벤트 onmouseover
+	this.src : 현재 이 객체가 가지고 있는 속성 src에 할당할 데이터
+	='/a00_img/banana.jpg' : 특정 주소(이미지)를 할당
+ -->
+
 
 </body>
 </html>
