@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+	
 	#menubar{background:white;}
 	
 	#menubar ul{
@@ -19,15 +20,148 @@
 	}
 	
 	#menubar ul li a{
-		color:black;
+		color:rgb(51, 51, 51);
 		text-decoration:none;
+		font-weight:600;
 	}
 	
 	#menubar ul li a:hover{
 		color:tomato;
 	}
-	#menubar ul li a#login{
+	
+	#menubar ul li a#reservation{
 		color: red;
+	}
+	
+	h3{
+		color:grey;
+		font-size:8pt;
+		font-weight:600;
+		position:relative;
+		left:200px;
+	}
+	
+	div.movieInfoSeatBox{
+		border:1px solid grey;
+		border-radius:5px;
+		width:1000px;
+		height:500px;
+		position:absolute;
+		top:220px;
+		left:270px;
+	}
+	
+	div.movieinfoBox{
+		border:2px solid grey;
+		border-radius:5px;
+		width:31%;
+		height:100%;
+		position:absolute;
+		left:0%;
+	}
+	
+	div.seatBox{
+		border:1px solid red;
+		border-radius:5px;
+		width:68%;
+		height:100%;
+		position:absolute;
+		right:0%;
+	}
+	span{
+		color:red;
+	}
+	h4{
+		font-size:16pt;
+		text-align:center;
+		position:absolute;
+		left:12%;
+	}
+	h2{
+		font-family:HY헤드라인M;
+		font-size:25pt;
+		text-align:center;
+		position:absolute;
+		top:15%;
+		left:8%;
+	}
+	img#moviepost{
+		width:90px;
+		height:120px;
+	}
+	table#movieInfoTable{
+		position:absolute;
+		top:40%;
+		left:3%;
+	}
+	
+	td#moviename{
+		font-size:10pt;
+		font-weight:800;
+	}
+	
+	td#subtitle{
+		font-size:8pt;
+		color:grey;
+	}
+	
+	td#bim{
+		font-size:10pt;
+	}
+	
+	td#ageLimit{
+		font-size:10pt;
+	}
+	div hr{
+		position:absolute;
+		bottom:30%;
+		left:5%;
+		background-color:rgb(79, 84, 88);
+		height:0.5px;
+		width:90%
+	}
+	div.ageselect{
+		position:absolute;
+		bottom:25%;
+		font-size:12pt;
+		left:8%;
+	}
+	p.cnt{
+		position:absolute;
+		bottom:12%;
+		left:20%;
+		font-size:12pt;
+		font-weight:800;
+	}
+	input[type=number]{
+		width:100px;
+	}
+	p#cntmax{
+		color:red;
+		font-size:8pt;
+		position:absolute;
+		bottom:8%;
+		left:2%;
+		font-weight:800;
+	}
+	p#discount{
+		font-size:8pt;
+		color:black;
+		position:absolute;
+		bottom:4%;
+		left:2%;
+		font-weight:800;
+	}
+	input[type=submit]{
+		width:350px; height:60px;
+		background-color:white; 
+		color:rgb(234,0,0); 
+		border:5px solid rgb(234,0,0);
+		border-radius:5px;
+		font-family:"HY견고딕"; font-size:30px;
+		position:absolute;
+		bottom:3%;
+		left:40%;
 	}
 </style>
 </head>
@@ -36,7 +170,7 @@
 		<ul>
 			<li></li>
 			<li><a href="javascript:alert('영화로 이동');">영화</a>
-			<li><a href="javascript:alert('예매로 이동');">예매</a>
+			<li><a href="Project3_CGV_Seat_Sel.html" id="reservation">예매</a>
 			<li><a href="javascript:alert('스토어로 이동');">스토어</a>
 			<li></li>
 			<li></li>
@@ -45,11 +179,51 @@
 				</a>
 			<li></li>
 			<li></li>
-			<li><a href="Project3_CGV_Login.html" id="login">로그인</a>
+			<li><a href="Project3_CGV_Login.html">로그인</a>
 			<li><a href="javascript:alert('고객센터로 이동');">고객센터</a>
-			<li><a href="javascript:alert('MyCGV로 이동');">MyCGV</a>
+			<li><a href="Project3_CGV_Point.html">MyCGV</a>
 		</ul>
-		<hr>
+		<hr width="150%">
 	</nav>
+	<br>
+	<h3>예매>예매하기>좌석선택</h3>
+	<br>
+	<form>
+		<div class="movieInfoSeatBox">
+			<div class="movieinfoBox">
+				<h4>CGV 건대입구 | 3관 4층<br>
+					남은 좌석 <span>145</span>/149</h4>
+				<h2>2022. 11. 13 (일)<br>
+					11:20 ~ 14:10</h2>
+			
+				<table id="movieInfoTable">
+					<tr><td rowspan="6"><img src=".\img\movieposter.jpg" id="moviepost"></td><td></td></tr>
+					<tr><td id="moviename">블랜 펜서-와칸다 포에버(4..</td></tr>
+					<tr><td id="subtitle">Black panther:Wakanda For...</td></tr>
+					<tr><td id="bim">4D</td></tr>
+					<tr><td id="ageLimit">12세 관람가</td></tr>
+					<tr><td></td></tr>
+				</table>
+				<hr>
+				<div class="ageselect">
+					<input type="radio" name="adult" checked value="일반">일반
+					<input type="radio" name="teenager" value="청소년">청소년
+					<input type="radio" name="old" value="경로">경로
+					<input type="radio" name="favor" value="우대">우대
+				</div>
+				<p class="cnt">인원수 선택
+						<input type="number" min="1" max="8" step="1" placeholder="2명">
+				</p>
+				<p id="cntmax">*최대 8명 선택 가능</p>
+				<p id="discount"><a href="http://www.cgv.co.kr/search/?query=%uD560%uC778">*관람 할인 안내 보러가기></a></p>
+			</div>
+			
+			<div class="seatBox">
+			
+			</div>
+		
+		</div>
+		<input type="submit" name="pay" value="결제하러 가기>">
+	</form>
 </body>
 </html>
