@@ -19,16 +19,122 @@
 	}
 	
 	#menubar ul li a{
-		color:black;
+		color:rgb(51, 51, 51);
 		text-decoration:none;
+		font-weight:600;
 	}
 	
 	#menubar ul li a:hover{
 		color:tomato;
 	}
-	#menubar ul li a#login{
+	
+	#menubar ul li a#MyCGV{
 		color: red;
 	}
+	
+	div.pointbox{
+	border:2px solid black;
+	width:1000px; height:850px;
+	position:absolute;
+	top:20%;
+	left:20%
+	}
+	
+	td#name_id{
+		text-align:left;
+	}
+	
+	iframe[name=name_id_frame]{
+		width:300px; 
+		height:40px;
+	}
+	
+	td#MyCJPoint{
+		font-size:25pt;
+		font-weight:600;
+		text-align:right;
+	}
+	
+	hr#idBottomHr{
+		background-color:rgb(79, 84, 88);
+		height:0.5px;
+		width:100%;
+	}
+	
+	div>table#pointTable{
+		text-align:center;
+		font-size:10pt;
+ 	 	height:5cm;
+		width:100%;
+		border:none;
+	}
+	
+	td.pointTableleft{
+	 	border-bottom:1px solid lightgrey;
+	 	border-right:1px solid lightgrey;
+	}
+	
+	td.pointTableright{
+	 	border-bottom:1px solid lightgrey;
+	}
+	td.pointTableleft1{
+	 	border-bottom:1px solid grey;
+	 	border-right:1px solid lightgrey;
+	}
+	
+	td.pointTableright1{
+	 	border-bottom:1px solid grey;
+	}
+	
+	th.pointTable{
+		border-right:2px solid lightgrey;
+		background:lightgrey;
+	}
+	p{
+	font-size:5pt;
+	font-weight:600;
+	color:grey;
+	margin:2px;
+	
+	}
+	
+	p span{
+	color:red;
+	}
+	
+	div.viewPeriodbox{
+		border:2px solid grey;
+		border-radius:5px;
+		width:100%;
+		height:400px;
+	}
+	
+	div.viewPeriodbox th{
+	 	font-size:15pt;
+	 	font-weight:600;
+	 	text-align:center;
+		padding:10px;
+	}
+	table#pointPeriodTable td{
+		text-align:center;
+		font-size:8pt;
+	}
+	
+	table#pointPeriodTable{
+		width:100%
+	}
+	
+	iframe[name=pointView]{
+		width:100%;
+		height:300px;	
+	}
+	input[name=view]{
+		background-color:rgb(234,0,0); color:white; border:red; 
+		font-size:9pt; border-radius:5px;
+		width:100px; height:30px;
+	}
+	
+	
 </style>
 </head>
 <body>
@@ -45,11 +151,68 @@
 				</a>
 			<li></li>
 			<li></li>
-			<li><a href="Project3_CGV_Login.html" id="login">로그인</a>
+			<li><a href="Project3_CGV_Login.html">로그인</a>
 			<li><a href="javascript:alert('고객센터로 이동');">고객센터</a>
-			<li><a href="javascript:alert('MyCGV로 이동');">MyCGV</a>
+			<li><a href="Project3_CGV_Point.html" id="MyCGV">MyCGV</a>
 		</ul>
-		<hr>
+		<hr width="150%">
+		<br><br>
 	</nav>
+	<div class="pointbox">
+		<table width="100%">
+			<tr>
+				<td id="name_id"><iframe name="name_id_frame" frameborder="1"></iframe></td>
+				<td id="MyCJPoint">MY CJ POINT</td>
+			</tr>
+		</table>
+		
+		<hr id="idBottomHr">
+		
+		<h4>CGV 이용 / CJ 포인트 적립 및 사용내역</h4>
+		
+		<table id="pointTable">
+			<col width=50%>
+			<col width=50%>
+			<col width=50%>
+			<col width=50%>
+			<col width=50%>
+				<tr><th class="pointTable">구분</th><th class="pointTable">내용</th></tr>
+				
+				<tr><td class="pointTableleft1">CJ 사용 가능 포인트</td><td class="pointTableright1">3,750 P</td></tr>
+				<tr><td class="pointTableleft">매표 구매 누적 포인트</td><td class="pointTableright">0 P</td></tr>
+				<tr><td class="pointTableleft">매점 & 씨네샵 누적 포인트</td><td class="pointTableright">130 P</td></tr>
+				<tr><td class="pointTableleft">기타 포인트</td><td class="pointTableright">250 P</td></tr>
+		</table>
+			<br>
+			<p> * 매표/매점 구매 누적 포인트는 <span>관람 후 2~3일 후</span>에 반영됩니다.</p>
+			<p> * 포인트 조회 시 표시되는 적립일은 CJ ONE 가용 일자와 상이할 수 있습니다.</p>
+			<p> * 자세한 포인트 적립 및 사용 내역은 CJ ONE에서 확인 가능합니다. <span>[CJ ONE POINT HOME]</span></p>
+		<br>
+		<div class="viewPeriodbox">
+			<table id="pointPeriodTable">
+				<col width="20%">
+				<tr><th>조회기간</th>
+				<td>시작일  <input type="date" name="startdate"></td>
+				<td> ~ </td>
+				<td>종료일  <input type="date" name="lastdate"></td>
+				<td><input type="submit" value="조회하기" name="view"></td>
+				</tr>
+				</table>
+			
+			<hr>
+			
+			<table id="pointViewColumnTable">
+				<col width="25%">
+				<tr><td>구매 구분</td><td>구매 극장</td><td>적립일</td><td>적립</td></tr>
+			</table>
+			
+			<hr>
+			<iframe name="pointView" value="내역이 존재하지 않습니다.">
+			</iframe>
+			
+		
+		</div>
+		
+	</div>
 </body>
 </html>

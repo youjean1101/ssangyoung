@@ -33,22 +33,41 @@
 		color: red;
 	}
 	
+	table{
+		position:absolute;
+		bottom:30%;right:40%
+	}
+	
 	td{
-		font-size:5pt;
+		color:rgb(51, 51, 51);
+		font-size:5pt;		
+	}
+	
+	td a{
+		color:grey;
+		text-decoration-line:none;
 	}
 	
 	input{
-	width:300px; height:30px;
+	width:300px; height:25px;
+	border: 2px solid grey;
+	border-radius:5px;
 	}
 	
+	input[type=submit]{
+	width:310px; height:35px;
+	}
+	
+	
 	input[name=logIn]{	background-color:rgb(234,0,0); color:white; 
-						border:red; border-radius:5px;
-						font-family:"HY견고딕"; font-size:20px;}
+						border:red; 
+						font-family:"HY견고딕"; font-size:15px;}
 						
 	input[name=signUp]{	background-color:white; 
 						color:rgb(234,0,0); 
-						border:1px solid rgb(234,0,0); border-radius:5px;
-						font-family:"HY견고딕"; font-size:20px;}
+						border:1px solid rgb(234,0,0); 
+						font-family:"HY견고딕"; font-size:15px;}
+	
 	
 </style>
 </head>
@@ -70,11 +89,11 @@
 			<li><a href="javascript:alert('고객센터로 이동');">고객센터</a>
 			<li><a href="javascript:alert('MyCGV로 이동');">MyCGV</a>
 		</ul>
-		<hr>
-		
+		<hr width="150%">
+	</nav>
 		<table>
-				<tr><td></td>
-				<td><a href="http://www.cgv.co.kr/user/login/find-account.aspx">아이디 찾기> </a>
+				<tr>
+				<td align="right"><a href="http://www.cgv.co.kr/user/login/find-account.aspx">아이디 찾기> </a>
 			 		<a href="http://www.cgv.co.kr/user/login/find-pw.aspx?act=pw"> 비밀번호 찾기></a></td></tr>
 			<form action="loginComplete.jsp">
 				<tr><th><input type="text" name="id"></th></tr>
@@ -86,8 +105,7 @@
 				<tr><th><input type="submit" name="signUp" value="회원가입" ><th></tr>
 			</form>
 			
-			<tr><td>아이디 비밀번호를 입력하신 후, 로그인 버튼을 클릭해주세요.</td></tr>
+			<tr><td align="center">아이디 비밀번호를 입력하신 후, 로그인 버튼을 클릭해주세요.</td></tr>
 		</table>
-	</nav>
 </body>
 </html>

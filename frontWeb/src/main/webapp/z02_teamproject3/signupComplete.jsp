@@ -37,6 +37,7 @@ input[type="button"], input[type="submit"] {
 	height:50px; 
 	font-size:20pt;
 	background-color:white; color:rgb(234,0,0); border:3px solid rgb(234,0,0);
+	border-radius:5px;
 }
 </style>
 <body>
