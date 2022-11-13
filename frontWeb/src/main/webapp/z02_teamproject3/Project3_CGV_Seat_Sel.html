@@ -42,7 +42,6 @@
 	}
 	
 	div.movieInfoSeatBox{
-		border:1px solid grey;
 		border-radius:5px;
 		width:1000px;
 		height:500px;
@@ -61,7 +60,7 @@
 	}
 	
 	div.seatBox{
-		border:1px solid red;
+		border:2px solid grey;
 		border-radius:5px;
 		width:68%;
 		height:100%;
@@ -163,7 +162,86 @@
 		bottom:3%;
 		left:40%;
 	}
+	div p#screen{
+		width:630px;
+		background-color:lightgrey;
+		height:30px;
+		text-align:center;
+		position:absolute;
+		left:4%;
+		font-size:15pt;
+		font-weight:600;
+	}
+	table.seat{
+		position:absolute;
+		left:20%;
+		top:20%
+		
+	}
+	table.seat th{
+		background-color:white;
+		color:rgb(95,95,95);
+		width:35px;
+		height:25px;
+		text-align:center;
+		font-family:"HY견고딕";
+	}
+	
+	table.seat td{
+		background-color:rgb(95,95,95);
+		color:white;
+		width:25px;
+		height:25px;
+		text-align:center;
+		border-radius:5px;
+		font-family:"HY견고딕";
+	}
+	td.noseat{
+		visibility:hidden;
+	}
+	
+	td#disabled1, td#disabled2{
+		background-color:rgb(152,243,6);
+		color:rgb(95,95,95);
+	}
+	td#impossible1, td#impossible2, td#impossible3, td#impossible4, td#impossible5, td#impossible6{
+		background-color:rgb(197, 197, 197);
+		color:white;
+	}
+	
+	table.seat td:hover{
+		background-color:tomato;
+	}
+	
+	.seatselect{display:none;}
+	
+	table.mark{
+		position:absolute;
+		left:1%;
+		bottom:2%
+	}
+	
+	table.mark img{
+		width:20px;
+		height:20px;
+	}
+	table.mark td{
+		height:15px;
+	}
+	
+	table.mark th{
+		width:100px;
+		height:10px;
+		font-size:11pt;
+		text-align:left;
+	}
 </style>
+<script type="text/javascript">
+	function chColor(obj){
+			obj.style.backgroundColor="red";
+			obj.style.color="red";
+		}
+</script>
 </head>
 <body>
 	<nav id="menubar">
@@ -188,7 +266,7 @@
 	<br>
 	<h3>예매>예매하기>좌석선택</h3>
 	<br>
-	<form>
+	<form method="post" action="reservationResult.jsp">
 		<div class="movieInfoSeatBox">
 			<div class="movieinfoBox">
 				<h4>CGV 건대입구 | 3관 4층<br>
@@ -198,27 +276,205 @@
 			
 				<table id="movieInfoTable">
 					<tr><td rowspan="6"><img src=".\img\movieposter.jpg" id="moviepost"></td><td></td></tr>
-					<tr><td id="moviename">블랜 펜서-와칸다 포에버(4..</td></tr>
-					<tr><td id="subtitle">Black panther:Wakanda For...</td></tr>
-					<tr><td id="bim">4D</td></tr>
-					<tr><td id="ageLimit">12세 관람가</td></tr>
+					<tr><td name="movieinfo" id="moviename">블랜 펜서-와칸다 포에버(4..</td></tr>
+					<tr><td name="subtitle" id="subtitle">Black panther:Wakanda For...</td></tr>
+					<tr><td name="bim" id="bim">4D</td></tr>
+					<tr><td name="ageLimit" id="ageLimit">12세 관람가</td></tr>
 					<tr><td></td></tr>
 				</table>
 				<hr>
 				<div class="ageselect">
-					<input type="radio" name="adult" checked value="일반">일반
-					<input type="radio" name="teenager" value="청소년">청소년
-					<input type="radio" name="old" value="경로">경로
-					<input type="radio" name="favor" value="우대">우대
+					<input type="radio" name="age" checked value="일반">일반
+					<input type="radio" name="age" value="청소년">청소년
+					<input type="radio" name="age" value="경로">경로
+					<input type="radio" name="age" value="우대">우대
 				</div>
 				<p class="cnt">인원수 선택
-						<input type="number" min="1" max="8" step="1" placeholder="2명">
+						<input name="peopleCnt" type="number" min="1" max="8" step="1" placeholder="2명">
 				</p>
 				<p id="cntmax">*최대 8명 선택 가능</p>
 				<p id="discount"><a href="http://www.cgv.co.kr/search/?query=%uD560%uC778">*관람 할인 안내 보러가기></a></p>
 			</div>
 			
 			<div class="seatBox">
+				<p id="screen">스크린</p>
+				
+				<table class="seat">
+					<tbody>
+					<tr><th>A</th><td onclick="chColor(this)" for="seatnoA1"><label>1<input class="seatselect" type="checkbox" name="seatno" id="seatnoA1" value="A1"/></label></td>
+								<td onclick="chColor(this)" for="seatnoA2"><label>2<input class="seatselect" type="checkbox" name="seatno" id="seatnoA2" value="A2"/></label></td>
+								<td onclick="chColor(this)" for="seatnoA3"><label>3<input class="seatselect" type="checkbox" name="seatno" id="seatnoA3" value="A3"/></label></td>
+								<td onclick="chColor(this)" for="seatnoA4"><label>4<input class="seatselect" type="checkbox" name="seatno" id="seatnoA4" value="A4"/></label></td>
+								<td class="noseat"></td>
+								<td id="disabled1" onclick="chColor(this)"><label>6<input class="seatselect" type="checkbox" name="seatno" value="A6"/></label></td>
+								<td id="disabled2" onclick="chColor(this)"><label>7<input class="seatselect" type="checkbox" name="seatno" value="A7"/></label></td>
+								<td class="noseat"></td>
+								<td onclick="chColor(this)"><label>9<input class="seatselect" type="checkbox" name="seatno" value="A9"/></label></td>
+								<td onclick="chColor(this)"><label>10<input class="seatselect" type="checkbox" name="seatno" value="A10"/></label></td>
+								<td onclick="chColor(this)"><label>11<input class="seatselect" type="checkbox" name="seatno" value="A11"/></label></td>
+								<td onclick="chColor(this)"><label>12<input class="seatselect" type="checkbox" name="seatno" value="A12"/></label></td>
+								<td onclick="chColor(this)"><label>13<input class="seatselect" type="checkbox" name="seatno" value="A13"/></label></td>
+								<td onclick="chColor(this)"><label>14<input class="seatselect" type="checkbox" name="seatno" value="A14"/></label></td>
+					</tr>
+					<tr><th>B</th><td onclick="chColor(this)"><label>1<input class="seatselect" type="checkbox" name="seatno" value="B1"/></label></td>
+								<td onclick="chColor(this)"><label>2<input class="seatselect" type="checkbox" name="seatno" value="B2"/></label></td>
+								<td onclick="chColor(this)"><label>3<input class="seatselect" type="checkbox" name="seatno" value="B3"/></label></td>
+								<td onclick="chColor(this)"><label>4<input class="seatselect" type="checkbox" name="seatno" value="B4"/></label></td>
+								<td onclick="chColor(this)"><label>5<input class="seatselect" type="checkbox" name="seatno" value="B5"/></label></td>
+								<td onclick="chColor(this)"><label>6<input class="seatselect" type="checkbox" name="seatno" value="B6"/></label></td>
+								<td onclick="chColor(this)"><label>7<input class="seatselect" type="checkbox" name="seatno" value="B7"/></label></td>
+								<td onclick="chColor(this)"><label>8<input class="seatselect" type="checkbox" name="seatno" value="B8"/></label></td>
+								<td onclick="chColor(this)"><label>9<input class="seatselect" type="checkbox" name="seatno" value="B9"/></label></td>
+								<td onclick="chColor(this)"><label>10<input class="seatselect" type="checkbox" name="seatno" value="B10"/></label></td>
+								<td onclick="chColor(this)"><label>11<input class="seatselect" type="checkbox" name="seatno" value="B11"/></label></td>
+								<td onclick="chColor(this)"><label>12<input class="seatselect" type="checkbox" name="seatno" value="B12"/></label></td>
+								<td onclick="chColor(this)"><label>13<input class="seatselect" type="checkbox" name="seatno" value="B13"/></label></td>
+								<td onclick="chColor(this)"><label>14<input class="seatselect" type="checkbox" name="seatno" value="B14"/></label></td>
+					</tr>
+					<tr><th>C</th><td onclick="chColor(this)"><label>1<input class="seatselect" type="checkbox" name="seatno" value="C1"/></label></td>
+								<td onclick="chColor(this)"><label>2<input class="seatselect" type="checkbox" name="seatno" value="C2"/></label></td>
+								<td onclick="chColor(this)"><label>3<input class="seatselect" type="checkbox" name="seatno" value="C3"/></label></td>
+								<td onclick="chColor(this)"><label>4<input class="seatselect" type="checkbox" name="seatno" value="C4"/></label></td>
+								<td onclick="chColor(this)"><label>5<input class="seatselect" type="checkbox" name="seatno" value="C5"/></label></td>
+								<td onclick="chColor(this)"><label>6<input class="seatselect" type="checkbox" name="seatno" value="C6"/></label></td>
+								<td onclick="chColor(this)"><label>7<input class="seatselect" type="checkbox" name="seatno" value="C7"/></label></td>
+								<td onclick="chColor(this)"><label>8<input class="seatselect" type="checkbox" name="seatno" value="C8"/></label></td>
+								<td onclick="chColor(this)"><label>9<input class="seatselect" type="checkbox" name="seatno" value="C9"/></label></td>
+								<td onclick="chColor(this)"><label>10<input class="seatselect" type="checkbox" name="seatno" value="C10"/></label></td>
+								<td onclick="chColor(this)"><label>11<input class="seatselect" type="checkbox" name="seatno" value="C11"/></label></td>
+								<td onclick="chColor(this)"><label>12<input class="seatselect" type="checkbox" name="seatno" value="C12"/></label></td>
+								<td onclick="chColor(this)"><label>13<input class="seatselect" type="checkbox" name="seatno" value="C13"/></label></td>
+								<td onclick="chColor(this)"><label>14<input class="seatselect" type="checkbox" name="seatno" value="C14"/></label></td>
+					</tr>
+					<tr><th>D</th><td onclick="chColor(this)"><label>1<input class="seatselect" type="checkbox" name="seatno" value="D1"/></label></td>
+								<td onclick="chColor(this)"><label>2<input class="seatselect" type="checkbox" name="seatno" value="D2"/></label></td>
+								<td onclick="chColor(this)"><label>3<input class="seatselect" type="checkbox" name="seatno" value="D3"/></label></td>
+								<td onclick="chColor(this)"><label>4<input class="seatselect" type="checkbox" name="seatno" value="D4"/></label></td>
+								<td onclick="chColor(this)"><label>5<input class="seatselect" type="checkbox" name="seatno" value="D5"/></label></td>
+								<td onclick="chColor(this)"><label>6<input class="seatselect" type="checkbox" name="seatno" value="D6"/></label></td>
+								<td onclick="chColor(this)"><label>7<input class="seatselect" type="checkbox" name="seatno" value="D7"/></label></td>
+								<td onclick="chColor(this)"><label>8<input class="seatselect" type="checkbox" name="seatno" value="D8"/></label></td>
+								<td onclick="chColor(this)"><label>9<input class="seatselect" type="checkbox" name="seatno" value="D9"/></label></td>
+								<td onclick="chColor(this)"><label>10<input class="seatselect" type="checkbox" name="seatno" value="D10"/></label></td>
+								<td onclick="chColor(this)"><label>11<input class="seatselect" type="checkbox" name="seatno" value="D11"/></label></td>
+								<td onclick="chColor(this)"><label>12<input class="seatselect" type="checkbox" name="seatno" value="D12"/></label></td>
+								<td onclick="chColor(this)"><label>13<input class="seatselect" type="checkbox" name="seatno" value="D13"/></label></td>
+								<td onclick="chColor(this)"><label>14<input class="seatselect" type="checkbox" name="seatno" value="D14"/></label></td>
+					</tr>
+					<tr><th>E</th><td onclick="chColor(this)"><label>1<input class="seatselect" type="checkbox" name="seatno" value="E1"/></label></td>
+								<td onclick="chColor(this)"><label>2<input class="seatselect" type="checkbox" name="seatno" value="E2"/></label></td>
+								<td onclick="chColor(this)"><label>3<input class="seatselect" type="checkbox" name="seatno" value="E2"/></label></td>
+								<td onclick="chColor(this)"><label>4<input class="seatselect" type="checkbox" name="seatno" value="E3"/></label></td>
+								<td onclick="chColor(this)"><label>5<input class="seatselect" type="checkbox" name="seatno" value="E4"/></label></td>
+								<td onclick="chColor(this)"><label>6<input class="seatselect" type="checkbox" name="seatno" value="E5"/></label></td>
+								<td onclick="chColor(this)"><label>7<input class="seatselect" type="checkbox" name="seatno" value="E6"/></label></td>
+								<td onclick="chColor(this)"><label>8<input class="seatselect" type="checkbox" name="seatno" value="E7"/></label></td>
+								<td onclick="chColor(this)"><label>9<input class="seatselect" type="checkbox" name="seatno" value="E8"/></label></td>
+								<td onclick="chColor(this)"><label>10<input class="seatselect" type="checkbox" name="seatno" value="E9"/></label></td>
+								<td id="impossible1">X</td>
+								<td id="impossible2">X</td>
+								<td id="impossible3">X</td>
+								<td id="impossible4">X</td>
+					</tr>
+					<tr><th>F</th><td onclick="chColor(this)"><label>1<input class="seatselect" type="checkbox" name="seatno" value="F1"/></label></td>
+								<td onclick="chColor(this)"><label>2<input class="seatselect" type="checkbox" name="seatno" value="F2"/></label></td>
+								<td onclick="chColor(this)"><label>3<input class="seatselect" type="checkbox" name="seatno" value="F3"/></label></td>
+								<td onclick="chColor(this)"><label>4<input class="seatselect" type="checkbox" name="seatno" value="F4"/></label></td>
+								<td onclick="chColor(this)"><label>5<input class="seatselect" type="checkbox" name="seatno" value="F5"/></label></td>
+								<td onclick="chColor(this)"><label>6<input class="seatselect" type="checkbox" name="seatno" value="F6"/></label></td>
+								<td onclick="chColor(this)"><label>7<input class="seatselect" type="checkbox" name="seatno" value="F7"/></label></td>
+								<td onclick="chColor(this)"><label>8<input class="seatselect" type="checkbox" name="seatno" value="F8"/></label></td>
+								<td id="impossible5">X</td>
+								<td id="impossible6">X</td>
+								<td onclick="chColor(this)"><label>11<input class="seatselect" type="checkbox" name="seatno" value="F11"/></label></td>
+								<td onclick="chColor(this)"><label>12<input class="seatselect" type="checkbox" name="seatno" value="F12"/></label></td>
+								<td onclick="chColor(this)"><label>13<input class="seatselect" type="checkbox" name="seatno" value="F13"/></label></td>
+								<td onclick="chColor(this)"><label>14<input class="seatselect" type="checkbox" name="seatno" value="F14"/></label></td>
+					</tr>
+					<tr><th>G</th><td onclick="chColor(this)"><label>1<input class="seatselect" type="checkbox" name="seatno" value="G1"/></label></td>
+								<td onclick="chColor(this)"><label>2<input class="seatselect" type="checkbox" name="seatno" value="G2"/></label></td>
+								<td onclick="chColor(this)"><label>3<input class="seatselect" type="checkbox" name="seatno" value="G3"/></label></td>
+								<td onclick="chColor(this)"><label>4<input class="seatselect" type="checkbox" name="seatno" value="G4"/></label></td>
+								<td onclick="chColor(this)"><label>5<input class="seatselect" type="checkbox" name="seatno" value="G5"/></label></td>
+								<td onclick="chColor(this)"><label>6<input class="seatselect" type="checkbox" name="seatno" value="G6"/></label></td>
+								<td onclick="chColor(this)"><label>7<input class="seatselect" type="checkbox" name="seatno" value="G7"/></label></td>
+								<td onclick="chColor(this)"><label>8<input class="seatselect" type="checkbox" name="seatno" value="G8"/></label></td>
+								<td onclick="chColor(this)"><label>9<input class="seatselect" type="checkbox" name="seatno" value="G9"/></label></td>
+								<td onclick="chColor(this)"><label>10<input class="seatselect" type="checkbox" name="seatno" value="G10"/></label></td>
+								<td onclick="chColor(this)"><label>11<input class="seatselect" type="checkbox" name="seatno" value="G11"/></label></td>
+								<td onclick="chColor(this)"><label>12<input class="seatselect" type="checkbox" name="seatno" value="G12"/></label></td>
+								<td onclick="chColor(this)"><label>13<input class="seatselect" type="checkbox" name="seatno" value="G13"/></label></td>
+								<td onclick="chColor(this)"><label>14<input class="seatselect" type="checkbox" name="seatno" value="G14"/></label></td>
+					</tr>
+					<tr><th>H</th><td onclick="chColor(this)"><label>1<input class="seatselect" type="checkbox" name="seatno" value="H1"/></label></td>
+								<td onclick="chColor(this)"><label>2<input class="seatselect" type="checkbox" name="seatno" value="H2"/></label></td>
+								<td onclick="chColor(this)"><label>3<input class="seatselect" type="checkbox" name="seatno" value="H3"/></label></td>
+								<td onclick="chColor(this)"><label>4<input class="seatselect" type="checkbox" name="seatno" value="H4"/></label></td>
+								<td onclick="chColor(this)"><label>5<input class="seatselect" type="checkbox" name="seatno" value="H5"/></label></td>
+								<td onclick="chColor(this)"><label>6<input class="seatselect" type="checkbox" name="seatno" value="H6"/></label></td>
+								<td onclick="chColor(this)"><label>7<input class="seatselect" type="checkbox" name="seatno" value="H7"/></label></td>
+								<td onclick="chColor(this)"><label>8<input class="seatselect" type="checkbox" name="seatno" value="H8"/></label></td>
+								<td onclick="chColor(this)"><label>9<input class="seatselect" type="checkbox" name="seatno" value="H9"/></label></td>
+								<td onclick="chColor(this)"><label>10<input class="seatselect" type="checkbox" name="seatno" value="H10"/></label></td>
+								<td onclick="chColor(this)"><label>11<input class="seatselect" type="checkbox" name="seatno" value="H11"/></label></td>
+								<td onclick="chColor(this)"><label>12<input class="seatselect" type="checkbox" name="seatno" value="H12"/></label></td>
+								<td onclick="chColor(this)"><label>13<input class="seatselect" type="checkbox" name="seatno" value="H13"/></label></td>
+								<td onclick="chColor(this)"><label>14<input class="seatselect" type="checkbox" name="seatno" value="H14"/></label></td>
+					</tr>
+					<tr><th>I</th><td onclick="chColor(this)"><label>1<input class="seatselect" type="checkbox" name="seatno" value="I1"/></label></td>
+								<td onclick="chColor(this)"><label>2<input class="seatselect" type="checkbox" name="seatno" value="I2"/></label></td>
+								<td onclick="chColor(this)"><label>3<input class="seatselect" type="checkbox" name="seatno" value="I3"/></label></td>
+								<td onclick="chColor(this)"><label>4<input class="seatselect" type="checkbox" name="seatno" value="I4"/></label></td>
+								<td onclick="chColor(this)"><label>5<input class="seatselect" type="checkbox" name="seatno" value="I5"/></label></td>
+								<td onclick="chColor(this)"><label>6<input class="seatselect" type="checkbox" name="seatno" value="I6"/></label></td>
+								<td onclick="chColor(this)"><label>7<input class="seatselect" type="checkbox" name="seatno" value="I7"/></label></td>
+								<td onclick="chColor(this)"><label>8<input class="seatselect" type="checkbox" name="seatno" value="I8"/></label></td>
+								<td onclick="chColor(this)"><label>9<input class="seatselect" type="checkbox" name="seatno" value="I9"/></label></td>
+								<td onclick="chColor(this)"><label>10<input class="seatselect" type="checkbox" name="seatno" value="I10"/></label></td>
+								<td onclick="chColor(this)"><label>11<input class="seatselect" type="checkbox" name="seatno" value="I11"/></label></td>
+								<td onclick="chColor(this)"><label>12<input class="seatselect" type="checkbox" name="seatno" value="I12"/></label></td>
+								<td onclick="chColor(this)"><label>13<input class="seatselect" type="checkbox" name="seatno" value="I13"/></label></td>
+								<td onclick="chColor(this)"><label>14<input class="seatselect" type="checkbox" name="seatno" value="I14"/></label></td>
+					</tr>
+					<tr><th>J</th><td onclick="chColor(this)"><label>1<input class="seatselect" type="checkbox" name="seatno" value="J1"/></label></td>
+								<td onclick="chColor(this)"><label>2<input class="seatselect" type="checkbox" name="seatno" value="J2"/></label></td>
+								<td onclick="chColor(this)"><label>3<input class="seatselect" type="checkbox" name="seatno" value="J3"/></label></td>
+								<td onclick="chColor(this)"><label>4<input class="seatselect" type="checkbox" name="seatno" value="J4"/></label></td>
+								<td onclick="chColor(this)"><label>5<input class="seatselect" type="checkbox" name="seatno" value="J5"/></label></td>
+								<td onclick="chColor(this)"><label>6<input class="seatselect" type="checkbox" name="seatno" value="J6"/></label></td>
+								<td onclick="chColor(this)"><label>7<input class="seatselect" type="checkbox" name="seatno" value="J7"/></label></td>
+								<td onclick="chColor(this)"><label>8<input class="seatselect" type="checkbox" name="seatno" value="J8"/></label></td>
+								<td onclick="chColor(this)"><label>9<input class="seatselect" type="checkbox" name="seatno" value="J9"/></label></td>
+								<td onclick="chColor(this)"><label>10<input class="seatselect" type="checkbox" name="seatno" value="J10"/></label></td>
+								<td onclick="chColor(this)"><label>11<input class="seatselect" type="checkbox" name="seatno" value="J11"/></label></td>
+								<td onclick="chColor(this)"><label>12<input class="seatselect" type="checkbox" name="seatno" value="J12"/></label></td>
+								<td onclick="chColor(this)"><label>13<input class="seatselect" type="checkbox" name="seatno" value="J13"/></label></td>
+								<td onclick="chColor(this)"><label>14<input class="seatselect" type="checkbox" name="seatno" value="J14"/></label></td>
+					</tr>
+					<tr><th>K</th><td onclick="chColor(this)"><label>1<input class="seatselect" type="checkbox" name="seatno" value="K1"/></label></td>
+								<td onclick="chColor(this)"><label>2<input class="seatselect" type="checkbox" name="seatno" value="K2"/></label></td>
+								<td onclick="chColor(this)"><label>3<input class="seatselect" type="checkbox" name="seatno" value="K3"/></label></td>
+								<td onclick="chColor(this)"><label>4<input class="seatselect" type="checkbox" name="seatno" value="K4"/></label></td>
+								<td onclick="chColor(this)"><label>5<input class="seatselect" type="checkbox" name="seatno" value="K5"/></label></td>
+								<td onclick="chColor(this)"><label>6<input class="seatselect" type="checkbox" name="seatno" value="K6"/></label></td>
+								<td onclick="chColor(this)"><label>7<input class="seatselect" type="checkbox" name="seatno" value="K7"/></label></td>
+								<td onclick="chColor(this)"><label>8<input class="seatselect" type="checkbox" name="seatno" value="K8"/></label></td>
+								<td onclick="chColor(this)"><label>9<input class="seatselect" type="checkbox" name="seatno" value="K9"/></label></td>
+								<td onclick="chColor(this)"><label>10<input class="seatselect" type="checkbox" name="seatno" value="K10"/></label></td>
+								<td onclick="chColor(this)"><label>11<input class="seatselect" type="checkbox" name="seatno" value="K11"/></label></td>
+								<td onclick="chColor(this)"><label>12<input class="seatselect" type="checkbox" name="seatno" value="K12"/></label></td>
+								<td onclick="chColor(this)"><label>13<input class="seatselect" type="checkbox" name="seatno" value="K13"/></label></td>
+								<td onclick="chColor(this)"><label>14<input class="seatselect" type="checkbox" name="seatno" value="K14"/></label></td>
+					</tr>				
+					</tbody>
+				</table>
+				
+				<table class="mark">
+					<tr><td><img src=".\img\select_mark.jpg"></td><th>선택</th></tr>
+					<tr><td><img src=".\img\reservation_possible_mark.jpg"></td><th>예매 가능</th></tr>
+					<tr><td><img src=".\img\reservation_impossible_mark.jpg"></td><th>예매 불가</th></tr>
+					<tr><td><img src=".\img\disabled_mark.jpg"></td><th>장애인석</th></tr>
+				</table>
 			
 			</div>
 		
