@@ -25,13 +25,34 @@
 		1) style	/style 태그에 스타일 시트 설정
 			- 전형적인 스타일 시트 설정
 		2) style 속성에 스타일 시트 작성
-			- <input style="text-align:center;"
+			- <input style="text-align:center;">
 		3) 스타일 시트를 별로 파일로 작성
 			<link>태그나 @import로 불러 사용
 	# 전형적인 모양
 	1. style 태그는 head 태그에서 선언하여 사용한다.
 	2. style 태그는 여러번 작성 가능
 	3. style 태그에 작성된 스타일 시트는 웹 페이지 전체에 적용
+	
+	# css3 규칙과 우선 순위
+	1. css3 스타일은 부모 태그로부터 상속
+	   1) 부모태그 (부모요소)
+	      자신을 둘러싸고 있는 태그   
+	      <table>
+	         <tr>
+	            <td>
+	         td의 부모 태그는 tr이고, tr의 부모태그는 table이다.
+	   2) 상위에 style은 하위에 상속되어 적용된다.
+	      <tr style="text-align:center">
+	         <td>
+	      상위에 tr에 선언한 css은 모든 하위 td에 적용된다.
+	2. 태그의 적용 가능 스타일 우선 순위
+	   1) inline으로 해당 태그에 선언된 style속성이 최우선 순위
+	   2) 한페이지당 선언한 <style>에 선언된 css
+	      동일한 선택자를 통해 다른 설정을 한 내용이면 
+	      최종 라인에 코드한 내용이 적용된다.
+	      
+	   3) 외부파일로 선언한 <link href="외부파일">선언한 태그
+	   4) 브라우저의 디폴트 스타일 
 	*/
 	body{
 		background-color:linen;

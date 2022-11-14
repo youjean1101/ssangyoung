@@ -7,7 +7,7 @@
 	
  */
 SELECT ename, job FROM emp;
-
+SELECT * FROM dept;
 SELECT * FROM emp;
 -- 주석
 -- 커서를 명령문에 위치시키고 ctrl+enter(실행)

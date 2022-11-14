@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+
+*/
+</style>
+<script type="text/javascript">
+	// 상단에 선언하는 부분
+	// 화면 body가 로딩되기 전에 처리할 부분
+	// 선언적 함수를 선언하여 하단 body에서 이벤트 형식으로 
+	// 호출하여 처리할 때, 주로 사용된다.
+</script>
+</head>
+<body>
+	<h2>안녕하세요</h2>
+	<h3>여기에 이름을 입력</h3>
+	<h4>합격여부</h4>
+	<h5>성인여부</h5>
+</body>
+<script type="text/javascript">
+	// body가 로딩된 후에 처리할 부분.
+	// DOM객체를 인식할 수 있는 상황
+	/*
+	# js 기본 출력 형식
+	1. 경고창
+		alert("출력내용");
+	2. console 출력
+		f12으로 console 확인
+		console.log("출력내용")
+	3. 화면 출력
+		document.write("출력내용")
+		==> body하단에 DOM 객체로 특정 요소객체 접근해서 처리
+		document.querySelector("h1").innerText="안녕하세요"
+		
+		//DOM객체는 body가 순차적으로 로딩된 상황에서 인식이 가능하다.
+	*/
+	document.querySelector("h2").innerText="변경이 되었네요!!^^"
+	/*
+	# 입력 형식
+	1. prompt("입력시 타이틀", "default입력값")
+		리턴내용으로 데이터(문자열)를 입력받아서 처리할 수 있다.
+	2. confirm("입력시 타이틀")
+		리턴내용으로 boolean(true/false)를 확인과 취소에 의해서 처리할 수 있다.
+	*/
+	//var fruit = prompt("좋아하는 과일을 입력하세요!","없음");
+		// 소스 변경후, ctrl+s 저장 후, 브라우저 화면에서 f5
+	//document.querySelector("h2").innerText="좋아하는 과일:"+fruit
+	
+	// ex) body <h3>여기에 이름을 입력</h3> body 화면에 반드시 코드 후,
+	//	prompt창으로 이름을 입력 받아서.
+	// 입력된 이름 : @@@가 출력되게 하세요/...
+	//var name = prompt("이름을 입력하세요.", "이름(여기에)");
+	// ; - 한라인에 명령어 두개 이상이 있을 때, 구분자로 반드시 붙여야 되지만
+	//	라인이 바꾸면 생략이 가능하다.
+	//document.querySelector("h3").innerText="입력된 이름:"+name
+	// 취소 클릭시, 입력이 안되고 null이 리턴되어 할당된다.
+	
+	//var isPass = confirm("합격입니까?")
+	// <h4>합격여부</h4>
+	// confirm("합격입니까?") : boolean값이기에 조건문이나 반복문에 활용
+	//document.querySelector("h4").innerText="합격여부:"
+	//	+(isPass?"합격":"불합격");
+	// body에 <h5>성인여부</h5>
+	// cofirm로 입력받아서 성인이면 로그인성공, 그렇지 않으면 미성년자 가입불가
+	var isAdult = confirm("성인입니까?")
+	document.querySelector("h5").innerText="결과:"+(isAdult?"로그인성공":"미성년자 입장불가");
+</script>
+</html>

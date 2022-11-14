@@ -1,0 +1,41 @@
+# jsp 지식계열화
+1. 서브단 프로그램의 처리 순서에 대한 이해
+	1) url 호출
+	2) 서버단 안에 처리
+		html + java ==> html ==> 클라이언트 전달
+		jsp ==> servlet java ==> class ==> html 클라이언트 전달
+				
+2. jsp 기초 문법
+	1) jsp의 화면 구성 : 페이지 지시자 + 스크립트 
+	2) 스크립트에 대한 이해와 활용
+		- 선언(declare) : <%! %>
+		- scriptlet : <% %>
+		- 표현(expression) : <%=%>
+	3) jsp의 기본 제어문
+		- 조건문
+		- 반복문
+3. 지시자와 태그
+	1) jsp의 지시자
+		page
+		include
+	2) 액션 태그
+4. jsp의 내장 객체
+	1) 내부 객체
+		- 요청과 반응처리
+			request
+			response
+		- session scope범위	
+			pageContext, request, session, application
+		- 예외 처리(exception)
+5. 자반 bean 활용하기
+	<jsp:useBean>
+6. session 과 cookie
+7. el과 jstl
+8. MVC 
+	1) servlet이란?
+	2) Model/View/Controller
+9. Database 연동
+	
+
+	
+		

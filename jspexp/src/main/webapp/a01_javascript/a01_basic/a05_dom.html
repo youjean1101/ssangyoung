@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/*
+# DOM
+1. document object model이라는 말로 js에서 화면을 객체로 인식하여,
+	해당 객체의 속성을 로직에 의해서 변경함으로 효과적으로 동적인 처리를 하기
+	위하여 처리하는 객체 모델링 형태이다.
+2. 기본 코드
+	1) 단일 객체 인식
+		var obj01 = document.querySelector("선택자")
+		// 단일 객체 선언과 할당.
+		// 여러개 선언되어 있더라도 첫번째 하나만 처리할 때.
+		// #아이디명 형식으로 단일 내용을 선택자로 해서 처리할 때, 주로 사용된다.
+	2) 다중 객체 인식
+		var array = document.querySelectAll("선택자")
+		// 하나가 아닌 여러개 객체를 선언하고 각각의 DOM객체에 대한 속성을
+		// 따로 따로 처리해야 할 때, 활용된다.
+		// array[0].innerText="첫번째", array[1].innerText="두번째"
+	cf) css에서 사용하는 선택자를 이용하여 단일 객체에 대한 처리와 다중객체에 대한 처리를 할 수 있다.
+3. DOM객체 인식 방법
+	1) 태그가 선언한 하단에서 호출
+		<body>
+			<h2>
+		<script>
+			document.querySelector("h2")
+	2) 함수를 통해서 특정한 이벤트가 처리된 후에 호출..
+		<script>
+			function chText(){
+				document.querySelector("h2")
+			}
+		
+		<body>
+			<h2 onclick="chText()"> 
+4. DOM객체의 속성 활용
+	1) 화면 출력 형태에 따른 코드
+		- h1~~, div, p, span, 형식은 기본적으로 출력을 처리하는 내용을 포함한 코드이다.
+			innerText : 문자열 그대로 해당 요소객체에 출력 처리
+				obj.innerText="안녕"
+			innerHTML : div, p, 시맨틱태그(hearder, nav, foot, )
+				등 다른 태그를 포함하는 태그에서 html코드를 랜더링이 필요할 때
+				html태그를 랜더링까지 처리해준다.
+				obj.innerText="<h3>반가워요</h3>"
+		- form 요소 객체는 출력의 내용을 value 속성으로 처리되는 코드가 있다.
+			obj.value="아이디입력"
+*/
+</style>
+<script type="text/javascript">
+	function call(){
+		// 클릭할 시점에는 이미 h2를 화면에 메모리로 로딩된 상황이기에 
+		// 해당 DOM 객체를 인식할 수 있는 상황에서 처리가 가능하다.
+		var h2Obj = document.querySelector("h2")
+		h2Obj.innerText = "문자열 변경^^"
+		var h3Obj = document.querySelector("h3")
+		h3Obj.innerText = "변경이 되네요!!"
+	}
+	//ex) h4 사과를 먹고 싶네요(클릭) 선언하고, h4를 클릭했을 시, 
+	//		h5, h6 하단에 사과가 출력되게 처리하세요.
+	function forEat(){
+		var h5Obj = document.querySelector("h5")
+		h5Obj.innerText = "사과"
+		// DOM을 객체로 선언하면 재활용할 수 있기 때문에 주로 사용된다.
+		document.querySelector("h6").innerText = "사과"
+		// 한번만 사용하는 경우, 바로 속성값을 이용해서 할당한다.
+	}
+	
+</script>
+</head>
+<body>
+	<h2 onclick="call()">반갑습니다. 클릭해보세요.</h2>
+	<h3>다른 DOM 객체도 인식이 될까요?</h3>
+	<h4 onclick="forEat()">사과를 먹고 싶네요(클릭)</h4>
+	<h5></h5>
+	<h6></h6>
+</body>
+<script type="text/javascript">
+/*
+ 
+ */
+</script>
+</html>
