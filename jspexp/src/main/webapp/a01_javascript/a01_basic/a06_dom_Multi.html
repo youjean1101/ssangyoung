@@ -18,16 +18,16 @@
 	<span>과일</span><br>
 	<h4>변경할까요? 모두다</h4>
 	<h4>변경할까요? 모두다</h4>
+	<h4 class="chColor">변경할까요? 모두다</h4>
 	<h4>변경할까요? 모두다</h4>
 	<h4>변경할까요? 모두다</h4>
-	<h4>변경할까요? 모두다</h4>
+	<h1 class="chColor">색상은?</h1>
 	<h1>색상은?</h1>
 	<h1>색상은?</h1>
+	<h1 class="chColor">색상은?</h1>
 	<h1>색상은?</h1>
 	<h1>색상은?</h1>
-	<h1>색상은?</h1>
-	<h1>색상은?</h1>
-	<h1>색상은?</h1>
+	<h1 class="chColor">색상은?</h1>
 
 </body>
 <script type="text/javascript">
@@ -54,7 +54,16 @@
 	rainbowArr[4].innerText = "파"
 	rainbowArr[5].innerText = "남"
 	rainbowArr[6].innerText = "보"
-	
+	// chColor
+	// 클래스로 선택된 배열
+	var chColor = document.querySelectorAll(".chColor")
+	// var idx=0 : js의 변수 선언
+	for(var idx=0;idx<chColor.length;idx++){
+		// DOM 배열객체.style : css 속성을 스타일로 지정
+		// style.background : css 속성
+		// = "pink" : css 속성값 할당 
+		chColor[idx].style.background="pink";
+	}
 /*
  
  */

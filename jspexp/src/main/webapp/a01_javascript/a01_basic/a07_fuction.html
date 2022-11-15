@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+</style>
+<script type="text/javascript">
+/*
+ # js의 함수 처리
+ 1. 함수는 기능 처리를 위한 코드의 집합체라고 할 수 있다.
+ 2. 기본형식
+ 	function 함수명(매개변수,...){
+		프로세스 처리
+		
+		return 리턴값;
+	}
+ */
+ 	function plus(num01, num02){
+	 	var sum = num01 + num02;
+	 	return sum;	 
+ 	}
+	//alert( plus(10,20));
+ 	
+	// ex) 물건가격과 갯수를 매개변수로 전달해서 총합계를 리턴하여 alert()로 로딩하세요.
+ 	function calcu(price,cnt){
+ 		var total = price*cnt;
+ 		return total;
+ 	}
+ 	// alert(calcu(20000,4));
+ 	// console.log(calcu(20000,4));
+ 	/*
+ # 이벤트와 이벤트핸들러 함수 처리
+ 1. js에서의 이벤트
+ 	js에서는 속성으로 on이벤트명="이벤트 핸들러"르르 통해서 해당 이벤트가 발생을 했을 때,
+ 	처리한 코드를 특정한 함수를 통해서 정의한 내용을 수행할 수 있다.
+ 2. 처리 순서
+ 	1) 이벤트 핸들러 함수 선언 : 이벤트를 통해 처리할 내용 함수 선언
+ 	2) 이벤트 속성 선언 및 이벤트 핸들러 함수 호출
+ 		태그 on이벤트명="이벤트핸들러함수()"
+ 	3) 이벤트 핸들러에 매개변수 전달
+ 		함수에 매개변수를 선언하여 문자열, 숫자 데이터를 전달할 수 있다.
+ 		
+ 	*/
+ 	function call01(){
+ 		alert("안녕하세요");
+ 	}
+ 	function call02(name){
+ 		alert("안녕하세요! "+name);
+ 	}
+ 	function call03(num01, num02){
+ 		alert(num01+ " + "+num02+" = "+(num01+num02));
+ 	}
+ 	// ex) call04를 통해서 물건명과 가격(숫자), 갯수(숫자)를 넘겨서 alert()으로 구매비용
+ 	//		물건:@@@, 비용:@@ 를 경고창으로 출력되게 하세요.
+ 	function call04(pname, price, cnt){
+ 		alert("물건:"+pname+", 비용:"+(price*cnt));
+ 	}
+ 	// 이벤트를 통해 특정한 DOM객체에 전달값 출력 처리..
+ 	function call05(){
+ 		//h2 첫번째 객체 호출
+ 		var h2Arry = document.querySelectorAll("h2");
+ 		h2Arry[0].innerText="안녕하세요";
+ 	}
+ 	// ex) h2에 출력2를 위해 call06함수를 만들고, h1을 추가하여 DOM 출력 레이블을 만들고 클릭시, 
+ 	//		반갑습니다 나오게 처리하세요.
+ 	function call06(){
+ 		var h2Arry = document.querySelectorAll("h2");
+ 		h2Arry[1].innerText="반갑습니다.";
+ 	}
+ 	function call07(){
+ 		// alert();
+ 		// input에 입력된 데이터를 가져온다.
+ 		// form요소객체의 입력된 데이터는 value라는 속성으로 가져올 수 있다.
+ 		var num01Val = document.querySelector("[name=num01]").value;
+ 		var num02Val = document.querySelector("[name=num02]").value;
+ 		//문자열을 + 연산처리를 이어주는 처리를 하기떄문에 js에 지원하는 숫자형변환
+ 		// 함수(Number()-대문자로 시작)를 통해 변환 후, 총 합산 처리값을 처리한다.
+ 		var tot = Number(num01Val)+Number(num02Val);
+ 		//출력할 대상 객체를 DOM으로 선언한다.
+ 		var h3Obj = document.querySelector("h3");
+ 		//. innerText 출력형식에 맞추어 출력 처리한다.
+ 		h3Obj.innerText = num01Val+ "+"+num02Val+" = " +tot
+ 	}
+ 	</script>
+</head>
+<body>
+	<h3>연산 결과</h3>
+	첫번째 숫자:<input type="text" name="num01"/><br>
+	두번째 숫자:<input type="text" name="num02"/><br>
+	<input type="button" value="합산" onclick="call07()"/>
+
+	<h2>출력1</h2>
+	<h2>출력2</h2>
+	<h1 onclick="call06()"">DOM 출력 레이블</h1>
+	<h1 onclick="call05()">이벤트 핸들러 호출(DOM 출력)</h1>
+	<h1 onclick="call01()">이벤트 핸들러 호출!!(클릭)</h1>
+	<h1 onclick="call02('홍길동')">이벤트 핸들러 호출(매개변수-문자)!!(클릭)</h1>
+	<h1 onclick="call03(4,5)">이벤트 핸들러 호출(매개변수-문자)!!(클릭)</h1>
+	<h1 onclick="call04('사과', 2000, 3)">이벤트 핸들러 호출(매개변수-문자, 숫자)!!(클릭)</h1>
+</body>
+<script>
+
+</script>
+
+</html>

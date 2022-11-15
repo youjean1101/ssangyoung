@@ -28,8 +28,11 @@
  	<%-- ex) 가격을 배열 만들고, 반복문을 통해서 h3로 출력하세요. --%>
  	<% 
  	int[] prices={3000,5000,9000}; 
+ 	log("길이"+prices.length);
  	for(int idx=0;idx<prices.length;idx++){
+ 		log("index:"+idx);
  		System.out.println(arry[idx]+":"+prices[idx]);
+ 		log("#로그#"+arry[idx]+":"+prices[idx]);
  	}
  	%>
  	

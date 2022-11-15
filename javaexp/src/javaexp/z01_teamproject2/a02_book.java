@@ -1,4 +1,4 @@
-package javaexp.teamproject2;
+package javaexp.z01_teamproject2;
 
 import java.sql.Connection;
 import java.sql.Date;

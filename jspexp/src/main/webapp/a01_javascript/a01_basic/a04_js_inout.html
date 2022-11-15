@@ -68,5 +68,24 @@
 	// cofirm로 입력받아서 성인이면 로그인성공, 그렇지 않으면 미성년자 가입불가
 	var isAdult = confirm("성인입니까?")
 	document.querySelector("h5").innerText="결과:"+(isAdult?"로그인성공":"미성년자 입장불가");
+	/*
+	3. form 요소 객체를 통한 입력
+		1) 처리한 입력 요소 객체 선언
+			물건가격: <input type="text" name="price">
+		2) 특정 요소객체 이벤트 핸들러 및 이벤트 지정
+		
+			<input type="button" onclick="calVal()"  value="가격평가">
+			function calVal(){
+				var price = document.querySelector("[name=price]").value;
+				// js에서는 기본적으로 문자열이지만, 비교연산식에서 자동형변환 처리
+				if( price > 5000 ){ 
+					alert("비싸다")
+				}else{
+					alert("싸다")
+				}
+			}
+		3) 입력요소객체를 DOM으로 호출 및 속성값(.value)으로 입력된 데이터 확인
+		4) 프로세스 처리..
+		*/
 </script>
 </html>

@@ -51,7 +51,7 @@ SET rentalcnt = 87,
 overduecnt = 2
 WHERE USERNO ='1029'
 AND div = 'user';
-SELECT * FROM BOOKUSER b ;
+SELECT * FROM bookuser;
 
 SELECT * FROM bookUser WHERE div = 'manager';
 /*

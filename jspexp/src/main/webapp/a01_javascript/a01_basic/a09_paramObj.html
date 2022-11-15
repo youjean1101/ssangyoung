@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+</style>
+<script type="text/javascript">
+/*
+ # 핸들러함수에 객체 매개변수 전달 및 여러가지 속성 활용
+ 1. 핸들러 함수에 this라는 키워드로 매개변수에 전달하면 DOM객체가 전체 넘어간다.
+ 2. 객체는 참조명으로 받아 가지고 있는 여러가지 속성을 할당하여 처리할 수 있다.
+ */
+ function callObj(obj){
+	obj.innerText="안녕하세요(문자열변경)";
+	obj.align="center" // 기본 속성 변경
+	obj.style.color="blue"; // css 속성 변경
+	obj.style.background="yellow";
+}
+function chBkColor(obj){
+	// 해당 객체가 가지고 있는 문자열로 해당 배경 색상을 변경 처리..
+	obj.style.background=obj.innerText
+}
+// ex) 3X2 테이블 과일 리스트를 만들고, 클릭시 마다, h2 buylist에 추가적으로 과일 항목이 담기게 
+//		처리해보세요.
+function addFruit(obj){
+	document.querySelector('#buylist').innerText += obj.innerText+", ";
+}
+
+</script>
+</head>
+<body>
+	<table border>
+	<tr>
+		<td onclick="addFruit(this)">사과</td>
+		<td onclick="addFruit(this)">딸기</td>
+		<td onclick="addFruit(this)">포도</td>
+	</tr>
+	<tr>
+		<td onclick="addFruit(this)">바나나</td>
+		<td onclick="addFruit(this)">토마토</td>
+		<td onclick="addFruit(this)">망고</td>
+	</tr>
+	</table>
+	
+	<h2 id="buylist">장바구니리스트 : </h2>
+	
+	
+	<h3 onclick="chBkColor(this)">red</h3>
+	<h3 onclick="chBkColor(this)">orange</h3>
+	<h3 onclick="chBkColor(this)">yellow</h3>
+	<h3 onclick="chBkColor(this)">green</h3>
+	<h3 onclick="chBkColor(this)">blue</h3>
+	<h3 onclick="chBkColor(this)">navy</h3>
+	<h3 onclick="chBkColor(this)">purple</h3>
+	<h2 onclick="callObj(this)">클릭해볼까요?</h2>
+	<h2 onclick="callObj(this)">클릭해볼까요?</h2>
+	<h2 onclick="callObj(this)">클릭해볼까요?</h2>
+</body>
+<script>
+
+</script>
+</html>

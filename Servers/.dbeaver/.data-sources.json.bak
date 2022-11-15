@@ -1,10 +1,10 @@
 {
 	"folders": {},
 	"connections": {
-		"oracle_thin-1842ef11d4e-b1165a5b322fd18": {
+		"oracle_thin-1844fd30fad-77ce809fcb0affe4": {
 			"provider": "oracle",
 			"driver": "oracle_thin",
-			"name": "localhost",
+			"name": "localhost 2",
 			"save-password": true,
 			"read-only": false,
 			"configuration": {
