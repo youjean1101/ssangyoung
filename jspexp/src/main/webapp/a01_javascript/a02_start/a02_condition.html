@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+</style>
+<script type="text/javascript">
+/*
+ 
+ */
+</script>
+</head>
+<body>
+
+</body>
+<script>
+/*
+# 동적 배열 처리
+1. js에서는 동적 배열이 기본적으로 지원되고 있다.
+2. 배열 선언
+	var 배열명 = []
+	var 배열명 = [데이터1, 데이터2...]
+3. 배열 활용
+	배열명[index명]
+	배열명. push(추가데이터)
+	
+	
+ */
+ var array = ['사과']
+ array.push("바나나") // 배열이 자동 증가
+ array.push("바나나") // 배열이 자동 증가
+ array.push("바나나") // 배열이 자동 증가
+ array[2] = "딸기" // 특정한 증가 index로 추가
+ var sh = document.body;
+ document.body.innerHTML = "<h2>"+array+"</h2>"
+ /*
+ # for문과 배열/객체
+ 1. for(var index in 배열명)
+	 index : index번호를 문자열로 가져온다.
+	 배열명[index] : 배열의 index위치의 데이터를 가져온다.
+ */
+ for(var idx in array){
+	 sh.innerHTML +="<h3>["+idx+"] - "+array[idx]+"</h3>"
+ }
+</script>
+</html>

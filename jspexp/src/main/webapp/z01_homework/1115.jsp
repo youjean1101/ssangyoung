@@ -32,10 +32,17 @@
 		</tr>
 		<%} %>
 	</table>
-	<h2>[1단계:확인] 4. dao에 부서정보를 찾아서, jsp로 부서정보를 출력하세요.</h2>
+	<h2>[1단계:확인]* 4. dao에 부서정보를 찾아서, jsp로 부서정보를 출력하세요.</h2>
+	<!-- 
+	1) 부서정보 기능 메서드 확인
+	2) jsp import 확인
+	3) dao객체 생성
+	4) 반복문을 통해서 출력확인
+	5) script(scriptlet, expression)을 통해서  table형식으로 출력 처리.
+	// import jsexp.vo.* 삭제 처리..
+	-->
 	<%
 	A06_PareparedDao dao = new A06_PareparedDao();
-
 	%>
 	<table>
 		<tr><th>부서번호</th><th>부서명</th><th>지역</th></tr>
@@ -45,8 +52,24 @@
 		</tr>
 		<%} %>
 	</table>
+	<h1>정답</h1>
+	<h2>부서정보</h2>
+	<table>
+		<tr><th>부서번호</th><th>부서명</th><th>부서위치</th></tr>
+		<%for(Dept d:dao.getDeptList(new Dept("",""))) {%>
+		<tr><td><%=d.getDeptno() %></td><td><%=d.getDname() %></td><td><%=d.getLoc() %></td></tr>
+		<%} %>
+	</table>
 	
-	<h2>[1단계:확인] 5. dao에 회원정보리스트 처리 기능메서드를 추가하고 jsp로 회원정보리스트를 출력하세요.</h2>
+	<h2>[1단계:확인]* 5. dao에 회원정보리스트 처리 기능메서드를 추가하고 jsp로 회원정보리스트를 출력하세요.</h2>
+	<!--  
+	1. dao 기능메서드 처리순서
+		1) sql 확인
+		2) vo추가 
+		3) 기능메서드 추가
+		4) dao호출
+		5) for script		
+	-->
 	<%
 	z01_memberInfoDao dao1 = new z01_memberInfoDao();
 	%>

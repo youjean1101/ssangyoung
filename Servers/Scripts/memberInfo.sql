@@ -16,3 +16,15 @@ INSERT INTO MembersInfo values(2,'manager','test','990102-1000000','인천광역
 INSERT INTO MembersInfo values(3,'user','김길동','951231-2000000','서울 신림','010-123-0000','goodgirl','9999');
 INSERT INTO MembersInfo values(4,'user','이길동','961021-2000000','부산 마린시티','010-456-0000','higirl','8888');
 INSERT INTO MembersInfo values(5,'user','마길동','970703-1000000','제주도 서귀포시','010-789-0000','goodman','5555');
+
+SELECT * FROM MEMBER100;
+
+/* 
+class MEMBER{
+	private String id;
+	private String passwd;
+	private String name;
+	private int point;
+	private String makedate;
+	}
+*/

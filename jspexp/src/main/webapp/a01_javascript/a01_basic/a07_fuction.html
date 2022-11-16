@@ -63,6 +63,18 @@
  	// 이벤트를 통해 특정한 DOM객체에 전달값 출력 처리..
  	function call05(){
  		//h2 첫번째 객체 호출
+ 		// 주의 querySelectorAll 한개이든 여러개이든 다 사용 h2
+ 		//	한개만 있을 때는 배열 안에 한개 객체가 들어가는 있는 것으로 처리
+ 		//	ex) 자바 String[] greets= {"안녕"}; greet[0]
+ 		//	var doms = document.querySelectAll("h3");
+ 		//	doms[0].innerText 로 처리한다.
+ 		// 주의 querySelector 한개이든 여러개이든 다 사용 h2
+ 		//	여러개일 때는 첫번째만 인식해서 처리한다.
+ 		//	<h4></h4><h4></h4><h4></h4><h4></h4>
+ 		// 	var h4Obj = document.querySelector("h4")
+ 		//	h4Obj.innerText="안녕" ==> 첫번째 h4만 출력처리..
+ 		//	화면에 없으면 null로 할당 처리되게 없는 경우가 있을 수 있으면
+ 		//	if(객체 != null)로 처리...
  		var h2Arry = document.querySelectorAll("h2");
  		h2Arry[0].innerText="안녕하세요";
  	}
@@ -80,6 +92,15 @@
  		var num02Val = document.querySelector("[name=num02]").value;
  		//문자열을 + 연산처리를 이어주는 처리를 하기떄문에 js에 지원하는 숫자형변환
  		// 함수(Number()-대문자로 시작)를 통해 변환 후, 총 합산 처리값을 처리한다.
+ 		// 문자열의 경우는 연결처리하는 기능도 있기에 명시적으로 형변환이 필요로 한다.
+ 		// 2+5 ==> 7
+ 		//	"2"+ "5" ==>"25"
+ 		//	"2"*"5" ==> 10 자동형변환으로 처리가능
+ 		//	"5"-"3" ==> 2 자동형변환으로 처리가능
+ 		
+ 		// 비교문자열 비교 equals()
+ 		// js에서는 equals()(X) 문자열 == 문자열로 처리하면 됩니다.
+ 		
  		var tot = Number(num01Val)+Number(num02Val);
  		//출력할 대상 객체를 DOM으로 선언한다.
  		var h3Obj = document.querySelector("h3");

@@ -61,25 +61,13 @@ public class movie {
 			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(sql);
 			
-		
 			pstmt.setString(1, movIs.getsMovieCode()); 
 			
 			rs = pstmt.executeQuery(); 
 			con.commit();
 			
 			while(rs.next()) {
-				System.out.println("[안내메시지] 영화정보가 정상적으로 삭제되었습니다.");
-				System.out.println();
-				System.out.println("▼삭제하신 영화정보▼");
-				System.out.println("▶ 영화코드 :"+rs.getString("moviecode"));
-				System.out.println("▶ 영화제목 :"+rs.getString("title"));
-				System.out.println("▶ 감독 :"+rs.getString("director"));
-				System.out.println("▶ 베우 :"+rs.getString("actor"));
-				System.out.println("▶ 장르 :"+rs.getString("genre"));			
-				System.out.println("▶ 상영시작날짜 :"+rs.getString("startdate"));			
-				System.out.println("▶ 상영종료날짜 :"+rs.getString("enddate"));	
-				System.out.println("▶ 상영상태 :"+rs.getString("status"));
-				System.out.println("▶ 예매수 :"+rs.getString("resercnt")+"\n");
+				System.out.println("[안내메시지] "+rs.getString("title")+"영화정보가 정상적으로 삭제되었습니다.");
 			}
 			
 		} catch (SQLException e) {
