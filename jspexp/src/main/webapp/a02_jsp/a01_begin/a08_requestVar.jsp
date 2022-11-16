@@ -45,6 +45,11 @@
  <%--
  ex) 학생명, 국어, 영어, 수학 점수를 요청값을 처리하고, 학생명 ==> "없음", 숫자는 0
  	으로 표현해서, 테이블형태로 데이터를 출력하세요. 
+ 	학생명 @@
+ 	국어 @@
+ 	영어 @@
+ 	수학 @@
+ 	?stuName=홍길동&kor=70&eng=80&math=90
   --%>
   <%
   String stuName =request.getParameter("stuName");
@@ -55,10 +60,16 @@
   if(eng==null) eng="0";
   String math =request.getParameter("math");
   if(math==null) math="0";
+  // 문자열 형식으로 된 숫자형 문자열을 숫자로 변환.. : Interger.parseInt("25")==>25
+	int korInt = Integer.parseInt(kor);
+	int engInt = Integer.parseInt(eng);
+	int mathInt = Integer.parseInt(math);
+	int tot = korInt + engInt + mathInt;
+  
   %>
   	<table>
-  	<tr><th>학생명</th><th>국어</th><th>영어</th><th>수학</th></tr>
-  	<tr><td><%=stuName %></td><td><%=kor %></td><td><%=eng %></td><td><%=math %></td></tr>
+  	<tr><th>학생명</th><th>국어</th><th>영어</th><th>수학</th><th>총점</th></tr>
+  	<tr><td><%=stuName %></td><td><%=kor %></td><td><%=eng %></td><td><%=math %></td><td><%=tot %></td></tr>
   	</table>
 </body>
 <script type="text/javascript">

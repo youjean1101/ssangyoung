@@ -32,7 +32,7 @@
 				"auth-model": "oracle_native"
 			},
 			"custom-properties": {
-				"resultset.maxrows": "150"
+				"resultset.maxrows": "2000"
 			}
 		}
 	},

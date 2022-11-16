@@ -25,14 +25,14 @@ INSERT INTO review VALUES('review'||reviewCode_seq.nextval,'user4', '와 또보�
 
 ---------------------------CGV 영화정보 테이블------------------------------------
 CREATE TABLE movie(
-	movieCode varchar2(20) PRIMARY key,
-	title varchar2(100) NOT NULL,
-	director varchar2(100),
-	actor varchar2(100),
+	movieCode varchar2(100) PRIMARY key,
+	title varchar2(300) NOT NULL,
+	director varchar2(300),
+	actor varchar2(300),
 	genre varchar2(100),
 	startDate DATE,
 	endDate DATE,
-	status varchar2(20) CONSTRAINT movie_status_ck check(status IN('개봉예정','상영중','상영종료')),
+	state varchar2(20) CONSTRAINT movie_status_ck check(state IN(NULL,'개봉예정','상영중','상영종료')),
 	reserCnt NUMBER
 	);
 
@@ -44,7 +44,7 @@ CREATE SEQUENCE movieCode_seq
 		increment by 1
 		start with 0
 		MINVALUE 0
-		MAXVALUE 100000;
+		MAXVALUE 10000;
 	
 DROP SEQUENCE movieCode_seq;
 
@@ -57,6 +57,41 @@ delete from movie where moviecode='movie14';
 --영화코드검색
 SELECT * FROM movie
 WHERE moviecode='movie0';
+
+UPDATE movie 
+SET status = '상영중'
+WHERE startdate<=sysdate AND 
+enddate>sysdate; --상영중
+
+UPDATE movie 
+SET status = '개봉예정'
+WHERE startdate>sysdate AND 
+enddate>sysdate; --개봉예정
+
+UPDATE movie 
+SET status = '상영종료'
+WHERE startdate<sysdate AND 
+enddate<sysdate; -- 상영종료
+
+SELECT * FROM movie;
+WHERE startdate>sysdate AND 
+enddate>sysdate; --개봉예정
+
+
+SELECT * FROM movie
+WHERE startdate<=sysdate AND 
+enddate>sysdate; -- 상영중
+
+SELECT * FROM movie
+WHERE startdate>sysdate AND 
+enddate>sysdate; --개봉예정
+
+SELECT * FROM movie
+WHERE startdate<sysdate AND 
+enddate<sysdate; -- 상영종료
+
+SELECT * FROM movie
+WHERE title='자백';
 --영화제목검색
 SELECT * FROM movie
 WHERE title LIKE '%'||'짱구'||'%';
@@ -70,9 +105,38 @@ WHERE actor LIKE '%'||'짱구'||'%';
 SELECT * FROM movie
 WHERE genre LIKE '%'||'범죄'||'%';
 --상영중인 영화검색
-SELECT * FROM movie 
+SELECT * FROM movie;
 WHERE status='상영종료';
 
+--영화수정(제목)
+UPDATE movie 
+SET title = ''
+WHERE moviecode = 'movie15';
+
+--영화수정(감독)
+UPDATE movie 
+SET director = ''
+WHERE moviecode = 'movie15';
+
+--영화수정(배우)
+UPDATE movie 
+SET actor = ''
+WHERE moviecode = 'movie15';
+
+--영화수정(장르)
+UPDATE movie 
+SET genre = ''
+WHERE moviecode = 'movie15';
+
+--영화수정(상영시작날짜)
+UPDATE movie 
+SET startdate= '20221120'
+WHERE moviecode = 'movie15';
+
+--영화수정(상영종료날짜)
+UPDATE movie 
+SET enddate = ''
+WHERE moviecode = 'movie15';
 
 ---------------------------CGV 사용자정보 테이블----------------------------------
 CREATE TABLE cgvUser(

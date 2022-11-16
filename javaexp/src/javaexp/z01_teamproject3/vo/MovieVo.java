@@ -8,14 +8,14 @@ public class MovieVo {
 	private String sGenre;
 	private String sStartdate;
 	private String sEnddate;
-	private String sStatus;
+	private String sState;
 	private String sReserCnt;
 	public MovieVo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public MovieVo(String sMovieCode, String sTitle, String sDirector, String sActor, String sGenre, String sStartdate,
-			String sEnddate, String sStatus, String sReserCnt) {
+			String sEnddate, String sState, String sReserCnt) {
 		super();
 		this.sMovieCode = sMovieCode;
 		this.sTitle = sTitle;
@@ -24,7 +24,7 @@ public class MovieVo {
 		this.sGenre = sGenre;
 		this.sStartdate = sStartdate;
 		this.sEnddate = sEnddate;
-		this.sStatus = sStatus;
+		this.sState = sState;
 		this.sReserCnt = sReserCnt;
 	}
 	
@@ -84,11 +84,11 @@ public class MovieVo {
 	public void setsEnddate(String sEnddate) {
 		this.sEnddate = sEnddate;
 	}
-	public String getsStatus() {
-		return sStatus;
+	public String getsState() {
+		return sState;
 	}
-	public void setsStatus(String sStatus) {
-		this.sStatus = sStatus;
+	public void setsState(String sState) {
+		this.sState = sState;
 	}
 	public String getsReserCnt() {
 		return sReserCnt;
