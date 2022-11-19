@@ -38,6 +38,10 @@ public class CGVuserInfoVo {
 		this.sGender = sGender;
 		this.iAge = iAge;
 	}
+	public CGVuserInfoVo(String sId) {
+		super();
+		this.sId = sId;
+	}
 	public CGVuserInfoVo(String sId, String sPassword) {
 		super();
 		this.sId = sId;

@@ -36,7 +36,7 @@ public class Movie {
 
 			rs = pstmt.executeQuery();
 			con.commit();
-			System.out.println("[안내메시지] 영화정보가 정상적으로 등록되었습니다.");
+			System.out.println("[안내메시지] 영화정보가 정상적으로 등록되었습니다.\n");
 			
 		String sql2 = "UPDATE movie \r\n"
 					+ "SET state = '상영중'\r\n"
@@ -229,7 +229,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 			rs = pstmt.executeQuery();
 			con.commit();
 			
-			System.out.println("[안내메시지] 입력하신 영화 정보가 정상적으로 수정되었습니다.");
+			System.out.println("[안내메시지] 입력하신 영화 정보가 정상적으로 수정되었습니다.\n");
 			
 			
 			String sql2 = "SELECT * FROM movie WHERE moviecode = ?";
@@ -251,7 +251,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 					System.out.println("▶ 배우: " + rs.getString("actor"));
 					System.out.println("▶ 장르: " + rs.getString("genre"));
 					System.out.println("▶ 상영시작날짜: " + rs.getString("startdate"));
-					System.out.println("▶ 상영종료날짜: " + rs.getString("enddate"));
+					System.out.println("▶ 상영종료날짜: " + rs.getString("enddate")+"\n");
 				}
 			
 		} catch (SQLException e) {
@@ -327,7 +327,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 			rs = pstmt.executeQuery();
 			con.commit();
 			
-			System.out.println("[안내메시지] 입력하신 영화 정보가 정상적으로 삭제되었습니다.");
+			System.out.println("[안내메시지] 입력하신 영화 정보가 정상적으로 삭제되었습니다.\n");
 			
 		} catch (SQLException e) {
 			System.out.println("DB에러:" + e.getMessage());
@@ -429,7 +429,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 				break;
 				
 			default : 
-				System.out.println("[안내메시지] 검색하신 속성이 없습니다.");
+				System.out.println("[안내메시지] 검색하신 속성이 없습니다."); //의미없음
 				break;
 		}
 		
@@ -508,7 +508,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 					break;
 					
 				default : 
-					System.out.println("[안내메시지] 요청하신 상영상태가 없습니다.");
+					System.out.println("[안내메시지] 요청하신 상영상태가 없습니다."); //의미없음
 					break;
 			}
 			
@@ -566,19 +566,20 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 		}
 	}
 //---------------------------------------------영화정보 Main()-----------------------------------------------------
-	public static void main(String[] args) {
+	//public static void main(String[] args) {
 		// TODO Auto-generated method stub
+	public void movieInfo(String sAuthMenu) {
 		boolean managerAndUserWhile = true;
 		while(managerAndUserWhile) {
-			System.out.println("☞ 관리자/사용자 중 무엇입니까?");
+			//System.out.println("☞ 관리자/사용자 중 무엇입니까?");
 			Scanner sc = new Scanner(System.in);
-			String auth = sc.nextLine();
+			//String auth = sc.nextLine();
 			boolean bManagerWhile = true;
 			boolean bUserWhile = true;
 			Movie dao = new Movie();
 			dao.movieStateUpdate(); //영화 상영상태 자동등록
 	
-			if (auth.equals("관리자")) {
+			if (sAuthMenu.equals("관리자")) {
 	
 				while (bManagerWhile) {
 					System.out.println("☞ 메뉴를 선택해주세요.");
@@ -820,7 +821,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 					}
 				}
 				managerAndUserWhile = false;
-			} else if (auth.equals("사용자")) {
+			} else if (sAuthMenu.equals("사용자")) {
 				while (bUserWhile) {
 					System.out.println("☞ 메뉴를 선택해주세요.");
 					System.out.println("1: 영화예매율순위 조회");
