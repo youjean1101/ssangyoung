@@ -32,10 +32,23 @@
 */
 
 var num01=25; var num02 = 30 //줄 단위는 생략가능하다.
+
+//요소객체 가운데 몇몇개는 바로 선언이 가능하다.
+// document.forms : 
+var body = document.querySelector("body") 
 var sh = document.body
+// body 태그를 기준으로 객체로 접근 가능..
 sh.innerHTML = num01+":"+num02+"<br>";
 sh.innerHTML += num01+":"+num02+"<br>";
 
+sh.innerText += "<h1>안녕하세요(.innerText)</h1>";
+sh.innerHTML += "<h1>안녕하세요(.innerHTML)</h1>";
+/*
+ # 출력 속성
+ 1. innerText : 문자열 그대로 출력
+ 2. innerHTML : 컨테이너(포함형식 태그 - div, body, p, table...)
+ 	내부적으로 태그를 포함해서 처리할 수 있다.
+ */
 
 /*
 # 문자열 사용
@@ -60,6 +73,10 @@ console.log(`숫자 ${num01} - 이 형식 표현일 때만 변수로 사용이 �
  # 연산자 사용.
  1. 숫자형 중 정수/정수 ==> 실수 처리
  	parseInt() 함수를 통해서 소숫점 절삭 처리 가능
+ 	cf ) parseInt("2000") ==> 2000
+ 	cf ) parseInt("") ==> 
+ 	cf ) parseInt("") ==> 
+ 	cf ) parseInt("") ==> 
  */
  sh.innerHTML += "10/3="+(10/3)+"<br>"
  // 함수 중에 문자열을 숫자로 변환하고, 정수형으로 변환해주는 함수 parseInt()
@@ -87,11 +104,11 @@ console.log(`숫자 ${num01} - 이 형식 표현일 때만 변수로 사용이 �
  
  /*
  # 자바스크립트의 데이터 유형
- 1. 문자열형(String)
- 2. 숫자형(number)
- 3. boolean형
- 4. 함수형(function)
- 5. 객체형(object)형으로 나누어진다.
+ 1. 문자열형(String) - '',"",``
+ 2. 숫자형(number) -  실수, 정수
+ 3. boolean형 - function call(){}, var call02=function(){}
+ 4. 함수형(function)형으로 나누어진다. - function call(){}, var call02=function(){}
+ 5. 객체형(object)형으로 나누어진다. - {}, function Obj(){}
  typeof()라는 함수를 통해서 확인할 수 있다.
  */
  sh.innerHTML += "'홍길동':"+typeof("홍길동")+"<br>"
@@ -113,9 +130,12 @@ console.log(`숫자 ${num01} - 이 형식 표현일 때만 변수로 사용이 �
  # 데이터가 없는 부분에 대한 처리
  1. 변수를 선언하고 할당하지 않는 경우 : undefined로 표시, 에러는 표기하지 않음.
  2. 선언되지 않는 변수를 호출하는 경우 : not defined 에러로 표기 - 진행이 안됨.
+ 3. Nan : not a number - 숫자형이 아닌데 형변환 처리할 때,
  */
  var num09;
  sh.innerHTML += "num09:"+num09+"<br>"
+ sh.innerHTML += "parseInt('이십오'):"+parseInt('이십오')+"<br>"
+ sh.innerHTML += "계속진행<br>"
  // sh.innerHTML += "num10:"+num10+"<br>"
 </script>
 </html>

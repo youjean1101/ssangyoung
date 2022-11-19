@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+
+</head>
+<body>
+
+
+</body>
+<script type="text/javascript">
+/*
+# 함수의 선언
+1. 익명적 함수(변수형 함수)
+	1) 형식
+	var 변수명 = function(매개변수1, 매개변수2..){
+		
+	}
+	2) 호출
+	변수명(데이터)
+	3) 특징
+		반드시 선언 후에 호출할 수 있다.
+ */
+var call = function( name ){
+		alert("이름"+name)
+		return name+"을 부르다!!"
+	}
+var body = document.body
+body.innerHTML="함수의 리턴값:"+call('홍길동')+"<br>"
+// 
+</script>
+</html>

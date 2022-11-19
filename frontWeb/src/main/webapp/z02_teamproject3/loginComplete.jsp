@@ -52,6 +52,6 @@ div.box{
 	 	<h4>☞ 입력하신 아이디: ${param.id}</h4>
 	 </div>
 	 
-	 <input type="button" value="메인으로 이동" onclick="alert('main이동')">	
+	 <a href="Project3_CGV_Login.html"><input type="button" value="로그인 하러가기"></a>
 </body>
 </html>

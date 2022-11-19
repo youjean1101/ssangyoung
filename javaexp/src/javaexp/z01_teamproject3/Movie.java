@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import javaexp.a13_database.DB;
+import javaexp.a13_database.vo.EmpQua;
 import javaexp.z01_teamproject3.vo.MovieVo;
 
 public class Movie {
@@ -16,7 +19,9 @@ public class Movie {
 
 //--------------------------------------------영화정보등록 기능메서드------------------------------------------------------
 	public void movieInfoInsert(MovieVo movIs) {
-		String sql = "INSERT INTO movie VALUES('movie'||movieCode_seq.nextval, ?, ?, ?, ?, ?, ?,null,0)";
+		String sql = "INSERT INTO movie "
+				+ "VALUES('movie'||movieCode_seq.nextval,"
+				+ " ?, ?, ?, ?, ?, ?,null,0)";
 		try {
 			con = DB.con();
 			con.setAutoCommit(false);
@@ -44,7 +49,6 @@ public class Movie {
 			
 			rs = pstmt.executeQuery();
 			con.commit();
-			
 			
 		String sql3 = "UPDATE movie \r\n"
 					+ "SET state = '개봉예정'\r\n"
@@ -106,6 +110,38 @@ public class Movie {
 		} finally {
 			DB.close(rs, pstmt, con);
 		}
+	}
+//--------------------------------------------영화정보수정 기능메서드------------------------------------------------------	
+	public boolean IsmovieSelect(String code) {
+		boolean mReturn = false;
+		
+		String sql = "SELECT * FROM movie\r\n"
+				+ "WHERE moviecode=?";
+		try {
+			con = DB.con();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, code);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				int nRowCnt = rs.getRow();
+				if(nRowCnt == 0) {
+					mReturn = false;
+				} else {
+					mReturn = true;
+				}
+			}
+			con.commit();
+			
+		} catch (SQLException e) {
+			System.out.println("DB에러:" + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("일반 에러:" + e.getMessage());
+		} finally {
+			DB.close(rs, pstmt, con);
+		}
+		return mReturn;
 	}
 //--------------------------------------------영화정보수정 기능메서드------------------------------------------------------
 public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
@@ -304,7 +340,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 
 //--------------------------------------------영화정보전체조회 기능메서드------------------------------------------------------
 	public void movieInfoAll() {
-		String sql = "SELECT * FROM movie";
+		String sql = "SELECT * FROM movie ORDER BY moviecode";
 		try {
 			con = DB.con();
 			con.setAutoCommit(false);
@@ -335,7 +371,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 
 //--------------------------------------------영화코드정보조회 기능메서드------------------------------------------------------
 	public void movieInfoView(MovieVo movIs) {
-		String sql = "SELECT * FROM movie\r\n" + "WHERE moviecode=?";
+		String sql = "SELECT * FROM movie WHERE moviecode=?";
 		try {
 			con = DB.con();
 			con.setAutoCommit(false);
@@ -369,57 +405,56 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 		}
 	}
 //--------------------------------------------영화검색조회 기능메서드------------------------------------------------------
-	public void movieInfoIndexView(String indexColumn,String indexWord) {
+	public List<MovieVo> movieInfoIndexView(String indexColumn,String indexWord){
+		List<MovieVo> mlist = new ArrayList<MovieVo>();
+	
+	//public void movieInfoIndexView(String indexColumn,String indexWord) {
 		
 		String sql = "SELECT * FROM movie\r\n";
+		switch(indexColumn) {
+			case "제목" :
+				sql += "WHERE title LIKE '%'||?||'%'";
+				break;
+				
+			case "감독" :
+				sql += "WHERE director LIKE '%'||?||'%'";
+				break;
+				
+			case "배우" :
+				sql += "WHERE actor LIKE '%'||?||'%'";
+				break;
+				
+			case "장르" :
+				sql += "WHERE genre LIKE '%'||?||'%'";
+				break;
+				
+			default : 
+				System.out.println("[안내메시지] 검색하신 속성이 없습니다.");
+				break;
+		}
+		
 		try {			
-			switch(indexColumn) {
-				case "제목" :
-					sql += "WHERE title LIKE '%'||?||'%'";
-					
-					con = DB.con();
-					con.setAutoCommit(false);
-					pstmt = con.prepareStatement(sql);
-					
-					pstmt.setString(1, indexWord);
-					break;
-					
-				case "감독" :
-					sql += "WHERE director LIKE '%'||?||'%'";
-					con = DB.con();
-					con.setAutoCommit(false);
-					pstmt = con.prepareStatement(sql);
-					
-					pstmt.setString(1, indexWord);
-					break;
-					
-				case "배우" :
-					sql += "WHERE actor LIKE '%'||?||'%'";
-					con = DB.con();
-					con.setAutoCommit(false);
-					pstmt = con.prepareStatement(sql);
-					
-					pstmt.setString(1, indexWord);
-					break;
-					
-				case "장르" :
-					sql += "WHERE genre LIKE '%'||?||'%'";
-					con = DB.con();
-					con.setAutoCommit(false);
-					pstmt = con.prepareStatement(sql);
-					
-					pstmt.setString(1, indexWord);
-					break;
-					
-				default : 
-					System.out.println("[안내메시지] 검색하신 속성이 없습니다.");
-					break;
-			}
-
+			con = DB.con();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, indexWord);
 			rs = pstmt.executeQuery();
 			con.commit();
-			
+						
 			while (rs.next()) {
+				mlist.add(new MovieVo(
+							rs.getString("MovieCode"),
+							rs.getString("Title"),
+							rs.getString("Director"),
+							rs.getString("Actor"),
+							rs.getString("Genre"),
+							rs.getString("Startdate"),
+							rs.getString("Enddate"),
+							rs.getString("state"),
+							rs.getString("resercnt")
+							)
+				);
 				System.out.println();
 				System.out.println("▼입력하신 영화정보▼");
 				System.out.println("▶ 영화코드: " + rs.getString("MovieCode"));
@@ -432,7 +467,10 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 				System.out.println("▶ 상영상태: " + rs.getString("state"));
 				System.out.println("▶ 예매수: " + rs.getString("resercnt") + "\n");
 			}
-			
+			if(mlist.size()==0) {
+				System.out.println("[안내메시지] 입력하신 영화가 존재하지 않습니다.");
+			}
+				
 		} catch (SQLException e) {
 			System.out.println("DB에러:" + e.getMessage());
 		} catch (Exception e) {
@@ -440,6 +478,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 		} finally {
 			DB.close(rs, pstmt, con);
 		}
+		return mlist;
 	}
 //--------------------------------------------영화상태조회 기능메서드------------------------------------------------------
 	public void movieInfoStateView(String movieState) {
@@ -447,7 +486,6 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 		String sql = "SELECT * FROM movie\r\n";
 		try {			
 			switch(movieState) {
-							
 				case "상영중" :
 					sql += "WHERE state='상영중'";
 					con = DB.con();
@@ -499,7 +537,34 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 			DB.close(rs, pstmt, con);
 		}
 	}
+//--------------------------------------------영화순위조회 기능메서드------------------------------------------------------
+	public void movieInfoTopView() {
+		String sql = "SELECT * FROM (\r\n"
+					+ "SELECT * FROM movie\r\n"
+					+ "ORDER BY resercnt DESC)\r\n"
+					+ "WHERE rownum<=5";
+		try {
+			con = DB.con();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			con.commit();
+			
+			System.out.println("▼Top5 무비차트(예매율순위)▼");
+			while (rs.next()) {
+				System.out.println(rs.getRow()+"위");
+				System.out.println("▶ 영화제목: " + rs.getString("Title"));
+				System.out.println("▶ 예매수: " + rs.getString("resercnt") + "\n");
+			}
 
+		} catch (SQLException e) {
+			System.out.println("DB에러:" + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("일반 에러:" + e.getMessage());
+		} finally {
+			DB.close(rs, pstmt, con);
+		}
+	}
 //---------------------------------------------영화정보 Main()-----------------------------------------------------
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -517,10 +582,10 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 	
 				while (bManagerWhile) {
 					System.out.println("☞ 메뉴를 선택해주세요.");
-					System.out.println("1: 영화정보등록");
-					System.out.println("2: 영화정보수정");
-					System.out.println("3: 영화정보삭제");
-					System.out.println("4: 영화정보조회");
+					System.out.println("1: 영화정보 등록");
+					System.out.println("2: 영화정보 수정");
+					System.out.println("3: 영화정보 삭제");
+					System.out.println("4: 영화정보 조회");
 					System.out.println("5: 뒤로가기");
 					int iMovieManagerMenu = sc.nextInt();
 					sc.nextLine();
@@ -562,89 +627,99 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 						System.out.println("☞ 영화정보를 수정할 영화코드를 입력해주세요");
 						String sUpdateMovieChoice = sc.nextLine();
 						
-						System.out.println("☞ 해당영화의 무슨속성을 수정하시겠습니까?");
-						System.out.println("1:영화제목");
-						System.out.println("2:감독");
-						System.out.println("3:배우");
-						System.out.println("4:장르");
-						System.out.println("5:상영시작날짜");
-						System.out.println("6:상영종료날짜");
-						int iMovieColumnChoice=sc.nextInt();
-						sc.nextLine();
-						
-						MovieVo updateMovie = new MovieVo();
-						
-						switch(iMovieColumnChoice) {
-						
-							case 1:
-								System.out.print("☞ 수정하실 제목명: ");
-								String updateTitle= sc.nextLine();
-								updateMovie.setsTitle(updateTitle);
-								dao.movieInfoUpdate(sUpdateMovieChoice,"제목", updateMovie);
-								break;
-								
-							case 2:
-								System.out.print("☞ 수정하실 감독: ");
-								String updateDirector= sc.nextLine();
-								updateMovie.setsDirector(updateDirector);
-								dao.movieInfoUpdate(sUpdateMovieChoice,"감독", updateMovie);
-								break;
-								
-							case 3:
-								System.out.print("☞ 수정하실 배우: ");
-								String updateActor= sc.nextLine();
-								updateMovie.setsActor(updateActor);
-								dao.movieInfoUpdate(sUpdateMovieChoice,"배우", updateMovie);
-								break;
-								
-							case 4:
-								System.out.print("☞ 수정하실 장르: ");
-								String updateGenre= sc.nextLine();
-								updateMovie.setsGenre(updateGenre);
-								dao.movieInfoUpdate(sUpdateMovieChoice,"장르", updateMovie);
-								break;
-								
-							case 5:
-								System.out.print("☞ 수정하실 상영시작날짜(YYYYMMDD): ");
-								String updateStartdate= sc.nextLine();
-								updateMovie.setsStartdate(updateStartdate);
-								dao.movieInfoUpdate(sUpdateMovieChoice,"상영시작날짜", updateMovie);
-								break;
-								
-							case 6:
-								System.out.print("☞ 수정하실 상영종료날짜(YYYYMMDD) ");
-								String updateEnddate= sc.nextLine();
-								updateMovie.setsEnddate(updateEnddate);
-								dao.movieInfoUpdate(sUpdateMovieChoice,"상영종료날짜", updateMovie);
-								break;
-								
-							default:
-								System.out.println("[안내메시지]보기에 있는 메뉴를 선택해주세요.");
-								break;
+						if(dao.IsmovieSelect(sUpdateMovieChoice)== true){
+							System.out.println("☞ 해당영화의 무슨속성을 수정하시겠습니까?");
+							System.out.println("1:영화제목");
+							System.out.println("2:감독");
+							System.out.println("3:배우");
+							System.out.println("4:장르");
+							System.out.println("5:상영시작날짜");
+							System.out.println("6:상영종료날짜");
+							int iMovieColumnChoice=sc.nextInt();
+							sc.nextLine();
+							
+							MovieVo updateMovie = new MovieVo();
+							
+							switch(iMovieColumnChoice) {
+								case 1:
+									System.out.print("☞ 수정하실 제목명: ");
+									String updateTitle= sc.nextLine();
+									updateMovie.setsTitle(updateTitle);
+									dao.movieInfoUpdate(sUpdateMovieChoice,"제목", updateMovie);
+									break;
+									
+								case 2:
+									System.out.print("☞ 수정하실 감독: ");
+									String updateDirector= sc.nextLine();
+									updateMovie.setsDirector(updateDirector);
+									dao.movieInfoUpdate(sUpdateMovieChoice,"감독", updateMovie);
+									break;
+									
+								case 3:
+									System.out.print("☞ 수정하실 배우: ");
+									String updateActor= sc.nextLine();
+									updateMovie.setsActor(updateActor);
+									dao.movieInfoUpdate(sUpdateMovieChoice,"배우", updateMovie);
+									break;
+									
+								case 4:
+									System.out.print("☞ 수정하실 장르: ");
+									String updateGenre= sc.nextLine();
+									updateMovie.setsGenre(updateGenre);
+									dao.movieInfoUpdate(sUpdateMovieChoice,"장르", updateMovie);
+									break;
+									
+								case 5:
+									System.out.print("☞ 수정하실 상영시작날짜(YYYYMMDD): ");
+									String updateStartdate= sc.nextLine();
+									updateMovie.setsStartdate(updateStartdate);
+									dao.movieInfoUpdate(sUpdateMovieChoice,"상영시작날짜", updateMovie);
+									break;
+									
+								case 6:
+									System.out.print("☞ 수정하실 상영종료날짜(YYYYMMDD) ");
+									String updateEnddate= sc.nextLine();
+									updateMovie.setsEnddate(updateEnddate);
+									dao.movieInfoUpdate(sUpdateMovieChoice,"상영종료날짜", updateMovie);
+									break;
+									
+								default:
+									System.out.println("[안내메시지]보기에 있는 메뉴를 선택해주세요.");
+									break;
+							}
+							dao.movieStateUpdate(); //영화 상영상태 자동등록
+							
+						}else {
+							System.out.println("[안내메시지]입력한 영화코드가 없습니다. 정확한 영화코드를 입력해주시기 바랍니다.");
 						}
-						dao.movieStateUpdate(); //영화 상영상태 자동등록
+					
 						break;
 	
 					case 3:
 						dao.movieInfoAll();
 						System.out.println("☞ 삭제하실 영화코드를 입력해주세요.");
 						String sRemoveMovieCode = sc.nextLine();
-						dao.movieInfoView(new MovieVo(sRemoveMovieCode));
-	
-						while (true) {
-							System.out.println("☞ 해당 영화를 정말 삭제하시겠습니까?(Y/N)");
-							String sMovieRemoveConfirm = sc.nextLine();
-	
-							if (sMovieRemoveConfirm.toUpperCase().equals("Y")) {
-								dao.movieInfoDelete(new MovieVo(sRemoveMovieCode));
-								break;
-							} else if (sMovieRemoveConfirm.toUpperCase().equals("N")) {
-								break;
-							} else {
-								System.out.println("[안내메시지]Y/N으로 입력해주세요");
+						if(dao.IsmovieSelect(sRemoveMovieCode)== true){
+							dao.movieInfoView(new MovieVo(sRemoveMovieCode));
+		
+							while (true) {
+								System.out.println("☞ 해당 영화를 정말 삭제하시겠습니까?(Y/N)");
+								String sMovieRemoveConfirm = sc.nextLine();
+		
+								if (sMovieRemoveConfirm.toUpperCase().equals("Y")) {
+									dao.movieInfoDelete(new MovieVo(sRemoveMovieCode));
+									break;
+								} else if (sMovieRemoveConfirm.toUpperCase().equals("N")) {
+									break;
+								} else {
+									System.out.println("[안내메시지]Y/N으로 입력해주세요");
+								}
 							}
+							
+						}else {
+							System.out.println("[안내메시지]입력하신 영화코드가 없습니다. 정확한 영화코드를 입력해주시기 바랍니다.");
 						}
-	
+		
 						break;
 	
 					case 4:
@@ -748,48 +823,101 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 			} else if (auth.equals("사용자")) {
 				while (bUserWhile) {
 					System.out.println("☞ 메뉴를 선택해주세요.");
-					System.out.println("1: 영화예매율순위조회");
-					System.out.println("2: 영화정보조회");
-					System.out.println("3: 상영중영화조회");
-					System.out.println("4: 개봉예정영화조회");
-					System.out.println("5: 상영종료영화조회");
-					System.out.println("6: 영화리뷰조회");
+					System.out.println("1: 영화예매율순위 조회");
+					System.out.println("2: 영화정보 조회");
+					System.out.println("3: 상영중 영화조회");
+					System.out.println("4: 개봉예정 영화조회");
+					System.out.println("5: 상영종료 영화조회");
+					System.out.println("6: 영화리뷰 조회");
 					System.out.println("7: 뒤로가기");
 					int iMovieUserMenu = sc.nextInt();
 					sc.nextLine();
 	
 					switch (iMovieUserMenu) {
-					case 1:
-						System.out.println("영화예매율순위 조회");
-						break;
-	
-					case 2:
-						System.out.println("영화정보 조회");
-						break;
-	
-					case 3:
-						System.out.println("상영중 영화조회");
-						break;
-	
-					case 4:
-						System.out.println("개봉예정 영화조회");
-						break;
-	
-					case 5:
-						System.out.println("상영종료 영화조회");
-						break;
-	
-					case 6:
-						System.out.println("영화리뷰조회");
-						break;
-	
-					case 7:
-						bUserWhile = false;
-						break;
-	
-					default:
-						System.out.println("[안내메시지]보기에 있는 메뉴를 선택해주세요.");
-						break;
+						case 1:
+							dao.movieInfoTopView();
+							break;
+		
+						case 2:
+							boolean movieIndexColumnChoice = true;
+							while(movieIndexColumnChoice) {
+								System.out.println("☞ 보기 중 무엇을 검색하시겠습니까?");
+								System.out.println("1:영화제목");
+								System.out.println("2:영화감독");
+								System.out.println("3:영화배우");
+								System.out.println("4:영화장르");
+								System.out.println("5:전체");
+								System.out.println("6:뒤로가기");
+								int iUserIndexMovieColumn = sc.nextInt();
+								sc.nextLine();
+								
+								switch(iUserIndexMovieColumn) {
+									case 1:
+										System.out.print("☞ 검색할 영화명:");
+										String sIndexMoviename = sc.nextLine();
+										dao.movieInfoIndexView("제목", sIndexMoviename);
+										movieIndexColumnChoice = false;
+										break;
+																				
+									case 2:
+										System.out.print("☞ 검색할 감독:");
+										String sIndexMovieDirector = sc.nextLine();
+										dao.movieInfoIndexView("감독", sIndexMovieDirector);
+										movieIndexColumnChoice = false;
+										break;
+										
+									case 3:
+										System.out.print("☞ 검색할 배우:");
+										String sIndexMovieActor = sc.nextLine();
+										dao.movieInfoIndexView("배우", sIndexMovieActor);
+										movieIndexColumnChoice = false;
+										break;
+										
+									case 4:
+										System.out.print("☞ 검색할 장르:");
+										String sIndexMovieGerne = sc.nextLine();
+										dao.movieInfoIndexView("장르", sIndexMovieGerne);
+										movieIndexColumnChoice = false;
+										break;
+									
+									case 5: 
+										dao.movieInfoAll();
+										movieIndexColumnChoice = false;
+										break;
+										
+									case 6: 
+										movieIndexColumnChoice = false;
+										break;
+									
+									default : 
+										System.out.println("[안내메시지]보기에 있는 메뉴를 선택해주세요.");
+										movieIndexColumnChoice = true;
+								}
+							}
+							break;		
+						case 3:
+							dao.movieInfoStateView("상영중");
+							break;
+		
+						case 4:
+							dao.movieInfoStateView("개봉예정");
+							break;
+		
+						case 5:
+							dao.movieInfoStateView("상영종료");
+							break;
+		
+						case 6:
+							System.out.println("영화리뷰조회");
+							break;
+		
+						case 7:
+							bUserWhile = false;
+							break;
+		
+						default:
+							System.out.println("[안내메시지]보기에 있는 메뉴를 선택해주세요.");
+							break;
 					}
 				}
 				managerAndUserWhile = false;

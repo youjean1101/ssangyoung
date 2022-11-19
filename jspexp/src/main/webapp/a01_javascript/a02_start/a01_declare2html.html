@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+</style>
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+
+</body>
+<script>
+/*
+# 변수 선언 형식(es6 이후 지원)
+1. 지역변수
+ 특정한 범위의 괄호안에서만 사용가능하고 영향을 미치는 변수
+2. 전역변수
+	다른 괄호(범위)에서도 전체적으로 사용가능하고 영향을 미치는 변수
+3. 상수 : 초기 변수를 할당했을 때, 변경되지 않는 데이터 처리.
+*/
+
+// 1. 전역변수
+var globalVar = 52;
+// 2. 지역/전역변수 
+let localGlobalVar = 270;
+// 3. 상수
+const constVar = 103;
+// constVar = 30 에러발생 이후 내용 수행하지 않음.
+var body = document.body
+body.innerHTML ="전역변수:"+globalVar+"<br>"
+body.innerHTML += "지역/전역변수:"+localGlobalVar+"<br>"
+body.innerHTML += "상수:"+constVar+"<br>"
+// var 전역변수 : 함수/객체/if/for의 내부에 선언되더라도 어디서나 호출해서 사용
+{
+	 // 중괄호 블럭 내부에서 증언
+	 var var01 = 273
+}
+{
+	 // 다른 중괄호 블럭에서 호출
+	 body.innerHTML += "다른 블럭에서 호출:"+var01+"<br>"
+	 console.log("다른 블럭에서 호출:"+var01)
+}
+body.innerHTML += "포함하는 외부 범위에서 호출:"+var01+"<br>"
+// var 변수의 전역변수에 원하지 않는 데이터 처리에 문제가 발생해서 let 변수를
+// es6버전부터 추가해서 처리.
+
+// let을 통한 전역/지역변수 구분
+let let02=999 // 중괄호 블럭은 포함한 전역변수 선언..
+{
+	 let let01 = 500
+	 body.innerHTML += "let으로 전역벽수 호출:"+let02+"<br>"
+}
+{	
+	let let01 = 100 // 지역변수이기에 현재 이 블럭에서 선언한 데이터를 사용가능
+	 body.innerHTML +="let으로 지역변수 호출:"+let01+"<br>"
+	 body.innerHTML +="let으로 전역변수 호출:"+let02+"<br>"
+}
+// 위와 같은 중관로 블럭은 객체, 함수, 조건, 반복문 등 모든 내용을 전역/지역변수 개념을 구분하여 적용된다.
+// ex) let으로 전역변수로 총계를 선언하고 for안에 let 지역변수로 단위 카운드 데이터를 할당하여 화면에 출력하게 하여
+//		1,2,3,.....10
+//		총합 : 55 가 for문을 통해서 let변수를 활용하여 출력되게 하세요.
+let tot = 0 // 전역변수
+	for(let cnt=1;cnt<=10;cnt++){ //지역변수
+		body.innerHTML += cnt+", " // for블럭 안에서만 사용 가능
+		tot +=cnt // 지역변수를 전역변수에 할당.
+	}
+		body.innerHTML += "let으로 전역변수 호출 tot:"+tot+"<br>"
+		//body.innerHTML += "let으로 지역변수 호출 cnt:"+cnt+"<br>"
+		
+var tot2 = 0 // 전역변수
+	for(var cnt2=1;cnt2<=10;cnt2++){ //전역변수
+		body.innerHTML += cnt2+", " // for블럭 안에서만 사용 가능
+		tot2 +=cnt2 // 지역변수를 전역변수에 할당.
+	}
+		body.innerHTML += "var으로 전역변수 호출 tot2:"+tot2+"<br>"
+		body.innerHTML += "var으로 지역변수 호출 cnt2:"+cnt2+"<br>"
+
+let likePt = 0;
+function likeHandler(){
+	likePt++;
+	 showLike()
+}
+function disLikeHandler(){
+	likePt--;
+	 showLike();
+}
+function showLike(){
+	var show = document.querySelector("#show");
+	show=""; // 초기화
+	for(let cnt=1;cnt<=likePt;cnt++){
+		show.innerText +="♥"
+	}
+}
+// <span onclick="likeHandler()">좋아요</span>
+//	<span onclick="disLikeHandler()">싫어요</span>
+// <h2 id="show"></h2>
+		
+console.log("포함하는 외부 범위에서 호출:"+var01)
+</script>
+</html>

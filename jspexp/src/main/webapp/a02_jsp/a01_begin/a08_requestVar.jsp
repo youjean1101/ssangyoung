@@ -55,12 +55,17 @@
   String stuName =request.getParameter("stuName");
   if(stuName==null) stuName="없음";
   String kor =request.getParameter("kor");
-  if(kor==null) kor="0";
+  if(kor==null || kor.equals("")) kor="0";
   String eng =request.getParameter("eng");
-  if(eng==null) eng="0";
+  if(eng==null || eng.equals("")) eng="0";
   String math =request.getParameter("math");
-  if(math==null) math="0";
-  // 문자열 형식으로 된 숫자형 문자열을 숫자로 변환.. : Interger.parseInt("25")==>25
+  if(math==null || math.equals("")) math="0";
+// 문자열 형식으로 된 숫자형 문자열을 숫자로 변환.. : Interger.parseInt("25")==>25
+// 실수 Double.parseDouble("25.7")
+// 입력없이 submit을 누르면 넘어갈 때.
+// null이 아니고 ""으로 처리되기에 Integer.parseInt("")에러가 발생한다.
+// 자바는 NumberFormatException 발생해서 수행중단, js parseInt("") ==> NaN
+// ?math=&kor=
 	int korInt = Integer.parseInt(kor);
 	int engInt = Integer.parseInt(eng);
 	int mathInt = Integer.parseInt(math);

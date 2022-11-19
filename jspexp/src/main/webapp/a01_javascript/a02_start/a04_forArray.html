@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+	<table id="tab01"></table>
+	
+	<div id="show"></div>
+</body>
+<script>
+/*
+# for(단위데이터 of 배열)
+1. 배열의 단위데이터를 받아와서 처리하는 형식을 말한다.
+ */
+ let list = ["홍길동", "김길동", "신길동"]
+ //var body = document.body
+ //for(const name of list){
+ // body.innerHTML += "<h2>"+name+"</h2>"
+ // }
+ // ex) 위 형식의 for구문을 활용하여 table에 도서 3권을 
+ let booklist = ["채쌤의자바", "데이터베이스개론과 실습", "자료구조와함께배우는 알고리즘"]
+ var tab01 = document.querySelector("#tab01")
+ tab01.innerHTML = "<tr><th>도서명</th></tr>"
+ 
+ for(const bookname of booklist){
+ 	tab01.innerHTML += "<tr><td>"+bookname+"</td></tr>"
+  }
+ // ex) body에 <div id="show"></div> 선언
+ //		배열로 과일명 3개를 선언하고 h2 과일명 ==> 3개를 출력하세요.
+ let fruitlist = ["사과","딸기","바나나"]
+ var show = document.querySelector("#show")
+ show.innerHTML = "과일명 :"
+ for(const fruitname of fruitlist){
+ 	show.innerHTML += fruitname+" "
+ }
+</script>
+</html>

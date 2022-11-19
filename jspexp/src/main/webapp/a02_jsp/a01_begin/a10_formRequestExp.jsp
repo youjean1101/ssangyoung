@@ -39,6 +39,10 @@
 		<input type="submit" value="영화예매">
 	</form>
 	<%
+	//	a10_formRequestExp.jsp
+	// 1. 초기로딩된 페이지와
+	// 2. 요청값을 전달 후 만들어진 페이지는 다른 모양으로 나온느 
+	// 		초기화면과 요청값을 받은 후 나오는 2개의 논리적 페이지를 포함하고 있다.
 	// ?mname=영화명&price=10000&cnt=5
 	String movieName = request.getParameter("movieName");
 	// 요청값이 없는 초기화면에는 출력내용이 보이지 않게 처리..
@@ -58,6 +62,25 @@
 		<tr><th>총관람비용</th><td><%=tot %></td></tr>
 	</table>
 	<%} %>
+<%--
+# 숫자형 데이터 요청값 처리
+1. default 변수 선언.
+	int num01=0;
+2. 요청값 설정
+	String num01S = request.getParameter("num01);
+3. 해당 요청데이터가 있을 때, 형변환 처리.
+	if(num01S!=null) num01 = Integer.parseInt(num01S);
+# 함수형 처리(기능메서드 선언 처리)
+int chInt(String req){
+	int num =0;
+	if(req!=null || !req.equals("")) num = Integer.parseInt(req);
+	return num;
+}
+
+int num01 = chInt(request.getParameter("num01");
+int num02 = chInt(request.getParameter("num02");
+	
+ --%>
 </body>
 <script type="text/javascript">
 /*

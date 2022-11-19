@@ -44,6 +44,38 @@ public class z01_memberInfoDao {
 		}
 		return mlist;
 	}
+	public List<Member100> getMemberinfoIndex(Member100 sch){
+		List<Member100> mlist = new ArrayList<Member100>();
+		String sql = "SELECT * FROM MEMBER100\r\n"
+				+ "WHERE name LIKE '%'|| ? ||'%'\r\n"
+				+ "AND auth LIKE '%'|| ? ||'%'";
+		
+		try {
+			con = DB.con();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, sch.getName());
+			pstmt.setString(2, sch.getAuth());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				mlist.add(new Member100(rs.getString("id"),
+									rs.getString("passwd"),
+									rs.getString("name"),
+									rs.getString("auth"),
+									rs.getInt("point"),
+									rs.getString("makedate")
+						));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("DB에러:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("일반 에러:"+e.getMessage());
+		}finally {
+			DB.close(rs, pstmt, con);
+		}
+		return mlist;
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -58,7 +90,15 @@ public class z01_memberInfoDao {
 			System.out.println(m.getId());
 			System.out.println(m.getPassword());
 		} 
-
+		for(Member100 m:dao1.getMemberinfoIndex(new Member100("길동","관리자"))) {
+			System.out.println(m.getId());
+			System.out.println(m.getPasswd());
+			System.out.println(m.getName());
+			System.out.println(m.getAuth());
+			System.out.println(m.getPoint());
+			System.out.println(m.getMakedate());
+		} 
+		
 	}
 
 }

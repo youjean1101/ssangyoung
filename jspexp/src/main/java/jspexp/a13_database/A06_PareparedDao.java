@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import jspexp.a13_database.vo.Dept;
+import jspexp.a13_database.vo.*;
 
 
 public class A06_PareparedDao {
@@ -172,6 +172,128 @@ public class A06_PareparedDao {
 		}
 		
 		return dlist;
+	}
+	 public List<Member> getMemberList(){
+	      List<Member> dlist = new ArrayList<Member>();
+	      String sql = "SELECT * FROM MEMBER";
+	      try {
+	         con = DB.con();
+	         pstmt = con.prepareStatement(sql);
+	         rs = pstmt.executeQuery(); // sql를 넣지 않는다.!!(주의)
+	         while(rs.next()) {
+	            dlist.add(new Member(
+	                              rs.getString("id"),
+	                              rs.getString("pass"),
+	                              rs.getString("name"),
+	                              rs.getString("auth"),
+	                              rs.getInt("point"),
+	                              rs.getString("address")                  
+	                               )
+	                   );
+	         }
+	         System.out.println("데이터 건수:"+dlist.size());
+	         
+	      } catch (SQLException e) {
+	         System.out.println("DB에러:"+e.getMessage());
+	      } catch(Exception e) {
+	         System.out.println("일반 에러:"+e.getMessage());
+	      }finally {
+	         DB.close(rs, pstmt, con);
+	      }
+	      
+	      return dlist;
+	   }
+	   // 조회 처리
+	   public List<Member> 
+	      getMemberList(Member sch){
+	      List<Member> dlist = new ArrayList<Member>();
+	      String sql = "SELECT * FROM MEMBER";
+	      try {
+	         con = DB.con();
+	         pstmt = con.prepareStatement(sql);
+	         rs = pstmt.executeQuery(); // sql를 넣지 않는다.!!(주의)
+	         while(rs.next()) {
+	            dlist.add(new Member(
+	                              rs.getString("id"),
+	                              rs.getString("pass"),
+	                              rs.getString("name"),
+	                              rs.getString("auth"),
+	                              rs.getInt("point"),
+	                              rs.getString("address")                  
+	                               )
+	                   );
+	         }
+	         System.out.println("데이터 건수:"+dlist.size());
+	         
+	      } catch (SQLException e) {
+	         System.out.println("DB에러:"+e.getMessage());
+	      } catch(Exception e) {
+	         System.out.println("일반 에러:"+e.getMessage());
+	      }finally {
+	         DB.close(rs, pstmt, con);
+	      }
+	      
+	      return dlist;
+	   }
+
+	// transaction 에러로 제대로 등록/수정/삭제되지 않을 때.
+	// 다시 eclipse 재부팅해서 DB도 확인하고, 다시 실행한다.
+	public void insertMember(Member ins) {
+		String sql = "insert into member values(?,?,?,?,?,?)";
+		try {
+			con = DB.con();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(sql);
+			// values('아이디', '패스워드', '이름', '권한', 1000, '주소')
+			pstmt.setString(1, ins.getId());
+			pstmt.setString(2,ins.getPasswd());
+			pstmt.setString(3,ins.getName());
+			pstmt.setString(4,ins.getAuth());
+			pstmt.setInt(5,ins.getPoint());
+			pstmt.setString(6,ins.getAddress());
+			System.out.println("등록건수:"+pstmt.executeUpdate());
+			con.commit();
+		} catch (SQLException e) {
+			System.out.println("DB에러:"+e.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				System.out.println("rollback 에러:"+e1.getMessage());
+			}
+		} catch(Exception e) {
+			System.out.println("일반 에러:"+e.getMessage());
+		}finally {
+			DB.close(rs, pstmt, con);
+		}
+	}
+	// transaction 에러로 제대로 등록/수정/삭제되지 않을 때.
+	// 다시 eclipse 재부팅해서 DB도 확인하고, 다시 실행한다.
+	public void insertSalgrade(Salgrade ins) {
+		String sql = "INSERT INTO salgrade values(?,?,?)";
+		try {
+			con = DB.con();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(sql);
+			// values('아이디', '패스워드', '이름', '권한', 1000, '주소')
+			pstmt.setString(1, ins.getGrade());
+			pstmt.setDouble(2,ins.getLosal());
+			pstmt.setDouble(3,ins.getHisal());
+			
+			System.out.println("등록건수:"+pstmt.executeUpdate());
+			con.commit();
+		} catch (SQLException e) {
+			System.out.println("DB에러:"+e.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				System.out.println("rollback 에러:"+e1.getMessage());
+			}
+		} catch(Exception e) {
+			System.out.println("일반 에러:"+e.getMessage());
+		}finally {
+			DB.close(rs, pstmt, con);
+		}
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

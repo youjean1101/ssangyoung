@@ -18,7 +18,13 @@ INSERT INTO MembersInfo values(4,'user','이길동','961021-2000000','부산 마
 INSERT INTO MembersInfo values(5,'user','마길동','970703-1000000','제주도 서귀포시','010-789-0000','goodman','5555');
 
 SELECT * FROM MEMBER100;
-
+SELECT * FROM MEMBER100
+WHERE name LIKE '%'||''||'%'
+AND auth LIKE '%'||''||'%';
+insert into member values('아이디', '패스워드', '이름', '권한', 1000, '주소');
+DELETE FROM MEMBER WHERE name='이름';
+insert into member values(?,?,?,?,?,?);
+SELECT * FROM MEMBER;
 /* 
 class MEMBER{
 	private String id;
@@ -28,3 +34,27 @@ class MEMBER{
 	private String makedate;
 	}
 */
+SELECT * FROM salgrade;
+SELECT * FROM salgrade
+WHERE grade BETWEEN 1 AND 5;
+
+INSERT INTO salgrade values('6','5000','10000');
+INSERT INTO salgrade values(?,?,?)
+/*
+ class Salgrade{
+private int grade
+private double losal
+private double hisal
+}
+*/
+CREATE TABLE member(
+	id varchar(30),
+	pass varchar(20),
+	name varchar(50),
+	auth varchar(20),
+	point NUMBER,
+	address varchar(200)
+);
+SELECT * FROM MEMBER;
+DROP TABLE MEMBER;
+	                        

@@ -55,8 +55,25 @@ INSERT INTO movie VALUES('movie'||movieCode_seq.nextval,'극장판 짱구는 못
 INSERT INTO movie VALUES('movie'||movieCode_seq.nextval,'압꾸정', '임진순', '마동석, 정경호, 오나라, 최병모', '코미디', '2022-11-30', '2023-02-28',null, 0);
 delete from movie where moviecode='movie14';
 --영화코드검색
+SELECT * FROM movie ORDER BY moviecode;
 SELECT * FROM movie
 WHERE moviecode='movie0';
+
+SELECT * FROM (
+SELECT * FROM movie
+ORDER BY resercnt DESC)
+WHERE rownum<=5;
+
+SELECT * FROM (
+SELECT * FROM bookuser
+WHERE overduecnt < 1
+AND div = 'user'
+ORDER BY rentalcnt DESC)
+WHERE rownum<=3;
+
+UPDATE movie 
+SET resercnt = '13'
+WHERE moviecode='movie5'; -- 예매갯수
 
 UPDATE movie 
 SET status = '상영중'
@@ -102,8 +119,9 @@ WHERE director LIKE '%'||'임진순'||'%';
 SELECT * FROM movie 
 WHERE actor LIKE '%'||'짱구'||'%';
 --장르검색
-SELECT * FROM movie
-WHERE genre LIKE '%'||'범죄'||'%';
+SELECT * FROM movie 
+WHERE genre LIKE '%'||'액션'||'%'
+ORDER BY moviecode;
 --상영중인 영화검색
 SELECT * FROM movie;
 WHERE status='상영종료';
@@ -166,3 +184,18 @@ INSERT INTO cgvUser VALUES('user'||userCode_seq.nextval, '관리자', '홍길동
 INSERT INTO cgvUser VALUES('user'||userCode_seq.nextval, '사용자', '김길동', 'goodman', '7777', '010-0000-0001', '남', 26,0);
 INSERT INTO cgvUser VALUES('user'||userCode_seq.nextval, '사용자', '이길동', 'higirl', '1111', '010-0000-0002', '여', 25,0);
 INSERT INTO cgvUser VALUES('user'||userCode_seq.nextval, '사용자', '신길동', 'goodgirl', '2222', '010-0000-0003', '여', 28,0);
+
+INSERT INTO cgvUser VALUES('user'||userCode_seq.nextval, '사용자', '신길동', 'goodgirl', '2222', '010-0000-0003', '여', 28,0);
+
+/*
+private String usercode;
+private String div;
+private String name;
+private String id;
+private String password;
+private String phonenum;
+private String gender;
+private int age;
+private double point;
+ */
+

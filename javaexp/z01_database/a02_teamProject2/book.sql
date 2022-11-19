@@ -12,7 +12,7 @@ CREATE TABLE bookUser(
 );
 SELECT * FROM bookuser WHERE rrn = '990101-1000000';
 
-SELECT * FROM bookuser
+SELECT * FROM bookuser;
 WHERE uname = '김길동'
 AND phone_number = '010-123-0000';
 

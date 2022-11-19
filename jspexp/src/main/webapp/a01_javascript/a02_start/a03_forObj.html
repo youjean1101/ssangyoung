@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+</style>
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+
+</body>
+<script>
+/*
+# json 객체(***)
+1. {속성:속성값,...}
+# 함수모양의 객체
+function Person(name, age, loc){
+	this.name = name
+	this.age = age
+	this.loc = loc
+}
+var p01 = new Person("홍길동",25,"서울");
+# 클래스모양 객체
+class Person{}
+
+# for in 구문의 객체 사용
+	객체 안에 속성의 갯수와 상관없이 반복문을 통해서 속석을 뽑아주는 역할을 한다.
+1. 형식
+	for(var prop in 객체){
+		prop : 객체의 속성
+		객체[prop] : 객체의 속성값
+		ex) p01['name'] ==> "홍길동"
+			p01.name ==> "홍길동"
+	}
+*/
+var p01 = {name:"홍길동", age:25, loc:"서울"}
+//	p01.name, p01['name']
+var body = document.body
+for(let prop in p01){
+	 body.innerHTML+=prop+":"+p01[prop]+"<br>"
+}
+// ex) 물건정보를 json형식으로 선언하고 for문을 통해서 출력하세요.
+var product = {pname:"바나나", price:6000, cnt:3}
+for(let pro in product){
+	body.innerHTML+= pro+":"+product[pro]+"<br>"
+}
+
+</script>
+</html>
