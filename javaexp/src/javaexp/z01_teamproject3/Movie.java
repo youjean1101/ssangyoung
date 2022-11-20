@@ -568,7 +568,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 //---------------------------------------------영화정보 Main()-----------------------------------------------------
 	//public static void main(String[] args) {
 		// TODO Auto-generated method stub
-	public void movieInfo(String sAuthMenu) {
+	public void movieInfo(String sAuthMenu, String id) {
 		boolean managerAndUserWhile = true;
 		while(managerAndUserWhile) {
 			//System.out.println("☞ 관리자/사용자 중 무엇입니까?");
@@ -576,8 +576,9 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 			//String auth = sc.nextLine();
 			boolean bManagerWhile = true;
 			boolean bUserWhile = true;
-			Movie dao = new Movie();
-			dao.movieStateUpdate(); //영화 상영상태 자동등록
+			Movie moviedao = new Movie();
+			MovieReview movieReviewdao = new MovieReview();
+			moviedao.movieStateUpdate(); //영화 상영상태 자동등록
 	
 			if (sAuthMenu.equals("관리자")) {
 	
@@ -609,7 +610,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 								String sStartDate = sc.nextLine();
 								System.out.print("☞ 상영종료날짜(YYYYMMDD): ");
 								String sEndDate = sc.nextLine();
-								dao.movieInfoInsert(
+								moviedao.movieInfoInsert(
 								new MovieVo(sMovieName, sDirector, sActors, sGenre, sStartDate, sEndDate));
 							
 								break;
@@ -624,11 +625,11 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 						break;
 	
 					case 2:
-						dao.movieInfoAll();
+						moviedao.movieInfoAll();
 						System.out.println("☞ 영화정보를 수정할 영화코드를 입력해주세요");
 						String sUpdateMovieChoice = sc.nextLine();
 						
-						if(dao.IsmovieSelect(sUpdateMovieChoice)== true){
+						if(moviedao.IsmovieSelect(sUpdateMovieChoice)== true){
 							System.out.println("☞ 해당영화의 무슨속성을 수정하시겠습니까?");
 							System.out.println("1:영화제목");
 							System.out.println("2:감독");
@@ -646,49 +647,49 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 									System.out.print("☞ 수정하실 제목명: ");
 									String updateTitle= sc.nextLine();
 									updateMovie.setsTitle(updateTitle);
-									dao.movieInfoUpdate(sUpdateMovieChoice,"제목", updateMovie);
+									moviedao.movieInfoUpdate(sUpdateMovieChoice,"제목", updateMovie);
 									break;
 									
 								case 2:
 									System.out.print("☞ 수정하실 감독: ");
 									String updateDirector= sc.nextLine();
 									updateMovie.setsDirector(updateDirector);
-									dao.movieInfoUpdate(sUpdateMovieChoice,"감독", updateMovie);
+									moviedao.movieInfoUpdate(sUpdateMovieChoice,"감독", updateMovie);
 									break;
 									
 								case 3:
 									System.out.print("☞ 수정하실 배우: ");
 									String updateActor= sc.nextLine();
 									updateMovie.setsActor(updateActor);
-									dao.movieInfoUpdate(sUpdateMovieChoice,"배우", updateMovie);
+									moviedao.movieInfoUpdate(sUpdateMovieChoice,"배우", updateMovie);
 									break;
 									
 								case 4:
 									System.out.print("☞ 수정하실 장르: ");
 									String updateGenre= sc.nextLine();
 									updateMovie.setsGenre(updateGenre);
-									dao.movieInfoUpdate(sUpdateMovieChoice,"장르", updateMovie);
+									moviedao.movieInfoUpdate(sUpdateMovieChoice,"장르", updateMovie);
 									break;
 									
 								case 5:
 									System.out.print("☞ 수정하실 상영시작날짜(YYYYMMDD): ");
 									String updateStartdate= sc.nextLine();
 									updateMovie.setsStartdate(updateStartdate);
-									dao.movieInfoUpdate(sUpdateMovieChoice,"상영시작날짜", updateMovie);
+									moviedao.movieInfoUpdate(sUpdateMovieChoice,"상영시작날짜", updateMovie);
 									break;
 									
 								case 6:
 									System.out.print("☞ 수정하실 상영종료날짜(YYYYMMDD) ");
 									String updateEnddate= sc.nextLine();
 									updateMovie.setsEnddate(updateEnddate);
-									dao.movieInfoUpdate(sUpdateMovieChoice,"상영종료날짜", updateMovie);
+									moviedao.movieInfoUpdate(sUpdateMovieChoice,"상영종료날짜", updateMovie);
 									break;
 									
 								default:
 									System.out.println("[안내메시지]보기에 있는 메뉴를 선택해주세요.");
 									break;
 							}
-							dao.movieStateUpdate(); //영화 상영상태 자동등록
+							moviedao.movieStateUpdate(); //영화 상영상태 자동등록
 							
 						}else {
 							System.out.println("[안내메시지]입력한 영화코드가 없습니다. 정확한 영화코드를 입력해주시기 바랍니다.");
@@ -697,18 +698,18 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 						break;
 	
 					case 3:
-						dao.movieInfoAll();
+						moviedao.movieInfoAll();
 						System.out.println("☞ 삭제하실 영화코드를 입력해주세요.");
 						String sRemoveMovieCode = sc.nextLine();
-						if(dao.IsmovieSelect(sRemoveMovieCode)== true){
-							dao.movieInfoView(new MovieVo(sRemoveMovieCode));
+						if(moviedao.IsmovieSelect(sRemoveMovieCode)== true){
+							moviedao.movieInfoView(new MovieVo(sRemoveMovieCode));
 		
 							while (true) {
 								System.out.println("☞ 해당 영화를 정말 삭제하시겠습니까?(Y/N)");
 								String sMovieRemoveConfirm = sc.nextLine();
 		
 								if (sMovieRemoveConfirm.toUpperCase().equals("Y")) {
-									dao.movieInfoDelete(new MovieVo(sRemoveMovieCode));
+									moviedao.movieInfoDelete(new MovieVo(sRemoveMovieCode));
 									break;
 								} else if (sMovieRemoveConfirm.toUpperCase().equals("N")) {
 									break;
@@ -733,7 +734,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 							sc.nextLine();
 							switch(sAllandIndexChoice) {
 								case 1 :
-									dao.movieInfoAll();
+									moviedao.movieInfoAll();
 									allAndIndexWhile = false;
 									break;
 										
@@ -754,48 +755,48 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 											case 1:
 												System.out.print("☞ 검색할 영화명:");
 												String sIndexMoviename = sc.nextLine();
-												dao.movieInfoIndexView("제목", sIndexMoviename);
+												moviedao.movieInfoIndexView("제목", sIndexMoviename);
 												indexColumnWhile = false;
 												break;
 																						
 											case 2:
 												System.out.print("☞ 검색할 감독:");
 												String sIndexMovieDirector = sc.nextLine();
-												dao.movieInfoIndexView("감독", sIndexMovieDirector);
+												moviedao.movieInfoIndexView("감독", sIndexMovieDirector);
 												indexColumnWhile = false;
 												break;
 												
 											case 3:
 												System.out.print("☞ 검색할 배우:");
 												String sIndexMovieActor = sc.nextLine();
-												dao.movieInfoIndexView("배우", sIndexMovieActor);
+												moviedao.movieInfoIndexView("배우", sIndexMovieActor);
 												indexColumnWhile = false;
 												break;
 												
 											case 4:
 												System.out.print("☞ 검색할 장르:");
 												String sIndexMovieGerne = sc.nextLine();
-												dao.movieInfoIndexView("장르", sIndexMovieGerne);
+												moviedao.movieInfoIndexView("장르", sIndexMovieGerne);
 												indexColumnWhile = false;
 												break;
 												
 											case 5:
-												dao.movieInfoStateView("상영중");
+												moviedao.movieInfoStateView("상영중");
 												indexColumnWhile = false;
 												break;
 												
 											case 6:
-												dao.movieInfoStateView("상영종료");
+												moviedao.movieInfoStateView("상영종료");
 												indexColumnWhile = false;
 												break;
 												
 											case 7:
-												dao.movieInfoStateView("개봉예정");
+												moviedao.movieInfoStateView("개봉예정");
 												indexColumnWhile = false;
 												break;
 												
 											default :
-												System.out.println("[안내메시지]보기에 있는 숫자를 입력해주세요.");
+												System.out.println("[안내메시지]보기에 있는 숫자를 선택해주세요.");
 												indexColumnWhile = true;
 												break;
 										}
@@ -804,7 +805,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 									break;
 										
 								default : 
-									System.out.println("[안내메시지]보기에 있는 숫자를 입력해주세요.");
+									System.out.println("[안내메시지]보기에 있는 숫자를 선택해주세요.");
 									allAndIndexWhile = true;
 									break;
 							}
@@ -816,7 +817,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 						break;
 	
 					default:
-						System.out.println("[안내메시지]보기에 있는 메뉴를 선택해주세요.");
+						System.out.println("[안내메시지]보기에 있는 숫자를 선택해주세요.");
 						break;
 					}
 				}
@@ -836,7 +837,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 	
 					switch (iMovieUserMenu) {
 						case 1:
-							dao.movieInfoTopView();
+							moviedao.movieInfoTopView();
 							break;
 		
 						case 2:
@@ -856,33 +857,33 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 									case 1:
 										System.out.print("☞ 검색할 영화명:");
 										String sIndexMoviename = sc.nextLine();
-										dao.movieInfoIndexView("제목", sIndexMoviename);
+										moviedao.movieInfoIndexView("제목", sIndexMoviename);
 										movieIndexColumnChoice = false;
 										break;
 																				
 									case 2:
 										System.out.print("☞ 검색할 감독:");
 										String sIndexMovieDirector = sc.nextLine();
-										dao.movieInfoIndexView("감독", sIndexMovieDirector);
+										moviedao.movieInfoIndexView("감독", sIndexMovieDirector);
 										movieIndexColumnChoice = false;
 										break;
 										
 									case 3:
 										System.out.print("☞ 검색할 배우:");
 										String sIndexMovieActor = sc.nextLine();
-										dao.movieInfoIndexView("배우", sIndexMovieActor);
+										moviedao.movieInfoIndexView("배우", sIndexMovieActor);
 										movieIndexColumnChoice = false;
 										break;
 										
 									case 4:
 										System.out.print("☞ 검색할 장르:");
 										String sIndexMovieGerne = sc.nextLine();
-										dao.movieInfoIndexView("장르", sIndexMovieGerne);
+										moviedao.movieInfoIndexView("장르", sIndexMovieGerne);
 										movieIndexColumnChoice = false;
 										break;
 									
 									case 5: 
-										dao.movieInfoAll();
+										moviedao.movieInfoAll();
 										movieIndexColumnChoice = false;
 										break;
 										
@@ -891,25 +892,32 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 										break;
 									
 									default : 
-										System.out.println("[안내메시지]보기에 있는 메뉴를 선택해주세요.");
+										System.out.println("[안내메시지]보기에 있는 숫자를 선택해주세요.");
 										movieIndexColumnChoice = true;
 								}
 							}
 							break;		
 						case 3:
-							dao.movieInfoStateView("상영중");
+							moviedao.movieInfoStateView("상영중");
 							break;
 		
 						case 4:
-							dao.movieInfoStateView("개봉예정");
+							moviedao.movieInfoStateView("개봉예정");
 							break;
 		
 						case 5:
-							dao.movieInfoStateView("상영종료");
+							moviedao.movieInfoStateView("상영종료");
 							break;
 		
 						case 6:
-							System.out.println("영화리뷰조회");
+							movieReviewdao.movieNameSelView();
+							System.out.println("\n☞ 리뷰를 보실 영화명은 입력해주세요.");
+							String reviewIndexMovie = sc.nextLine();
+							movieReviewdao.reviewUserView(reviewIndexMovie);
+							if(movieReviewdao.IsreviewMovie(reviewIndexMovie)==false) {
+								System.out.println("[안내메시지] 입력하신 영화는 리뷰는 존재하지 않습니다.\n");
+							}
+							System.out.println("[안내메시지] 더 자세한 리뷰를 보고 싶으시면, 리뷰메뉴를 이용 부탁드립니다.");							
 							break;
 		
 						case 7:
@@ -917,7 +925,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 							break;
 		
 						default:
-							System.out.println("[안내메시지]보기에 있는 메뉴를 선택해주세요.");
+							System.out.println("[안내메시지]보기에 있는 숫자를 선택해주세요.");
 							break;
 					}
 				}

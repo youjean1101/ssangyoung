@@ -31,7 +31,7 @@ public class MovieHome {
 			pstmt.setString(5, useradd.getsPhonenum());
 			pstmt.setString(6, useradd.getsGender());
 			pstmt.setInt(7, useradd.getiAge());
-			System.out.println("[안내메시지] 회원가입이 완료되었습니다. 저희 CGV를 이용해주셔서 감사합니다♡\n");
+			System.out.println("[안내메시지] 회원가입이 완료되었습니다. 저희 CGV를 이용해주셔서 감사합니다♥\n");
 
 			rs = pstmt.executeQuery();
 			con.commit();
@@ -43,6 +43,42 @@ public class MovieHome {
 			} catch (SQLException e1) {
 				System.out.println("rollback에러:" + e1.getMessage());
 			}
+		} catch (Exception e) {
+			System.out.println("기타 예외:" + e.getMessage());
+		} finally {
+			DB.close(rs, pstmt, con);
+		}
+	}
+	
+//------------------------------------------------회원삭제 기능메서드------------------------------------------------
+	public void cgvMemberRemove(CGVuserInfoVo useradd) {
+		String sql = "DELETE FROM cgvUser WHERE id= ? AND password= ?";
+		try {
+			con = DB.con();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, useradd.getsId());
+			pstmt.setString(2, useradd.getsName());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				int getRowcnt = rs.getRow();
+				if(getRowcnt==1) {
+					System.out.println("[안내메시지] 회원 삭제가 완료되었습니다. 그 그동안 저희 CGV를 이용해주셔서 감사합니다♡\n");
+				}
+			}
+			
+			con.commit();
+			
+		} catch (SQLException e) {
+			System.out.println("DB 처리:" + e.getMessage());
+			
+			try { con.rollback(); } 
+			catch (SQLException e1) {
+				System.out.println("rollback에러:" + e1.getMessage()); 
+			}
+			
 		} catch (Exception e) {
 			System.out.println("기타 예외:" + e.getMessage());
 		} finally {
@@ -150,6 +186,7 @@ public class MovieHome {
 		Scanner sc = new Scanner(System.in);
 		MovieHome homedao = new MovieHome();
 		Movie movieInfodao = new Movie(); 
+		MovieReview movieReviewdao = new MovieReview();
 		
 		System.out.println("☆★☆★☆★저희 CGV에 오신걸 환영합니다.★☆★☆★☆");
 		System.out.println("");
@@ -235,32 +272,197 @@ public class MovieHome {
 				System.out.print("☞ 패스워드:");
 				String sLoginPass = sc.nextLine();
 				String auth = null;
+				String loginID = null;
 				
 				if(homedao.isIdConfirmSel("PASSWORD", new CGVuserInfoVo(sLoginID, sLoginPass))==true) { //회원정보테이블에 계정이 있으면, 
 					
 					List<CGVuserInfoVo> userlist = homedao.login(new CGVuserInfoVo(sLoginID, sLoginPass));
 					for(CGVuserInfoVo userinfo:userlist) {
 						auth = userinfo.getsDiv();
-						System.out.println("[안내메시지]"+userinfo.getsDiv()+"인 "+userinfo.getsId()+" 님이 정상적으로 로그인 되었습니다.\n");
+						loginID = userinfo.getsId();
+						System.out.println("[안내메시지]\""+userinfo.getsDiv()+"\"인 "+userinfo.getsId()+" 님이 정상적으로 로그인 되었습니다.\n");
 					}
 					
 					if(auth.equals("관리자")) {
-						System.out.println("☞ 관리자메뉴 생성");
-						System.out.println("1:영화정보");
-						System.out.println("2:영화리뷰");
-						System.out.println("3:로그아웃");
-						//메뉴생성
-						movieInfodao.movieInfo(auth);
-						homeMenuWhile = true;
+						boolean managerMenuWhile = true;
+						while(managerMenuWhile) {
+							System.out.println("☞ 실행하실 메뉴를 선택해주세요.(관리자) ");
+							System.out.println("1:영화정보");
+							System.out.println("2:영화리뷰");
+							System.out.println("3:회원정보");
+							System.out.println("4:로그아웃");
+							int iMgrMenuChoice = sc.nextInt();
+							sc.nextLine();
+							switch(iMgrMenuChoice) {
+								case 1 :
+									movieInfodao.movieInfo(auth,loginID);
+									managerMenuWhile = true;
+									homeMenuWhile = false;
+									break;
+									
+								case 2 :
+									movieReviewdao.movieReview(auth,loginID);
+									managerMenuWhile = true;
+									homeMenuWhile = false;
+									break;
+									
+								case 3 :
+									System.out.println("☞ 메뉴를 선택해주세요.");
+									System.out.println("1:회원조회");
+									System.out.println("2:회원수정");
+									System.out.println("3:회원삭제");
+									System.out.println("4:뒤로가기");
+									int memberMenuChoice = sc.nextInt();
+									sc.nextLine();
+									switch(memberMenuChoice) {
+										case 1:
+											for(CGVuserInfoVo userinfo:userlist) {
+												System.out.println("▼ My 회원정보 ▼");
+												System.out.println("▶ 회원권한: "+userinfo.getsDiv());
+												System.out.println("▶ ID: "+userinfo.getsId());
+												System.out.println("▶ Password: "+userinfo.getsPassword());
+												System.out.println("▶ 이름: "+userinfo.getsName());
+												System.out.println("▶ 휴대폰번호: "+userinfo.getsPhonenum());
+												System.out.println("▶ 성별: "+userinfo.getsGender());
+												System.out.println("▶ 나이: "+userinfo.getiAge() +"세");
+												System.out.println("▶ 포인트: "+userinfo.getdPoint()+" P\n");
+											}
+											break;
+											
+										case 2:
+											
+											break;
+											
+										case 3:
+											while(true) {
+												System.out.println("☞ 정말 회원탈퇴를 하시겠습니까?(Y/N)");
+												String memberRemove = sc.nextLine();
+												
+												if(memberRemove.toUpperCase().equals("Y")) {
+													homedao.cgvMemberRemove(new CGVuserInfoVo(sLoginID, sLoginPass));
+													break;
+												}else if(memberRemove.toUpperCase().equals("N")) {
+													break;
+												}else {
+													System.out.println("[안내메시지] Y/N으로 입력해주세요.");
+												}
+											}
+											break;
+											
+										case 4:
+											
+											break;
+										
+										default:
+											System.out.println("[안내메시지]보기에 있는 숫자를 선택해주세요.");
+											break;
+									}
+									managerMenuWhile = true;
+									homeMenuWhile = false;
+									break;
+									
+								case 4 :
+									managerMenuWhile = false;
+									homeMenuWhile = true;
+									break;
+								
+								default : 
+									System.out.println("[안내메시지]보기에 있는 숫자를 선택해주세요.");
+									break;
+							}
+						}
 						
 					} else if(auth.equals("사용자")) {
-						System.out.println("☞ 사용자메뉴 생성");
-						System.out.println("1:영화정보");
-						System.out.println("2:영화리뷰");
-						System.out.println("3:로그아웃");
-						//메뉴생성
-						movieInfodao.movieInfo(auth);
-						homeMenuWhile = true;
+						boolean userMenuWhile = true;
+						while(userMenuWhile) {
+							System.out.println("☞ 실행하실 메뉴를 선택해주세요.(사용자)");
+							System.out.println("1:영화정보");
+							System.out.println("2:영화리뷰");
+							System.out.println("3:회원정보");
+							System.out.println("4:로그아웃");
+							int iUserMenuChoice = sc.nextInt();
+							sc.nextLine();
+							switch(iUserMenuChoice) {
+								case 1 :
+									movieInfodao.movieInfo(auth, loginID);
+									userMenuWhile = true;
+									homeMenuWhile = false;
+									break;
+									
+								case 2 :
+									movieReviewdao.movieReview(auth,loginID);
+									userMenuWhile = true;
+									homeMenuWhile = false;
+									break;
+								
+								case 3 :
+									System.out.println("☞ 메뉴를 선택해주세요.");
+									System.out.println("1:회원조회");
+									System.out.println("2:회원수정");
+									System.out.println("3:회원삭제");
+									System.out.println("4:뒤로가기");
+									int memberMenuChoice = sc.nextInt();
+									sc.nextLine();
+									switch(memberMenuChoice) {
+										case 1:
+											for(CGVuserInfoVo userinfo:userlist) {
+												System.out.println("▼ My 회원정보 ▼");
+												System.out.println("▶ 회원권한: "+userinfo.getsDiv());
+												System.out.println("▶ ID: "+userinfo.getsId());
+												System.out.println("▶ Password: "+userinfo.getsPassword());
+												System.out.println("▶ 이름: "+userinfo.getsName());
+												System.out.println("▶ 휴대폰번호: "+userinfo.getsPhonenum());
+												System.out.println("▶ 성별: "+userinfo.getsGender());
+												System.out.println("▶ 나이: "+userinfo.getiAge() +"세");
+												System.out.println("▶ 포인트: "+userinfo.getdPoint()+" P\n");
+											}
+											break;
+											
+										case 2:
+											
+											break;
+											
+										case 3:
+											while(true) {
+												System.out.println("☞ 정말 회원탈퇴를 하시겠습니까?(Y/N)");
+												String memberRemove = sc.nextLine();
+												
+												if(memberRemove.toUpperCase().equals("Y")) {
+													for(CGVuserInfoVo userinfo:userlist) {
+														movieReviewdao.reviewRemove(userinfo.getsUsercode());
+													}
+													homedao.cgvMemberRemove(new CGVuserInfoVo(sLoginID, sLoginPass));
+													break;
+												}else if(memberRemove.toUpperCase().equals("N")) {
+													break;
+												}else {
+													System.out.println("[안내메시지] Y/N으로 입력해주세요.");
+												}
+											}
+											break;
+											
+										case 4:
+											
+											break;
+										
+										default:
+											System.out.println("[안내메시지]보기에 있는 숫자를 선택해주세요.");
+											break;
+									}
+									userMenuWhile = true;
+									homeMenuWhile = false;
+									break;
+									
+								case 4 :
+									userMenuWhile = false;
+									homeMenuWhile = true;
+									break;
+									
+								default : 
+									System.out.println("[안내메시지]보기에 있는 숫자를 선택해주세요.");
+									break;
+							}
+						}
 						
 					} else {
 						System.out.println("[안내메시지] 관리자/사용자 error!"); //의미없음

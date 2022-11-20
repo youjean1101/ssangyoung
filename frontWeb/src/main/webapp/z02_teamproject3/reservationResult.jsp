@@ -40,7 +40,7 @@
 	<div class="reservationBox">
 		<h4 id="movieInfo">영화 정보:${param.moviename}<span>${param.subtitle}</span>(${param.bim},${param.ageLimit})</h4>
 		<h4 id="reservationInfo">예매정보: ${param.age} <span>${param.peopleCnt}</span>명<br>
-			좌석번호: <span>${param.seatno}</span>,<span>${param.seatno}</span>,<span>${param.seatno}</span>,<span>${param.seatno}</span>,<span>${param.seatno}</span>,<span>${param.seatno}</span>,<span>${param.seatno}</span>,<span>${param.seatno}</span></h4>
+			좌석번호: <span>${paramValues.seatno[0]}</span>,<span>${paramValues.seatno[1]}</span>,<span>${paramValues.seatno[2]}</span>,<span>${param.seatno}</span>,<span>${param.seatno}</span>,<span>${param.seatno}</span>,<span>${param.seatno}</span>,<span>${param.seatno}</span></h4>
 	</div>
 	
 </body>

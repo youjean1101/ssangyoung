@@ -20,8 +20,8 @@ CREATE SEQUENCE reviewCode_seq
 DROP SEQUENCE reviewCode_seq;
 SELECT * FROM cgvuser;
 SELECT * FROM review;
-INSERT INTO review VALUES('review'||reviewCode_seq.nextval,'user5', '강추합니다!!', '★★★', 'good', 'movie4');
-INSERT INTO review VALUES('review'||reviewCode_seq.nextval,'user3', '나만 당할수 없다..니가가라 하와이', '★', 'bad', 'movie4');
+INSERT INTO review VALUES('review'||reviewCode_seq.nextval,'user5', '강추합니다!!', '★★★', 'good', 'movie5');
+INSERT INTO review VALUES('review'||reviewCode_seq.nextval,'user3', '나만 당할수 없다..니가가라 하와이', '★', 'bad', 'movie5');
 INSERT INTO review VALUES('review'||reviewCode_seq.nextval,'user4', '와 또보고싶어요','★★★★★', 'good', 'movie3');
 
 SELECT * FROM review
@@ -30,8 +30,17 @@ WHERE div='good';
 SELECT * FROM review
 WHERE div='bad';
 
-SELECT * FROM review;
+UPDATE review
+SET content = '재밌다완전재밌다'
+where usercode = 'user4'
+AND moviecode='movie3';
 
+SELECT * FROM review;
+SELECT * FROM cgvuser;
+select * FROM movie;
+
+DELETE FROM review
+WHERE usercode='user4';
 
 /*
  private String sReviewCode;
@@ -57,6 +66,39 @@ CREATE TABLE movie(
 SELECT * FROM movie;
 DROP TABLE movie;
 
+SELECT * FROM movie;
+SELECT * FROM review;
+SELECT * FROM cgvUSER;
+
+SELECT substr(u.id,1,4)||'****' id, m.title, r.content, r.starrating, r.div
+FROM movie m,review r, cgvuser u
+WHERE m.moviecode = r.moviecode
+AND r.usercode= u.usercode
+AND r.div='good';
+
+SELECT u.id, m.title, r.content, r.starrating, r.div
+FROM movie m,review r, cgvuser u
+WHERE m.moviecode = r.moviecode
+AND r.usercode= u.usercode
+AND r.div='good';
+
+SELECT substr(u.id,1,4)||'****' id, m.title, r.content, r.starrating, r.div
+FROM movie m,review r, cgvuser u
+WHERE m.moviecode = r.moviecode
+AND r.usercode= u.usercode
+AND m.title LIKE '%'||'압꾸정'||'%';
+
+SELECT u.id, m.title, r.content, r.starrating, r.div
+FROM movie m,review r, cgvuser u
+WHERE m.moviecode = r.moviecode
+AND r.usercode= u.usercode
+AND m.title LIKE '%'||'압꾸정'||'%';
+
+SELECT u.id, m.title, r.content, r.starrating, r.div
+FROM movie m,review r, cgvuser u
+WHERE m.moviecode = r.moviecode
+AND r.usercode= u.usercode;
+AND id = 'yujin';
 
 CREATE SEQUENCE movieCode_seq
 		increment by 1
@@ -200,7 +242,7 @@ CREATE SEQUENCE userCode_seq
 	
 DROP SEQUENCE userCode_seq;
 SELECT * FROM cgvUser;
-DELETE FROM cgvUser WHERE usercode='user2';
+DELETE FROM cgvUser WHERE id='goodman' AND password='7777';
 INSERT INTO cgvUser VALUES('user'||userCode_seq.nextval, '관리자', '홍길동', 'himan', '1234', '010-0000-0000', '남', 24,0);
 INSERT INTO cgvUser VALUES('user'||userCode_seq.nextval, '사용자', '김길동', 'goodman', '7777', '010-0000-0001', '남', 26,0);
 INSERT INTO cgvUser VALUES('user'||userCode_seq.nextval, '사용자', '이길동', 'higirl', '1111', '010-0000-0002', '여', 25,0);

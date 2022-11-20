@@ -1,4 +1,4 @@
-CREATE TABLE bookUser(
+SELECT * FROM movie;SELECT * FROM movie;SELECT * FROM movie;SELECT * FROM movie;SELECT * FROM movie;SELECT * FROM movie;CREATE TABLE bookUser(
 	userno varchar2(10) PRIMARY key,
 	div varchar2(20) CONSTRAINT bookUser_auth_ck check(div IN('manager','user')),
 	uname varchar2(20) not null,
