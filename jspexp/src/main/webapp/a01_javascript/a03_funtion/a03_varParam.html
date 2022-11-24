@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+
+</head>
+<body>
+	<h2 onclick="call(1000)">가변형 매개변수</h2>
+	<h2 onclick="call(1000,2000)">가변형 매개변수</h2>
+	<h2 onclick="call(1000,2000,3000)">가변형 매개변수</h2>
+	<h2 onclick="call('사과','바나나','딸기')">가변형 매개변수</h2>
+	<div></div>
+
+
+</body>
+<script type="text/javascript">
+/*
+# 가변형 매개변수 처리
+1. arguments 내장 객체 활용
+	1) 형식
+	function 함수명(){
+		var args = arguments // 매개변수 객체 선언.
+		//
+	}
+	함수명()
+	함수명(2,3)
+	함수명("문자열1","문자열2","문자열")
+	함수명(숫자, "문자열1","문자열2","문자열")
+	2) 매개변수가 다르게 호출하더라도 argments에서 배열로 동적으로 받아서 처리할 수 있다.
+ */
+var body = document.querySelector("div")
+body.innerHTML=""
+function call(){
+		var show = ""
+		for(var idx in arguments){
+			show += arguments[idx]+","
+		}
+		body.innerHTML+=show+"<br>"
+}
+call(1) // arguments = [1]
+call(1,2) // arguments = [1,2]
+call('가','나','다') // arguments = ['가','나','다']
+
+// 
+</script>
+</html>

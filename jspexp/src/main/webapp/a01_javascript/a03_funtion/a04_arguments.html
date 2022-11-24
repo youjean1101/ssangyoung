@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+
+</head>
+<body>
+	<h2 onclick="buy()">아직구매안됨</h2>
+	<h2 onclick="buy('사과')">사과</h2>
+	<h2 onclick="buy('바나나',3000)">바나나 3000원</h2>
+	<h2 onclick="buy('오렌지',2000,4)">오렌지 2000원 4개</h2>
+	<p></p>
+
+</body>
+<script type="text/javascript">
+/*
+ex) buy(), buy('사과'), buy('바나나',3000)
+	buy('오렌지',2000,4)
+	와 같이 매개변수가 다른 함수를 호출하고, 이것을 arguments를 활용하여 하단에 출력처리하세요.
+ */
+var p = document.querySelector("p")
+function buy(){
+	if(arguments.length==0){
+		p.innerHTML="구매없음<br>"
+	}else{
+		var add = ""
+		for(var idx in arguments){
+			add += arguments[idx]+" "
+			}
+		p.innerHTML+=add+"<br>"
+	}
+}
+//buy()
+//buy('사과')
+//buy('바나나',3000)
+//buy('오렌지',2000,4)
+
+</script>
+</html>

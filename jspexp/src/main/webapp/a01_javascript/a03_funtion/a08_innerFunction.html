@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+# 내장 함수 처리..
+1. 프로그래밍에서 여러가지 기능을 처리하는 함수가 필요로 하는데,
+활용도가 높은 내용은 내장해서 지원함으로 효율적으로 기능 처리를 할 수 있게 한다.
+2. 내장 함수 활용
+	1) 기능 api 확인
+	2) 입력값 확인, 기능함수명, 리턴값 확인
+3. 여러가지 내장 함수.
+	1) isFinite(숫자형) : /0 처리시 발생하는 에러를 사전에 조건문이 막기 위해서 처리하는 함수..
+		0으로 나누었을 때, 자바의 경우 에러가 발생한다.
+		js에서는 함수를 처리할 수 있게 한다.
+		
+		
+ */
+</script>
+</head>
+<body>
+<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+/*
+
+ */
+ var div = document.querySelector("#container")
+ 
+ div.innerHTML=""+(1/0)+":"+isFinite(1/0)+":"+isFinite(1/1)+"<br>"
+ for(var cnt=-5;cnt<5;cnt++){
+	 var divCal = 10/cnt
+	 // isFinite(divCal)을 통해 Infinity가 나오지 않는 경우만 출력 처리한다.
+	 if(isFinite(divCal) ){
+		 div.innerHTML+=divCal+","
+	 }
+	 
+ }
+ // /0 으로 나누었을 Infinity 코드 발생
+ // 정상적인 값을 check해서 출력할 때, 활용한다.
+ // ex) parseInt(Math.random()*경우의수 + 시작수)
+ //		주사위 parseInt(Math.random()*6+1)
+ // 10회 주사위(랜덤1)를 던져 0,1,2 임의(랜덤2)로 나눈 데이터를 출력하고자 한다.
+ //	무한데이터가 나오지 않게 처리하고 그 결과값을 출력하세요.
+ div.innerHTML+= "<br>문제<br>";
+ for(var cnt=1;cnt<=10;cnt++){
+ 	var dice = parseInt(Math.random()*6+1);
+ 	var rCnt = parseInt(Math.random()*3);
+	var tot = dice/rCnt
+	if(!isFinite(tot)) tot=0; // 무한대가 되면 tot값을 0으로 처리
+ 	div.innerHTML+= cnt+") 주사위"+dice+", 임의수:"+rCnt+
+ 			", 연산결과"+tot+"<br>";
+ }
+ 
+
+</script>
+</html>

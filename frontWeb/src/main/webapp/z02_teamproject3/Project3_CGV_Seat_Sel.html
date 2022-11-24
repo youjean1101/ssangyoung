@@ -159,8 +159,9 @@
 		border-radius:5px;
 		font-family:"HY견고딕"; font-size:30px;
 		position:absolute;
-		bottom:3%;
-		left:40%;
+		bottom:20%;
+		left:30%;
+		margin :-150px 150px;
 	}
 	div p#screen{
 		width:630px;
@@ -266,11 +267,11 @@
 	<br>
 	<h3>예매>예매하기>좌석선택</h3>
 	<br>
-	<form method="post" action="reservationResult.jsp">
+	<form method="get" action="reservationResult.jsp">
 		<div class="movieInfoSeatBox">
 			<div class="movieinfoBox">
 				<h4>CGV 건대입구 | 3관 4층<br>
-					남은 좌석 <span>145</span>/149</h4>
+					남은 좌석 <span>146</span>/152</h4>
 				<h2>2022. 11. 13 (일)<br>
 					11:20 ~ 14:10</h2>
 			
@@ -301,10 +302,13 @@
 				
 				<table class="seat">
 					<tbody>
-					<tr><th>A</th><td onclick="chColor(this)" for="seatnoA1"><label>1<input class="seatselect" type="checkbox" name="seatno" id="seatnoA1" value="A1"/></label></td>
-								<td onclick="chColor(this)" for="seatnoA2"><label>2<input class="seatselect" type="checkbox" name="seatno" id="seatnoA2" value="A2"/></label></td>
-								<td onclick="chColor(this)" for="seatnoA3"><label>3<input class="seatselect" type="checkbox" name="seatno" id="seatnoA3" value="A3"/></label></td>
-								<td onclick="chColor(this)" for="seatnoA4"><label>4<input class="seatselect" type="checkbox" name="seatno" id="seatnoA4" value="A4"/></label></td>
+					<tr><th>A</th>
+						<td onclick="chColor(this)"><label>1
+							<input class="seatselect" type="checkbox" name="seatno" value="A1"/>
+							</label></td>
+								<td onclick="chColor(this)"><label>2<input class="seatselect" type="checkbox" name="seatno" value="A2"/></label></td>
+								<td onclick="chColor(this)"><label>3<input class="seatselect" type="checkbox" name="seatno" value="A3"/></label></td>
+								<td onclick="chColor(this)"><label>4<input class="seatselect" type="checkbox" name="seatno" value="A4"/></label></td>
 								<td class="noseat"></td>
 								<td id="disabled1" onclick="chColor(this)"><label>6<input class="seatselect" type="checkbox" name="seatno" value="A6"/></label></td>
 								<td id="disabled2" onclick="chColor(this)"><label>7<input class="seatselect" type="checkbox" name="seatno" value="A7"/></label></td>

@@ -15,6 +15,30 @@
 /*
  
 */
+function ckValid(){
+	var deptno = document.querySelector("[name=deptno]")
+	var deptnoV = deptno.value.trim();
+	var dname = document.querySelector("[name=dname]")
+	var dnameV = dname.value.trim();
+	var loc = document.querySelector("[name=loc]")
+	var locV = loc.value.trim();
+	if(deptnoV=="" || isNaN(deptnoV)){
+		alert("부서번호는 공백이 아니거나, 숫자형이어야 합니다.")
+		deptno.value=""; deptno.focus()
+		return;
+	}
+	if(dnameV==""){
+		alert("부서명는 공백이 아니어야 합니다.")
+		dname.focus()
+		return;
+	}
+	if(locV==""){
+		alert("부서 위치는 공백이 아니어야 합니다.")
+		loc.focus()
+		return;
+	}
+	document.querySelector("form").submit();
+}
 </script>
 
 </head>
@@ -26,6 +50,22 @@
 
 <h2>부서정보등록</h2>
 <%--
+1. 초기화면(페이지가 이동되었을 때)
+	a13_DeptInsertForm.jsp
+	요청값이 없음.
+	
+
+2. 입력값이 있는 화면(등록 처리시)
+	a13_DeptInsertForm.jsp?deptno=&dname=&loc=
+
+3. 위 두가지처리 화면을 구분하기 위해서 
+	String deptnoS = request.getParameter("deptno");
+	if(deptnoS==null){ // 초기 화면
+	
+	}else{ //입력버튼을 클릭한 화면
+	
+	}
+	
 # 
 alt+space+m
 화살표 방향키 (위로)
@@ -34,7 +74,8 @@ alt+space+m
 			부서번호 <input type="text" name="deptno"/>
 			부서명 <input type="text" name="dname"/>
 			부서위치 <input type="text" name="loc"/>
-			<input type="submit" value="등록" />
+			<input type="button" onclick="ckValid()" value="등록" />
+			<input type="submit" value="등록 submit" />
 	</form>
 	
 	
@@ -44,7 +85,17 @@ alt+space+m
 	// DB처리를 할 수 있게 된다.
 	String deptno = request.getParameter("deptno");
 	int deptnoInt = 0;
-	if(deptno!=null) deptnoInt = Integer.parseInt(deptno);
+	if(deptno!=null&& !deptno.equals("")) {
+			// check1 : depno.lenth());
+			System.out.println("문자열크기:"+deptno.length());
+		try{
+			// 부서번호:[이십오] ==>0
+			deptnoInt = Integer.parseInt(deptno);
+		} catch(Exception e){
+			// check2 : log(e.getMessage());
+			log(e.getMessage());
+		}
+	}
 	String dname = request.getParameter("dname"); if(dname==null) dname="";
 	String loc = request.getParameter("loc"); if(loc==null) loc="";
 	boolean isInsert = false;

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+# default 매개변수 : 매개변수가 없을 때, 초기화할 데이터를 설정.
+ */
+</script>
+</head>
+<body>
+	<div id="container" ></div>
+	<h1 onclick="member()">회원등록(기본)</h1>
+	<h1 onclick="member('yujin')">아이디</h1>
+	<h1 onclick="member('yujin','1234')">아이디/패스워드</h1>
+	<h1 onclick="member('yujin','1234','정유진')">아이디/패스워드/이름</h1>
+	<p></p>
+	<!-- 
+	ex) 회원 정보 등록 출력 처리를 가변 매개변수 함수 default 데이터 처리에 의해서 호출 및 수행하세요.
+		(h1 클릭이벤트로 처리, p에 해당 내용 출력)
+	regMem()
+	regMem(아이디)
+	regMem(아이디, 패스워드)
+	regMem(아이디, 패스워드, 이름)
+	 -->
+
+
+</body>
+<script type="text/javascript">
+/*
+# default 매개변수 처리
+1. 입력되지 않을 대, 물건명만, 물건명, 가격 등 매개변수에 따라서 
+	default가 설정이 필요한 경우가 있을 때, 가변적으로 처리하는 형식을 말한다.
+	
+
+ */
+var div = document.querySelector("#container")
+function test(name="없음",price=0,cnt=1){
+	div.innerHTML+="물건명:"+name+", 가격:"+price+", 갯수"+cnt+"<br>"
+}
+test()
+test("사과")
+test("바나나", 3000)
+test("오렌지", 2000, 3)
+
+var pObj = document.querySelector("p")
+function member(id="입력없음", password="입력없음",name="무명"){
+	pObj.innerHTML+="아이디: "+id+", 패스워드: "+password+", 이름: "+name+"<br>"
+}
+// 
+</script>
+</html>

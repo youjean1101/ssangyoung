@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+var buyList = "" // 전역변수 구매한 물건
+// 전역변수는 함수가 호출될 때 마다 함수에서 처리한 데이터를 
+// 누적하는 경우 많이 활용된다.
+function buy(obj){
+	buyList+=obj.innerText+" " // 전역변수에 할당 누적해서 처리한다.
+	// 이 내용은 아래와 같이 처리하면 초기화 된다.
+	// 지역변수는 함수에서 처리된 데이터를 누적처리하지 못한다.
+	let blist = obj.innerText+" "
+	var h3Obj = document.querySelector("h3")
+	h3Obj.innerHTML = "구매한 물건:" + buyList
+	var h4Obj = document.querySelector("h4")
+	h4Obj.innerHTML = "구매한 물건:" + blist
+}
+var menuList="";
+function lunchMenu(menu){
+	menuList += menu+" "
+	var pObj = document.querySelector("#menuname").innerHTML = "점심메뉴 선택:" + menuList
+}
+var mList="";
+var tot = 0;
+function chMenus(menu, price){
+	mList+=menu+" "
+	tot+=price
+	document.querySelector("#menuprice").innerText="총비용: "+tot+
+		",선택한 메뉴 :"+mList
+}
+// 1단계 3X3 테이블에 점심에 메뉴 9가지를 리스트하고, 클릭시 마다 하단 p에 출력이 되게하세요.
+// 2단계 3X3 테이블에 점심메뉴/가격 9가지를 리스트하고,
+// 	클릭시 마다 하단 p에 출력(메뉴와 합산 금액이 표시)되게 하세요.
+// 1단계가 끝나면 손들기
+</script>
+</head>
+<body>
+	<h2 onclick="buy(this)">사과</h2>
+	<h2 onclick="buy(this)">바나나</h2>
+	<h2 onclick="buy(this)">딸기</h2>
+	<h3></h3>
+	<h4></h4>
+	
+	<h2>메뉴</h2>
+	<table width="300" height="300">
+		<tr><td onclick="lunchMenu('돈까스')">돈까스</td><td onclick="lunchMenu('중국집')">중국집</td><td onclick="lunchMenu('순댓국')">순댓국</td></tr>
+		<tr><td onclick="lunchMenu('치킨')">치킨</td><td onclick="lunchMenu('피자')">피자</td><td onclick="lunchMenu('육회비빔밥')">육회비빔밥</td></tr>
+		<tr><td onclick="lunchMenu('제육볶음')">제육볶음</td><td onclick="lunchMenu('일본라멘')">일본라멘</td><td onclick="lunchMenu('해장국')">해장국</td></tr>
+	</table>
+	<p id="menuname"></p>
+	
+	<h2>메뉴</h2>
+	<table width="300" height="300">
+		<tr><td onclick="chMenus('돈까스',7000)">돈까스(7000)</td><td onclick="chMenus('중국집',8000)">중국집(8000)</td><td onclick="chMenus('순댓국',8000)">순댓국(8000)</td></tr>
+		<tr><td onclick="chMenus('치킨',30000)">치킨(30000)</td><td onclick="chMenus('피자',15000)">피자(15000)</td><td onclick="chMenus('육회비빔밥',10000)">육회비빔밥(10000)</td></tr>
+		<tr><td onclick="chMenus('제육볶음',6000)">제육볶음(6000)</td><td onclick="chMenus('일본라멘',9000)">일본라멘(9000)</td><td onclick="chMenus('해장국',9000)">해장국(9000)</td></tr>
+	</table>
+	<p id="menuprice"></p>
+	
+</body>
+
+<script type="text/javascript">
+/*
+# 함수의 지역변수와 전역변수 처리
+1. 함수는 전역적으로 처리하는 내용을 함수선언 밖에서  선언하여 처리하다.
+2. 지역변수와 전역변수를 구분할 떄는 let 변수를 활용한다.
+ */
+
+var body = document.body
+//body.innerHTML=""
+// 
+</script>
+</html>

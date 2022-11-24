@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+var div = document.quarySelector("div")
+
+function fun02(...pays){ // pays 사용자가 정의한 배열의 이름으로 매개변수 처리
+	var tot = 0;
+	// for(단위데이터 of 배열)
+	for(var pay of pays){
+		tot+=pay
+	}
+	var pObj = document.querySelector("p")
+	pObj.innerHTML = "인원수:"+pays.length+", 총비용: "+tot
+}
+
+</script>
+</head>
+<body>
+	<div></div>
+	<table>
+	<tr>
+	<td onclick="fun02(7000)">1명 7000원</td>
+	<td onclick="fun02(7000,8000)">2명 7000,8000</td>
+	<td onclick="fun02(7000,8000,10000)">3명 7000,8000,10000</td></tr>
+	</table>
+	<div></div>
+	<p></p>
+</body>
+<script type="text/javascript">
+/*
+# 가변매개변수 처리2
+1. 형식
+	function 함수명(매개변수1, 매개변수2, ...매개변수){
+	}
+2. 기본 매개변수 이외에 가변적인 매개변수를 ...매개변수로
+	선언하여 처리하는 경우를 말한다.
+// ex) ...형 매개변수 처리를 활용하여, 1X3 테이블에서 클릭시 마다,
+		한사람의 관람비용, 2사람의 관람비용, 3사람의 관람비용을 각각 매개변수르 다르게하여, 총 비용을 인원수와 함게 출력하세요.
+
+ */
+var body = document.quarySelector("div")
+
+function fun01(var01, var02, ...numbers){
+	 //alert(numbers.length)
+	 body.innerHTML+=var01+":"+var02+":"+numbers+"<br>"
+}
+fun01(1000,2000)
+fun01(1000,2000,3000)
+fun01(1000,2000,4000,5000)
+fun01(1000,2000,3000,4000,5000)
+
+
+</script>
+</html>

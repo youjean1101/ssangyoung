@@ -42,8 +42,45 @@
 4. jsp의 내장 객체
 	1) 내부 객체
 		- 요청과 반응처리
-			request
+			*request
 				브라우저 화면에서 전송되는 데이터를 처리해주는 객체..
+				request.getParameter("요청키")
+				request.getParameterValue("다중의키")
+				ex) ?name=himan&price=1000&price=2000
+				String name = request.getParameter("name");
+				String []price = requerst.getParameter("price");
+				if
+				
+				ex) ?price=3000&cnt=2
+				ex) ?price=&cnt= : 서버에서 이렇게 안받게 처리..
+				String priceS = request.getParameter("price")
+				int price = 0;
+				if(price!=null && price.trim().equals("")){
+					try{
+							price = Integer.parseInt(prices)
+					} catch(Excepction e){
+						log("예외발생"+e.getMessage)
+					
+				}
+				하단의 js를 처리하면
+				int price = Integer.paraseInt(request.get Parameter("price));
+				
+				
+				function send(){
+					var price = document.querySelector("[name=price]");
+					var pVal = price.value 
+					//isNaN("이십오") ==> true 숫자형이 아닐 떄,
+						if(pVal.trim()=="" || isNaN( pVal ){
+						alert("해당 내용이 공백이거나 숫자가 아닙니다.");
+						price.focus();
+						return; // 해당조건일 떄, 프로세스가 진행 안되게 막음.
+					}
+					document.querySelector("form").submit();
+				}
+				<input type="button" value="서버호출" onclick="send()"
+				
+				String priceS = request.getParameter("price")
+				
 			response
 		- session scope범위	
 			pageContext, request, session, application

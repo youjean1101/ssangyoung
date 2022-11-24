@@ -5,3 +5,5 @@ WHERE dname LIKE '%'||'SALES'||'%'
 and loc LIKE '%'||'CHICAGO'||'%';
 
 SELECT * FROM emp100;
+
+SELECT * FROM MEMBER;

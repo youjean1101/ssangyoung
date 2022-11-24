@@ -29,9 +29,17 @@ function goInputPage(){
 <body>
 <h2>부서정보 검색</h2>
 <%
-	String dname =  request.getParameter("dname"); if(dname==null) dname="";
-	String loc =  request.getParameter("loc"); if(loc==null) loc="";
 	//요청값 처리 및 value에 할당.
+	String dname =  request.getParameter("dname"); 
+	// 초기에 query string이 없기 때문에 null
+	// a01_begin/a12_DeptList.jsp
+	// 입력값 없이 submit 버튼 클릭 시.
+	// a01_begin/a12_DeptList.jsp?dname=&loc=
+	// dname="", loc=""
+	if(dname==null) dname=""; // null을 통한 에러방지. 
+	String loc =  request.getParameter("loc"); 
+	if(loc==null) loc="";
+	
 %>
 
 <form>

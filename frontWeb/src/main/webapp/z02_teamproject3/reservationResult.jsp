@@ -21,6 +21,7 @@
 		border:6px solid red;
 		position:absolute;
 		left:25%;
+		margin :10px -30px;
 	}
 	h4{
 		text-align:center;
@@ -31,17 +32,39 @@
 	
 	span{
 		color:red;
-		font-size:18pt; 
+		font-size:20pt; 
+		font-weight:50px;
+	}
+	input[type=button]{
+	width:350px; height:60px;
+	background-color:white; 
+	color:rgb(234,0,0); 
+	border:5px solid rgb(234,0,0);
+	border-radius:5px;
+	font-family:"HY견고딕"; font-size:30px;
+	position:absolute;
+	bottom:20%;
+	left:28%;
+	margin :50px 160px;
 	}
 </style>
 <body>
 	<h2><img src=".\img\CGV_mark.png" width="200px" height="90px" name="cgvmark"></h2>
 	<h3>회원님 좌석 예매 내역</h3>
 	<div class="reservationBox">
-		<h4 id="movieInfo">영화 정보:${param.moviename}<span>${param.subtitle}</span>(${param.bim},${param.ageLimit})</h4>
+		<h4 id="movieInfo"> 영화 정보: <span> 블랜 펜서-와칸다 포에버</span>(4D,12세관람가)</h4>
 		<h4 id="reservationInfo">예매정보: ${param.age} <span>${param.peopleCnt}</span>명<br>
-			좌석번호: <span>${paramValues.seatno[0]}</span>,<span>${paramValues.seatno[1]}</span>,<span>${paramValues.seatno[2]}</span>,<span>${param.seatno}</span>,<span>${param.seatno}</span>,<span>${param.seatno}</span>,<span>${param.seatno}</span>,<span>${param.seatno}</span></h4>
+			좌석번호: <span>${paramValues.seatno[0]}</span>,
+			<span>${paramValues.seatno[1]}</span>,
+			<span>${paramValues.seatno[2]}</span>,
+			<span>${paramValues.seatno[3]}</span>,
+			<span>${paramValues.seatno[4]}</span>,
+			<span>${paramValues.seatno[5]}</span>,
+			<span>${paramValues.seatno[6]}</span>,
+			<span>${paramValues.seatno[7]}</span>
+		</h4>
 	</div>
+		<input type="button" value="결제하러가기>">
 	
 </body>
 </html>

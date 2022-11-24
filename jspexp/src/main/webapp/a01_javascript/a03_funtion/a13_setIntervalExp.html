@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+	td{width:33%; height:33%;}
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+	<table height="300">
+		<tr><td></td><td></td><td></td></tr>
+		<tr><td></td><td></td><td></td></tr>
+		<tr><td></td><td></td><td></td></tr>
+	</table>
+<div id="container" ></div>
+<script>
+	var tdArry = document.querySelectorAll("td")
+	var idx=0;
+	var int01 = setInterval(function(){
+		tdArry[idx].innerText=(idx+1)
+		tdArry[idx].style.background="yellow";
+		if(idx==8){
+			clearInterval(int01)
+			//alert("종료")
+		}
+		idx++;
+	},1000)
+	
+	var set02 = setInterval(function(){
+		// 초기화 처리.변경된 색상 원래로 복귀)
+		for(var idx=0; idx<tdArry.length;idx++){
+			tdArry[idx].style.background="yellow";
+			tdArry[idx].style.color="black"
+			tdArry[idx].style.fontSize="10px"
+		}
+		// 0~8 임의의 cell(td)에서 배경색상과 글자색상과 글자크기를 처리
+		var ranIdx =parseInt(Math.random()*9)
+		tdArry[ranIdx].style.background="pink";
+		tdArry[ranIdx].style.color="navy"
+		tdArry[ranIdx].style.fontSize="50px"
+	},500)
+	var set01 = setTimeout(function(){
+		clearInterval(set01) // 10초 후에 반복수행 중단.(메모리 해제)
+		clearTimeout(set02)
+		alert("10초 후 중단")
+	},10000)
+</script>
+
+</body>
+<script type="text/javascript">
+/*
+
+ */
+ var div = document.querySelector("#container")
+ div.innerHTML=""
+
+</script>
+</html>

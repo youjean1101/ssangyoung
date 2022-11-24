@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+ 	
+ */
+</script>
+</head>
+<body>
+	<div id="container" ></div>
+	<div id="pay" ></div>
+	<!-- 
+	this.innerText=calcu(3000,2)+'원'
+	this.innerText : 현재 클릭한 이 객체(this)의 레이블 내용에 대한 변경
+	calcu(3000,2)+'원' : 정의된 함수의 리턴값과 문자열 "원"을 붙여서 처리
+	 -->
+	<h1 onclick="this.innerText=calcu(3000,2)">3000원 2개(총비용?)</h1>
+	<h1 onclick="this.innerText=calcu(4000,3)">4000원 3개(총비용?)</h1>
+	<h1 onclick="this.innerText=calcu(5000,2)">5000원 2개(총비용?)</h1>
+	<h1 onclick="this.innerText=calcu(6000,5)">6000원 5개(총비용?)</h1>
+</body>
+<script type="text/javascript">
+/*
+# 화살표 함수 처리
+1. 간단하게 매개변수와 리턴값을 화살표로 선언함으로 처리하는 형식을 말한다.
+2. 형식
+ 	함수명 = (매개변수1, 매개변수2) => 리턴값
+ */
+ const multiply = (num01, num02) => num01*num02
+ var div = document.querySelector("#container")
+ div.innerHTML="화살표 함수 호출:"+multiply(25,30)
+ // ex) 물건가격과 갯수를 입력받아 총 비용을 처리하는 화살표 함수를 선언하고 호출하세요.
+ const sum = (price, count) => price*count
+ var pay = document.querySelector("#pay")
+ 
+ var price = prompt("물건가격을 입력하세요!","0");
+ var cnt = prompt("물건갯수를 입력하세요!","0");
+ 
+ pay.innerHTML = "총 비용:" + sum(price,cnt)
+ 
+ const calcu = (price, count) => price*count
+</script>
+</html>

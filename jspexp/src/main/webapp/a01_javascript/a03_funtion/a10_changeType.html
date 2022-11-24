@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+	
+ */
+</script>
+</head>
+<body>
+<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+/*
+# 데이터 유형 변환
+0. javascript에서는 형변환이 자동으로 되는 경우가 많다.
+	연산자 기준으로 + 이외에는 자동형변환이 된다.
+	"2"*"3" ==> 6
+	"2"+"3" ==> 23
+	cf) ==(유형상관없이 자동형변환하여 같으면 true) ,
+		===(데이터 유형도 같고 데이터도 같아야 ture)
+1. Number("숫자형 문자열") : 숫자로 형변환 처리. (실수/정수) 반드시, 숫자형 문자열
+							모든 문자열이 숫자형 문자열이어야 한다. NaN
+2. parseInt("숫자형 문자열") : 정수로 형변환 처리, 숫자로 시작한 문자가 나타나기까지
+							숫자를 추출하여 숫자로 변환
+							1) 정수형(숫자형) 문자열 ==> 정수
+							2) 실수 ==> 정수형 cf) Math.floor() : 내림으로 실수형을 정수형으로 변환
+							3) 문자열 시작하는 숫자만 추출하여 ==> 숫자
+								parseInt("3000원") ==> 3000
+							
+3. parseFloat("숫자형문자열") : 실수로 형변환 처리, 숫자로 시작하여 다음에 숫자이외에 문자열이 나타나기
+							전까지 숫자를 형변환 처리한다.
+							1) 실수형 문자열 ==> 실수
+							2) 문자열로 시작하는 숫자만 추출하여 ==> 숫자
+								parseFloat("1.5$") ==> 1.5
+	
+ */
+ var div = document.querySelector("#container")
+ 
+ div.innerHTML+=""+("10"+"3")+"<br>"
+ div.innerHTML+=""+("10"-"3")+"<br>"
+ div.innerHTML+=""+("10"*"3")+"<br>"
+ div.innerHTML+=""+("10"/"3")+"<br>"
+ div.innerHTML+=""+(Number("1730")+Number("25.7"))+"<br>"
+ div.innerHTML+=""+(Number("1730원")+Number("25.7원"))+"<br>"
+ div.innerHTML+=""+(parseInt("1730원")+parseInt("25.7원"))+"<br>"
+ div.innerHTML+=""+(parseFloat("1730원")+parseFloat("25.7원"))+"<br>"
+// ex) prompt 창으로 반지름으르 입력받아서 원의 면적으로 출력하되
+//		실수값과 정수값을 각각 출력하세요.
+	div.innerHTML+="원 반지름 문제<br>"
+	var r = parseFloat(prompt("원의 반지름을 입력하세요."))
+	if(!isNaN(r)){
+		var result = r*r*3.14
+		div.innerHTML+="입력한 반지름:"+r+", 원의 면적 실수:"+
+			result+", 정수:"+parseInt(result)
+	}else{
+		alert("숫자형을 입력하세요.")
+	}
+	div.innerHTML+="<br>정수값 : "+((parseInt(r)*parseInt(r)*parseInt("3.14")))+"<br>"
+	div.innerHTML+="실수값 : "+((parseFloat(r)*parseFloat(r)*parseFloat("3.14")))
+</script>
+</html>

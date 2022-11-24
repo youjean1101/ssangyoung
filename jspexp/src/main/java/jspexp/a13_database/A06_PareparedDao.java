@@ -295,6 +295,30 @@ public class A06_PareparedDao {
 			DB.close(rs, pstmt, con);
 		}
 	}
+	// 조회 처리
+	   public boolean login(String id, String pass){
+	      boolean isSuccess = false;
+	      String sql = "SELECT 1\r\n"
+					+ "FROM member\r\n"
+					+ "WHERE id=?\r\n"
+					+ "AND pass=?";
+	      try {
+	         con = DB.con();
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setString(1, id);
+	         pstmt.setString(2, pass);
+	         rs = pstmt.executeQuery(); // sql를 넣지 않는다.!!(주의)
+	         isSuccess = rs.next();	// 해당 id, pass로 조회 될때만 true 그 외는 false
+	         
+	      } catch (SQLException e) {
+	         System.out.println("DB에러:"+e.getMessage());
+	      } catch(Exception e) {
+	         System.out.println("일반 에러:"+e.getMessage());
+	      }finally {
+	         DB.close(rs, pstmt, con);
+	      }
+	      return isSuccess;
+	   }
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
