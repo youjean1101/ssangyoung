@@ -75,7 +75,158 @@ ex) cnt를 1~16까지하여 테이블을 번호가 있는 테이블(4X4)을 만�
 	 	 } 	 
  	 %>
  </table>
+ <h2>테이블2</h2>
+ <table>
+ 	 <%
+	 	 for(int cel=1;cel<=16;cel++){
+	 		 if(cel%4==1) out.print("<tr>");
+	 	 		out.print("<td>"+cel+"</td>");
+	 	 		if(cel%4==0) out.print("</tr>");
+ 	 	}
+ 	 %>
+ </table>
+ <%-- ex1) ul의 리스트로 배열로 선언된 과일명 출력하기--%>
+ 	<h2>ex1)</h2>
+ 	<ul>
+ 	<%
+ 		String []fruits = {"사과","바나나","딸기","포도"};
+ 		for(int idx=0;idx<fruits.length;idx++){
+ 			out.print("<li>"+fruits[idx]);
+ 		}
+ 	%>
+ 	</ul>
+ <%-- ex1-1)ol로 물건의 가격 5개 리스트 배열 선언 후, 출력 --%>
+ 	<ol>
+ 		<%
+ 			String []products = {"노트북","키보드","마우스","스피커","의자"};
+ 			for(String pro:products){
+ 				out.print("<li>"+pro+"</li>"); 			
+ 			}
+ 		%>
+ 	</ol>
+ 	
+ <%-- ex2) select의 option의 value 출력내용을 부서번호 배열, 부서명 배열 출력--%>
+ 	<h2>ex2)</h2>
+ 	부서정보: <select name ="deptno" onchange="alert(this.value)"><!-- 선택한 값을 경고창으로 로딩 -->
+ 	
+ 		<% 
+ 		int []deptnos={10,20,30};
+ 		String []dnames={"인사팀", "회계팀","마케팅팀"};
+ 		for(int idx=0;idx<deptnos.length;idx++){
+ 			out.print("<option value='"+deptnos[idx]+"'>"+dnames[idx]+"</option>");
+ 		}
+ 		%>
+ 			<option value='50'>아이티사업</option>
+ 	</select>
+ <%-- ex2-1) 사원번호와 사원명을 배열로 선언하고, select로 선언하여 value에서 사원번호 레이블에는 사원명으로 처리되게 하세요.--%>
+	 <select name="eno" onchange="alert(this.value)">
+	<%
+		int []empnos2 = {7000,7001,7002,7003};
+		String []enames2 = {"홍길동", "마길동", "이길동","김길동"};
+		for(int idx=0; idx<empnos2.length; idx++){
+			out.print("<option value='"+empnos2[idx]+"'>"+enames2[idx]+"</option>");
+		}
+	%>
+	</select> 
+	
+	<%
+	int []empnos = {7000,7001,7002,7003};
+	String []enames = {"홍길동", "마길동", "이길동","김길동"};
+	%>
+	<h2>사원정보</h2>
+	<select name="empno" onchange="alert(this.value)">
+	<% for(int idx=0;idx<empnos.length;idx++){%>
+	<option value="<%=empnos[idx]%>"><%=enames[idx] %><option>
+	<%} %>
+	</select>	
+
+	<h2>사원정보2</h2>
+	<select onchange="alert(this.value)">
+		<%
+			List<Code> clist = new ArrayList<Code>();
+			clist.add(new Code("7780","홍길동"));
+			clist.add(new Code("7781","김길동"));
+			clist.add(new Code("7782","신길동"));
+			for(Code c:clist){
+				out.print("<option value='"+c.getKey()+"'>"+c.getVal()+"</option>");
+			}
+		%>
+	</select>
+ <%-- ex3) h3로 7가지 무지개색 배경색상과 함께 출력하기(무지개 배경색상-배열선언) --%>
+ 	
+ 	<%
+ 		String []rainbow = {"red","orange","yellow","green","blue","navy","purple"};
+ 		for(String color:rainbow){
+ 			out.print("<h3 style='background-color:"+color+"'>"+color+"</h3>");
+ 		}
+ 	%>
+ 	<%
+ 	String[] colorsH={"빨강","주황","노랑","초록","파랑","남","보라"};
+ 	String[] colorsE={"red","orange","yellow","green","blue","navy","purple"};
+ 	for(int idx=0;idx<colorsH.length;idx++){
+ 		out.print("<h3 style='background-color:"+colorsE[idx]+"'>"+colorsH[idx]+"</h3>");
+ 	}
+ 	%>
+ 	<%--ex3-1)span 태그로 물건명을 3개 출력하되 테두리 색상을 초록색, 글자색은 파랑색/노랑색/보라색으로 처리하되
+ 		해당 색상의 변수는 자바로 선언하고 처리하세요. --%>
+ 	<%
+	 	String []pname = {"apple","banana","tomato"}; 
+	 	String []color = {"blue","yellow","purple"}; 
+	 	for(int idx=0;idx<pname.length;idx++){
+	 		out.print("<span style='color:"+color[idx]+"'>"+pname[idx]+"</span><br>");
+	 	}
+	 %>
+	 <%
+	 	String []pnames = {"사과","바나나","딸기"}; 
+	 	String []fcolor = {"blue","yellow","purple"};
+	 	String bkColor = "green";
+	 	for(int idx=0;idx<pnames.length;idx++){
+	 %>
+	 <span style='padding:15px;border-radius:10px;border:1px solid <%=bkColor %>;color:<%=fcolor[idx]%>'><%=pnames[idx] %></span>
+ 	<%}
+ 	%>
+ <%-- ex4) table로(2X3) 3의 배수를 출력, 배경색상 짝수 cel마다 pink색--%>
+ 	<table>
+ 	<tr>
+ 	<% 
+    int number=0;
+ 	int tot = 0;
+    for(int row=0; row<=1;row++){
+       out.print("<tr>");
+       for(int col=0; col<=2;col++){
+          tot += number+3;
+          if(tot%2==0){
+        	  out.print("<td style='background-color:pink'>"+tot+"</td>");
+          }else {
+        	  out.print("<td>"+tot+"</td>");
+          }
+       }
+       out.print("</tr>");
+       }   
+ 	%>
+ 	</tr>
+ 	</table>
+ 	<h2>테이블 생성연습(2X3)</h2>
+ 	<table>
+ 	<%
+ 	for(cnt=1;cnt<=6;cnt++){
+ 		if(cnt%3==1) out.print("<tr>");
+ 		out.print("<td style='background:"+(cnt%2==0?"pink":"")+"'>"+cnt*3+"</td>");
+ 		if(cnt%3==0) out.print("</tr>");
+ 	}
+ 	%>
+ 	</table>
  
+ 
+ <%-- ex5) table 타이틀로 물건명 가격 갯수 5개 row로 각각 cel마다 input, 갯수는 1~9--%>
+ 	<table>
+ 		<tr><th>물건명</th><th>가격</th><th>갯수</th></tr>
+ 		<tr><td></td><td></td><td></td></tr>
+ 		<tr><td></td><td></td><td></td></tr>
+ 		<tr><td></td><td></td><td></td></tr>
+ 		<tr><td></td><td></td><td></td></tr>
+ 		<tr><td></td><td></td><td></td></tr>
+ 	</table>
 </body>
 <script type="text/javascript">
 /*

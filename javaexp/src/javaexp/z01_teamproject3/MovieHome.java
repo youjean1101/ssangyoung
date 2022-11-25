@@ -62,13 +62,7 @@ public class MovieHome {
 			pstmt.setString(2, useradd.getsName());
 			rs = pstmt.executeQuery();
 			
-			if(rs.next()) {
-				int getRowcnt = rs.getRow();
-				if(getRowcnt==1) {
-					System.out.println("[안내메시지] 회원 삭제가 완료되었습니다. 그 그동안 저희 CGV를 이용해주셔서 감사합니다♡\n");
-				}
-			}
-			
+			System.out.println("[안내메시지] 회원 삭제가 완료되었습니다. 그 그동안 저희 CGV를 이용해주셔서 감사합니다♡\n");
 			con.commit();
 			
 		} catch (SQLException e) {
@@ -187,6 +181,7 @@ public class MovieHome {
 		MovieHome homedao = new MovieHome();
 		Movie movieInfodao = new Movie(); 
 		MovieReview movieReviewdao = new MovieReview();
+		MovieScreening movieScreeningdao = new MovieScreening();
 		
 		System.out.println("☆★☆★☆★저희 CGV에 오신걸 환영합니다.★☆★☆★☆");
 		System.out.println("");
@@ -289,8 +284,9 @@ public class MovieHome {
 							System.out.println("☞ 실행하실 메뉴를 선택해주세요.(관리자) ");
 							System.out.println("1:영화정보");
 							System.out.println("2:영화리뷰");
-							System.out.println("3:회원정보");
-							System.out.println("4:로그아웃");
+							System.out.println("3:상영정보등록");
+							System.out.println("4:회원정보");
+							System.out.println("5:로그아웃");
 							int iMgrMenuChoice = sc.nextInt();
 							sc.nextLine();
 							switch(iMgrMenuChoice) {
@@ -305,8 +301,12 @@ public class MovieHome {
 									managerMenuWhile = true;
 									homeMenuWhile = false;
 									break;
-									
+								
 								case 3 :
+									movieScreeningdao.movieScreening(auth,loginID);
+									break;
+									
+								case 4 :
 									System.out.println("☞ 메뉴를 선택해주세요.");
 									System.out.println("1:회원조회");
 									System.out.println("2:회원수정");
@@ -361,7 +361,7 @@ public class MovieHome {
 									homeMenuWhile = false;
 									break;
 									
-								case 4 :
+								case 5 :
 									managerMenuWhile = false;
 									homeMenuWhile = true;
 									break;
@@ -378,8 +378,9 @@ public class MovieHome {
 							System.out.println("☞ 실행하실 메뉴를 선택해주세요.(사용자)");
 							System.out.println("1:영화정보");
 							System.out.println("2:영화리뷰");
-							System.out.println("3:회원정보");
-							System.out.println("4:로그아웃");
+							System.out.println("3:예매하기");
+							System.out.println("4:회원정보");
+							System.out.println("5:로그아웃");
 							int iUserMenuChoice = sc.nextInt();
 							sc.nextLine();
 							switch(iUserMenuChoice) {
@@ -394,8 +395,14 @@ public class MovieHome {
 									userMenuWhile = true;
 									homeMenuWhile = false;
 									break;
+									
+								case 3:
+									movieScreeningdao.movieScreening(auth,loginID);
+									userMenuWhile = true;
+									homeMenuWhile = false;
+									break;
 								
-								case 3 :
+								case 4 :
 									System.out.println("☞ 메뉴를 선택해주세요.");
 									System.out.println("1:회원조회");
 									System.out.println("2:회원수정");
@@ -431,7 +438,7 @@ public class MovieHome {
 													for(CGVuserInfoVo userinfo:userlist) {
 														movieReviewdao.reviewRemove(userinfo.getsUsercode());
 													}
-													homedao.cgvMemberRemove(new CGVuserInfoVo(sLoginID, sLoginPass));
+													homedao.cgvMemberRemove(new CGVuserInfoVo(sLoginID, sLoginPass)); //탈퇴 진행이 안됌
 													break;
 												}else if(memberRemove.toUpperCase().equals("N")) {
 													break;
@@ -453,7 +460,7 @@ public class MovieHome {
 									homeMenuWhile = false;
 									break;
 									
-								case 4 :
+								case 5 :
 									userMenuWhile = false;
 									homeMenuWhile = true;
 									break;

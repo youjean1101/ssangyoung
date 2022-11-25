@@ -132,8 +132,11 @@ ORDER BY rentalcnt DESC)
 WHERE rownum<=3;
 
 UPDATE movie 
-SET resercnt = '13'
-WHERE moviecode='movie5'; -- 예매갯수
+SET resercnt = '312'
+WHERE moviecode='movie0'
+AND state='상영중'; -- 예매갯수
+
+SELECT * FROM movie;
 
 UPDATE movie 
 SET state = '상영중'
@@ -252,7 +255,7 @@ INSERT INTO cgvUser VALUES('user'||userCode_seq.nextval, '사용자', '신길동
 
 SELECT * FROM cgvUser WHERE id ='himan' 
 AND password ='';
-
+DELETE FROM cgvUser WHERE id='goodman' AND password= '7777'
 /*
 private String usercode;
 private String div;

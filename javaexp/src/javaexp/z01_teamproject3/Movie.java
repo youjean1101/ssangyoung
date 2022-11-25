@@ -913,7 +913,7 @@ public void movieInfoUpdate(String moviecode,String column,MovieVo movIs) {
 							movieReviewdao.movieNameSelView();
 							System.out.println("\n☞ 리뷰를 보실 영화명은 입력해주세요.");
 							String reviewIndexMovie = sc.nextLine();
-							movieReviewdao.reviewUserView(reviewIndexMovie);
+							movieReviewdao.userReviewMovieView(reviewIndexMovie);
 							if(movieReviewdao.IsreviewMovie(reviewIndexMovie)==false) {
 								System.out.println("[안내메시지] 입력하신 영화는 리뷰는 존재하지 않습니다.\n");
 							}

@@ -43,7 +43,11 @@
 	1) 특정 페이지로 이동하라고 웹 브라우저에 응답
 	2) 서버 안에서 명령문으로 특정 페이지로 이동 처리
 		response.sendRedirect(String location)
+		요청에 의해서 데이터를 전송하고 그 전송된 내용에 판단에 의해서
+		페이지가 결정될 때.. ex) login 경우, DB 내용에 따라 페이지 결정
+			
 	cf) location.href="이동페이지" 브라우저에서 특정한 페이지로 이동 처리
+		화면에 클릭하여 페이지 이동, 메뉴이동은 대부분 js, a href로 처리
 	
 --%>
 	<h2>redirect와 location.href의 차이</h2>

@@ -64,7 +64,7 @@
 			<span>${paramValues.seatno[7]}</span>
 		</h4>
 	</div>
-		<input type="button" value="결제하러가기>">
+		<input type="button" value="결제하러가기>" onclick="alert('결제창 넘어가기')">
 	
 </body>
 </html>

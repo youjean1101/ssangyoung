@@ -4,8 +4,11 @@
     import="java.util.*"
     import="jspexp.a13_database.*" 
     import="jspexp.a13_database.vo.*"
-      
+    session = "true"
     %>
+ <%-- 대부분 프로그램의 boolean 유형의 default 설정이 false인데,
+ 		directive은 경우에는 default가 true이다.
+ 		--%>
 <!DOCTYPE html>
 <html>
 <head>

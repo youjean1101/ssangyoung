@@ -395,7 +395,7 @@ public class MovieReview {
 							movieReviewdao.movieNameSelView();
 							System.out.println("\n☞ 리뷰를 보실 영화명은 입력해주세요.");
 							String reviewIndexMovie = sc.nextLine();
-							movieReviewdao.reviewUserView(reviewIndexMovie);
+							movieReviewdao.userReviewMovieView(reviewIndexMovie);
 							if(movieReviewdao.IsreviewMovie(reviewIndexMovie)==false) {
 								System.out.println("[안내메시지] 입력하신 영화는 리뷰는 존재하지 않습니다.\n");
 							}
@@ -406,15 +406,15 @@ public class MovieReview {
 							break;
 							
 						case 6:
-							
+							System.out.println("리뷰작성하기");
 							break;
 
 						case 7:
-							
+							System.out.println("리뷰수정하기");
 							break;
 							
 						case 8:
-							
+							System.out.println("리뷰삭제하기");
 							break;
 							
 						case 9:

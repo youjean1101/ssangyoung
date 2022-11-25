@@ -46,6 +46,8 @@
 			isFail = true;
 			// 현재 페이지에서 로그인 처리하기 때문에 생략 가능
 			// response.sendRedirect("a08_login.jsp");
+			// 요청값을 넘기면 초기페이지가 아니라 로그인 check된 페이지라는
+			// 것을 구분해주면 처리할 수 있다.
 		}
 	}
 	%>
