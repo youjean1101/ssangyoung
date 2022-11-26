@@ -218,15 +218,81 @@ ex) cnt를 1~16까지하여 테이블을 번호가 있는 테이블(4X4)을 만�
  	</table>
  
  
- <%-- ex5) table 타이틀로 물건명 가격 갯수 5개 row로 각각 cel마다 input, 갯수는 1~9--%>
+ <%-- ex5) table 타이틀로 물건명 가격 갯수 선언, 5개 row로 각 cel마다 물건명/가격은 input, 갯수는 0~9까지 있는 select
+ 	1) 기본화면 구성
+ 	2) java List 선언(Dao로 가져온 데이터 리스트)
+ 	3) 반복문과 html 코드로 처리
+ 	4) script 처리가 필요한 부분 처리
+ --%>
+ 	<h2>입력하는 테이블 리스트</h2>
+ 	<%
+ 	List<Product> plist = new ArrayList<Product>();
+ 	plist.add(new Product("사과",3000,2));
+ 	plist.add(new Product("바나나",4000,3));
+ 	plist.add(new Product("딸기",12000,5));
+ 	plist.add(new Product("딸기",12000,5));
+ 	plist.add(new Product("딸기",12000,5));
+ 	plist.add(new Product("딸기",12000,5));
+ 	plist.add(new Product("딸기",12000,5));
+ 	%>
  	<table>
- 		<tr><th>물건명</th><th>가격</th><th>갯수</th></tr>
- 		<tr><td></td><td></td><td></td></tr>
- 		<tr><td></td><td></td><td></td></tr>
- 		<tr><td></td><td></td><td></td></tr>
- 		<tr><td></td><td></td><td></td></tr>
- 		<tr><td></td><td></td><td></td></tr>
+ 		<tr><th>선택</th><th>물건명</th><th>가격</th><th>갯수</th></tr>
+ 		<%for(int idx=0;idx<plist.size();idx++) {
+ 			Product p = plist.get(idx);
+ 		%>
+ 		<tr><td><input type="checkbox" name="ch" value="<%=idx%>"
+ 						<%=idx%2==0?"checked":"" %>/></td>
+	 		<td><input type="text" name="name" value="<%=p.getPname()%>"/></td>
+	 		<td><input type="text" name="price" value="<%=p.getPrice()%>"/></td>
+	 		<td><select name="cnt"/>
+	 			<%for(cnt=0;cnt<=9;cnt++){ %>
+	 			<option <%=cnt==p.getCnt()?"selected":"" %>><%=cnt %></option>
+	 			<%} %>
+	 		</select></td></tr>
+	 	<%} %>
  	</table>
+ 		<br>
+ 	 	<select>
+	 		<option>사과</option>
+	 		<option>바나나</option>
+	 		<option selectrd>딸기</option>
+	 		<option>오렌지</option>
+	 	</select>
+	 	<%-- ex) 사원번호, 사원명, 급여, 부서명(select) 테이블 form 요소객체로 출력 --%>
+	 	<h2>사원정보</h2>
+	 	<table>
+	 	<col width="10%">
+	 	<col width="20%">
+	 	<col width="25%">
+	 	<col width="20%">
+	 	<col width="25%">
+	 	<tr><th>선택</th><th>사원번호</th><th>사원명</th><th>급여</th><th>부서명(select)</th></tr>
+	 	<%
+	 	// public Emp(int empno, String ename, double sal, int deptno) 
+	 	List<Emp> elist = new ArrayList<Emp>();
+	 	elist.add(new Emp(7781,"홍길동",3000,10));
+	 	elist.add(new Emp(7782,"김길동",4000,20));
+	 	elist.add(new Emp(7783,"신길동",3500,10));
+	 	elist.add(new Emp(7784,"오길동",5000,40));
+	 	%>
+	 	
+	 	<%for(int idx=0;idx<elist.size();idx++){ 
+	 		Emp e = elist.get(idx);
+	 	%>
+	 	<tr><td><input type="checkbox" name="ck" value="<%=idx%>"/></td>
+	 		<td><input type="text" name="empno" value="<%=e.getEmpno()%>"/></td>
+		 	<td><input type="text" name="ename" value="<%=e.getEname()%>"/></td>
+		 	<td><input type="text" name="sal" value="<%=e.getSal()%>"/></td>
+		 	<td><select name="deptno">
+			 		<option value="10" <%=e.getDeptno()==10?"selected":"" %>>인사</option>
+			 		<option value="20" <%=e.getDeptno()==20?"selected":"" %>>재무</option>
+			 		<option value="30" <%=e.getDeptno()==30?"selected":"" %>>회계</option>
+			 		<option value="40" <%=e.getDeptno()==40?"selected":"" %>>기획</option>
+	 			</select>
+		 	</td></tr>
+		 	<%} %>
+	 	</table>
+	 
 </body>
 <script type="text/javascript">
 /*

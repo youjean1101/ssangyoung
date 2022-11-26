@@ -37,6 +37,14 @@ public class Emp {
 		this.deptno = deptno;
 	}	
 	
+	public Emp(int empno, String ename, double sal, int deptno) {
+		super();
+		this.empno = empno;
+		this.ename = ename;
+		this.sal = sal;
+		this.deptno = deptno;
+	}
+
 	// 검색1  
 	public Emp(String ename, String job, double frSal, double toSal) {
 		this.job = job;

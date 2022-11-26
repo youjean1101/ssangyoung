@@ -321,7 +321,7 @@ public class A06_PareparedDao {
 	   }
 	// 조회 처리
 public boolean Dept(String deptno,String dname){
-	boolean deptreturn=false;
+	boolean hasInfo=false;
 		String sql = "SELECT *\r\n"
 				+ "FROM dept100\r\n"
 				+ "WHERE deptno= ?\r\n"
@@ -332,7 +332,7 @@ public boolean Dept(String deptno,String dname){
 			pstmt.setString(1, deptno); //
 			pstmt.setString(2, dname);
 			rs = pstmt.executeQuery(); 
-			deptreturn = rs.next();
+			hasInfo = rs.next();
 	
 		} catch (SQLException e) {
 			System.out.println("DB에러:"+e.getMessage());
@@ -342,9 +342,34 @@ public boolean Dept(String deptno,String dname){
 			DB.close(rs, pstmt, con);
 		}
 		
-		return deptreturn;
+		return hasInfo;
 	}
 
+	// 조회 처리
+public boolean chkDept(int deptno,String dname){
+	boolean hasInfo=false;
+		String sql = "SELECT *\r\n"
+				+ "FROM dept100\r\n"
+				+ "WHERE deptno= ?\r\n"
+				+ "AND dname = ?";
+		try {
+			con = DB.con();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, deptno); //
+			pstmt.setString(2, dname);
+			rs = pstmt.executeQuery(); 
+			hasInfo = rs.next();
+	
+		} catch (SQLException e) {
+			System.out.println("DB에러:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("일반 에러:"+e.getMessage());
+		}finally {
+			DB.close(rs, pstmt, con);
+		}
+		
+		return hasInfo;
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		

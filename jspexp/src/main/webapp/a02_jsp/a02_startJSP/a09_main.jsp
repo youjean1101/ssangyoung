@@ -26,6 +26,7 @@
 --%>
 <h2>로그인 성공/메인 페이지</h2>
 
+<h2>부서정보 확인!! 로그인 성공(정답)</h2>
 </body>
 <script type="text/javascript">
 /*

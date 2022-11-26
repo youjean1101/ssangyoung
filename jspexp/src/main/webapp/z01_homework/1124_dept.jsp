@@ -24,7 +24,7 @@
 
 
 --%>
-<h2>조회한부서페이지</h2>
+<h2>조회한 부서 페이지</h2>
 
 </body>
 <script type="text/javascript">

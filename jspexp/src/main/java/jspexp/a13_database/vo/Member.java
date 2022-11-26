@@ -20,6 +20,13 @@ public class Member {
 		this.point = point;
 		this.address = address;
 	}
+	public Member(String id, String name, String auth, int point) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.auth = auth;
+		this.point = point;
+	}
 	public Member(String name, String auth) {
 		super();
 		this.name = name;
