@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+/*
+# 객체 개요
+1. 배열: []
+	인덱스와 요소를 통해서 활용
+	var 배열명 = [데이터, 데이터2, ..]
+2. 객체:{}
+	속성인 키와 할당된 값을 활용
+	var 객체명 = {속성1:속성값, 속성2:속성2값...}
+	객체["속성1"] : 호출
+	객체.속성1 : 호출
+	객체.속성3 = 데이터 : 새로운 속성값 설정 및 데이터 할당.
+ */
+var div = document.querySelector("#container")
+var p01 = {name:"홍길동", age:25}
+div.innerHTML=p01['name']+","+p01.age+"<br>"
+p01.loc = "서울" // 추가 속성 설정 처리.
+div.innerHTML+=p01['loc']+"<br>"
+// ex) json 형태로 초기로 물건명만 선언했다가 물건 가격과 갯수를 추가적으로 속성과
+//		속성값으로 선언하고 출력하세요.
+var product = {pname:"apple",price:3000,cnt:3}
+div.innerHTML+="물건명:"+product['pname']+", 가격:"+product.price+", 갯수:"+product.cnt
+
+var prod = {name2:"사과"}
+prod['price2']=3000
+prod.cnt2=5
+div.innerHTML+="물건명:"+prod.name2+", 가격:"+prod.price2+", 갯수:"+prod.cnt2+"<br>"
+/*
+ # 메서드
+ 1. 객체의 속성 중, 함수 자료형인 속성을 특별히 메서드라고 부른다.
+ 	var 객체 = {메서드:fucntion(){함수호출 시 처리할 내용}}
+ 	객체.메서드()
+ 2. this. : 메서드에서 현재 객체의 속성을 호출할 때, 접두어로 활용한다.
+ */
+var prod2 = {name:"사과",price:3000,cnt:5,
+		 	tot:function(){
+				return this.price* this.cnt; // 가격과 갯수를 return 처리
+			},
+ 			showDis:function(disRatio){
+ 				alert("할인율:"+parseInt(disRatio*100)+'%')
+ 				alert("총금액:"+ ( this.tot() - (this.tot() * disRatio)) )
+ 			}
+ 			}
+ div.innerHTML+=prod2.name+", 총계:"+prod2.tot()+"<br>"
+ prod2.showDis(0.2)
+// ex) 계산기로 num01, num02, plus(), minus() 기능 메서드로 연산값을 리턴하는 메서드를 선언하고, 화면에 출력하세요.
+ var cal = { num01:4000,num02:5000,
+			plus:function(){
+				return this.num01+this.num02;
+			},
+			minus:function(){
+				return this.num01-this.num02;
+			}}
+div.innerHTML += cal.plus()+","+cal.minus()+"<br>"
+</script>
+</html>

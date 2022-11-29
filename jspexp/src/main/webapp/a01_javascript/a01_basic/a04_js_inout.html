@@ -47,7 +47,7 @@
 		리턴내용으로 boolean(true/false)를 확인과 취소에 의해서 처리할 수 있다.
 	*/
 	//var fruit = prompt("좋아하는 과일을 입력하세요!","없음");
-		// 소스 변경후, ctrl+s 저장 후, 브라우저 화면에서 f5
+		 //소스 변경후, ctrl+s 저장 후, 브라우저 화면에서 f5
 	//document.querySelector("h2").innerText="좋아하는 과일:"+fruit
 	
 	// ex) body <h3>여기에 이름을 입력</h3> body 화면에 반드시 코드 후,
@@ -59,15 +59,15 @@
 	//document.querySelector("h3").innerText="입력된 이름:"+name
 	// 취소 클릭시, 입력이 안되고 null이 리턴되어 할당된다.
 	
-	//var isPass = confirm("합격입니까?")
+	var isPass = confirm("합격입니까?")
 	// <h4>합격여부</h4>
 	// confirm("합격입니까?") : boolean값이기에 조건문이나 반복문에 활용
-	//document.querySelector("h4").innerText="합격여부:"
-	//	+(isPass?"합격":"불합격");
+	document.querySelector("h4").innerText="합격여부:"
+		+(isPass?"합격":"불합격");
 	// body에 <h5>성인여부</h5>
 	// cofirm로 입력받아서 성인이면 로그인성공, 그렇지 않으면 미성년자 가입불가
-	var isAdult = confirm("성인입니까?")
-	document.querySelector("h5").innerText="결과:"+(isAdult?"로그인성공":"미성년자 입장불가");
+	// var isAdult = confirm("성인입니까?")
+	// document.querySelector("h5").innerText="결과:"+(isAdult?"로그인성공":"미성년자 입장불가");
 	/*
 	3. form 요소 객체를 통한 입력
 		1) 처리한 입력 요소 객체 선언

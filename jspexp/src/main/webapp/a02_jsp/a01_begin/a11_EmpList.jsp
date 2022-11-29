@@ -17,6 +17,31 @@
 </script>
 
 </head>
+<%--
+# 서버로 요청값을 넘기기전에 client단 프로그램으로 유효성 check 처리 순서
+1. type="submit" ==> type="button"
+2. onclick="send()" ==> 전송되기전에 이벤트 핸들러 함수로 check 후, 
+	전송될 수 있게 함수 호출
+3. function send(){
+		//DOM 객체 호출
+		var in01Obj = document.querySelector("[name=num01]");
+		var in01 = in01Obj.value
+		if(in01 == ''){ //공백인지 여부 check
+		
+		}
+		if(isNaN(in01)){	// 숫자형이 아닌지 여부 check
+		
+		}
+		==> 숫자형은 둘다 check하는 if
+		if(in01 == '' || isNaN(in01){
+			alert("공백이거나 숫자형이 아닙니다.") // 메시지 처리
+			in01Obj.value=""; in01Obj.focus();
+			return; //진행 프로세스 중단..
+		}
+		// type="submit"를 클릭한 것과 동일한 효과 처리
+		document.querySelector("form").submit();
+	}
+ --%>
 <body>
 <% 
 String ename=request.getParameter("ename"); if(ename==null) ename="";

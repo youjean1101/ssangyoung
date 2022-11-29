@@ -39,6 +39,18 @@
 		웹 브라우저가 정보를 전송할 때, 사용한 방식을 구한다.
 	3) getRequestURI() : 웹브라우저가 요청한 URL에서 경로를 구한다.
 	4) getContextPath() : JSP 페이지가 속한 웹 어플리케이션의 컨텍스트 경로를 구한다.
+		webapp 하위에 절대 기준 경로를 설정할 수 있기때문에 변수를 설정해서
+		공통 css, 공통 javascript, 이미지 폴드, 페이지이동 등을 활용할 때,
+		기준경로 설정한다. 
+		<% String path = request.getContextPath(); %>
+		
+		<link href="<%=path%>a00_com/a01_common.css"
+		<script src = "<%=path%>a00_com/a02_com.js"
+		<img src="<%=path%>a01_img/img01.jpg">
+		<a href="<%=path%>a01_main/menu01.jsp">
+		
+		context명을 서버에서 /로 설정했기 때문에 사용하지 않고 바로 처리함
+		<link href="/a00_com/a01_common.css" rel="stylesheet">
 	5) getServerName() : 연결할 때 사용한 서버 이름을 구한다.
 	6) getServerPort() : 서버가 실행중인 포트 번호를 구한다.
 	ps) 위 정보들을 서버에서 LOG파일이나 db로 저장해서, 현재 서버의 부하량이나 
@@ -56,6 +68,8 @@ String path = request.getContextPath();
 %>
 <img src ="<%=path%>/a00_img/apple.jpg"/>
 <!-- 
+# request, response 객체는 서버안에 있는 코드에서 
+사용되는 jsp 객체이다.
 클라이언트 <============> 서버
 		====request==>
 		<===response==

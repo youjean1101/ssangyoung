@@ -29,7 +29,11 @@
 1. if조건을 통해서 null인 경우 
 	1) 문자열 ==> ""
 	2) 숫자 ==> 0
-
+	초기화면에서 form 요소객체에 의해서 요청값을 전송하지 않기 때문에
+	null 데이터인 경우로 처리된다.
+	==> 한페이지에서 form 입력화면과 요청값을 전달할 결과 데이터 출력화면이
+	같이 처리될 때, 주로 if(요청==null)를 check하여 처리한다.
+	
  --%>
  <%
  String name = request.getParameter("name");
@@ -49,7 +53,14 @@
  	국어 @@
  	영어 @@
  	수학 @@
+? 	: 초기화면 - request.getParameter("sname") == null
+ 	?stuName=&kor=&eng=&math=
+ 	 : 입력하지 않고 submit 했을 때
+ 	 - request.getParameter("sname").equals("")
+ 	ps) 서버에 전송되기 전에 js단에서 form 요소가 입력되게 처리한다.
  	?stuName=홍길동&kor=70&eng=80&math=90
+ 	 : 입력하고 submit 했을 때..
+ 	 - request.getParameter("sname").equals("홍길동")
   --%>
   <%
   String stuName =request.getParameter("stuName");

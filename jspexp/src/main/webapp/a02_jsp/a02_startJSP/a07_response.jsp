@@ -42,10 +42,22 @@
 4. 리다이렉트
 	1) 특정 페이지로 이동하라고 웹 브라우저에 응답
 	2) 서버 안에서 명령문으로 특정 페이지로 이동 처리
-		response.sendRedirect(String location)
+		response.sendRedirect(String location) **
 		요청에 의해서 데이터를 전송하고 그 전송된 내용에 판단에 의해서
 		페이지가 결정될 때.. ex) login 경우, DB 내용에 따라 페이지 결정
-			
+		ps) 페이지 이동 시 처리한 내용
+		# 단계별 처리되는 내용
+		0. ahref, location.href
+			1) 페이지 이동
+			2) 클라이언트 단에서 페이지 이동 처리
+		1. form 객체를 통해서 처리되는 내용
+			1) 페이지 이동
+			2) 요청값을 함께 전달(클라이언 ==> 서버)
+		2. response.sendRedirect()
+			1) 페이지 이동 (서버 내부에서 조건에 따른 처리)
+		3. session범위에 따른 처리
+			1) session 값과 함께 전송..
+	
 	cf) location.href="이동페이지" 브라우저에서 특정한 페이지로 이동 처리
 		화면에 클릭하여 페이지 이동, 메뉴이동은 대부분 js, a href로 처리
 	
