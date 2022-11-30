@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+<div id="container" ></div>
+	검색한 데이터 입력하세요 : <input type="text" onkeyup="chChar(this)"/>
+
+</body>
+<script type="text/javascript">
+function chChar(obj){
+	// 입력받자마자 대문자로 변환하여 처리..
+	obj.value = obj.value.toUpperCase()
+}
+/*
+
+ */
+ var str01 = "사과^바나나^딸기"
+ var fruits = str01.split("^")
+ 
+ var div = document.querySelector("#container")
+ div.innerHTML+="<h2>과일</h2>"
+ fruits.forEach(function(fruit,idx){
+	 div.innerHTML+=idx+1+")"+fruit+"<br>"
+ })
+ div.innerHTML+="<br>"
+
+ var str02 = "hi! man!!"
+ div.innerHTML += str02.toUpperCase()+"<br>"
+</script>
+</html>

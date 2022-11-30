@@ -26,7 +26,12 @@
 # 생성자 함수
  1. 함수모양의 객체를 말한다.
  	fuction 객체명()
+ 	- 객체라는 것을 구분해서 나타내기 위해서
+ 	1) 객체명을 대문자로 시작해서 선언한다.
+ 	2) 속성 this를 활용한다.
  2. this.속성 형식으로 현재 객체의 멤버 변수를 설정한다.
+ 	1) 일반 데이터 속성 this.속성 = 속성값
+ 	2) 기능 메서드 속성 this.속성 = function(){}
  3. 기본 형식
  	function Object명(매개변수1, 매개변수2){
 		this.속성1 = 매개변수1
@@ -73,8 +78,9 @@ teams.push(team)
 teams.push(new Team("크로아티아","F조",1,1,0))
 teams.push(new Team("모르코","F조",1,1,0))
 teams.push(new Team("캐나다","F조",0,0,0))
-teams.forEach(function(t01){
-	t01.record()
+// 배열.forEach(function(단위객체, index, 배열)) : 각 매개변수는 순서로 뒤에서 부터 하나씩 생략 가능
+teams.forEach(function(team){
+	team.record()
 })
 // ex) 위 Student 객체를 배열형태로 선언하고 추가하여 학생 3명의 점수를 출력하세요.
 	var students = []
@@ -88,7 +94,8 @@ teams.forEach(function(t01){
 		for(var pro in std){ // 객체 안에 속성을 가져올 수 있기에 반복문 처리.
 			if(pro=="getSum"||pro=="getAvg"){
 				// 기능 메서드인 경우, 리턴값을 호출하려면 ()를 붙여야 한다.
-				show+="<td>"+std[pro]()+"</td>"
+				// getSum ==> std[pro] ==> getSum()
+				show+="<td>"+parseInt(std[pro]())+"</td>"
 			}else{
 				show+="<td>"+std[pro]+"</td>"
 			}

@@ -14,11 +14,30 @@
 /*
 
  */
+ function calcu(){
+	var seat = document.querySelector("[name=seat01]").value
+	var hit = document.querySelector("[name=hit01]").value
+	var reObj = document.querySelector("#record")
+	reObj.innerText = "0" // 초기값 설정 아래에 나타나는 정상적이지 않은 입력 시 모두 0으로 처리
+	if(!isNaN(seat) && !isNaN(hit)){	// 두 데이터가 모두 숫자형일 때만 처리.
+		var result = hit/seat
+		if(isFinite(result)){	// /0 예외에 대한 처리.
+			reObj.innerText = result.toFixed(3)	// 소숫점 3자리 입력 처리..
+		}
+	}
+}
 </script>
 </head>
 <body>
 <div id="container" ></div>
-
+	<!-- onkeyup : 입력할 때, 바로 이벤트가 발생.(onchage보다 빠른 반응) -->
+	<!-- 타석:<input type="text" name="seat01" value="0" onchange="calcu()" />
+	안타수:<input type="text" name="hit01" value="0" onchange="calcu()"/> -->
+	
+	타석(onkeyup):<input type="text" name="seat01" value="0" onkeyup="calcu()" />
+	안타수(onkeyup):<input type="text" name="hit01" value="0" onkeyup="calcu()"/>
+	타율<span id="record"></span>
+	<div id="container"></div>
 
 </body>
 <script type="text/javascript">
@@ -35,7 +54,16 @@
 	
  */
  var div = document.querySelector("#container")
- div.innerHTML=""
-
+ var num01 = 2432.2533
+ div.innerHTML="typeof(num01):"+typeof(num01)+"<br>"
+ div.innerHTML+="toExponential():"+num01.toExponential()+"<br>"
+ div.innerHTML+="toFixed(2):"+num01.toFixed(2)+"<br>"
+ div.innerHTML+="toPrecision():"+num01.toPrecision()+"<br>"
+ 
+// ex) 타석과 안타수를 prompt로 입력받아서, 타율을 출력하되 소숫점 3자리로 표현되게 처리하세요.
+//var safety = prompt("안타수을 입력하세요!","0");
+//var atBat = prompt("타석을 입력하세요!","0");
+var barAvg =safety/atBat
+div.innerHTML+="<hr>타율:"+barAvg.toFixed(3)+"<br>"
 </script>
 </html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+/*
+# 배열데이터의 복사 및 활용
+1. 객체형 데이터의 복사
+*/
+var num01 = 25
+var num02 = num01
+num02 = 30
+// 일반변수는 stack영역에 데이터를 바로 할당하기에 대입을 하더라도 다른 메모리를 
+// 사용한다.
+var show = document.querySelector("#container")
+var array01 = [1000,2000,3000]
+var array02 = array01
+array02[0] = 5000
+// 배열을 포함한 객체는 대입연산자에 의해 객체가 실제 저장하는 주소값을 할당하기에
+// 주소값을 복사해서 할당했으므로 동일한 객체를 참조하기에 이름이 다르지만
+// 동일한 객첼르 바라보고 있어서 한쪽 데이터가 변경되면 다른쪽도 동일하게 처리된다.
+show.innerHTML = num01+"<br>"
+show.innerHTML += num02+"<br>"
+show.innerHTML += array01+"<br>"
+show.innerHTML += array02+"<br>"
+var array03 = [...array01]
+array03[0] = 7000
+show.innerHTML += "<h2>...에 의해 복사후</h2>"
+show.innerHTML += array01+"<br>"
+show.innerHTML += array02+"<br>"
+show.innerHTML += array03+"<br>"
+// ex) fruit01로 과일명 3개를 선언하고 fruit02에 대입으로 복사, fruit03에 ...(deep copy)의해 복사한 후
+// 		fruit01의 두번째 과일명 변경에 fruit02, fruit03의 데이터를 확인하세요.
+var fruit01=["사과","딸기","바나나"]
+var fruit02 = fruit01
+var fruit03 = [...fruit01]
+fruit01[1] = "망고(변경)"
+show.innerHTML += "<h2>과일명 복사후</h2>"
+show.innerHTML += "fruit01:"+fruit01+"<br>"
+show.innerHTML += "fruit02:"+fruit02+"<br>"
+show.innerHTML += "fruit03:"+fruit03+"<br>"
+var p01 = {name:"홍길동",age:25,loc:"서울신림"}
+var p02 = p01
+var p03 = {...p01}
+p03.point = {...p01}
+p01.name = "마길동(변경)"
+// JSON.stringify(객체) : 객체를 문자열로 변환해서 활용
+show.innerHTML += "<h2>객체 복사 후</h2>"
+show.innerHTML += "p01:"+JSON.stringify(p01)+"<br>"
+show.innerHTML += "p02:"+JSON.stringify(p02)+"<br>"
+show.innerHTML += "p03:"+JSON.stringify(p03)+"<br>"
+
+
+</script>
+</html>
