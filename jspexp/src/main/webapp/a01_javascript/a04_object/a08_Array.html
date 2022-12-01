@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+/*
+# Array객체
+1. js의 배열 선언 형식
+	1) var array = new Array(); // 빈 배열
+		new Array(5); // 배열의 크기르 지정
+		new Array(50,30,400) // 구성요소 포함
+	2) var array2 = []
+		[10,20,30]
+2. 속성과 메서드
+	1) length : 배열 요소의 갯수
+	2) concat() : 배열 요소를 이어주는 역할
+	3) join() : 모든 요소 문자열
+	4) pop() : 마지막 요소 제거 및 리턴 처리
+	5) push() : 마지막에 요소 추가
+	6) reverse() : 배열 데이터 뒤집기 처리
+	7) slide(index시작, 마지막) : 지정 부분 추출하여 배열 처리 - 원배열 구조 변경하지 않음.
+	8) sort() : 정렬처리 - 기본(첫째문자부터 순서로 비교하여 가나다라, 123 순서로 비교)
+			123
+			134
+			2
+			숫자의 경우 위같은 형식에 한계(데이터 비교 문제 발생)가 있기에 익명함수를 매개변수로 사용한다.
+			sort(function(left,right){ return left-right;})
+	9) splice() : 지정 부분 삭제, 삭제한 요소 리턴 - 원배열 구조 변경
+ */
+ var div = document.querySelector("#container")
+ 
+ var arry01 = []
+ var arry02 = [1000,2000,3000]
+ var arry03 = new Array()
+ var arry04 = new Array(5)
+ var arry05 = new Array(3000,4000,5000)
+ 
+ div.innerHTML+="arry01:"+arry01+"<br>"
+ div.innerHTML+="arry02:"+arry02+"<br>"
+ div.innerHTML+="arry03:"+arry03+"<br>"
+ div.innerHTML+="arry04:"+arry04+"<br>"
+ div.innerHTML+="arry05:"+arry05+"<br>"
+ 
+// ex) 월드컵 선수 3명이름 배열로 두가지 형식으로 선언하고, 출력하세요. 
+ var soccerPlayers = ["조현우","김민재","이강인"]
+ var soccerPlayers2 = new Array("조현우","김민재","이강인")
+ div.innerHTML+="<h2>월드컵 선수 배열정렬</h2>"
+ div.innerHTML+= "[]형식 : "+soccerPlayers+"<br>"
+ div.innerHTML+= "Array()형식 : "+soccerPlayers2+"<br>"
+ //정답
+ var players1 = ["킬리안 음바페(파리 생제르맹)","카림 벤제마(레알 마드리드)","케빈 더보"]
+ var players2 = new Array("아르헨티나 리오넬 메시(파리 생제르맹)","크리스티아누 호날두(맨체스터 유나이티드)","베르나르두 실바")
+ div.innerHTML+= "players1 : "+players1+"<br>"
+ div.innerHTML+= "players2 : "+players2+"<br>"
+</script>
+</html>

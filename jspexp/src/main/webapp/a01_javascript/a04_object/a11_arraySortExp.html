@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+/*
+
+ */
+ var div = document.querySelector("#container")
+ div.innerHTML=""
+// ex) 구매정보 물건명, 가격, 갯수 설정해서 3개정도 가격기준 정렬/총비용기준 정렬처리
+ var buyList=[]
+ buyList.push({pname:"딸기",price:12000,cnt:1})
+ buyList.push({pname:"사과",price:3000,cnt:3})
+ buyList.push({pname:"바나나",price:6000,cnt:10})
+
+ 
+ var show = "<h2>가격기준정렬</h2>" 
+ show += "<table><tr><th>물건명</th><th>가격</th><th>갯수</th><th>총비용</th></tr>"
+ buyList.sort(function(left,right){
+	 return left.price - right.price
+ })
+ buyList.forEach(function(prod){
+	 show+="<tr><td>"+prod.pname+"</td><td>"+prod.price+"</td><td>"
+	 +prod.cnt+"</td><td>"+prod.price*prod.cnt+"</td></tr>"
+ })
+ show+="</table>"
+ div.innerHTML+=show
+ var show = "<h2>총계기준정렬</h2>" 
+ show += "<table><tr><th>물건명</th><th>가격</th><th>갯수</th><th>총비용</th></tr>"
+ buyList.sort(function(left,right){
+	 var lTot = left.price*left.cnt
+	 var rTot = right.price*right.cnt
+ 	 return rTot - lTot
+ })
+ buyList.forEach(function(prod){
+	 show+="<tr><td>"+prod.pname+"</td><td>"+prod.price+"</td><td>"
+	 +prod.cnt+"</td><td>"+prod.price*prod.cnt+"</td></tr>"
+ })
+ show+="</table>"
+ div.innerHTML+=show
+</script>
+</html>

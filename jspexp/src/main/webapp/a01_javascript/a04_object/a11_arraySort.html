@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+/*
+# sort의 처리
+1. 기본 sort()는 첫번째자리부터 비교해서 정렬하고,
+	그다음 자리에 데이터를 비교하기에, 자리수가 같지 않으면
+	원하는 정렬이 처리되지 않는다.
+2. 숫자의 데이터를 비교해서 정리를 위한 처리..
+	1) 오름차순
+	배열.sort(fuction(left, right){
+		return left - right;// 0, +, - 값에 따라서 정렬을 처리
+	})
+	2)내림차순
+	배열.sort(fuction(left, right){
+		return right - left;// 0, +, - 값에 따라서 정렬을 처리
+	})
+ */
+ var div = document.querySelector("#container")
+ var array = [52,273,103,32]
+ var array1 = [52,73,32,12]
+ var array2 = [152,273,332,412]
+ var array3 = [52,1,273,332,4324,412]
+ array.sort(); array1.sort(); array2.sort(); array3.sort();
+ div.innerHTML+=array+"<br>"
+ div.innerHTML+=array1+"<br>"
+ div.innerHTML+=array2+"<br>"
+ div.innerHTML+=array3+"<br>"
+ var array = [52,273,103,32]
+ array.sort(function(left,right){
+	 return left - right; // 그대로 내려오기에 기본 순차정렬인 오름차순 정렬
+ })
+div.innerHTML += "기능 처리 후 오름차순 정렬:"+array+"<br>"
+array.sort(function(left,right){
+	return right - left; // X형식으로 바꾸어주기에 역정렬인 내림차순으로 정렬
+})
+div.innerHTML += "기능 처리 후 내림차순 정렬:"+array+"<br>"
+
+// ex) 임의의 수(1~9999) 범위 안에 숫자 5개를 배열로 가져와서 최고높은 값부터 
+//		내림차순으로 출력되게 하세요...
+var numberArr = []
+for(var idx=1;idx<6;idx++){
+	numberArr.push(parseInt(Math.random()*10000+1))
+}
+
+div.innerHTML += "["+numberArr+"]<br>";
+numberArr.sort(function(left,right){
+	return right - left;
+})
+div.innerHTML +="내림차순 정렬["+ numberArr+"]<br>";
+// 정답
+var ranNums = []
+for(var cnt=1;cnt<=5;cnt++){
+	ranNums.push(parseInt(Math.random()*9999+1))
+}
+div.innerHTML+=ranNums+"<br>"
+ranNums.sort(function(left,right){
+	return left-right;
+})
+div.innerHTML+=ranNums+"<br>"
+// 학생별로 번호, 국어/영어/수학 점수가 있을 때, 국어점수가 가장 높은 학생, 영어점수가
+// 가장 낮은 학생별로 정렬을 처리할 때, 어떻게 하여야 하는가?
+var show="<h2>학생성적</h2>"
+var studs = []
+for(var no=1;no<=25;no++){
+	var stud = {}
+	stud.no = no
+	stud.kor = parseInt(Math.random()*101)
+	stud.eng = parseInt(Math.random()*101)
+	stud.math = parseInt(Math.random()*101)
+	studs.push(stud)
+	show+=stud.no+":"+stud.kor+":"+stud.eng+":"+stud.math+"<br>"
+}
+div.innerHTML=show
+studs.sort(function(left,right){ //studs 배열안에 비교 객체를 기준
+	return right.kor-left.kor;
+})
+var show=""
+studs.forEach(function(stud){
+	show+=stud.no+":"+stud.kor+":"+stud.eng+":"+stud.math+"<br>"
+})
+div.innerHTML="<h2>학생 국어점수 기준 내림 차순</h2>"
+div.innerHTML+=show 
+
+
+
+</script>
+</html>

@@ -25,16 +25,20 @@
 		패스워드:<input type="text" name="PASSWORD" />
 		<input type="submit" value="로그인" />
 	</form>
-	
-<div id="container" ></div>
+<%
+	String id = request.getParameter("id");
+	boolean isInvalid = false;
+	if(id!=null){
+		isInvalid = true;
+	}
+%>	
+
 
 
 </body>
 <script type="text/javascript">
-/*
- 
-*/
-var div = document.querySelector("#container")
-div.innerHTML=""
+var isInvalid = < %=isInvalid%>;
+if(isInvalid) alert("< %=id%>는 인증된 계정이 아닙니다.");
+
 </script>
 </html>

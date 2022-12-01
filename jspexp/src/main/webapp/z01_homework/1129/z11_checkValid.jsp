@@ -21,15 +21,28 @@
 </head>
 <body>
 <% 
+	String id = request.getParameter("ID"); 
+	if(id.equals("himan")){
+		session.setAttribute("ID",id);
+		response.sendRedirect("z11_main.jsp");
+	}else{
+		request.setAttribute("ID", id);
+		request.getRequestDispatcher("z01_login.jsp").forward(request,response);
+	}
+%>
+<%-- 
 String id = request.getParameter("ID"); 
-if(id.equals("himan")){
+String pass = request.getParameter("pass");
+if(id.equals("himan") && pass.equals("7777")){
 	session.setAttribute("ID",id);
 	response.sendRedirect("z11_main.jsp");
 }else{
-	request.setAttribute("ID", id);
+	//request.setAttribute()로 처리해도 되지만,
+	//request.sendParameter("id")로 처리가 되기에 생략 가능
+	//request.setAttribute("ID", id);
 	request.getRequestDispatcher("z01_login.jsp").forward(request,response);
 }
-%>
+--%>
 
 <div id="container" ></div>
 

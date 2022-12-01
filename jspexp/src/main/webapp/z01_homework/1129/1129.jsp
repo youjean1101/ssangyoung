@@ -138,19 +138,31 @@
 		2) form action 요청페이지 호출 설정(유효성 check-js)
 		3) 요청값을 받을 내용을 처리(z11_checkValid.jsp)
 			- DB나 조건에 의해 인증되었을 때, 세션값 설정 z11_main.jsp 이동 처리
+			- 인증되지 않았을 때, forward로 z10_login.jsp 이동
 				if(id.equals("haman") && pass.equals("7777"){
 					session.setAttribute("id",id);
 					response.sendRedirect("z11_main.jsp");
 				}else{
-					request.getDispatherRequest("z10_login.jsp"
+					// request.setAttribute()로 처리해도 되지만,
+					// request.getParameter("id")로 처리가 되기에 생략 가능
+					request.getRequestDispather("z10_login.jsp"
 					).forward(request, response);
 				}
-					
-			- 인증되지 않았을 때, forward로 z10_login.jsp 이동
+			
 			
 		4) 유효화하지 않는 id에 대한 로그인 화면 요청값 처리(z10_login.jsp)
 			- request 객체로 요청값 확인 및 인증되지 않음 경고창 처리
+			String id = request.getParameter("id")
+			boolean isInvalid = false;
+			if(id!=null){
+				isInvalid = true;
+			}
+			js
+			var isInvalid = < %=isInvalid%>;
+			if(isInvalid) alert("< %=id%>는 인증된 계정이 아닙니다.");
+			
 		5) 메인 화면에서 session 출력 z11_main.jsp
+			<h2>< %=session.getAttribute("id")%>님 로그인 중입니다.</h2>
 		
 	
 	

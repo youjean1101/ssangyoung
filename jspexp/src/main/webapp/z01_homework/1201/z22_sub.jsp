@@ -12,7 +12,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="/a00_com/a01_common.css" rel="stylesheet">
-<% %>
 <script type="text/javascript">
 /*
  
@@ -22,21 +21,18 @@
 </head>
 <body>
 <%
-	//정답
-	String id = (String)session.getAttribute("id");
+String country=request.getParameter("country"); if(country==null) country="";
+String name=request.getParameter("name"); if(name==null) name="";
+String score=request.getParameter("score"); if(score==null) score="0";
 %>
-
-<h3><%=session.getAttribute("ID") %>님 로그인되었습니다.</h3>
-<!-- <h3><%=id %>님 로그인되었습니다.</h3> -->
-
 <div id="container" ></div>
 
 
 </body>
 <script type="text/javascript">
-	var id = "<%=id%>"
-	alert(id+"님 로그인 성공")
-
+/*
+ 
+*/
 var div = document.querySelector("#container")
 div.innerHTML=""
 </script>

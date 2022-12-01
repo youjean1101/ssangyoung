@@ -12,7 +12,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="/a00_com/a01_common.css" rel="stylesheet">
-<% %>
 <script type="text/javascript">
 /*
  
@@ -21,22 +20,25 @@
 
 </head>
 <body>
-<%
-	//정답
-	String id = (String)session.getAttribute("id");
-%>
-
-<h3><%=session.getAttribute("ID") %>님 로그인되었습니다.</h3>
-<!-- <h3><%=id %>님 로그인되었습니다.</h3> -->
-
+<%-- 
+ex) a03_includeExp.jsp에 include액션태그로 a04_subPage.jsp를 만들고, 출력하게 하세요.
+		전달데이터 - 회원명 회원권한
+--%>
+ <h2>포함화면</h2>
+	<div style="border:1px solid green">
+		<jsp:include page="a04_subPage.jsp">
+			<jsp:param value="홍길동" name="ename"/>
+			<jsp:param value="관리자" name="auth"/>
+		</jsp:include>
+	</div>
 <div id="container" ></div>
 
 
 </body>
 <script type="text/javascript">
-	var id = "<%=id%>"
-	alert(id+"님 로그인 성공")
-
+/*
+ 
+*/
 var div = document.querySelector("#container")
 div.innerHTML=""
 </script>

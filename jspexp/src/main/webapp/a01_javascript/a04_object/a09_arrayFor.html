@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+/*
+# 배열과 반복문 처리
+1. for문
+	1) for(var idx=0;idx<배열.length;idx++){
+			배열[idx] : 배열의 index로 접근해서 가져온다.
+		}
+	2) for(var idx in 배열)
+		idx : 배열의 index를 문자열로 가져온다.
+		배열[idx] : 배열에 할당된 값을 가져온다.
+ 	3) for(var 단위데이터 of 배열)
+ 		배열의 단위데이터를 변수에 할당하여 가져온다.
+ 	4) 배열.forEach(function(단위데이터, index, 배열전체){})
+ */
+ 	var array01 = ['A','B','C','D']
+ 	
+	 var div = document.querySelector("#container")
+	 for(var idx=0;idx<array01.length;idx++){
+		 div.innerHTML+=idx+":"+array01[idx]+"<br>"
+	 }
+	// ex) array01를 2),3),4) 적용해서 출력하세요.
+	div.innerHTML+="<h2>for(var idx in 배열)</h2>"
+	for(var idx in array01){
+		div.innerHTML+=idx+":"+array01[idx]+":index의 데이터-"+typeof(idx)+"<br>"
+	}
+	div.innerHTML+="<h2>for(var 단위데이터 of 배열)</h2>"
+	for(var ch of array01){
+		 div.innerHTML+=ch+"<br>"
+	}
+	div.innerHTML+="<h2>배열.forEach(function(단위데이터, index, 배열전체){})</h2>"
+	array01.forEach(function(ch, idx, arr){
+		 div.innerHTML+=idx+":"+ch+":"+arr+"<br>"
+	})
+
+</script>
+</html>
