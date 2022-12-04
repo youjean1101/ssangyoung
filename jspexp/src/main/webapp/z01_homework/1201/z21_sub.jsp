@@ -20,8 +20,14 @@
 
 </head>
 <body>
+
 	<h2><%=request.getParameter("teamname") %></h2>
-	<h2><%=request.getParameter("point") %></h2>
+	<h2><%=request.getParameter("point") %>점</h2>
+	
+	<h2>B조 1위</h2>
+	<h2><%=request.getParameter("nation") %></h2>
+	<h2><%=request.getParameter("points") %>점</h2>
+	
 <div id="container" ></div>
 
 

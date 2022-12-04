@@ -20,15 +20,11 @@
 
 </head>
 <body>
-<h2>frame01</h2>
-<input type="text" name="call" />
-
+	<h1>forward된 페이지</h1>
+	<h2>페이지: <%=pageContext.getAttribute("pag_name")%></h2>
+	<h2>요청: <%=request.getAttribute("req_name")%></h2>
 </body>
 <script type="text/javascript">
-/*
- 
-*/
-var div = document.querySelector("#container")
-div.innerHTML=""
+
 </script>
 </html>

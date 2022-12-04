@@ -20,8 +20,10 @@
 
 </head>
 <body>
-<h2>frame01</h2>
-<input type="text" name="call" />
+<h2>장바구니1</h2>
+
+<div id="container" ></div>
+
 
 </body>
 <script type="text/javascript">

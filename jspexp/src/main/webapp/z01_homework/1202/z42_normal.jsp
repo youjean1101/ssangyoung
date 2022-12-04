@@ -20,8 +20,7 @@
 
 </head>
 <body>
-<h2>frame01</h2>
-<input type="text" name="call" />
+	<h2>일반 손님입니다.</h2>
 
 </body>
 <script type="text/javascript">

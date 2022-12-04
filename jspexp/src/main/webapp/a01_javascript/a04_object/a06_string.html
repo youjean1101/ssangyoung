@@ -22,7 +22,7 @@
 	}
  }
  
- function chLen(obj){
+ function ckLen(obj){
 	 var len = obj.value.length
 	 var span = document.querySelector("span")
 	 if(len>20){
@@ -42,7 +42,9 @@
 	<hr><br>
 	
 내용을 입력하세요:
-<textarea name="cont" cols="20" rows="5" onkeyup="chLen(this)"></textarea>
+<!-- onkeyup : 해당 대상객체에 입력했다가 키가 올라오는 순간 이벤트 발생
+	this : 이벤트가 일어나는 현재 textarea객체 전체를 매개변수로 전달 -->
+<textarea name="cont" cols="20" rows="5" onkeyup="ckLen(this)"></textarea>
 <span>0/20</span>
 </body>
 <script type="text/javascript">

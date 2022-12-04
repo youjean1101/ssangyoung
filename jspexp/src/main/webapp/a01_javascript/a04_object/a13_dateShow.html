@@ -45,12 +45,15 @@
  div.innerHTML+= date.getFullYear()+"년"+date.getMonth()+"월"+date.getDate()+"일  "
  div.innerHTML+= date.getHours()+"시"+date.getMinutes()+"분<br>"
  //정답
- var date01 = new Date(2023,0,1,09,00,00)
+ var date01 = new Date(2023,1,1,09,00,00)
  div.innerHTML+= "날짜 출력: "+ date01.toLocaleDateString()+"<br>"
  div.innerHTML+= "시간 출력: "+ date01.toLocaleTimeString()+"<br>"
  var shw = date01.getFullYear()+"년 "
  shw += date01.getMonth()+"월 "
  shw += date01.getDate()+"일 "
+ var days=["일","월","화","수","목","금","토"]
+ shw += days[date01.getDay()]+"요일 " 
+ // 요일은 변경 기준이 없어서 setDay가 없음. 다른 속성에 의해 영향을 받기만 함..
  shw += date01.getHours()+"시 "
  shw += date01.getMinutes()+"분"
  div.innerHTML += shw

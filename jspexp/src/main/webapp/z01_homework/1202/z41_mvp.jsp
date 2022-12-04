@@ -20,8 +20,8 @@
 
 </head>
 <body>
-<h2>frame01</h2>
-<input type="text" name="call" />
+	<h2>MVP 손님입니다, 깍듯이 모시세요.</h2>
+
 
 </body>
 <script type="text/javascript">

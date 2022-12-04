@@ -42,7 +42,7 @@
    		}
    	</script>
    
-	<h2>[2단계:확인] 3. [js] 회원 아이디를 입력시 글자수 제한을 8~16로 처리하기로 했다. 입력시, 해당 범위에 맞지 않으면
+	<h2>[2단계:확인]* 3. [js] 회원 아이디를 입력시 글자수 제한을 8~16로 처리하기로 했다. 입력시, 해당 범위에 맞지 않으면
                하단에 입력범위는 8~16 표시하고 그외에는 입력가능으로 표시하게 하세요.</h2>
 	 
 	 회원아이디:<input type="text" name="id" onkeyup="textCnt3(this)"/>
@@ -59,8 +59,24 @@
    	 }
     }
     </script>
+    <h3>정답</h3>
+    <script type="text/javascript">
+    function ckId(obj){
+    	var len2 = obj.value.length
+    	var spanOb = document.querySelector("#answer3");
+    	var msg = "아이디는 8~16 입력가능합니다."
+    	spanOb.style.color="red"
+    	if(len2>=8 && len2<=16){
+    		msg = "유효한 아이디 입력"
+    		spanOb.style.color="blue"
+    	}
+    	spanOb.innerText = msg
+    }
+    </script>
+    회원아이디 : <input type="text" name="id2" onkeyup="ckId(this)"/>
+    <span id="answer3">아이디 입력</span> 
     
-	<h2>[2단계:확인] 4. [js] 팀인원등록[    ][등록] 
+	<h2>[2단계:확인]* 4. [js] 팀인원등록[    ][등록] 
 			==> 선수명을 ,단위로 구분해서 등록 버튼을 누르면 바로 밑에 테이블 형식으로 번호(1.2...)와 함께 이름이 출력되게 하세요</h2>
 			
 	팀인원등록:<input type="number" name="teamcnt" />
@@ -82,7 +98,24 @@
 			document.querySelector("#ex4").innerHTML = show 
 		}
 	</script>
-		
+	<h3>정답</h3>
+		<script>
+		function regTab(){
+			var data = document.querySelector("[name=regMem]").value
+			var players = data.split(",") // "홍길동, 김길동, 신길동" ==> ["홍길동","김길동","신길동"]
+			var shHTML = "<table><tr><th>번호</th><th>이름</th></tr>"
+			players.forEach(function(players, idx){
+				shHTML+="<tr><td>"+(idx+1)+"</td><td>"+players+"</td></tr>"
+			})
+			shHTML+="</table>"
+			document.querySelector("#show").innerHTML = shHTML;
+		}
+		</script>
+		<h2>팀인원등록</h2>
+		<input type="text" name="regMem"/>
+		<input type="button" value="등록" onclick="regTab()"/>
+		<div id="show"></div>
+	
 	<h2>[1단계:확인]* 5. [jsp] 웹 서버단위로 초기 설정값을 설정할려고 한다. 처리 방식을 기술하세요</h2>
 	
 	<h2>[1단계:확인]* 6. [jsp] 웹 서버에서 DB 주소, port, sid, 계정, 비번설정해서 DB를 접속할려고 한다. 처리하고, 호출하세요.</h2>

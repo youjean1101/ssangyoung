@@ -59,7 +59,11 @@ pageContext.setAttribute("obj01",new Person("홍길동",25,"서울"));
 <h1>페이지 범위 문자열:<%=pageContext.getAttribute("str01") %></h1>
 <h1>페이지 범위 숫자:<%=pageContext.getAttribute("num01") %></h1>
 <h1>페이지 범위 숫자연산:
-	<%=((Integer)pageContext.getAttribute("num01")+(Integer)pageContext.getAttribute("num02")) %></h1>
+	<%=((Integer)pageContext.getAttribute("num01")
+			+(Integer)pageContext.getAttribute("num02")) %></h1>
+<%--setAttribute로 설정되는 내용은 기본적으로 Object로 저장되기에 
+	고유의 유형(숫자, boolean 등) 형식을 사용하거나 특정 객체 유형인 경우는
+	객체타입으로 형변환해주어야 한다. --%>
 <%
 // 페이지범위 저장 객체 가져오기.
 Person p01 = (Person)pageContext.getAttribute("obj01");

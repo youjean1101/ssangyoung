@@ -44,9 +44,14 @@ function go(idx){
 	//var fr = document.querySelectorAll("iframe")
 	//alert(fr)
 	// frame, href에서 호출되는 객체는 BOM(browser object model)
-	// DOM 객체의 상위 객체로 bom명.document.querySelector("포함된 객체 접근")
-	var nameVal = document.querySelector("[name=name]").value
-	if(idx==0) frame01.document.body.innerHTML+=nameVal+"<br>"
+	// DOM 객체(Document Object Model)의 상위 객체로 
+	// bom명.document.querySelector("포함된 객체 접근")
+	var nameVal = this.document.querySelector("[name=name]").value
+	// this. 현재 페이지 BOM을 지칭
+	if(idx==0) {
+		frame01.document.body.innerHTML+=nameVal+"<br>"
+		frame01.document.querySelector("[name=call]").value=nameVal+"^^"
+	}
 	if(idx==1) frame02.document.body.innerHTML+=nameVal+"<br>"
 }
 // ex) a12_main.jsp 

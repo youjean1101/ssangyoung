@@ -11,21 +11,25 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-
-</style>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
 <script type="text/javascript">
-
+/*
+ 
+*/
 </script>
 
 </head>
 <body>
-
+ <h2><%=request.getParameter("id")%>로그인 성공<h2> 
 <div id="container" ></div>
 
 
 </body>
 <script type="text/javascript">
-
+/*
+ 
+*/
+var div = document.querySelector("#container")
+div.innerHTML=""
 </script>
 </html>

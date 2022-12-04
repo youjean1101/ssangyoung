@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+/*
+# Date 객체의 시간간격에 대한 처리
+1. getTime()를 통해서 1970/1/1기준으로 1/1000시간을 가져올 수 있다.
+	우리나라 GMT+ 9:00 
+ */
+ var div = document.querySelector("#container")
+ 
+ var d1 = new Date(1970,0,1,9,0)
+ var show =""
+	 show+="1970/1/1의 getTime():"+d1.getTime()+"<br>"
+ var d2 = new Date()
+	 show+="현재의 getTime():"+d2.getTime()+"<br>"
+ var d3 = new Date(2022,11,02,15,22,0)
+	 show+="2022/12/02 15:22 0초의 getTime():"+d3.getTime()+"<br>"
+ var d4 = new Date(2022,11,02,15,22,1)
+	 show+="2022/12/02 15:22 1초의 getTime():"+d4.getTime()+"<br>"
+	 show+="d3와 d4의 차이:"+parseInt(d4.getTime()-d3.getTime())+"밀리세컨드<br>"
+ var d5 = new Date(2023,3,22,18,00)
+ 	 show+="2023/03/22 18:00의 getTime():"+d5.getTime()+"<br>"
+ var diff = d5.getTime() - d2.getTime()
+	 show+="현재시간과 차이(1/1000) getTime():"+diff+"<br>"
+	 show+="현재시간과 차이(초단위):"+parseInt(diff/1000)+"<br>"
+	 show+="현재시간과 차이(분단위):"+parseInt(diff/1000/60)+"<br>"
+	 show+="현재시간과 차이(시단위):"+parseInt(diff/1000/60/60)+"<br>"
+	 show+="현재시간과 차이(일단위):"+parseInt(diff/1000/60/60/24)+"<br>"
+	 div.innerHTML = show
+// ex) 과정시작 : 2022/8/29 오늘 날짜 기준으로 진행한 날 수 계산 출력..
+	 var d6 = new Date(2022,7,29,9,0)
+	 var diff2 = d2.getTime()-d6.getTime()
+	 show +="과정시작날짜:"+d6.getTime()+"<br>"
+	 show +="과정시작날짜:"+d6+"<br>"
+	 show+="과정시작 진행한 날 수:"+parseInt(diff2/1000/60/60/24)+"일<br>"
+	 
+	 
+	 
+	 div.innerHTML = show
+</script>
+</html>

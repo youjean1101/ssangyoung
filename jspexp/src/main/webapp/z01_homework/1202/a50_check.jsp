@@ -13,22 +13,27 @@
 <title>Insert title here</title>
 <link href="/a00_com/a01_common.css" rel="stylesheet">
 <script type="text/javascript">
-/*
- 
-*/
+
 </script>
 
 </head>
 <body>
-<h2>frame01</h2>
-<input type="text" name="call" />
-
+	<%= request.getAttribute("pname") %>
+	<%if(request.getAttribute("pname").equals("사과")){ 
+		//재고없음
+	%>
+    	<jsp:forward page="a54_main.jsp"/> 
+   
+    <%	}else{
+    	// 재고있음
+    %>
+		<jsp:forward page="a53_main.jsp"/>
+    <%
+    	}
+    %>
+ 
 </body>
 <script type="text/javascript">
-/*
- 
-*/
-var div = document.querySelector("#container")
-div.innerHTML=""
+
 </script>
 </html>
