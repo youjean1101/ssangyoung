@@ -370,6 +370,28 @@ public boolean chkDept(int deptno,String dname){
 		
 		return hasInfo;
 	}
+	// 조회 처리
+   public boolean checkId(String id){
+      boolean isSuccess = false;
+      String sql = "SELECT 1\r\n"
+				+ "FROM member\r\n"
+				+ "WHERE id=?";
+      try {
+         con = DB.con();
+         pstmt = con.prepareStatement(sql);
+         pstmt.setString(1, id);
+         rs = pstmt.executeQuery(); // sql를 넣지 않는다.!!(주의)
+         isSuccess = rs.next();	// 해당 id, pass로 조회 될때만 true 그 외는 false
+         
+      } catch (SQLException e) {
+         System.out.println("DB에러:"+e.getMessage());
+      } catch(Exception e) {
+         System.out.println("일반 에러:"+e.getMessage());
+      }finally {
+         DB.close(rs, pstmt, con);
+      }
+      return isSuccess;
+   }
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		

@@ -21,7 +21,8 @@
 </head>
 <body>
 	<h2>MVP 손님입니다, 깍듯이 모시세요.</h2>
-
+	<h2><%= request.getParameter("name5") %>구매 MVP 페이지</h2>
+	 <h3><%= request.getAttribute("tot2") %></h3>
 
 </body>
 <script type="text/javascript">

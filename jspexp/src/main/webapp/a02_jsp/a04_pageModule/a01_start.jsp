@@ -46,7 +46,18 @@
 	이동처리하는 jsp의 액션태그인 jsp:forward가 있다.
 	현재페이지가 가지고 있는 request, response와 함께 있는 데이터를 가지고 다음페이지에 전송이 된다. 
 	ex) 요청값, 쿠키값 등..
+--%>
+	<jsp:forward page="a01.page.jsp"></jsp:forward>
+	<%
+	// 위 내용으로 화면 전환에 문제가 있을 경우에는 아래의 java 코드를 처리함
+	RequestDispatcher rd = request.getRequestDispatcher("a01_page.jsp");
+	rd.forward(request, response);
+	// request 범위로 데이터를 가지고 있을려면, 이렇게 매번 forward 처리해야 가능하지만, 
+	// session은 a href나 response.sendRedirect()로 이동하더라도 
+	// session값을 가지고 있을 수 있다.
+	%>
 
+<%--
 # jsp:include 액션태그
 1. 다른 jsp 페이지의 실행 결과를 현재 위치에 삽입
 2. 기본형식

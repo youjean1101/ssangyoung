@@ -41,6 +41,11 @@
 <script type="text/javascript">
 
 function go(idx){
+	// iframe으로 데이터를 화면별로 전송하는 것은 서버와 관련이 없이 
+	// 현재 로딩된 js,html을 이용해서 DOM으로 접근하여 처리하는 것이다.
+	// DOM(document object model)
+	
+	
 	//var fr = document.querySelectorAll("iframe")
 	//alert(fr)
 	// frame, href에서 호출되는 객체는 BOM(browser object model)

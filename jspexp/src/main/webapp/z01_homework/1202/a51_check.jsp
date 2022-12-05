@@ -20,15 +20,16 @@
 
 </head>
 <body>
-<%-- <h2><%=request.getAttribute("pname")%> 재고있음</h2> --%>
-<%-- 
-
-
---%>
-	<h3>정답</h3>
-	<h2><%=request.getAttribute("msg")%></h2>
-	<h2><%=request.getParameter("pname2")%>재고</h2>
-
+		<%
+		String id = request.getParameter("id4");
+		if(id!=null){
+			A06_PareparedDao dao = new A06_PareparedDao();
+			request.setAttribute("hasId",dao.checkId(id)?"Y":"N");
+		%>
+			<jsp:forward page="1202.jsp" />
+		<%
+		}
+		%>
 <div id="container" ></div>
 
 

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+	<h2>단일 객체의 레이블 변경하기</h2>
+	<p></p>
+	<h3>다중 선택자</h3>
+	<h3>다중 선택자</h3>
+	<h3>다중 선택자</h3>
+	<h3>다중 선택자</h3>
+	<h3>다중 선택자</h3>
+	<h3>다중 선택자</h3>
+	<table id="tab01">
+	<tr><td class="cls01"></td><td></td></tr>
+	<tr><td></td><td class="cls01"></td></tr>
+	<tr><td class="cls01"></td><td></td></tr>
+	</table>
+	
+	<h4>1</h4>
+	<h4 class ="cls02">2</h4>
+	<h4>3</h4>
+	<h4 class ="cls02">4</h4>
+	<h4>5</h4>
+	<h4 class ="cls02">6</h4>
+	<h4>7</h4>
+	
+	
+	<script>
+	var h2Obj = document.querySelector("h2")
+	h2Obj.innerText="변경된 레이블"
+	
+	//ex) p태그를 선언하여 반갑습니다. 출력해보기..
+	var pObj=document.querySelector("p")
+	pObj.innerText="출력 레이블"
+	var h3Array = document.querySelectorAll("h3")
+	var cls901 = document.querySelectorAll(".cls01")
+	cls901[0].style.color="red"
+	cls901[1].style.color="blue"
+	cls901[2].style.color="purple"
+	
+	h3Array[0].innerText = "선택1"
+	h3Array[1].innerText = "선택2"
+	h3Array[3].innerText = "선택3"
+	h3Array[5].innerText = "선택4"
+	// ex) 2X2 테이블을 만들고, 해당 td 안에 빨강/파랑/노랑/청록이라고 출력하세요.
+	
+	var tbs= document.querySelectorAll("#tab01 td")
+	tbs[0].innerText = "빨강"
+	tbs[1].innerText = "파랑"
+	tbs[2].innerText = "노랑"
+	tbs[3].innerText = "청록"
+	tbs[4].innerText = "보라"
+	
+	// ex) h4를 7개를 선언하고, 이 중, 3개를 클래스 cls02로 선언하고 해당 클래스의 배경색상을 노랑색으로 처리하세요.
+	var cls02 = document.querySelectorAll(".cls02")
+	cls02[0].style.background="yellow"
+	cls02[1].style.background="yellow"
+	cls02[2].style.background="yellow"
+	
+	</script>
+	
+
+
+<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+/*
+# DOM
+1. document object model
+	html 안에 여러 요소를 객체로 인식하게 하여, 화면을 출력하거나
+	속성값을 변화시켜 원하는 화면구현이나 동적인 기능 처리를 할 때, 사용하는 객체모델을 말한다.
+2. DOM의 구성요소
+	1) dom 객체의 선택자
+		- css의 선택자를 통하여 객체를 선택할 수 있다.
+			태그, #아이디, .클래스
+			document.querySelector("h1")
+		- 단일
+			var ch01 = document.querySelector("#ch01")
+		- 다중선택
+			var cls01 = document.querySelectorAll(".cls01")
+		복합선택자,[속성=속성값] 등 css의 선택자를 활용하여 선택자 처리를 할 수 있다.
+		
+	2) dom 객체의 속성
+		1) 출력
+			.innerHTML : 화면에 출력할 내용을 랜더링(html 적용)한 내용의 태그를 
+				가져오거나 처리하는 속성
+			.innerText : 화면에 출력할 내용을 html 적용하지 않은 순서한 내용 자체를 가져오거나
+							랜더링하지 않는 속성
+		2) 기본 속성 
+			.속성	 = 속성값 : 태그가 가지고 있는 기본 속성을 읽어 오거나 설정할 수 있다.
+		3) style 속성
+			.style.속성 = 속성값 : css속성이 적용된 내용을 설정할 수 있다.
+		4) form 요소객체 속성
+			.value = "값" : 데이터의 입력 처리를 할 때, form 하위 객체의 요소인 value를 통해서
+							효과적으로 처리할 수 있다.
+		
+ */
+ 
+ var div = document.querySelector("#container")
+ div.innerHTML=""
+
+</script>
+</html>

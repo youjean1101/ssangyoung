@@ -20,11 +20,15 @@
 
 </head>
 <body>
-<h2><%=request.getAttribute("pname")%> 재고없음</h2>
+<%-- <h2><%=request.getAttribute("pname")%> 재고없음</h2> --%>
 <%-- 
 
 
 --%>
+	<h3>정답</h3>
+	<h2><%=request.getAttribute("msg")%></h2>
+	<h2><%=request.getParameter("pname2")%>재고</h2>
+	
 <div id="container" ></div>
 
 

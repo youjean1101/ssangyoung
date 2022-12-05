@@ -21,7 +21,9 @@
 </head>
 <body>
 	<h2>일반 손님입니다.</h2>
-
+	<h2><%= request.getParameter("name5") %>구매 일반 페이지</h2>
+	<h3><%= request.getAttribute("tot2") %></h3>
+	
 </body>
 <script type="text/javascript">
 /*

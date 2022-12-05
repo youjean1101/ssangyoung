@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+function calcu(){
+	var calStr = document.querySelector("#calStr").value
+	document.querySelector("#show").innerText=calStr+"="+eval(calStr)
+}
+</script>
+</head>
+<body>
+	연산식을 입력하세요:<input type="text" id="calStr"/>
+	<input type="button" value="계산" onclick="calcu()"/>
+	<h2 id="show"></h2>
+
+<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+/*
+# eval()
+1. 문자열로된 코드가 실제 코드로 변경할 때 사용한다.
+2. ex) 
+	var num01 = 25;
+	"var num01 = 25"; // 문자열로 된 코드 실행 안됨
+	"20 + 30 + 40" // 문자열로만 나열
+	20 + 30 + 40	// 90
+ */
+ var code01 = "var num01 = 30; alert(num01)"
+ var div = document.querySelector("#container")
+div.innerHTML=code01+"<br>"
+div.innerHTML+=eval("20 + 30 + 40")+"<br>"
+// eval(code01) // 실행이 된다.
+
+</script>
+</html>

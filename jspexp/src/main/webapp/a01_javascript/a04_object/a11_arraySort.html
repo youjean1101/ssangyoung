@@ -36,6 +36,22 @@
 	배열.sort(fuction(left, right){
 		return right - left;// 0, +, - 값에 따라서 정렬을 처리
 	})
+3. 객체형 배열데이터의 정렬처리..
+	1) 특정한 속성을 기준으로 오름 내림 차순 처리
+	var points = 
+	[{kor:70,eng:80,math:90},
+	 {kor:80,eng:85,math:90},
+	 {kor:90,eng:90,math:90}
+	]
+	points.sort(function(left, right){
+		// left, right 위 포함된 단위 객체를 지칭..
+		// 특정한 속성을 기준으로 처리할려면 left.속성 접근해서 처리
+		return left.kor-right.kor // 국어점수 기준으로 오름차순
+		return right.eng-left.eng // 영어점수 기준으로 내림차순
+		leftTot = left.kr+left.eng+left.eng
+		rightTot = right.kr+right.eng+right.eng
+		return rightTot - leftTot // 총합산 기준으로 내림차순
+	})
  */
  var div = document.querySelector("#container")
  var array = [52,273,103,32]
