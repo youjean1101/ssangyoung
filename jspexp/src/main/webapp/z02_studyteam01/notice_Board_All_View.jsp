@@ -10,6 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>Insert title here</title>
 <style>
 	input[type="button"]{
@@ -72,7 +73,7 @@
 
 </head>
 <body>
-	<iframe src="noticeBoard_topMenu.jsp" width="100%" height="100"  frameborder="0"></iframe>
+	<jsp:include page="noticeBoard_topMenu.jsp"></jsp:include>
 	<box id="All">
 		<box id="noticeIndex">
 			<input type="button" value="게시판 작성" onclick="boardInsertGo()"/>

@@ -74,6 +74,11 @@
 	//  if(this.innerText=='C')??
  	
  	for(var idx=0;idx<tds.length;idx++){
+ 		// <td onclick="함수"
+ 		//		this.innerText : td 중에 이벤트가 일어난 객체를 지칭
+ 		//			숫자(0~9), C(초기화), =(계산처리)
+ 		//		tds[0].innerText  : 상단의 출력 내용
+ 		//		eval(tds[0].innerText)  : 상단의 내용을 함수로 계산 처리 (문자열 ==> 계산)
  		tds[idx].onclick=function(){
  			//클릭한 현재 문자열을 출력
  			//alert(this.innerText)

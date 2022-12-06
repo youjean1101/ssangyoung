@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+	<h2></h2>
+	<h2></h2>
+	<h2></h2>
+	<h2></h2>
+	<h2></h2>
+	<h2></h2>
+	<h2></h2>
+	<hr>
+	<h4></h4>	
+	<h4></h4>	
+	<h4></h4>	
+	<table id="tab01">
+		<thead>
+			<tr><th>이름</th><th>국어</th></tr>
+		</thead>
+		<tbody>
+			<tr><td></td><td></td></tr>
+			<tr><td></td><td></td></tr>
+			<tr><td></td><td></td></tr>
+		</tbody>
+	</table>
+	<hr>
+	<table id="tab02">
+		<thead>
+			<tr><th>물건명</th><th>가격</th><th>갯수</th><th>계</th></tr>
+		</thead>
+		<tbody>
+			<tr><td></td><td></td><td></td><td></td></tr>
+			<tr><td></td><td></td><td></td><td></td></tr>
+			<tr><td></td><td></td><td></td><td></td></tr>
+		</tbody>
+	</table>
+	
+	
+</body>
+<script type="text/javascript">
+/*
+# 여러가지 배열 데이터와 함게 DOM 객체 활용하기
+1. DOM 다중 선택자
+	var domArry = document.querySelectorAll("다중의 선택자")
+2. 배열문과 반복 처리
+	domArry[0] : 개별적인 단위 DOM객체
+	domArry[1] : 개별적인 단위 DOM객체
+	
+	for(var idx=0;idx<배열.length;idx++)
+		// 각 DOM의 데이터 처리
+		domArry[idx].innerText = "입력데이터"
+ */
+	var h2Arry = document.querySelectorAll("h2")
+	h2Arry[0].innerHTML = "첫번째 데이터"
+	h2Arry[1].innerHTML = "두번째 데이터"
+	h2Arry[2].innerHTML = "h2의 길이 : "+h2Arry.length
+	var colors = ["red","orange","yellow","green","blue","navy","purple"]
+	for(var idx=0;idx<h2Arry.length;idx++){
+		h2Arry[idx].innerText = colors[idx]
+		h2Arry[idx].style.color = colors[idx]
+	}
+	// ex) h4를  3개 만들어 학생 3명의 이름을 배열로 선언된 데이터를 출력하세요.
+	var h4Arry = document.querySelectorAll("h4")
+	var names = ["홍길동", "김길동", "이길동"]
+	for(var idx=0;idx<h4Arry.length;idx++){
+		h4Arry[idx].innerText = names[idx]
+	}
+	var tds = document.querySelectorAll("#tab01 td")
+	for(var idx=0;idx<tds.length;idx++){
+		tds[idx].innerText = names[idx]
+	}
+	// # 다중의 속성을 가진 배열을 위의 DOM에 처리하기 위해서 logic이 필요로 한다.
+	var studs = [{name:"홍길동", kor:70},{name:"김길동", kor:80},{name:"오길동", kor:90}]
+	
+	var tds = document.querySelectorAll("#tab01 td");
+	tds[0].innerText = studs[0].name
+	tds[1].innerText = studs[0].kor
+	tds[2].innerText = studs[1].name
+	tds[3].innerText = studs[1].kor
+	tds[4].innerText = studs[2].name
+	tds[5].innerText = studs[2].kor
+	
+	for(var idx=0;idx<tds.length;idx++){
+		var stIdx = Math.floor(idx/2) // 위 index를 확인하여 td와 studs의 index차이를 로직으로 처리한다.
+		if(idx%2==0) {
+			tds[idx].innerText = studs[stIdx].name
+		}else{
+			tds[idx].innerText = studs[stIdx].kor
+		}
+	}
+	
+	// ex) id로 tab02로 3X2 테이블을 만들고 물건명과 가격이 3개 있는 json배열을 만들고 해당 테이블에 출력하세요.
+		var prods = [{pname:"사과", price:3000, cnt:2},
+						{pname:"바나나", price:6000, cnt:3},
+						{pname:"딸기", price:12000, cnt:4}]
+		var tds2 = document.querySelectorAll("#tab02 tbody td");
+		// td 0 1 2 물건의 name price cnt 할당	
+		prods.forEach(function(prod,idx){
+			var tdIdx = idx*4 // 물건명
+			tds2[idx*4].innerText = prod.pname
+			tds2[idx*4+1].innerText = prod.price
+			tds2[idx*4+2].innerText = prod.cnt
+			tds2[idx*4+3].innerText = prod.price*prod.cnt
+		})
+		
+</script>
+	<!-- 
+		td	0	1	2	3	물건0 물건명 가격 갯수 계
+		td	4	5	6	7	물건1 물건명 가격 갯수 계
+		td	8	9	10	11	물건2 물건명 가격 갯수 계
+		물건 index*4 ==> td의 index 물건명(0), 물건가격(+1), 물건갯수(+2) 계(+3)
+				
+				td index Vs 물건정보 index
+			0 1 2  3			0 name price cnt price*cnt 
+			4 5 6  7			1 name price cnt price*cnt 
+			8 9 10 11			2 name price cnt price*cnt 
+			
+			tIdx = pIdx*4+0 물건명 
+			tIdx = pIdx*4+1 가격 
+			tIdx = pIdx*4+2 갯수 
+			tIdx = pIdx*4+3 계 
+		
+	 -->
+</html>

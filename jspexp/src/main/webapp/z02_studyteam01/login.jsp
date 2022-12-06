@@ -65,8 +65,8 @@
 	}
 	box{
 		position:fixed;
-		left:28%;
-		top:30%;
+		left:30%;
+		top:28%;
 	}
 </style>
 <script type="text/javascript">
@@ -85,6 +85,34 @@
 			<input type="button" value="회원가입" onclick="signUpGo()"/>
 			<input type="submit" value="로그인" />
 		</form>
+	<%
+	String id = request.getParameter("id");
+	String password = request.getParameter("password");
+	boolean isFail = false;
+	if(id!=null&&password!=null){
+		studyteamDao dao = new studyteamDao();
+		
+		if(dao.login(id, password)){ //true(있으면)
+			response.sendRedirect("main.jsp");
+			session.setAttribute("loginID",id);
+			session.setAttribute("loginPassword",password);
+			NoticeBoardUser sel= new NoticeBoardUser(id,password);
+			for(NoticeBoardUser user:dao.userInfo(sel)){
+				session.setAttribute("loginEmail",user.getsEmail());
+				session.setAttribute("loginName",user.getsName());
+				session.setAttribute("loginPhone",user.getsPhonNumber());
+			}
+		}else{ //false(없으면)
+			isFail = true;
+		}
+	}
+	%>
+	<script>
+		var isFail=<%=isFail%>
+		if(isFail){
+			alert("로그인 실패\n인증된 아이디가 아닙니다.")
+		}
+	</script>
 	</box>
 </body>
 <script type="text/javascript">

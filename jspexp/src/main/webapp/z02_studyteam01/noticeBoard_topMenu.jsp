@@ -6,6 +6,7 @@
     import="jspexp.a13_database.vo.*"
     session = "true"
     %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,25 +63,33 @@
 	<box>
 		<label for="usermenu">
 			<img id="profile" src=".\a_img\profile.jpg" />
-			<select id="usermenu" onchage="">
-				<option value="" disabled selected>yujin님</option> 
-				<option value="회원탈퇴">회원탈퇴</option>
-				<option value="login.jsp">로그아웃</option>
-				<option value="설정">설정(개인정보수정)</option>
+			<select id="usermenu" onchange="menuChoice(this.form)">
+				<option value="" disabled selected><%=session.getAttribute("loginID") %></option> 
+				<option value="userDelete">회원탈퇴</option>
+				<option value="logout">로그아웃</option>
+				<option value="userSet">설정(개인정보수정)</option>
 			</select></label>
 		
 	</box>
 </body>
 <script type="text/javascript">
-
-	function loginGo(){
-		location.replace("login.jsp");
-	}
-	function userRemoveGo(){
-		location.replace("sigh_Up.jsp");
-	}
-	function setGo(){
-		location.replace("user_Info_edit.jsp");
+	function menuChoice(form) {
+		var usermenu = document.querySelector("#usermenu").value;
+		if(usermenu=="userDelete"){
+			location.replace("UserRemove.jsp");
+		} 
+		if(usermenu=="logout"){
+			<%-- <%session.removeAttribute("loginID");%>
+			<%session.removeAttribute("loginPassword");%>
+			<%session.removeAttribute("loginName");%>
+			<%session.removeAttribute("loginEmail");%>
+			<%session.removeAttribute("loginPhone");%> --%>
+			location.replace("login.jsp");
+		}
+		if(usermenu=="userSet"){
+			location.replace("user_Info_edit.jsp");
+		}
+		
 	}
 </script>
 </html>

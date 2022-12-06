@@ -8,8 +8,12 @@ CREATE TABLE noticeBoardUser(
 DROP TABLE noticeBoardUser;
 
 SELECT * FROM noticeBoardUser;
+SELECT * FROM noticeBoardUser WHERE id='himan' AND password='1234';
+DELETE FROM noticeBoardUser WHERE id='wqdwqdqw' AND password='1234';
 
 INSERT INTO noticeboarduser values('himan','1234','홍길동','gildong@naver.com','010-1234-5678');
+INSERT INTO noticeboarduser values('4444','1234','홍길동','gildong@naver.com','010-1234-5678');
+UPDATE noticeboarduser SET name='김길동' WHERE id ='himan';
 
 CREATE TABLE noticeBoard(
 	id varchar(30) CONSTRAINT noticeBoardUser_id_fk REFERENCES noticeBoardUser(id),
