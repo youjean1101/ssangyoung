@@ -200,14 +200,14 @@
 	}
 	
 	function idConfirm(){
-		document.querySelector("form").submit();
 		var isIDConfirm = <%=isIDConfirm%>; // 계정이 존재하면 false
-		//alert(isIDConfirm);
-		if(isIDConfirm){
+		document.querySelector("form").submit();// 한번전송해서 안됌.
+		alert(isIDConfirm);
+		/* if(isIDConfirm){
 			alert("[안내메시지] 사용가능한 아이디 입니다.");
 		}else{
 			alert("[안내메시지] 이미 등록 되어있는 아이디입니다.\n 다른 아이디를 이용해주세요. ")
-		}
+		} */
 	}
 	
 	var isInsert = <%=isInsert%>; 

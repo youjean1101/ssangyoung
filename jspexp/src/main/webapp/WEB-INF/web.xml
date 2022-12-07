@@ -11,6 +11,11 @@
 	 	<error-code>500</error-code>
 	 	<location>/a02_jsp/a05_error/z01_errorPage.jsp</location>
 	 </error-page>
+	 
+	  <error-page>
+	 	<exception-type>java.lang.Exception</exception-type>
+	 	<location>/a02_jsp/a05_error/z06_allException.jsp</location>
+	 </error-page>
 
 	 <error-page>
 	 	<exception-type>java.lang.NullPointerException</exception-type>
