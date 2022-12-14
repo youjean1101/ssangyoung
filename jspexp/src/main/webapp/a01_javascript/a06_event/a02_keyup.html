@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+	<div id="container" ></div>
+	아이디 : <input type="text" name="id" />
+
+	물건가격: <input type="text" name="price" value="0"/>
+	물건갯수 : <input type="text" name="cnt" value="0"/>
+	<h3>총계:<div id="ex"></div></h3>
+	<script>
+	var ex = document.querySelector("#ex")
+	var priceOb = document.querySelector("[name=price]")
+	var cntOb = document.querySelector("[name=cnt]")
+	var evT = document.querySelectorAll("[name=price],[name=cnt]")
+	for(var idx=0;idx<evT.length;idx++){
+		evT[idx].onkeyup=function(){
+			var tot = priceOb.value*cntOb.value
+			ex.innerText = tot
+		}
+	}
+	</script>
+</body>
+<script type="text/javascript">
+/*
+# keyup/keydown
+1. 키보드를 입력할 때, 발생하는 이벤트 처리시 사용된다.
+ex) 물건가격 : [	] 물건갯수:[	]
+	입력 시, 바로 하단에 총계가 출력되게 처리하세요.
+ */
+ var idOb = document.querySelector("[name=id]")
+ var div = document.querySelector("#container")
+ idOb.onkeyup=function(){
+	var len = this.value.length // 입력된 글자 수
+	var cont = this.value //입력된 내용
+	div.innerText = "글자수:"+len+", 내용:"+cont
+}
+ div.innerHTML=""
+
+</script>
+</html>

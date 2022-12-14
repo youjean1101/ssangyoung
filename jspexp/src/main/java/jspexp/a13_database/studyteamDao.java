@@ -7,10 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import jspexp.a13_database.vo.Dept;
-import jspexp.a13_database.vo.Member;
-import jspexp.a13_database.vo.Member100;
-import jspexp.vo.Emp;
+import jspexp.vo.NoticeBoard;
 import jspexp.vo.NoticeBoardUser;
 
 public class studyteamDao {
@@ -188,6 +185,40 @@ public class studyteamDao {
 			DB.close(rs, pstmt, con);
 		}
 	}	
+//----------------------------게시판 작성하기------------------------------------
+	public List<NoticeBoard> NoticeBoardAdd(NoticeBoard ins){
+		List<NoticeBoard> blist = new ArrayList<NoticeBoard>();
+		String sql = "INSERT INTO noticeboard values(?,?,?,?,?)";
+		
+		try {
+			con = DB.con();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ins.getsId());
+			pstmt.setString(2, ins.getsDiv());
+			pstmt.setString(3, ins.getsTitle());
+			pstmt.setString(4, ins.getsContent());
+			pstmt.setString(5, ins.getsFileadd());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				blist.add(new NoticeBoard
+								(rs.getString("id"),
+								rs.getString("div"),
+								rs.getString("title"),
+								rs.getString("content"),
+								rs.getString("fileadd")
+						));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("DB에러:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("일반 에러:"+e.getMessage());
+		}finally {
+			DB.close(rs, pstmt, con);
+		}
+		return blist;
+	}
 	
 //------------------------------Main()---------------------------------
 	public static void main(String[] args) {

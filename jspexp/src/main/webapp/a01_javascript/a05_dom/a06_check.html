@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+
+	<h2>좋아하는 과일 선택</h2>
+	<input type="checkbox" name="favFoods" value="사과" />사과
+	<input type="checkbox" name="favFoods" value="바나나" />바나나
+	<input type="checkbox" name="favFoods" value="딸기" />딸기
+	<input type="checkbox" name="favFoods" value="오렌지" />오렌지<br>
+	<input type="checkbox" name="ckAll" onclick="ckAllFn(this)"/>전체
+	<div id="container" ></div>
+	<!-- 
+	ex) 주로 보는 TV 시청 프로 종류
+		[]드라마 []영화 []음악 []토크
+		클릭 시, 하단에 해당 내용을 출력되게 처리하세요.
+		
+	 -->
+	 <input type="checkbox" name="TV" value="드라마"/>드라마
+	 <input type="checkbox" name="TV" value="영화"/>영화
+	 <input type="checkbox" name="TV" value="음악"/>음악
+	 <input type="checkbox" name="TV" value="토크"/>토크<br>
+	 <h3 id="tvlist"></h3>
+	 <script>
+	 	var tvlist = document.querySelector("#tvlist")
+		var TV = document.querySelectorAll("[name=TV]")
+		TV[0].checked=true
+		for(var idx=0;idx<TV.length;idx++){
+			TV[idx].onclick=function(){
+				var show = "";
+				// 여러개가 선택되어지기 때문에 체크된 것만 for문으로 확인
+		 		for(var idx=0;idx<TV.length;idx++){
+		 			if(TV[idx].checked){
+		 				show += TV[idx].value+","
+		 			}
+		 		}
+		 		tvlist.innerText = show
+			}
+		}
+	 
+	 </script>
+</body>
+<script type="text/javascript">
+	var container = document.querySelector("#container")
+	var favFoods = document.querySelectorAll("[name=favFoods]")
+	favFoods[1].checked=true
+	for(var idx=0;idx<favFoods.length;idx++){
+		favFoods[idx].onclick=function(){
+			console.log("클릭")
+			ckData();
+		}
+	}
+	function ckData(){
+		var add="";
+		for(var idx=0;idx<favFoods.length;idx++){
+			if(favFoods[idx].checked){
+				add += favFoods[idx].value+",";
+			}
+		}
+		container.innerText=add
+	}
+		
+	function ckAllFn(obj){
+			//해당 내용이 checked가 true이면 전체 checked
+			// false이면 전체 unchecked
+		for(var idx=0;idx<favFoods.length;idx++){
+			favFoods[idx].checked = obj.checked	
+			// 각요소객체를 이벤트로 할당.
+		}
+	}
+ 
+
+</script>
+</html>

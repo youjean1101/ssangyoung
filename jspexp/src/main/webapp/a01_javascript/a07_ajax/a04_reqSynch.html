@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+ex) a04_reqSynch.html
+	z04_data.jsp
+	물건명[	] 가격[	] 갯수[	]
+	[구매]
+	@@@를 @@@(총계)에 구매하셨습니다. 출력
+ */
+</script>
+</head>
+<body>
+
+	물건명<input type="text" name="pname" />
+	가격<input type="text" name="price" />
+	갯수<input type="text" name="count"/>
+	<input type="button" value="구매" onclick="buy()"/>
+	<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+function buy(){
+	var xhr = new XMLHttpRequest()
+	var pnameval = document.querySelector("[name=pname]").value
+	var priceval = document.querySelector("[name=price]").value
+	var countval = document.querySelector("[name=count]").value
+	var page = "z04_data.jsp?pname="+pnameval+"&price="+priceval+"&count="+countval
+	xhr.open("get",page,false);
+	xhr.send()
+	document.querySelector("#container").innerText=xhr.responseText
+}
+/*
+
+ */
+
+</script>
+</html>

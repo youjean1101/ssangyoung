@@ -15,14 +15,31 @@
 
 </style>
 <script type="text/javascript">
-
+function userInsert(){
+	var title = document.querySelector("[name=title]")
+	var titleV = title.value.trim();
+	var content = document.querySelector("[name=content]")
+	var contentV = content.value.trim();
+	if(idV==""){
+		alert("[안내메시지]게시판 제목을 입력해주세요.")
+		id.focus()
+		return;
+	}
+	if(passwordV==""){
+		alert("[안내메시지]게시판 내용을 입력해주세요.")
+		password.focus()
+		return;
+	}
+	document.querySelector("form").submit();
+}
 </script>
 
 </head>
 <body>
+	<jsp:include page="noticeBoard_topMenu.jsp"></jsp:include>
 	<form>
 		<table>
-			<tr><th>구분 : </th><td row="2"><select>
+			<tr><th>구분 : </th><td row="2"><select name="div">
 								<option>java script</option>
 								<option>jsp</option>
 								<option>java</option>
@@ -38,11 +55,33 @@
 		<input type="submit" value="작성하기" />
 		<input type="button" value="취소" onclick="noticeAllViewGo()" />
 	</form>
-
+	<%
+	studyteamDao dao = new studyteamDao();
+	String div = request.getParameter("div"); if(div==null) div="";
+	String title = request.getParameter("title"); if(title==null) title="";
+	String content = request.getParameter("content"); if(content==null) content="";
+	String files = request.getParameter("files"); if(files==null) files="";
+	
+	boolean isInsert = false;
+	if(title!=""&&content!=""){
+		NoticeBoard ins = new NoticeBoard("yujin",div,title,content,files);
+		dao.NoticeBoardAdd(ins);
+		isInsert = true;
+	}
+	
+	%>
+	
 </body>
 <script type="text/javascript">
 	function noticeAllViewGo(){
 		location.replace("notice_Board_All_View.jsp");
+	}
+	
+	var isInsert = <%=isInsert%>; 
+	if( isInsert ){
+		if(confirm("[안내메시지]게시판 등록이 완료되었습니다. \n게시판조회 화면으로 이동하시겠습니까?")){
+			location.href="notice_Board_All_View.jsp";
+		}
 	}
 </script>
 </html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+
+ */
+</script>
+</head>
+<body>
+	<div id="container" ></div>
+	입력:<input type="text" name="in01"/>
+	<input type="button" onclick="chPro()" value="속성변경"/>
+	<script>
+	function chPro(){
+		var in01 = document.querySelector("[name=in01]")
+		in01.value="데이터 입력(기본)"
+		//in01.type="checkbox"
+		in01.type="radio"
+		in01.checked=true
+	}
+	// ex) 입력형식2 name="in02"를 만들고, 속성변경2 버튼을 추가하고 클릭시 
+	// button형식으로 변경하고 레이블내용을 "안녕하세요 버튼"이라고 표현하세요.
+	</script>
+	입력형식1: <input type="text" name="in01" />
+	입력형식2: <input type="text" name="in02" />
+	<input type="button" value="속성변경" onclick="chPro()" />
+	<input type="button" value="속성변경2" onclick="chPro2()" />
+	<script>
+		function chPro2(){
+			var in02 = document.querySelector("[name=in02]")
+			//in02.type="button"
+			in02.value="안녕하세요 버튼"
+			
+			if(in02.readOnly){
+				in02.readOnly=false
+			}else{
+				in02.readOnly=true
+			}
+			// in02.type="button"
+		}
+	</script>
+</body>
+<script type="text/javascript">
+
+/*
+# form요소객체들의 속성변경 처리
+1. form의 하위요소들을 여러가지 속성들을 포함하고 있다.
+2. js에서는 이러한 속성을 속성과 속성값을 통해 동적으로 변경을 할 수 있다.
+3. 기본 속성
+	1) input
+		- value
+		- readonly : 읽기 전용 필드
+		- required : 필수 입력 필드
+		- type : 형식을 설정
+			hidden 보이지 않는 형식
+			text/search/tel/url/email/password/date/button/file..
+			등 여러 속성값으로 설정할 수 있다.
+			radio/checkbox : checked 속성 포함
+	2) select
+		- option
+			selected: 선택되었을 때 true
+			
+			
+ */
+ var div = document.querySelector("#container")
+ div.innerHTML=""
+
+</script>
+</html>

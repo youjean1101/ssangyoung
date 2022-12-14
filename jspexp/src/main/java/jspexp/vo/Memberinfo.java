@@ -1,4 +1,4 @@
-package jspexp.a13_database.vo;
+package jspexp.vo;
 
 public class Memberinfo {
 	private int userno;

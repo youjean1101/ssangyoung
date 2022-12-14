@@ -14,9 +14,9 @@
 </script>
 </head>
 <body>
-<span onclick="likeHandler()">좋아요</span>
-<span onclick="disLikeHandler()">싫어요</span>
- <h2 id="show"></h2>
+	<span onclick="likeHandler()">좋아요</span><br>
+	<span onclick="disLikeHandler()">싫어요</span>
+	<h2 id="show"></h2>
 </body>
 <script>
 /*
@@ -36,7 +36,7 @@ let localGlobalVar = 270;
 const constVar = 103;
 // constVar = 30 에러발생 이후 내용 수행하지 않음.
 var body = document.body
-body.innerHTML ="전역변수:"+globalVar+"<br>"
+body.innerHTML +="전역변수:"+globalVar+"<br>"
 body.innerHTML += "지역/전역변수:"+localGlobalVar+"<br>"
 body.innerHTML += "상수:"+constVar+"<br>"
 // var 전역변수 : 함수/객체/if/for의 내부에 선언되더라도 어디서나 호출해서 사용
@@ -52,7 +52,7 @@ body.innerHTML += "상수:"+constVar+"<br>"
 body.innerHTML += "포함하는 외부 범위에서 호출:"+var01+"<br>"
 // var 변수의 전역변수에 원하지 않는 데이터 처리에 문제가 발생해서 let 변수를
 // es6버전부터 추가해서 처리.
-
+console.log("포함하는 외부 범위에서 호출:"+var01)
 // let을 통한 전역/지역변수 구분
 let let02=999 // 중괄호 블럭은 포함한 전역변수 선언..
 {
@@ -64,7 +64,7 @@ let let02=999 // 중괄호 블럭은 포함한 전역변수 선언..
 	 body.innerHTML +="let으로 지역변수 호출:"+let01+"<br>"
 	 body.innerHTML +="let으로 전역변수 호출:"+let02+"<br>"
 }
-// 위와 같은 중관로 블럭은 객체, 함수, 조건, 반복문 등 모든 내용을 전역/지역변수 개념을 구분하여 적용된다.
+// 위와 같은 중괄호 블럭은 객체, 함수, 조건, 반복문 등 모든 내용을 전역/지역변수 개념을 구분하여 적용된다.
 // ex) let으로 전역변수로 총계를 선언하고 for안에 let 지역변수로 단위 카운드 데이터를 할당하여 화면에 출력하게 하여
 //		1,2,3,.....10
 //		총합 : 55 가 for문을 통해서 let변수를 활용하여 출력되게 하세요.
@@ -86,16 +86,17 @@ var tot2 = 0 // 전역변수
 
 let likePt = 0;
 function likeHandler(){
-	likePt++;
-	 showLike()
+	likePt++; // likePt 1씩 증가
+	 showLike();
 }
 function disLikeHandler(){
-	likePt--;
+	likePt--; // likePt 1씩 감소
 	 showLike();
 }
 function showLike(){
 	var show = document.querySelector("#show");
-	show=""; // 초기화
+	show.innerText=""; // 초기화
+	//show.innerText+=likePt; // 초기화
 	for(let cnt=1;cnt<=likePt;cnt++){
 		show.innerText +="♥"
 	}
@@ -104,6 +105,6 @@ function showLike(){
 //<span onclick="disLikeHandler()">싫어요</span>
 // <h2 id="show"></h2>
 		
-console.log("포함하는 외부 범위에서 호출:"+var01)
+
 </script>
 </html>

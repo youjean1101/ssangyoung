@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import jspexp.a13_database.vo.Salgrade;
+import jspexp.vo.Salgrade;
 
 public class SalgradeDao {
 	private Connection con;

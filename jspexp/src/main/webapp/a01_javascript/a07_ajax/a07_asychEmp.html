@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+	<h2>사원정보 조회</h2>
+	<table>
+		<col width="40%">
+		<tr><th>사원명</th>
+			<td colspan="2"><input class="sch" type="text" name="ename" value="" /></td></tr>
+		<tr><th>직책명</th>
+			<td colspan="2"><input class="sch" type="text" name="job" value=""/></td></tr>
+		<tr><th>급여</th>
+			<td><input class="sch" type="text" name="frSal" value="0"/></td>
+			<td><input class="sch" type="text" name="toSal" value="9999"/></td>
+		</tr>
+		<tr><td colspan="3">
+          <input type="button" id="schBtn" value="검색"/>
+      	</td></tr> 
+	</table>
+	<div id="container" ></div>
+</body>
+<script type="text/javascript">
+//# 비동기적으로 화면 로딩 처리..
+var enameOb = document.querySelector("[name=ename]")
+var jobOb = document.querySelector("[name=job]")
+var frSalOb = document.querySelector("[name=frSal]")
+var toSalOb = document.querySelector("[name=toSal]")
+var schArr = document.querySelectorAll(".sch")
+var schBtn = document.querySelector("#schBtn")
+schArr.forEach(function(sch){
+	sch.onkeyup=function(){
+		if(event.keyCode==13) //enter입력시
+		search()
+	}
+})
+schBtn.onclick = search // 검색 버튼 클릭 시
+function search(){
+	var ename = enameOb.value
+	var job = jobOb.value
+	var frSal = frSalOb.value
+	var toSal = toSalOb.value
+	var qstr="?ename="+ename+"&job="+job+"&frSal="+frSal+"&toSal="+toSal
+	console.log(qstr)
+	loadData(qstr)
+}
+function loadData(qstr){
+	var xhr = new XMLHttpRequest()
+ 	xhr.open("get","z05_EmpList.jsp"+qstr,true) //비동기 방식으로 화면로딩
+ 	xhr.send()
+ 	// 비동기 이벤트 선언 및 핸들러 할당.
+ 	xhr.onreadystatechange=function(){
+		// 전송상태 check : readyState : 4 전송 완료
+		// http 반응코드가 에러가 없는 200일 떄..
+		if(xhr.readyState == 4 && xhr.status == 200){
+			console.log(xhr.responseText)
+			document.querySelector("#container").innerHTML = xhr.responseText
+			
+		}
+	}
+ }
+
+/*
+
+ */
+ 
+</script>
+</html>

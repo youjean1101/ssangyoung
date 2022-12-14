@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+	좋아요 클릭하세요!
+	<div id="container" >♥♥</div>
+	<hr>
+	<h2>1000원</h2>
+	<h3>5000원</h3>
+	<h4>10000원</h4>
+	<div id="ex"></div>
+</body>
+<script type="text/javascript">
+/*
+# 이벤트 중단
+1. 특정조건이나 프로그래밍 시간에 따라 이벤트를 중단 처리할 수 있다.
+2. 기본 코드
+	DOM.on이벤트 = null;
+ex) h2(1000원), h3(5000원), h4(10000원)
+	클릭 시, 하단에 구매 금액을 합산해서 출력하되, 50000원 이상시,
+	더 이상 구매할 수 없습니다 메시지 뜨고, click이벤트로 중단 처리
+	
+ */
+ var priceArr = document.querySelectorAll("h2,h3,h4")
+// var h2Ob = document.querySelector("h2")
+//var h3Ob = document.querySelector("h3")
+//var h4Ob = document.querySelector("h4")
+ var exOb = document.querySelector("#ex")
+ var tot=0;
+ priceArr.forEach(function(clOb){
+	 clOb.onclick=function(){
+		 tot+=parseInt(clOb.innerText) 
+		 //원을 없애기 위해서 Number가아닌 parseInt
+		 // parseInt() : 숫자만 추출
+		 if(tot>=50000){
+			 tot-=parseInt(clOb.innerText)
+			 alert("50000원 이상시 더 이상 구매할 수 없습니다.")
+			 // 이벤트 중단
+			 priceArr.forEach(function(clOb){
+				clOb.onclick=null; 
+			 });
+		 }
+		 exOb.innerText = "총합:"+tot+"원"
+	 }
+ })
+ 
+ 
+ 
+ var div = document.querySelector("#container")
+ div.onclick=function(){
+	 div.innerText+="♥"
+	 //이벤트가 한번만 처리가 되고 중단처리됨..
+	 this.onclick=null;
+ }
+
+</script>
+</html>

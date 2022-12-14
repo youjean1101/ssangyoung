@@ -12,7 +12,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	h2{
+	.say{
 		font-family:batang;
 		font-size:30pt;
 		text-align:center;
@@ -40,8 +40,9 @@
 </head>
 <body>
  	<jsp:include page="noticeBoard_topMenu.jsp"></jsp:include>
-	<h2 id="first">나태함</h2>
-	<h2 id="second">그 순간은 달콤하나, 결과는 비참하다.</h2>
+ 	<br><br><br>
+	<h2 class="say">나태함</h2>
+	<h2 class="say">그 순간은 달콤하나, 결과는 비참하다.</h2>
 	<input type="button" value="게시판 보러가기" onclick="noticeGo()"/>
 
 

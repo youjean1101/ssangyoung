@@ -56,8 +56,8 @@ Emp sch = new Emp(ename, job, frSalD, toSalD);
 //초기에 전체 데이터 로딩, 입력내용에 따라서 검색되게 처리.
 %>
 <h2>사원정보</h2>
-<form>
-	<table id = frm01>
+<form  id = "frm01">
+	<table>
 		<col width="40%">
 		<tr><th>사원명</th>
 			<td colspan="2"><input type="text" name="ename" value="<%=ename %>" /></td></tr>

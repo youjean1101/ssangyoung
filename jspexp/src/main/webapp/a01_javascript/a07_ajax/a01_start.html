@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+
+	<h2 onclick="goAjax()">XMLHttpRequest 통신의 나라로(클릭)</h2>
+	<div id="container" ></div>
+</body>
+<script type="text/javascript">
+function goAjax(){
+	var xhr = new XMLHttpRequest()
+	//alert(xhr)
+	xhr.open("get","z01_data.jsp",false) // 비동기여부 false(동기), true(비동기)
+	xhr.send()
+	document.querySelector("#container").innerText=xhr.responseText
+}
+// ex) z02_data.jsp 두번쨰 서버의 데이터
+// a02_callAynchData.html 클릭 시, 동기적으로 서버의 데이터 가져오게 하세요.
+
+
+
+/*
+# ajax(asynchronized javascript)
+1. 비동기적으로 서버와의 통신을 javascript로 처리하여 화면 전환 없이 데이터를 
+	받아와서 처리하는 방식을 말한다.
+2. 동기방식과 비동기식 방식
+	1) 동기
+		- 서버와 클라이언트가 같은 속도로 연계하는 것을 말한다.
+		ex) 편지를 우체통에 넣고 답장 올 때까지 기다리고 오면 다른 일을 하는 것을 말한다.
+		ex) 웹 화면에서는 form데이터를 입력하고 submit 후, 
+			다시 화면이 전환되면서 서버에서 만들어진 화면을 사용하는 경우
+		ex) id를 입력했을 때, 화면이 refresh되지는 않지만, 
+			서버에서 데이터 가져올 때(js)까지, 다른 작업을 하지 못하는 것을 말한다.
+		ex) 파일 업로드시, 파일을 서버에 다 올려서 해당 파일 정보가 있을 때, 
+			다운로드를 하게 하거나, 이미지를 볼 수 있게 하여야 한다.
+		
+	2) 비동기식
+		- 서버와 클라이언트가 같은 속도로 연계하지 않음
+		ex) 편지를 우체통에 넣기만 하고 다른 일을 하다가 오면 처리하는 것을 말한다.
+		ex) 검색처리하고, 다른 기능을 처리하면서 검색이 완료되었을 때, 화면에 로딩되어보이게 하는 것을 말한다.
+		ps) 비동기식으로 처리하면 해당 비동기 처리 과정의 이벤트 처리와 이벤트 핸들러 함수를 선언하여 호출하여야 한다.
+3. 주요 핵심 코드
+	1) XMLHttpRequest
+		화면 전환없이 서버에 있는 자원들을 가지고 오는 js 내장 객체(동기/비동기 가능)
+	2) 객체 생성
+		var xhr = new XMLHttpRequest()
+	3) 옵션 설정 메서드
+		xhr.open("get/post방식", "서버의 자원", 동기/비동기여부boolean)
+	4) 전송처리 메서드 
+		xhr.send()
+	5) 서버에서 해당 자원이 전송해주는 데이터 받는 메서드
+		xhr.responseText()
+	6) 비동기식일 때, 처리하는 이벤트 및 이벤트 핸들러 함수(비동기식일 때)
+		xhr.onreadyStatechange=function(){
+			xhr.readyState : 서버와 통신을 단계별로 코드값으로 가져온다.
+				0: 객체를 만듦, 1,2 데이터 받을 준비, 3:서버에서 데이터를 일부받음, 
+				4:서버에서 데이터를 모두 받음.
+			xhr.status : http응답코드 200~299 - 정상적으로 받음.일반적을 200으로 설정
+			ps) xhr.responseText()로 결과 내용은 비동기식 기능메서드 안에서 정상적으로 다 데이터가 왔을 때, 처리한다.
+		}
+		
+
+ */
+ var div = document.querySelector("#container")
+ div.innerHTML=""
+
+</script>
+</html>

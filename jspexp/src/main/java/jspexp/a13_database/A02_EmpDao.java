@@ -7,9 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import jspexp.a13_database.vo.Dept;
+import jspexp.vo.Dept;
 import jspexp.vo.Emp;
-
+//jspexp.a13_database.A02_EmpDao
 public class A02_EmpDao {
 	// 1. 필드 선언
 	private Connection con;

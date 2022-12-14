@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+	입력: <input type="text" id="in01" />
+	<div id="container"></div>
+	<table id="tab01" height="300px">
+		<tr><td>1</td><td>2</td><td>3</td></tr>
+		<tr><td>4</td><td>5</td><td>6</td></tr>
+		<tr><td>7</td><td>8</td><td>9</td></tr>
+	</table>
+
+</body>
+<script type="text/javascript">
+/*
+
+ */
+ var div = document.querySelector("#container")
+ var in01 = document.querySelector("#in01")
+ var tds = document.querySelectorAll("#tab01 td")
+ //tds[4].innerText="선택"
+ tds[4].style.background="yellow"
+ var cIdx=0;
+ //this.이벤트 : 전체화면에서 이벤트를 발생
+ this.onkeyup=function(){
+	 for(var idx=0;idx<tds.length;idx++){
+			tds[idx].style.background=""
+		 }
+	 tds[4].style.background="yellow"
+ }
+ this.onkeydown=function(){ // this : 현재화면 Window객체를 지칭
+	if(event.keyCode>=37&&event.keyCode<40){
+		 for(var idx=0;idx<tds.length;idx++){
+			tds[idx].style.background=""
+		 }
+	}
+ 	if(event.keyCode==37) tds[3].style.background="yellow"
+ 	if(event.keyCode==38) tds[1].style.background="yellow"
+ 	if(event.keyCode==39) tds[5].style.background="yellow"
+ 	if(event.keyCode==40) tds[7].style.background="yellow"
+	//tds[cIdx%9].style.background="yellow"
+	//cIdx++	
+	console.log("##")
+	console.log(event.keyCode)
+	div.innerText = event.keyCode;
+}
+ 
+
+</script>
+</html>

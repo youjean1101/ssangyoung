@@ -1,5 +1,5 @@
-package jspexp.a13_database.vo;
-//jspexp.a13_database.vo.Dept
+package jspexp.vo;
+//jspexp.vo.Dept
 public class Dept {
 	private int deptno;
 	private String dname;

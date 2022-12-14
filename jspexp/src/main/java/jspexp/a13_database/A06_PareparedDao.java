@@ -1,5 +1,5 @@
 package jspexp.a13_database;
-
+//jspexp.a13_database.A06_PareparedDao
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import jspexp.a13_database.vo.*;
+import jspexp.vo.Dept;
+import jspexp.vo.Member;
+import jspexp.vo.Salgrade;
 
 
 public class A06_PareparedDao {

@@ -8,8 +8,8 @@ CREATE TABLE noticeBoardUser(
 DROP TABLE noticeBoardUser;
 
 SELECT * FROM noticeBoardUser;
-SELECT * FROM noticeBoardUser WHERE id='himan' AND password='1234';
-DELETE FROM noticeBoardUser WHERE id='wqdwqdqw' AND password='1234';
+SELECT * FROM noticeBoardUser WHERE id='yujin';
+DELETE FROM noticeBoardUser WHERE id='yujin' AND password='1234';
 
 INSERT INTO noticeboarduser values('himan','1234','홍길동','gildong@naver.com','010-1234-5678');
 INSERT INTO noticeboarduser values('4444','1234','홍길동','gildong@naver.com','010-1234-5678');
@@ -24,6 +24,7 @@ CREATE TABLE noticeBoard(
 );
 DROP TABLE noticeBoard;
 
+DELETE FROM noticeBoard WHERE id='yujin';
 SELECT * FROM noticeBoard;
 
 INSERT INTO noticeboard values('himan','JAVA','for','반복문이다.','사진.jpg');

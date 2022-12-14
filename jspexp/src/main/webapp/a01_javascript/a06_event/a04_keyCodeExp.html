@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+	아이디 입력: <input type="text" name="id" />
+<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+/*	위 아이디를 입력하고 enter를 입력했을 때(event.keyCode)에 아래
+ 	입력된 아이디는 @@@입니다. 출력
+ */
+ var div = document.querySelector("#container")
+ 
+ var idOb = document.querySelector("[name=id]")
+ idOb.onkeyup=function(){
+	 if(event.keyCode==13){
+		 div.innerText="입력된 아이디는 "+this.value+"입니다."
+	 }
+ }
+ 
+ 
+
+</script>
+</html>

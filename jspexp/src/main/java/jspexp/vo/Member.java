@@ -1,4 +1,4 @@
-package jspexp.a13_database.vo;
+package jspexp.vo;
 
 public class Member {
 	private String id;
@@ -27,11 +27,17 @@ public class Member {
 		this.auth = auth;
 		this.point = point;
 	}
-	public Member(String name, String auth) {
+	
+	public Member(String id, String name) {
 		super();
+		this.id = id;
 		this.name = name;
-		this.auth = auth;
 	}
+
+	/*
+	 * public Member(String name, String auth) { super(); this.name = name;
+	 * this.auth = auth; }
+	 */
 	public String getId() {
 		return id;
 	}

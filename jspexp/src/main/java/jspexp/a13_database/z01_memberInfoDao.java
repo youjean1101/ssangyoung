@@ -7,7 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import jspexp.a13_database.vo.*;
+import jspexp.vo.Member100;
+import jspexp.vo.Memberinfo;
 
 public class z01_memberInfoDao {
 

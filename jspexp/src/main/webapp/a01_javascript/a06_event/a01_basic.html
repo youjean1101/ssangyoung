@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+	<div id="container" ></div>
+	<h2>안녕하세요</h2>
+	<h2>안녕하세요</h2>
+	<h2>안녕하세요</h2>
+	<h2>안녕하세요</h2>
+	<script>
+	var h2Arr = document.querySelectorAll("h2")
+	for(var idx=0;idx<h2Arr.length;idx++){
+		/* h2Arr[idx].onclick=function(){
+			this.innerText = idx+"번째 h2! 클릭되었습니다."
+		} */
+		h2Arr[idx].onclick=call; // 정의된 이벤트 핸들러 함수 할당
+	}
+	function call(){
+		this.innerText = "h2 클릭되었습니다."
+	}
+	</script>
+
+</body>
+<script type="text/javascript">
+/*
+#js에서 이벤트 처리
+1. 이벤트란?
+	js에서 특정한 요소객체(DOM)에 필요로 하는 이벤트 속성을 선언하고,
+	이 이벤트가 일어났을 때, 처리할 함수(이벤트 핸들러 함수)를 통해서
+	이벤트를 처리한다.
+	대상객체 ==> 이벤트 속성 ==> 이벤트 핸들러 함수
+2. 이벤트 처리방식
+	1) 인라인 이벤트
+		태그에서 속성으로 on이벤트명을 선언하고 지정된 핸들러 함수를 처리하는 것을 말한다.
+		ex) <h2 onclick="call()"
+	2) js코드에서 익명이벤트 선언
+		var h2Obj = document.querySelector("h2")
+		h2Obj.onclick=function(){
+		}
+3. 이벤트의 종류
+	1) 이벤트는 다양한 처리형식으로 나타난다.
+		click : 마우스 클릭 시, ,
+		dblclick : 마우스 두번 클릭시
+		focus : 해당 요소객체 포커스를 위치시(form요소객체에 주로 발생)
+		blur : 해당 요소객체에서 포커스를 벗어날 때
+		mouseover : 마우스 커서가 해당 요소객체를 지나갈 때
+		mouseout : 마우스 커서가 해당 요소객체를 벗어났을 때
+		keyup : 키보드의 자판을 입력했을 때 발생.(누르고 다시 키보드가 올라올 때)
+		keydown : 키보드의 자판을 입력했을 때 발생.(누를 때)
+			- keyCode : 키보드를 입력했을 때, 해당 키보드의 고유 값을 가져온다 ex) enter(13)
+4. 이벤트 강제 (코드)
+	0) 이벤트 핸들러함수 선언
+	1) DOM객체.focus()
+		DOM객체.click()
+		이벤트가 실제 일어나게 하거나 일어난 것과 동일하게 이벤트 핸들러 함수를 수행 시켜 준다.
+5. 이벤트 처리 중단
+	1) 이벤트는 특정한 조건에서 이벤트 수행을 더 이상하지 않게 코드로 중단할 수 있다.
+		if(조건)
+			DOM객체.onclick = null
+		
+ */
+ 
+ var div = document.querySelector("#container")
+ div.innerHTML=""
+
+</script>
+</html>

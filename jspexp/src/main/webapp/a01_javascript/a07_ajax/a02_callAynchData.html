@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+
+<h2 onclick="call()">서버 데이터 호출</h2>
+	<div id="container" ></div>
+</body>
+<script type="text/javascript">
+//ex) z02_data.jsp 두번쨰 서버의 데이터
+//a02_callAynchData.jsp 클릭 시, 동기적으로 서버의 데이터 가져오게 하세요.
+function call(){
+	var xhr = new XMLHttpRequest()
+	xhr.open("get","z02_data.jsp",false)
+	xhr.send()
+	document.querySelector("#container").innerText=xhr.responseText
+}
+/*
+
+ */
+ var div = document.querySelector("#container")
+ div.innerHTML=""
+
+</script>
+</html>

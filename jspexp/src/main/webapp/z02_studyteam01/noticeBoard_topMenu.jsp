@@ -77,16 +77,14 @@
 		var usermenu = document.querySelector("#usermenu").value;
 		if(usermenu=="userDelete"){
 			location.replace("UserRemove.jsp");
-		} 
-		if(usermenu=="logout"){
+		} else if(usermenu=="logout"){
+			location.replace("login.jsp");
 			<%-- <%session.removeAttribute("loginID");%>
 			<%session.removeAttribute("loginPassword");%>
 			<%session.removeAttribute("loginName");%>
 			<%session.removeAttribute("loginEmail");%>
-			<%session.removeAttribute("loginPhone");%> --%>
-			location.replace("login.jsp");
-		}
-		if(usermenu=="userSet"){
+			<%session.removeAttribute("loginPhone");%>  --%>
+		}else if(usermenu=="userSet"){
 			location.replace("user_Info_edit.jsp");
 		}
 		

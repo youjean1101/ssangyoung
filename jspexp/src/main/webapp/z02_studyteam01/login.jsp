@@ -80,7 +80,7 @@
 		<form>
 			<table>
 				<tr><th>ID : </th><td><input type="text" name="id" placeholder="아이디를 입력해주세요."/></td></tr>
-				<tr><th>PASSWORD : </th><td><input type="password" name="password" placeholder="비밀번호를 입력해주세요."//></td></tr>
+				<tr><th>PASSWORD : </th><td><input type="password" name="password" placeholder="비밀번호를 입력해주세요." /></td></tr>
 			</table>
 			<input type="button" value="회원가입" onclick="signUpGo()"/>
 			<input type="submit" value="로그인" />
@@ -110,7 +110,7 @@
 	<script>
 		var isFail=<%=isFail%>
 		if(isFail){
-			alert("로그인 실패\n인증된 아이디가 아닙니다.")
+			alert("[안내메시지]로그인 실패\n인증된 아이디가 아닙니다.")
 		}
 	</script>
 	</box>

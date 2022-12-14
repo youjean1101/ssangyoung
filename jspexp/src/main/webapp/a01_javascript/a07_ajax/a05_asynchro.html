@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+	<h2 onclick="loadData()">데이터 화면 로딩</h2>
+	<div id="container" ></div>
+	<h2 onclick="deptData()">부서정보 가져오기</h2>
+	<div id="ex"></div>
+</body>
+<script type="text/javascript">
+/*
+# 비동기적으로 화면 로딩 처리..
+
+ */
+ function loadData(){
+	var xhr = new XMLHttpRequest()
+ 	xhr.open("get","z05_EmpList.jsp",true) //비동기 방식으로 화면로딩
+ 	xhr.send()
+ 	// 비동기 이벤트 선언 및 핸들러 할당.
+ 	xhr.onreadystatechange=function(){
+		// 전송상태 check : readyState : 4 전송 완료
+		// http 반응코드가 에러가 없는 200일 떄..
+		if(xhr.readyState == 4 && xhr.status == 200){
+			console.log(xhr.responseText)
+			document.querySelector("#container").innerHTML = xhr.responseText
+			
+		}
+	}
+ }
+// ex) 부서정보 가져오기 클릭시 부서정보가 화면에 출력되게 하세요.
+	function deptData(){
+		var xhr = new XMLHttpRequest()
+	 	xhr.open("get","z06_DeptList.jsp",true) //비동기 방식으로 화면로딩
+	 	xhr.send()
+	 	xhr.onreadystatechange=function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				console.log(xhr.responseText)
+				document.querySelector("#ex").innerHTML = xhr.responseText
+				
+			}
+		}
+	}
+</script>
+</html>

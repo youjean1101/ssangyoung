@@ -136,6 +136,45 @@
 				}
 			}
 		</script>
+		<h3>정답</h3>
+		<table>
+			<tr>
+				<td><input type="text" name="num01" value="0" size="2"/></td>
+				<td><select name="cal2">
+					<option value="0">+</option>
+					<option value="1">-</option>
+					<option value="2">*</option>
+					<option value="3">/</option>
+				</select></td>
+				<td><input type="text" name="num02" value="0" size="2"/></td>
+				<td><input type="button" value="결과확인" onclick="result()"/></td>
+			</tr>
+		</table>
+		<script>
+			var num01Ob = document.querySelector("[name=num01]")	
+			var num02Ob = document.querySelector("[name=num02]")	
+			var calOb = document.querySelector("[name=cal2]")	
+			var options = document.querySelectorAll("[name=cal2]>option")
+			console.log(options.length)
+			// 임의의 값 할당
+			num01Ob.value = Math.floor(Math.random()*10+1);
+			num02Ob.value = Math.floor(Math.random()*10+1);
+			var rIdx = Math.floor(Math.random()*4);
+			for(var idx=0;idx<options.length;idx++){
+				if(rIdx==idx){
+					// selected 선택되어진 것에 대한 속성 설정
+					options[idx].selected=true;
+				}
+			}
+			function result(){
+				var nuM01 = num01Ob.value
+				var nuM02 = num02Ob.value
+				var cIx = calOb.value
+				var calR = [Number(nuM01)+Number(nuM02),nuM01-nuM02,nuM01*nuM02,nuM01/nuM02]
+				var cal2 = [" + ", " - ", " X ", " / "]
+				alert(nuM01+cal2[cIx]+nuM02+" = "+calR[cIx])
+			}
+		</script>
 </body>
 <script type="text/javascript">
 /*

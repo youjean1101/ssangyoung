@@ -93,10 +93,9 @@
 			show +="</tr>"
 			recObj.innerHTML = show
 			nameObj.value=""; nameObj.focus()
-			korObj.value=""; korObj.focus()
-			engObj.value=""; engObj.focus()
-			mathObj.value=""; mathObj.focus()
-			
+			korObj.value=""; 
+			engObj.value=""; 
+			mathObj.value="";
 		}
 	
 </script>

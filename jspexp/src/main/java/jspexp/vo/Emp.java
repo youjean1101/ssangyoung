@@ -1,5 +1,5 @@
 package jspexp.vo;
-
+//jspexp.vo.Emp
 import java.util.Date;
 
 public class Emp {
@@ -15,6 +15,7 @@ public class Emp {
 	private double comm;
 	private int deptno;
 	public Emp() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -28,7 +29,13 @@ public class Emp {
 		this.comm = comm;
 		this.deptno = deptno;
 	}
-
+	
+	public Emp(int empno, String ename, int deptno) {
+		super();
+		this.empno = empno;
+		this.ename = ename;
+		this.deptno = deptno;
+	}
 
 	// ename,  sal deptno
 	public Emp(String ename, double sal, int deptno) {

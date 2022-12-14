@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+# focus, blur
+1. 해당 요소객체에 포커싱을 했을 때, 처리한 내용을 지정
+2.DOM.focus(), DOM.blur()
+	해당 요소객체에 포커싱을 강제로 하게 해주는 기능 메서드
+ */
+</script>
+</head>
+<body>
+	입력:<input type="text" id="in01" value="입력처리" />
+	<div id="container" ></div>
+	<hr>
+	숫자1:<input type="text" name="num01" size="5"/>
+	숫자2:<input type="text" name="num02" size="5"/>
+	<h3 id="calR"></h3>
+</body>
+<script type="text/javascript">
+	//숫자1[	] 숫자2[	]
+	// focus되었을 때, 배경색상을 pink로 만들고 글자색상으로 navy로 했다가
+	// blur되었을 때, 바로 밑에 합산 결과를 출력(@@+@@=@@)하고, 다시
+	// 숫자1 입력 요소 객체에 focus강제되게 처리하세요.
+	var focusArr = document.querySelectorAll("[name=num01],[name=num02]")
+	var num01Ob = document.querySelector("[name=num01]")
+	var num02Ob = document.querySelector("[name=num02]")
+	var calROb = document.querySelector("#calR")
+	focusArr.forEach(function(numOb,idx){
+		numOb.onfocus=function(){
+			this.value=""
+			this.style.background="pink"
+			this.style.color="navy"
+		}
+		num02Ob.onblur=function(){
+			this.style.background=""
+			this.style.color=""
+			//두번째 입력할 번호일 때..
+			if(idx==1){
+				var num01 = Number(num01Ob.value)
+				var num02 = Number(num02Ob.value)
+				var tot = num01+num02
+				calROb.innerText = num01+"+"+num02+"="+tot
+				num02Ob.value="0"
+				num01Ob.focus();
+			}
+		}
+	})
+	
+	
+	var in01 = document.querySelector("#in01")
+	in01.onfocus=function(){
+		this.value=""
+		this.style.fontSize="20pt"
+		this.style.background="yellow"
+	}
+	in01.onblur=function(){ //벗어났을 때,
+		this.style.fontSize="10pt"
+		this.style.background=""
+	}
+	// 강제로 focus()로 이벤트를 호출 처리..
+	in01.focus()
+
+	var div = document.querySelector("#container")
+	div.innerHTML=""
+
+</script>
+</html>
