@@ -2,8 +2,7 @@
     pageEncoding="UTF-8"
     import="java.util.*"
     import="jspexp.a13_database.*" 
-    import="jspexp.a13_database.vo.*"
-      
+    import="jspexp.vo.*" 
     %>
 <!DOCTYPE html>
 <html>

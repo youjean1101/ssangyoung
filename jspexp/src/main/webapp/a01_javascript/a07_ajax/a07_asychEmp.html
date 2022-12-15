@@ -35,13 +35,35 @@
 	<div id="container" ></div>
 </body>
 <script type="text/javascript">
+/*
+ # 처리 프로세스
+ 1. 화면 구현(FORM) 
+ 	 입력 처리 폼
+ 2. 폼에 있는 객체에 입력된 내용 후,이벤트에 의해 QUERY string 만들기
+ 	 1) DOM객체 선언
+ 	 	각각의 압력하는 요소 객체
+ 	 	이벤트가 일어나는 요소 객체
+ 	 	결과값을 출력할 요소 객체
+ 	 2) 입력시 처리할 이벤트핸들러 함수 구현
+ 	 	 이벤트 요소객체.onkeyup = function(){ 이벤트 핸들러 처리함수 }
+ 	 3) 이벤트 핸들러 함수에서 query string 문자만들기(요청값 전달을 위해)
+ 3. ajax처리를 위한 XMLHttpRequest 객체 사용
+ 	 1) 객체 생성 및 옵션 설정
+ 	 	 xhr.open("get","서버에 처리되는 화면 + 요청값", true)
+ 	 	 xhr.onreadystatechange=function(){
+ 		 	상태값 조건 처리 : xhr.readyState==4, xhr.status==200
+ 	 	 } 비동기 함수 처리
+ 	 2) 서버에서 온 화면 데이터, 출력 div에 할당
+ 	 	 div.innerHTML = xhr.reaponseText
+ 	 
+ */
 //# 비동기적으로 화면 로딩 처리..
 var enameOb = document.querySelector("[name=ename]")
 var jobOb = document.querySelector("[name=job]")
 var frSalOb = document.querySelector("[name=frSal]")
 var toSalOb = document.querySelector("[name=toSal]")
-var schArr = document.querySelectorAll(".sch")
-var schBtn = document.querySelector("#schBtn")
+var schArr = document.querySelectorAll(".sch") // 키를 입력한느 대상객체를 클래스로 지정
+var schBtn = document.querySelector("#schBtn") // 클릭을 했을 때, 처리하는 대상객체 지정
 schArr.forEach(function(sch){
 	sch.onkeyup=function(){
 		if(event.keyCode==13) //enter입력시
@@ -49,6 +71,9 @@ schArr.forEach(function(sch){
 	}
 })
 schBtn.onclick = search // 검색 버튼 클릭 시
+/* schBtn.onclick = function(){
+ 		 search() // 검색 버튼 클릭 시
+} //위의 내용이랑 같은 내용*/
 function search(){
 	var ename = enameOb.value
 	var job = jobOb.value

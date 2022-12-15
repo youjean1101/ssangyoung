@@ -1,4 +1,4 @@
-package jspexp.a13_database;
+package z01_studyteam01;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import jspexp.vo.NoticeBoard;
-import jspexp.vo.NoticeBoardUser;
+import jspexp.a13_database.DB;
+import z01_studyteam01.vo.NoticeBoard;
+import z01_studyteam01.vo.NoticeBoardUser;
 
 public class studyteamDao {
 	private Connection con;

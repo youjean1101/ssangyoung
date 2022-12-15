@@ -1,4 +1,4 @@
-package jspexp.vo;
+package z01_studyteam01.vo;
 
 public class NoticeBoard {
 	private String sId;

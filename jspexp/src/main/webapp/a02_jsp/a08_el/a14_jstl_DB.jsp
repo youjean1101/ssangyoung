@@ -23,7 +23,7 @@
 
 <%--
 # DB 호출 및 jstl 반복문을 통한 데이터 로딩 처리
-1. useBean 활용
+1. useBean 활용 : 데이터베이스 호출 dao
 2. 요청할 데이터 vo객체 선언
 3. forEach구문을 통한 객체형 ArrayList 출력 처리
  --%>
@@ -45,8 +45,14 @@ form ==> submit ==> ?ename=&job=&frSal=&toSal=
 	<c:if test="${param.toSal}>${sch.setToSal(9999)
  --%>
 <jsp:useBean id="dao" class="jspexp.a13_database.A02_EmpDao"/>
+<%--?ename=himan&job=사원&frSal=0&toSal=5000
+	Emp클래스 안에서 요청키와 property가 동일하면 데이터가 할당이 된다. 
+		void setEname(String s)
+		void setFrSal(int sal)
+ --%>
 <jsp:useBean id="sch" class="jspexp.vo.Emp"/>
 <jsp:setProperty property="*" name="sch"/>
+<%-- 초기화면에 요청값이 없을 때, 초기 데이터 설정을 위한 내용 --%>
 <c:if test="${empty param.ename}">${sch.setEname("")}</c:if>
 <c:if test="${empty param.job}"> ${sch.setJob("")}</c:if>
 <c:if test="${empty param.frSal}">${sch.setFrSal(0)} </c:if>

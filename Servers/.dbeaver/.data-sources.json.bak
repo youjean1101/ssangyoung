@@ -61,7 +61,7 @@
 				"auth-model": "oracle_native"
 			}
 		},
-		"oracle_thin-184bef0ec35-350a04c2c0f9a3b6": {
+		"oracle_thin-18510f5e54e-2e53566814d14dd5": {
 			"provider": "oracle",
 			"driver": "oracle_thin",
 			"name": "localhost 3",

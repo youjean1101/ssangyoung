@@ -3,7 +3,6 @@
     import="jspexp.vo.*"
     import="java.util.*"
     import="jspexp.a13_database.*" 
-    import="jspexp.a13_database.vo.*"
     session = "true"
     %>
 <!DOCTYPE html>

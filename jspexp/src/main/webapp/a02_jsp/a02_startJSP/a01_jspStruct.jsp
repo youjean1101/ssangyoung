@@ -3,7 +3,6 @@
     import="jspexp.vo.*"
     import="java.util.*"
     import="jspexp.a13_database.*" 
-    import="jspexp.a13_database.vo.*"
     session = "true"
     %>
  <%-- 대부분 프로그램의 boolean 유형의 default 설정이 false인데,
