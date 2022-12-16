@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+
+/*
+# 회원 등록 시, id로 회원 등록여부 check ajax 처리
+1. 화면구성
+2. DOM처리
+3. 데이터 처리 jsp 구현 : 요청값에 의해서
+4. ajax 선언 및 이벤트 처리
+	1) 넘겨오는 결과로 등록 여부 확인
+ */
+
+</script>
+</head>
+<body>
+
+	<h2>회원등록</h2>
+	아이디 : <input type="text" name="id" />
+	<input type="button" id="ckIdBtn" value="등록여부"/>
+	<div id="container" ></div>
+
+</body>
+<script type="text/javascript">
+var idOb = document.querySelector("[name=id]")
+var ckIdBtnOb = document.querySelector("#ckIdBtn")
+var containerOb = document.querySelector("#container")
+idOb.onkeyup=function(){
+	if(event.keyCode==13){
+		callAjax(idOb.value);
+	}
+}
+ckIdBtnOb.onclick=function(){
+	callAjax(idOb.value)
+}
+
+ function callAjax(idVal){
+		var xhr = new XMLHttpRequest()
+		xhr.open("get","z16_checkId.jsp?id="+idVal,true)
+		xhr.send()
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4&&xhr.status==200){
+				console.log(xhr.responseText)
+				var data = JSON.parse(xhr.responseText) // JSON객체로 변환
+				// {"hasMember":false}
+				var dlist = data.contacts
+				if(data.hasMember){
+					alert("등록된 아이디가 있습니다.")
+					containerOb.innerText="등록된 아이디가 있습니다."
+				}else{
+					alert("등록 가능합니다.")
+					containerOb.innerText="등록 가능합니다."
+				}
+			}
+		}
+	}
+
+</script>
+</html>

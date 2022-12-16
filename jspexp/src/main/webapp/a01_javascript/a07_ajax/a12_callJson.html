@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+	<h2>json 문자열 가져와서 객체 변환</h2>
+	<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+var div = document.querySelector("#container")
+var h2Ob = document.querySelector("h2")
+h2Ob.onclick=callAjax
+console.log("실행1")
+function callAjax(){
+	var xhr = new XMLHttpRequest()
+	xhr.open("get","z12_json.jsp",true)
+	xhr.send()
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState==4&&xhr.status==200){
+			console.log(xhr.responseText)
+			div.innerHTML="문자열 json: "+xhr.responseText+"<br>"
+			// 객체로 변환
+			var p01=JSON.parse(xhr.responseText)
+			div.innerHTML+="이름:"+p01.name+"<br>"
+			div.innerHTML+="나이:"+p01.age+"<br>"
+			div.innerHTML+="사는곳:"+p01.loc+"<br>"
+		}
+	}
+}
+// ex) a13_callJsonExp.html
+//		a13_json.jsp 물건명 가격 갯수 json으로 선언
+
+/*
+# json
+1. 비동기적으로 서버에 있는 json데이터를 가져와서
+2. 문자열 json데이터
+3. 객체(js)로 변환시켜서 : 
+	문자열 == JSON.parse() ==> json객체
+	json객체 == JSON.stringify() ==> json문자열
+	네트웍상에서는 객체로 데이터를 전송하지 못한다.
+	문자열로 바꾸어야 한다.
+4. 화면에 로딩 출력 처리.
+ */
+ 
+
+</script>
+</html>

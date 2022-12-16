@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+	<h2>물건정보로딩!!</h2>
+	<table id="td01">
+		<thead>
+			<tr><th>물건명</th><th>가격</th><th>갯수</th></tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	
+	<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+/*
+
+ */
+ var div = document.querySelector("#container")
+ var h2Ob = document.querySelector("h2")
+ var tdOb = document.querySelector("#td01 tbody")
+ 
+ h2Ob.onclick = callAjax
+ function callAjax(){
+ 	var xhr = new XMLHttpRequest()
+ 	xhr.open("get","z13_json.jsp",true)
+ 	xhr.send()
+ 	xhr.onreadystatechange=function(){
+ 		if(xhr.readyState==4&&xhr.status==200){
+ 			console.log(xhr.responseText)
+ 			div.innerHTML="문자열 json: "+xhr.responseText+"<br>"
+ 			var plist = JSON.parse(xhr.responseText)
+ 			var adHTML=""
+ 			plist.forEach(function(prod){
+ 				adHTML+="<tr>"
+ 				adHTML+="<td>"+prod.name+"</td>"
+ 				adHTML+="<td>"+prod.price+"</td>"
+ 				adHTML+="<td>"+prod.cnt+"</td>"
+ 				adHTML+="</tr>"
+ 			})
+ 			tdOb.innerHTML +=adHTML
+ 			//div.innerHTML+="물건명:"+pro.name+"<br>"
+ 			//div.innerHTML+="가격:"+pro.price+"<br>"
+ 			//div.innerHTML+="갯수:"+pro.cnt+"<br>"
+ 		}
+ 	}
+ }
+ // ex) z14)deptJson.jsp : 부서정보 list
+ //		a14_callList.jsp : 클릭시, 부서정보를 로딩 처리
+</script>
+</html>

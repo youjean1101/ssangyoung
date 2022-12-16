@@ -48,6 +48,40 @@ public class SalgradeDao {
 		return slist;
 	}
 	
+	public List<Salgrade> getSalgradeIndex(Salgrade sch){
+		List<Salgrade> slist = new ArrayList<Salgrade>();
+		String sql = "SELECT * FROM salgrade\r\n"
+				+ "WHERE grade BETWEEN ? AND ?";
+		
+		try {
+			con = DB.con();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setDouble(1, sch.getLosal());
+			pstmt.setDouble(2, sch.getHisal());
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				slist.add(new Salgrade(rs.getString("grade"),
+									rs.getDouble("losal"),
+									rs.getDouble("hisal")
+						));
+				
+				System.out.println(rs.getString("grade"));
+				System.out.println(rs.getString("losal"));
+				System.out.println(rs.getString("hisal"));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("DB에러:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("일반 에러:"+e.getMessage());
+		}finally {
+			DB.close(rs, pstmt, con);
+		}
+		return slist;
+	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SalgradeDao dao = new SalgradeDao();

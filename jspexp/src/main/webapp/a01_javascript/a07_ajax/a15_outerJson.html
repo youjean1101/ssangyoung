@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+	<!-- 
+	{"no":1601087554678,"name":"강감찬","tel":"010-2222-3339","address":"서울시","photo":"http://sample.bmaster.kro.kr/photos/noimage.jpg"},{"no":1601087500172,"name":"Keandra Russell","tel":"010-3456-8299","address":"서울 -->
+	<h2>외부 사이트 json데이터 로딩</h2>
+	<table id="tab01">
+		<col width='30%'>
+		<col width='15%'>
+		<col width='30%'>
+		<col width='10%'>
+		<col width='15%'>
+		<thead>
+			<tr>
+				<th>번호</th><th>이름</th>
+				<th>전화번호</th><th>주소</th>
+				<th>사진</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+		</tbody>
+	</table>
+	<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+var div = document.querySelector("#container")
+var h2Ob = document.querySelector("h2")
+var tbOb = document.querySelector("#tab01 tbody")
+h2Ob.onclick= callAjax
+/*
+# 외부 json데이터 가져와서 화면구성하기
+1. 외부 site 확인
+	1) 요청값 처리 방식 확인
+	https://sample.bmaster.kro.kr/
+2. 이벤트 처리
+3. 외부 json로딩 및 화면 구성
+ */
+function callAjax(){
+	var xhr = new XMLHttpRequest()
+	xhr.open("get","https://sample.bmaster.kro.kr/contacts",true)
+	xhr.send()
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState==4&&xhr.status==200){
+			//{"no":1601087554678,"name":"강감찬","tel":"010-2222-3339",
+			//	"address":"서울시","photo":"http://sample.bmaster.kro.kr/photos/noimage.jpg"}
+			console.log(xhr.responseText)
+			var data = JSON.parse(xhr.responseText)
+			var dlist = data.contacts
+			var adHTML=""
+			dlist.forEach(function(p){
+				adHTML+="<tr>"
+				adHTML+="<td>"+p.no+"</td>"
+				adHTML+="<td>"+p.name+"</td>"
+				adHTML+="<td>"+p.tel+"</td>"
+				adHTML+="<td>"+p.address+"</td>"
+				adHTML+="<td><img width='60%' height='60%' src='"+p.photo+"'/></td>"
+				adHTML+="</tr>"
+			})
+			tbOb.innerHTML +=adHTML
+		}
+	}
+}
+</script>
+</html>

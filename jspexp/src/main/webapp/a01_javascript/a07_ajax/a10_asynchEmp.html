@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+
+
+<h2>사원정보(비동기검색)</h2>
+<table>
+	<col width="30%">
+	<tr><th>사원명</th><td><input class="sch" type="text" name="ename" /></td></tr>
+	<tr><th>직책명</th><td><input class="sch" type="text" name="job" /></td></tr>
+	<tr><th>급여(시작)</th><td><input class="sch" type="text" name="frSal" value="0" /></td></tr>
+	<tr><th>급여(마지막)</th><td><input class="sch" type="text" name="toSal" value="9999" /></td></tr>
+	<tr><td colspan="2"><input type="button" id="schBtn" value="검색"/></td></tr>
+</table>
+
+<div id="container" ></div>
+
+
+</body>
+<script type="text/javascript">
+	var enameOb=document.querySelector("[name=ename]")
+	var jobOb=document.querySelector("[name=job]")
+	var frSalOb=document.querySelector("[name=frSal]")
+	var toSalOb=document.querySelector("[name=toSal]")
+	var schArr=document.querySelectorAll(".sch")
+	var schBtnOb=document.querySelector("#schBtn")
+	function search(){
+		// 서버에 요청값을 넘겨준 데이터 처리
+		var qstr = "?ename="+enameOb.value+"&job="+jobOb.value+
+				"&frSal="+frSalOb.value+"&toSal="+toSalOb.value
+		console.log(qstr)
+		callAjax(qstr)
+	}
+	function callAjax(qstr){
+		// 1. 객체 생성
+		var xhr = new XMLHttpRequest()
+		// 2. open() 대상 jsp호출
+	 	xhr.open("get","z10_DB_fmt.jsp"+qstr,true) 
+	 	// 3. 전달
+	 	xhr.send()
+	 	// 4. onreadystatechange 이벤트 핸들러 함수 호출
+	 	xhr.onreadystatechange=function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				console.log(xhr.responseText)
+				document.querySelector("#container").innerHTML = xhr.responseText
+			}
+		}
+	}
+	// 대상 객체엥 이벤트를 통해서 이벤트 핸틀러 함수 연결.. schArr,schBtnOb
+	// 대상객체.on이벤트 = 이벤트 핸들러 함수(search)
+	schArr.forEach(function(schob){
+		schob.onkeyup=function(){
+			if(event.keyCode==13){
+				search();
+			}
+		}
+	})
+	schBtnOb.onclick = search;
+/*
+ex) z10_DB_fmt.jsp에 form화면을 만들고 요청값을 전달하여 비동기적으로 출력하세요.
+1. 화면구현
+	form 사원명, 직책명, 급여(시작) 급여(마지막) value="9999"
+2. DOM객체 호출
+	1) 각 입력할 DOM
+	2) 이벤트 처리 DOM
+3. 이벤트에 의해 query String 만들기 (공통 함수로 연결)
+	1) 이벤트 핸들러 함수(query string)
+	2) 대상객체에 이벤트로 핸들러 함수 연결
+4. 매개변수로 받은 query String에 의해 ajax 처리 함수 처리
+5. 전달되어온 html코드, container div에 할당 처리.
+ */
+</script>
+</html>
