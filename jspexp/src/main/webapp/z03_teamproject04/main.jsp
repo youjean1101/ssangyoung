@@ -9,46 +9,80 @@
 <title>Insert title here</title>
 <style>
 	#use{
-		border:1px solid black;
-		width: 270px;
-	    height: 350px;
+		/* border:1px solid black; */
+		width: 300px;
+	    height: 400px;
 		position:fixed;
 		bottom: 35%;
 	    left: 10%;
 	    background:lightyellow;
 	}
 	#login{
-		border:1px solid black;
-		width: 270px;
-	    height: 350px;
+		/* border:1px solid black; */
+		width: 300px;
+	    height: 400px;
 		position:fixed;
 		bottom: 35%;
 	    left: 40%;
 	    background:lightyellow;
 	}
 	#notice{
-	 	border:1px solid black;
-	 	width: 270px;
-	    height: 350px;
+	 	/* border:1px solid black; */
+	 	width: 300px;
+	    height: 400px;
 		position:fixed;
 		bottom: 35%;
 	    left: 70%;
 	    background:lightyellow;
 	}
+	#use img{
+		width:100%;
+		height:100%;
+	}
+	#login img{
+		width:100%;
+		height:100%;
+	}
+	#notice img{
+		width:100%;
+		height:100%;
+	}
 	box input[type=button]{
 		background:white;
 		border:none;
 		color:rgb(243, 156, 18);
-		width:80px;
+		width:110px;
 		height:40px;
-		position:absolute;
-		bottom:10%;
-		left:30%;
-		font-weight: bold;
-		font-size:10pt;
+		font-weight:bold;
+		font-size:13pt;
 	}
-	box #noticego{
-		width:150px;
+	box #useGo{
+		width: 220px;
+	    position: absolute;
+	    bottom: 4%;
+	    left: 13%;
+	}
+	#login #signupGo{
+		width:100px;
+		position:absolute;
+		bottom:4%;
+		left:10%;
+		font-size:14pt;
+	}
+	#login #loginGo{
+		width:100px;
+		position:absolute;
+		bottom:4%;
+		left:57%;
+		font-size:14pt;
+	}
+	#notice #noticeGo{
+		width:200px;
+		position:absolute;
+		bottom:9%;
+		left:2%;
+		height:70px;
+		font-size:16pt;
 	}
 	
 </style>
@@ -58,16 +92,19 @@
 	<jsp:include page="frame.jsp"></jsp:include>
 	
 	<box id="use">
-		<input type="button" value="이용하기" />
+		<img src=".\img\main1.png">
+		<input id="useGo" type="button" value="중고나라 이용하기" />
 	</box>
 	
 	<box id="login">
-		<input type="button" value="회원가입" />
-		<input type="button" value="로그인" />
+		<img src=".\img\main2.png">
+		<input id="signupGo" type="button" value="회원가입" onclick="location.href='signUp.jsp'"/>
+		<input id="loginGo" type="button" value="로그인" onclick="location.href='login.jsp'"/>
 	</box>
 		
 	<box id="notice">
-		<input id="noticego" type="button" value="공지사항 보러가기" />
+		<img src=".\img\main3.png">
+		<input id="noticeGo" type="button" value="공지사항 보러가기" />
 	</box>
 </body>
 <script type="text/javascript">

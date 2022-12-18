@@ -84,7 +84,7 @@
 		<nav id="menubar">
 			<ul>
 				<tr>
-					<td><a href="#"><img name="logo" src=".\img\olderword Logo.png" /></a></td>
+					<td><a href="main.jsp"><img name="logo" src=".\img\olderword Logo.png" /></a></td>
 					<td width="12.5%"><a class="textclass" href="#">구매하기</a></td>
 					<td width="12.5%"><a class="textclass" href="#">판매하기</a></td>
 					<td width="20%"><a class="textclass" href="#">문의하기</a></td>
