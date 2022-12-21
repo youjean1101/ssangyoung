@@ -29,7 +29,7 @@
  */
  function loadData(){
 	var xhr = new XMLHttpRequest()
- 	xhr.open("get","z05_EmpList.jsp",true) //비동기 방식으로 화면로딩
+ 	xhr.open("get","z05_EmpList.jsp",true) //비동기(true) 방식으로 화면로딩
  	xhr.send()
  	// 비동기 이벤트 선언 및 핸들러 할당.
  	xhr.onreadystatechange=function(){

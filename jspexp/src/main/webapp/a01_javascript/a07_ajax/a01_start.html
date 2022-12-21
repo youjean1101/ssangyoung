@@ -64,15 +64,15 @@ function goAjax(){
 		xhr.open("get/post방식", "서버의 자원", 동기/비동기여부boolean)
 	4) 전송처리 메서드 
 		xhr.send()
-	5) 서버에서 해당 자원이 전송해주는 데이터 받는 메서드
-		xhr.responseText()
+	5) 서버에서 해당 자원이 전송해주는 데이터 받음
+		xhr.responseText
 	6) 비동기식일 때, 처리하는 이벤트 및 이벤트 핸들러 함수(비동기식일 때)
 		xhr.onreadyStatechange=function(){
 			xhr.readyState : 서버와 통신을 단계별로 코드값으로 가져온다.
 				0: 객체를 만듦, 1,2 데이터 받을 준비, 3:서버에서 데이터를 일부받음, 
 				4:서버에서 데이터를 모두 받음.
 			xhr.status : http응답코드 200~299 - 정상적으로 받음.일반적을 200으로 설정
-			ps) xhr.responseText()로 결과 내용은 비동기식 기능메서드 안에서 정상적으로 다 데이터가 왔을 때, 처리한다.
+			ps) xhr.responseText로 결과 내용은 비동기식 기능메서드 안에서 정상적으로 다 데이터가 왔을 때, 처리한다.
 		}
 		
 

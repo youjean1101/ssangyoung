@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import="jspexp.vo.*"
+    import="z02_teamproject4.vo.*"
     import="java.util.*"
-    import="jspexp.a13_database.*" 
+    import="z02_teamproject4.*" 
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원정보수정</title>
+<title>중고월드 회원정보수정</title>
 <style>
 	.button{
 		border-radius:13px;
@@ -70,34 +70,36 @@
 <body>
 	<jsp:include page="frame.jsp"></jsp:include>
 	<form>
+			<%
+				User loginUser = (User)session.getAttribute("loginUserInfo");
+				boolean hasSess = loginUser!=null; // 로그인한계정정보가 null아니면 true
+				if(hasSess){
+			%>
 		<table id="signuptab">
 			<tr><th colspan="2">회원정보</th></tr>
 			<tr><td colspan="2"><hr></td></tr>
 			<tr><td>아이디</td><td></td></tr>
-			<tr><td><input class="input" type="text" name="id" placeholder="아이디"/></td>
-				<td><input class="button" type="button" value="중복확인"></td></tr>
+			<tr><td colspan="2"><input class="input" type="text" name="id" value="<%=loginUser.getsId()%>"/></td></tr>
 			<tr><td>비밀번호</td><td></td></tr>
-			<tr><td colspan="2"><input class="input" type="text" name="password" placeholder="비밀번호" /></td></tr>
+			<tr><td colspan="2"><input class="input" type="text" name="password" value="<%=loginUser.getsPassword()%>"/></td></tr>
 			<tr><td>비밀번호 확인</td><td></td></tr>
-			<tr><td colspan="2"><input class="input" type="text" name="passwordconfirm" placeholder="비밀번호 확인" /></td></tr>
+			<tr><td colspan="2"><input class="input" type="text" name="passwordconfirm" value="<%=loginUser.getsPassword()%>" /></td></tr>
 			<tr><td>이름</td><td></td></tr>
-			<tr><td colspan="2"><input class="input" type="text" name="name" placeholder="실명을 입력하세요." /></td></tr>
+			<tr><td colspan="2"><input class="input" type="text" name="name" value="<%=loginUser.getsUsername()%>"/></td></tr>
 			<tr><td>휴대폰 번호</td><td></td></tr>
-			<tr><td colspan="2"><input class="input" type="text" name="phonenumber" placeholder="'-'구분없이 입력" /></td></tr>
-			<!-- <tr><td>인증번호</td><td></td></tr>
-			<tr><td colspan="2"><input class="input" type="text" name="codenumber" placeholder="인증번호 입력" /></td></tr> -->
+			<tr><td colspan="2"><input class="input" type="text" name="phonenumber" value="<%=loginUser.getsPhonenumber()%>"/></td></tr>
 			<tr><td>생년월일</td><td></td></tr>
-			<tr><td colspan="2"><input class="input" type="text" name="birthday" placeholder="8자리 입력" /></td></tr>
+			<tr><td colspan="2"><input class="input" type="text" name="birthday" value="<%=loginUser.getiPoint()%>"/></td></tr>
 			<tr><td>성별</td><td></td></tr>
 			<tr><td colspan="2"><input type="radio" name="gender" value="남성">남성
 								<input type="radio" name="gender" value="여성">여성</td></tr>
 			<tr><td>주소</td><td></td></tr>
-			<tr><td><input type="text" class="input" name="address" placeholder="주소를 검색해주세요."/></td>
-				<td><input class="button" type="button" value="주소검색"></td></tr>
-			<tr><td colspan="2"><input class="input" type="text" name="address" placeholder="상세주소를 입력해주세요."/></td></tr>
+			<tr><td><input type="text" class="input" name="address" value="<%=loginUser.getsAddress()%>"/></td>
+				<td><input class="button" type="button" value="주소변경"></td></tr>
+			<tr><td colspan="2"><input class="input" type="text" name="address" value="<%=loginUser.getsDetailaddress()%>"/></td></tr>
 			<tr><td>이메일</td><td></td></tr>
-			<tr><td><input class="email" type="text" name="email1" placeholder="이메일 아이디" size="15">@
-					<input class="email" type="text" name="email2" placeholder="이메일주소" size="15"/>
+			<tr><td><input class="email" type="text" name="email1" placeholder="이메일 아이디" size="15" value="<%=loginUser.getsEmail()%>">@
+					<input class="email" type="text" name="email2" placeholder="이메일주소" size="15" value="<%=loginUser.getsEmail()%>"/>
 				</td>
 				<td><select id="emailaddress">
 						<option selected disabled value="">메일선택하기</option>
@@ -110,10 +112,11 @@
 			<tr><td> </td><td></td></tr>
 			<tr><td colspan="2"><input id="dosignup" type="submit" value="중고월드 시작하기"></td></tr>
 		</table>
+			<%} %>
 	</form>
 
 </body>
 <script type="text/javascript">
-
+	var 
 </script>
 </html>

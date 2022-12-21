@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
+    import="z02_teamproject4.vo.*"
+    import="z02_teamproject4.*"
+    import="java.util.*"
     %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>중고월드 메인</title>
 <style>
 	#use{
 		/* border:1px solid black; */
@@ -84,6 +87,16 @@
 		height:70px;
 		font-size:16pt;
 	}
+	#thanks{
+		position: fixed;
+	    bottom: 50%;
+	    left: 35%;
+	    text-align:center;
+	    font-size:24pt;
+	    font-family: "Arial Black", sans-serif;
+	    color: black;
+	    text-shadow:2px 4px 2px gray;
+	}
 	
 </style>
 
@@ -95,13 +108,19 @@
 		<img src=".\img\main1.png">
 		<input id="useGo" type="button" value="중고나라 이용하기" />
 	</box>
-	
+	<%
+		User loginUser = (User)session.getAttribute("loginUserInfo");
+		boolean hasSess = loginUser!=null; // 로그인한계정정보가 null아니면 true
+		if(!hasSess){
+	%>
 	<box id="login">
 		<img src=".\img\main2.png">
 		<input id="signupGo" type="button" value="회원가입" onclick="location.href='signUp.jsp'"/>
 		<input id="loginGo" type="button" value="로그인" onclick="location.href='login.jsp'"/>
 	</box>
-		
+	<%}else{ %>
+		<h2 id="thanks">저희 중고월드를 이용해주셔서 <div>감사합니다.♥</div></h2>
+	<%} %>
 	<box id="notice">
 		<img src=".\img\main3.png">
 		<input id="noticeGo" type="button" value="공지사항 보러가기" />

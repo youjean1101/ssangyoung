@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
+    import="z02_teamproject4.vo.*"
+    import="z02_teamproject4.*"
+    import="java.util.*"
     %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>탑메뉴</title>
+<title>중고월드 top메뉴</title>
 
 <style>
 	#topmenutab{
@@ -14,6 +17,10 @@
 		height:18px;
 		background:rgb(243, 156, 18);
 	}
+	/* #topmenutab td{
+		border:1px solid black;
+		text-align:right;
+	} */
 	#menubar ul{/*여백과 패딩 처리*/
 		margin:0;
 		padding:0;
@@ -25,7 +32,7 @@
 		padding:5px 15px;
 		color:white;
 		text-decoration:none;
-		font-size:14pt;
+		font-size:16pt;
 		font-weight: bold;
 	}
 	.textclass:hover{
@@ -47,18 +54,18 @@
 	input[name=indexblock]{
 		width:250px;
 		height:30px;
+		border:none;
 	}
-	#menubar ul table{
-    	width:100%;
-  	}
-  	#menubar ul table td{
+	
+  	#menubar ul td{
     	width:12%;
     	font-size:13pt;
   	}
 	#usermenu{
-		width:100px;
+		width:140px;
 		height:30px;
 		border:none;
+		border-radius:2px;
 	}
 	#usermenu option[value=""][disabled] {
 		display:none;
@@ -67,19 +74,25 @@
 		background:rgb(243, 156, 18);
 		color:white;
 	}
-	
 	#indexbutton{
 		width:55px;
 		height:35px;
 		border:none;
 		background:rgb(243, 156, 18);
 	}
-	
-	
+	#topmenutab>td>#countTab>td{
+		position:absolute;
+	}
+	#countTab td{
+		text-align:right;
+		font-size:8pt;
+		/* background:white; */
+		width:90%;
+	}
 </style>
-
 </head>
 <body>
+	
 	<table id="topmenutab">
 		<nav id="menubar">
 			<ul>
@@ -96,18 +109,42 @@
 						<button id="indexbutton" type="submit"><img name="indexclick" src=".\img\indexclick.png" alt=""></button>
 					</form>
 					</td>
-					<td width="15%"></td>
+					<%
+						User loginUser = (User)session.getAttribute("loginUserInfo");
+						boolean hasSess = loginUser!=null; // 로그인한계정정보가 null아니면 true
+						if(hasSess){
+					%>
+					<td width="14%">
+						<table id="countTab">
+							<tr><td>나의 판매횟수: </td><td><%=loginUser.getiSalecount() %>회</td></tr>
+							<tr><td>나의 구매횟수: </td><td><%=loginUser.getiBuycount() %>회</td></tr>
+							<tr><td>나의 신고당한횟수: </td><td><%=loginUser.getiDeclarationcount() %>회</td></tr>
+						</table>
+					</td>
 						<td width="5%">
 					<label for="usermenu">
 						<img name="profile" src=".\img\profile.png" />
 						</td>
 						<td>
-						<select id="usermenu" onchange="menuChoice(this.form)">
-							<option value="" disabled selected>himan님</option>
+						<select id="usermenu">
+							<option value="" disabled selected><%=loginUser.getsId() %>님</option>
 							<option value="userSet">회원정보수정</option>
 							<option value="logout">로그아웃</option>
 							<option value="MyPage">MyPage</option>
 							<option value="userDelete">회원탈퇴</option>
+					
+					<%}else{ %>
+					
+							<td width="5%">
+						<label for="usermenu">
+							<img name="profile" src=".\img\profile.png" />
+							</td>
+							<td>
+							<select id="usermenu" onchange="menuChoice(this.form)">
+							<option value="" disabled selected>로그인을 해주세요.</option>
+							<option value="loginGo">로그인 하러가기</option>
+							<option value="mainGo">메인으로 가기</option>
+					<%} %>
 						</select>
 						</td>
 					</label>
@@ -115,7 +152,7 @@
 			</ul>
 		</nav>
 	</table>
-
+	
 
 </body>
 <script type="text/javascript">
@@ -128,6 +165,31 @@
 		document.getElementById('usermenu').size = 4
 		li.show();
 	} */
+	var usermenu = document.querySelector("#usermenu")
+	usermenu.onclick=function(){
+		if(usermenu.value=="userSet"){
+			location.href="userInfoUpdate.jsp"
+			
+		}else if(usermenu.value=="logout"){
+			/* session.removeAttribute("loginUserInfo"); */
+			/* location.href="main.jsp" */
+			response.sendRedirect("main.jsp");
+			
+		}else if(usermenu.value=="MyPage"){
+			location.href="MyPage.jsp"
+			
+		}else if(usermenu.value=="userDelete"){
+			window.open("userRemove.jsp", "탈퇴확인하기", "width=500, height=210, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
+			window.close();
+			//location.href="userRemove.jsp"
+		}else if(usermenu.value=="loginGo"){
+			location.href="login.jsp"
+			
+		}else if(usermenu.value=="mainGo"){
+			location.href="main.jsp"
+		}
+	}
+	
 
 </script>
 </html>

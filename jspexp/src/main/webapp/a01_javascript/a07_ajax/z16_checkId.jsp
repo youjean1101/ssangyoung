@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import="jspexp.vo.*"
+    import="z02_teamproject4.vo.*"
     import="java.util.*"
-    import="jspexp.a13_database.*" 
+    import="z02_teamproject4.*"
     %>
 <%-- 주석은 꼭 이걸로 해야함
 jspexp.a13_database.A06_PareparedDao checkId

@@ -1,5 +1,6 @@
 package z01_studyteam01;
-
+// z01_studyteam01.studyteamDao.*
+// z01_studyteam01.vo.*
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

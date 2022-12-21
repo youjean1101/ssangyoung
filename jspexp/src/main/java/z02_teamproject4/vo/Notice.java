@@ -1,5 +1,5 @@
 package z02_teamproject4.vo;
 
-public class buyInfo {
+public class Notice {
 
 }

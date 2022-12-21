@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+	<h2>부서정보조회</h2>
+	<table>
+		<col width="30%">
+		<tr><th>부서명</th><th><input type="text" class="sch" name="dname" /></th></tr>
+		<tr><th>부서위치</th><th><input type="text" class="sch" name="loc" /></th></tr>
+		<tr><td colspan="2"><input type="button" id="schBtn" value="검색"/></td></tr>
+	</table>
+	<table id="tab01">
+		<thead>
+			<tr><th>부서번호</th><th>부서명</th><th>부서위치</th></tr>	
+		</thead>
+		<tbody>
+		
+		</tbody>
+	</table>
+
+
+</body>
+<script type="text/javascript">
+var dnameOb = document.querySelector("[name=dname]")
+var locOb = document.querySelector("[name=loc]")
+var schArr = document.querySelectorAll(".sch")
+var schBtnOb = document.querySelector("#schBtn")
+var div = document.querySelector("#tab01 tbody")
+search();
+function search(){
+	var qstr= "?dname="+dnameOb.value+"&loc="+locOb.value
+	console.log("z20_gsonData.jsp"+qstr)
+	var xhr = new XMLHttpRequest()
+	xhr.open("get","z20_gsonData.jsp"+qstr,true)
+	xhr.send()
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState==4 && xhr.status==200){
+			//div.innerHTML = xhr.responseText
+			var dlist = JSON.parse(xhr.responseText)
+			var addHTML = ""
+			dlist.forEach(function(dept){
+				addHTML +="<tr><td>"+dept.deptno+"</td><td>"+dept.dname
+							+"</td><td>"+dept.loc+"</td></tr>"
+			})
+			div.innerHTML = addHTML
+		}
+	}
+}
+schArr.forEach(function(sch){
+	sch.onkeyup=function(){
+		if(event.keyCode==13){
+			search()
+		}
+	}
+})
+schBtnOb.onclick=search
+</script>
+</html>

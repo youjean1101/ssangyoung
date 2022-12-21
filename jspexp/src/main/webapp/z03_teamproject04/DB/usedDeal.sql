@@ -3,11 +3,14 @@ CREATE TABLE olddealuser(
 	id varchar2(20) PRIMARY key, -- 아이디
 	password varchar2(20) NOT null,	--패스워드
 	div varchar2(20) CONSTRAINT olddealuser_auth_ck check(div IN('관리자','회원')),	-- 권한구분
+	profileimg varchar(4000),
 	username varchar2(20),	-- 이름
-	rrn varchar2(14) not NULL CONSTRAINT olddealuser_rrn_uq UNIQUE,	-- 주민번호
+	/*rrn varchar2(14) not NULL CONSTRAINT olddealuser_rrn_uq UNIQUE,	-- 주민번호*/
+	birthday varchar2(8),
+	gender varchar2(4) CONSTRAINT olddealuser_gender_ck check(gender IN('남자','여자')),
+	phonenumber varchar2(13),	-- 전화번호
 	address varchar2(100),	-- 주소
 	detailaddress varchar2(100),	-- 상세주소
-	phonenumber varchar2(13),	-- 전화번호
 	email varchar2(50), -- 이메일
 	point number,	-- 포인트
 	salecount number,	-- 판매횟수
@@ -17,7 +20,19 @@ CREATE TABLE olddealuser(
 DROP TABLE olddealuser;
 
 SELECT * FROM olddealuser;
-INSERT INTO olddealuser values();
+SELECT * FROM olddealuser WHERE id='?';
+SELECT * FROM olddealuser WHERE id='test' AND password='0000';
+
+INSERT INTO olddealuser values('mgryujin','1234','관리자','관유진','010-1234-5678','서울특별시 마포구 서교동','447-5','mgryujin@usedDeal.com',0,0,0,0);
+INSERT INTO olddealuser values('yujin','1234','회원','정유진','010-0001-1234','서울특별시 강남구 역삼동','735 8층 쌍용교육센터','yujin@usedDeal.com',0,0,0,0);
+INSERT INTO olddealuser values('test','0000','회원','테스트용','010-0001-1234','서울특별시 강남구 역삼동','735 8층 쌍용교육센터','yujin@usedDeal.com',0,0,0,0);
+
+UPDATE olddealuser 
+SET password='1234' WHERE id='test';
+
+DELETE FROM olddealuser WHERE id='test' AND password='0000';
+
+
 -------------------------------상품정보 sql--------------------------------------------
 CREATE TABLE olderproduct(
 	productno NUMBER PRIMARY key, -- 상품번호

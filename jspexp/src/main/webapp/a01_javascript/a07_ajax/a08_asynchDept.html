@@ -12,6 +12,28 @@
 </style>
 <script>
 /*
+ # 비동기식으로 DB와 연동해서 요청값을 전달하는 ajax 처리 순서
+ 1. 화면 구성/form 하위 객체 선언
+ 2. 사용할 DOM 선언
+ 	1) value
+ 	2) 이벤트 처리할 내용(onclick, onkeyup(event.keyCode)... )
+ 3. 이벤트 핸들러 함수 선언
+ 	1) query string을 만들기(*)
+ 		서버에 보낼 query string(key=value&key2=value2)
+ 	2) ajax 처리할 내용
+ 		객체 생성
+ 		open 설정
+ 		보내기
+ 		onreadystatechange=function(){
+ 			조건(상태 처리)
+ 				xhr.responseText
+ 		}
+ 4. 데이터를 처리할 jsp화면/json 구성
+ 	1) 요청값 처리
+ 	2) DB연결 및 결과 처리
+ 	
+ 
+ 
 
  */
 </script>

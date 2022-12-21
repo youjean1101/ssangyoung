@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="z02_teamproject4.vo.*"
+    import="z02_teamproject4.*"
     import="java.util.*"
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,13 +12,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로그인창</title>
+<title>중고월드 로그인</title>
 <style>
 	#snsphoto{
 		/* border:1px solid black; */
 		position:fixed;
 		left:40%;
-		bottom:30%;
+		bottom:35%;
 		width:350px;
 		height:450px;
 	}
@@ -96,7 +97,8 @@
 	}
 	
 </style>
-
+<script>
+</script>
 </head>
 <body>
 	<jsp:include page="frame.jsp"></jsp:include>
@@ -105,19 +107,58 @@
 			<tr><td><h3>반갑습니다.<br>중고월드입니다.</h3></td><td></td></tr>
 			<form>
 			<tr><td colspan="2"><input type="text" class="input" name="id" placeholder="아이디를 입력해주세요."></td></tr>
-			<tr><td colspan="2"><input type="text" class="input" name="password" placeholder="비밀번호를 입력해주세요."></td></tr>
+			<tr><td colspan="2"><input type="password" class="input" name="password" placeholder="비밀번호를 입력해주세요."></td></tr>
 			<tr><td colspan="2"><input type="submit" value="로그인 하기"></td></tr>
 			</form>
-			<tr><td colspan="2" id="clickGo"><button id="signupGo"/>회원가입</button><span>|</span><button id="idFindGo"/>아아디/비밀번호 찾기</button></td></tr>
+			<tr><td colspan="2" id="clickGo"><button id="signupGo" onclick="location.href='signUp.jsp'"/>회원가입</button><span>|</span><button id="idFindGo"/>아아디/비밀번호 찾기</button></td></tr>
 			<tr><td colspan="2"><hr></td></tr>
 			<tr><td colspan="2"><button class="sns" id="google"/><img class="mark" id="googlemark" src=".\img\googlemark.png"/>구글 계정으로 로그인</button></td></tr>
 			<tr><td colspan="2"><button class="sns" id="naver"/><img class="mark" id="navermark" src=".\img\navermark.png"/>네이버 계정으로 로그인</button></td></tr>
 			<tr><td colspan="2"><button class="sns" id="kakao"/><img class="mark" id="kakaomark" src=".\img\kakaomark.png"/>카카오톡 계정으로 로그인</button></td></tr>
 		</table>
 	</box>	
-	
+	<%
+	String id = request.getParameter("id");
+	String password = request.getParameter("password");
+	boolean isFail = false;
+	if(id!=null&&password!=null){
+		userdao dao = new userdao();
+		
+		if(dao.login(id, password)){ //true(있으면)
+			response.sendRedirect("main.jsp");
+			/* session.setAttribute("loginID",id);
+			session.setAttribute("loginPassword",password); */
+			User sel= new User(id,password);
+			
+			for(User user:dao.userInfo(sel)){
+				User loginuser = new User(id,password,user.getsDiv(),user.getsUsername(),user.getsPhonenumber(),
+											user.getsAddress(),user.getsDetailaddress(),
+											user.getsEmail(),user.getiPoint(),user.getiSalecount(),user.getiBuycount(),
+											user.getiDeclarationcount()); //12개
+				session.setAttribute("loginUserInfo",loginuser);
+
+				/* session.setAttribute("loginAuth",user.getsDiv());
+				session.setAttribute("loginName",user.getsUsername());
+				session.setAttribute("loginPhonenumber",user.getsPhonenumber());
+				session.setAttribute("loginAddress",user.getsAddress());
+				session.setAttribute("loginDetailAddress",user.getsDetailaddress());
+				session.setAttribute("loginEmail",user.getsEmail());
+				session.setAttribute("loginPoint",user.getiPoint());
+				session.setAttribute("loginSaleCnt",user.getiSalecount());
+				session.setAttribute("loginBuyCnt",user.getiBuycount());
+				session.setAttribute("loginDeclarationCnt",user.getiDeclarationcount()); */
+			}
+		}else{ //false(없으면)
+			isFail = true;
+		}
+	}
+	%>
 </body>
 <script type="text/javascript">
-
+	
+	var isFail=<%=isFail%>
+	if(isFail){
+		alert("[안내메시지]등록된 계정이 없습니다.\n아이디/패스워드를 확인해주세요.")
+	}
 </script>
 </html>

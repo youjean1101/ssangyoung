@@ -1,5 +1,5 @@
 package jspexp.vo;
-
+//jspexp.vo.Member
 public class Member {
 	private String id;
 	private String passwd;

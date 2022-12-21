@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
+    import="jspexp.vo.*"
     import="java.util.*"
-    import="z01_studyteam01.vo.*" 
-    import="z01_studyteam01.*" 
-    session = "true"
+    import="jspexp.a13_database.*" 
     %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:requestEncoding value="utf-8" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,21 +22,17 @@
 
 </head>
 <body>
-	<h2>중복확인</h2>
-	<%
-		String id = request.getParameter("confirmId");
-		if(id!=null){
-			studyteamDao dao = new studyteamDao();
-			request.setAttribute("hasId",dao.isIDConfirm(id)?"Y":"N");
-	%>
-		<jsp:forward page="sigh_Up.jsp" />
-	<%
-	}
-	%>
-	
+<%-- 
+
+
+--%>
+
 
 </body>
 <script type="text/javascript">
-		
+/*
+ 
+*/
+
 </script>
 </html>

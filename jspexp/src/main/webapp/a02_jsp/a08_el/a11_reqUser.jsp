@@ -68,6 +68,13 @@
 	위와 같이 선언시, Bean객체 내부에 아래 요청 값을 받을 수 있는 property와 타입이 같으면 자동으로 할당된다.
 	?name=사과&price=3000&cnt=2
 	setName(String s) setPrice(int price) setCnt(int cnt)
+	
+	?callname=사과
+	setName(String s)
+	
+	요청값(query string)과 property가 다를 때.
+	<jsp:setProperty property="name" param="callname" name="product" />
+
 	 --%>
 	
 	<%-- <jsp:setProperty property="pname" name="product" />

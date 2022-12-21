@@ -28,7 +28,7 @@
 2. 아래의 방법에 의해 객체를 저장하고 처리한다.
 	1) 객체 저장
 		범위객체.setAttribute("키", new 객체());
-		<c:set var="num01" value="${}" />
+		<c:set var="num01" value="${키}" />
 	2) 바로 호출 및 할당
 		<c:set var="num02" value="<%=new Person("홍길동",25,"서울")%>" />
 	3) usebean을 통한 객체 생성 및 호출
