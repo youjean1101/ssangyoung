@@ -88,6 +88,8 @@
 		var nameV = name.value.trim();
 		var phonenumber = document.querySelector("[name=phonenumber]")
 		var phonenumberV = phonenumber.value.trim();
+		var gender = document.querySelectorAll("[name=gender]")
+		var genderV = gender.value.trim();
 		var address = document.querySelector("[name=address]")
 		var addressV = address.value.trim();
 		if(idV==""){
@@ -130,7 +132,7 @@
 </script>
 </head>
 <body>
-	<jsp:include page="frame.jsp"></jsp:include>
+	<jsp:include page="\frame\frame.jsp"></jsp:include>
 	<form id="singupform">
 		<table id="signuptab">
 			<tr><th colspan="2">회원가입</th></tr>
@@ -148,8 +150,8 @@
 			<tr><td colspan="2"><input class="input" type="text" name="phonenumber" placeholder="'-'구분없이 입력" /></td></tr>
 			<tr><td>생년월일</td><td></td></tr>
 			<tr><td colspan="2"><input class="input" type="text" name="birthday" placeholder="8자리 입력" /></td></tr>
-			<tr><td>성별</td><td></td></tr>
-			<tr><td colspan="2"><input type="radio" name="gender" value="남성">남성
+			<tr><td><span class="guide">*</span>성별</td><td></td></tr>
+			<tr><td colspan="2"><input type="radio" name="gender" value="남성" checked="checked">남성
 								<input type="radio" name="gender" value="여성">여성</td></tr>
 			<tr><td><span class="guide">*</span> 주소</td><td></td></tr>
 			<tr><td><input type="text" class="input" name="address" placeholder="주소를 검색해주세요."/></td>
@@ -192,7 +194,7 @@
 		boolean isInsert = false;
 		if(id!=""&&password!=""){
 			User ins = new User(id, passwordConfirm, null,name, phonenumber, birthday, gender, address, addressDetail, email);
-			dao.userAdd(ins);
+			dao.userAdd(ins); // null값은 프로필
 			isInsert = true;
 		}
 	%>

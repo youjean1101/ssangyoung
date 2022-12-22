@@ -42,7 +42,7 @@
 			
 		\a02_jsp\z01_sample\a03_checkSession.jsp
 			<script>
-					var id = "${mem.id}"
+					var id = "${mem.id}" # session 있는지 여부를 확인
 					if(id==""){
 						alert("로그인을 하셔야 합니다.\n로그인페이지이동")
 						location.href="a01_login.jsp"
@@ -55,6 +55,25 @@
 			세션이 없으면 로그인하여야 합니다. 하고 로그인 페이지로 이동
 			
 	3) 로그아웃으로 해당 세션이 사라지는 기능
+		메인이나, 특정페이지에 로그아웃(버튼/이미지)
+		==> js(로그아웃 하시겠습니까?) ==> login 페이지로 이동
+		a03_checkSession.jsp
+			<input type="button" value="로그아웃" onclick="logout()">
+			js
+			function logout(){
+				if(confirm("로그아웃하시겠습니까?")){
+					location.href="a01_login_DB.jsp"
+				}
+			}
+		
+		로그인페이지에서 세션을 삭제하고 시작
+			특정 session : session.removeAttribute("mem")
+				<c:remove var="mem" scope="session" />
+				특정 session 변수 삭제 jstl
+			session 전체 삭제 : session.invalidate()
+			
+			a01_login_DB.jsp
+				<c:remove var="mem" scope="session" />
 	4) 로그인 후, session 범위 안에 특정 메뉴 접근 가능
 	5) 게시판에서 등록한 사용자만 해당 게시물을 수정/삭제 처리 가능 등..
 	

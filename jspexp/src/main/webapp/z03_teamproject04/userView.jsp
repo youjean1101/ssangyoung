@@ -14,15 +14,15 @@
 <style>
 	#infobox{
 		width:600px;
-		height:500px;
-		border:1px solid black;
+		height:600px;
+		/* border:1px solid black; */
 		position:fixed;
+		top:15%;
 		left:35%;
-		top:20%;
-	/* 	margin:auto 300px; */
+		margin:auto auto;
 	}
 	
-	#infofield{
+	#infobox #infofield{
 		width:100%;
 	}
 	#infofield legend{
@@ -30,21 +30,51 @@
 		font-size:25pt;
 	}
 	#infofield #userInfotab{
+		width:100%;
 	}
 	#infofield #userInfotab td{
 		text-align:center;
+		width:70%;
+		font-size:14pt;
+		background:lightyellow;
+		border:2px solid white;
 		
 	}
 	#infofield #userInfotab th{
 		text-align:right;
+		width:30%;
+		font-size:18pt;
 	}
-	
+	#infobox .button{
+		border:4px solid rgb(142, 68, 173);
+		background:white;
+		color:rgb(142, 68, 173);
+		width:40%;
+		height:50px;
+		font-size:16pt;
+		font-weight:bold;
+		position:absolute;
+		bottom:0%;
+	}
+	input[value="수정하기"]{
+		position:absolute;
+		left:12%;
+	}
+	input[value="뒤로가기"]{
+		position:absolute;
+		right:5%;
+	}
+	#infobox .button:hover{
+		background:rgb(142, 68, 173);
+		color:white;
+	}
 </style>
 
 </head>
 <body>
-		<jsp:include page="frame.jsp"></jsp:include>
+		<jsp:include page="\frame\frame.jsp"></jsp:include>
 		<%
+			boolean loginalert=false;
 			User loginUser = (User)session.getAttribute("loginUserInfo");
 			boolean hasSess = loginUser!=null; // 로그인한계정정보가 null아니면 true
 			if(hasSess){
@@ -68,13 +98,20 @@
 					<tr><th>신고당한횟수:</th><td><%=loginUser.getiDeclarationcount() %></td></tr>
 					</table>
 			</fieldset>
-		<%} %>
-		<input type="button" value="수정하기" /><input type="button" value="뒤로가기" />
+		<input class="button" type="button" value="수정하기" onclick="location.href='userInfoUpdate.jsp'"/>
+		<input class="button" type="button" value="뒤로가기" onclick="location.href='MyPage.jsp'"/>
 		</box>
+		<%}else{ 
+			loginalert=true;
+		} %>
 		
 
 </body>
 <script type="text/javascript">
-
+	var alertis = <%=loginalert%>
+	if(alertis){
+		alert("[안내메시지]로그인을 해주세요.")
+		location.href="login.jsp";
+	}
 </script>
 </html>

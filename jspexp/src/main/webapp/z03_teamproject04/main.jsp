@@ -102,7 +102,7 @@
 
 </head>
 <body>
-	<jsp:include page="frame.jsp"></jsp:include>
+	<jsp:include page="\frame\frame.jsp"></jsp:include>
 	
 	<box id="use">
 		<img src=".\img\main1.png">

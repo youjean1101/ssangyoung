@@ -101,7 +101,7 @@
 </script>
 </head>
 <body>
-	<jsp:include page="frame.jsp"></jsp:include>
+	<jsp:include page=".\frame\frame.jsp"></jsp:include>
 	<box id="snsphoto">
 		<table id="logintab">
 			<tr><td><h3>반갑습니다.<br>중고월드입니다.</h3></td><td></td></tr>
@@ -129,10 +129,14 @@
 			/* session.setAttribute("loginID",id);
 			session.setAttribute("loginPassword",password); */
 			User sel= new User(id,password);
-			
+			/*
+			public User(String sId, String sPassword, String sDiv, String sProfileimg, String sUsername, String sPhonenumber,
+			String sBirthday, String sGender, String sAddress, String sDetailaddress, String sEmail, int iPoint,
+			int iSalecount, int iBuycount, int iDeclarationcount)
+			*/
 			for(User user:dao.userInfo(sel)){
-				User loginuser = new User(id,password,user.getsDiv(),user.getsUsername(),user.getsPhonenumber(),
-											user.getsAddress(),user.getsDetailaddress(),
+				User loginuser = new User(id,password,user.getsDiv(),user.getsProfileimg(),user.getsUsername(),user.getsPhonenumber(),
+											user.getsBirthday(),user.getsGender(),user.getsAddress(),user.getsDetailaddress(),
 											user.getsEmail(),user.getiPoint(),user.getiSalecount(),user.getiBuycount(),
 											user.getiDeclarationcount()); //12개
 				session.setAttribute("loginUserInfo",loginuser);

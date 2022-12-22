@@ -20,7 +20,28 @@ public class User {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+	 //전체필드
+	public User(String sId, String sPassword, String sDiv, String sProfileimg, String sUsername, String sPhonenumber,
+			String sBirthday, String sGender, String sAddress, String sDetailaddress, String sEmail, int iPoint,
+			int iSalecount, int iBuycount, int iDeclarationcount) {
+		super();
+		this.sId = sId;
+		this.sPassword = sPassword;
+		this.sDiv = sDiv;
+		this.sProfileimg = sProfileimg;
+		this.sUsername = sUsername;
+		this.sPhonenumber = sPhonenumber;
+		this.sBirthday = sBirthday;
+		this.sGender = sGender;
+		this.sAddress = sAddress;
+		this.sDetailaddress = sDetailaddress;
+		this.sEmail = sEmail;
+		this.iPoint = iPoint;
+		this.iSalecount = iSalecount;
+		this.iBuycount = iBuycount;
+		this.iDeclarationcount = iDeclarationcount;
+	}
+	//회원가입필드
 	public User(String sId, String sPassword, String sProfileimg, String sUsername, String sPhonenumber,
 			String sBirthday, String sGender, String sAddress, String sDetailaddress, String sEmail) {
 		super();
@@ -35,35 +56,20 @@ public class User {
 		this.sDetailaddress = sDetailaddress;
 		this.sEmail = sEmail;
 	}
-
-	public User(String sId, String sPassword, String sDiv, String sUsername, String sPhonenumber, String sAddress,
-			String sDetailaddress, String sEmail, int iPoint, int iSalecount, int iBuycount, int iDeclarationcount) {
+	// 회원변경 필드
+	public User(String sId, String sPassword, String sProfileimg, String sPhonenumber, String sBirthday, String sGender,
+			String sAddress, String sDetailaddress, String sEmail) {
 		super();
 		this.sId = sId;
 		this.sPassword = sPassword;
-		this.sDiv = sDiv;
-		this.sUsername = sUsername;
+		this.sProfileimg = sProfileimg;
 		this.sPhonenumber = sPhonenumber;
-		this.sAddress = sAddress;
-		this.sDetailaddress = sDetailaddress;
-		this.sEmail = sEmail;
-		this.iPoint = iPoint;
-		this.iSalecount = iSalecount;
-		this.iBuycount = iBuycount;
-		this.iDeclarationcount = iDeclarationcount;
-	}
-	public User(String sId, String sPassword, String sUsername, String sPhonenumber, String sAddress,
-			String sDetailaddress, String sEmail) {
-		super();
-		this.sId = sId;
-		this.sPassword = sPassword;
-		this.sUsername = sUsername;
-		this.sPhonenumber = sPhonenumber;
+		this.sBirthday = sBirthday;
+		this.sGender = sGender;
 		this.sAddress = sAddress;
 		this.sDetailaddress = sDetailaddress;
 		this.sEmail = sEmail;
 	}
-	
 	public User(String sId, String sPassword) {
 		super();
 		this.sId = sId;

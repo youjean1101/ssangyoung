@@ -42,30 +42,39 @@ public class userdao {
 //------------------------------------------회원가입 기능메서드------------------------------------------------	
 	public List<User> userAdd(User ins){
 		List<User> userlist = new ArrayList<User>();
-		String sql = "INSERT INTO olddealuser values(?,?,'회원',?,?,?,?,?,0,0,0,0)";
+		String sql = "INSERT INTO olddealuser values(?,?,'회원',?,?,?,?,?,?,?,?,0,0,0,0)";
 		
 		try {
 			con = DB.con();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, ins.getsId());
 			pstmt.setString(2, ins.getsPassword());
-			pstmt.setString(3, ins.getsUsername());
-			pstmt.setString(4, ins.getsPhonenumber());
-			pstmt.setString(5, ins.getsAddress());
-			pstmt.setString(6, ins.getsDetailaddress());
-			pstmt.setString(7, ins.getsEmail());
+			pstmt.setString(3, ins.getsProfileimg());
+			pstmt.setString(4, ins.getsUsername());
+			pstmt.setString(5, ins.getsBirthday());
+			pstmt.setString(6, ins.getsGender());
+			pstmt.setString(7, ins.getsPhonenumber());
+			pstmt.setString(8, ins.getsAddress());
+			pstmt.setString(9, ins.getsDetailaddress());
+			pstmt.setString(10, ins.getsEmail());
 			rs = pstmt.executeQuery();
 			con.commit();
-			
+			/*
+			public User(String sId, String sPassword, String sProfileimg, String sUsername, String sPhonenumber,
+			String sBirthday, String sGender, String sAddress, String sDetailaddress, String sEmail)
+			 */
 			while(rs.next()) {
 				userlist.add(new User
-						(rs.getString("id"),
-								rs.getString("password"),
-								rs.getString("username"),
-								rs.getString("phonenumber"),
-								rs.getString("address"),
-								rs.getString("detailaddress"),
-								rs.getString("email")
+									(rs.getString("id"),
+									 rs.getString("password"),
+									 rs.getString("profileimg"),
+									 rs.getString("username"),
+									 rs.getString("phonenumber"),
+									 rs.getString("birthday"),
+									 rs.getString("gender"),
+									 rs.getString("address"),
+									 rs.getString("detailaddress"),
+									 rs.getString("email")
 								));
 			}
 			
@@ -113,20 +122,27 @@ public class userdao {
 			pstmt.setString(1, sel.getsId());
 			pstmt.setString(2, sel.getsPassword());
 			rs = pstmt.executeQuery();
-			
+			/*
+			public User(String sId, String sPassword, String sDiv, String sProfileimg, String sUsername, String sPhonenumber,
+			String sBirthday, String sGender, String sAddress, String sDetailaddress, String sEmail, int iPoint,
+			int iSalecount, int iBuycount, int iDeclarationcount)
+			 */
 			while(rs.next()) {
 				userlist.add(new User(rs.getString("id"),
-										rs.getString("password"),
-										rs.getString("div"),
-										rs.getString("username"),
-										rs.getString("phonenumber"),
-										rs.getString("address"),
-										rs.getString("detailaddress"),
-										rs.getString("email"),
-										rs.getInt("point"),
-										rs.getInt("salecount"),
-										rs.getInt("buycount"),
-										rs.getInt("declarationcount")
+									  rs.getString("password"),
+									  rs.getString("div"),
+									  rs.getString("profileimg"),
+									  rs.getString("username"),
+									  rs.getString("phonenumber"),
+									  rs.getString("birthday"),
+									  rs.getString("gender"),
+									  rs.getString("address"),
+									  rs.getString("detailaddress"),
+									  rs.getString("email"),
+									  rs.getInt("point"),
+									  rs.getInt("salecount"),
+									  rs.getInt("buycount"),
+									  rs.getInt("declarationcount")
 						));
 			}
 			con.commit();
@@ -163,41 +179,25 @@ public class userdao {
 		return userlist;
 	}
 //------------------------------------------회원수정 기능메서드------------------------------------------------	
-	public List<User> userUpdate(String col,String id,String upt){
+	public List<User> userUpdate(User upt){
 		List<User> userlist = new ArrayList<User>();
-		String sql = "UPDATE olddealuser \r\n";
+		String sql = "UPDATE olddealuser \r\n"
+				+ "SET password=?, profileimg=?,birthday=?, \r\n"
+				+ "gender=?,phonenumber=?,address=?,detailaddress=?,email=? WHERE id=?";
 		
-		switch(col) {
-			case "password":
-				sql += "SET password=? WHERE id=?";
-				break;
-				
-			case "phonenumber":
-				sql += "SET phonenumber=? WHERE id=?";
-				break;
-				
-			case "address":
-				sql += "SET address=? WHERE id=?";
-				break;
-				
-			case "detailaddress":
-				sql += "SET detailaddress=? WHERE id=?";
-				break;
-				
-			case "email":
-				sql += "SET email=? WHERE id=?";
-				break;
-			
-			default: 
-				System.out.println("[안내메시지] 테이블에 있는 컬럼을 선택해주세요.");
-		}
-				
 		
 		try {
 			con = DB.con();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, upt);
-			pstmt.setString(2, id);
+			pstmt.setString(1, upt.getsPassword());
+			pstmt.setString(2, upt.getsProfileimg());
+			pstmt.setString(3, upt.getsBirthday());
+			pstmt.setString(4, upt.getsGender());
+			pstmt.setString(5, upt.getsPhonenumber());
+			pstmt.setString(6, upt.getsAddress());
+			pstmt.setString(7, upt.getsDetailaddress());
+			pstmt.setString(8, upt.getsEmail());
+			pstmt.setString(9, upt.getsId());
 			rs = pstmt.executeQuery();
 			//System.out.println(pstmt.executeUpdate());
 			if(pstmt.executeUpdate()>=1) System.out.println("수정이 완료되었습니다.");
@@ -216,10 +216,12 @@ public class userdao {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		userdao dao = new userdao();
-		dao.userAdd(new User("himan","7777","하이맨","010-1200-7777","인천계양구","계산1동","himan@naver.com"));
+		//dao.userAdd(new User("himan","7777","하이맨","010-1200-7777","인천계양구","계산1동","himan@naver.com"));
 		//dao.userdel(new User("test","1234"));
 		//dao.userIDConfirm("t");
-		//dao.userUpdate("password", "test", "0000");
+		//User(String sId, String sPassword, String sProfileimg, String sPhonenumber, String sBirthday, String sGender,
+		//String sAddress, String sDetailaddress, String sEmail)
+		//dao.userUpdate(new User("test2","1234","프로필사진","010-7985-4444","20221231","여자","서울","홍대입구역","test2@daum.net"));
 	}
 
 }

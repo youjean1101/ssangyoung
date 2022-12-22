@@ -1,6 +1,17 @@
 package jspexp.vo;
 //jspexp.vo.Member
 public class Member {
+/*
+create table member(
+	id varchar2(100),
+	passwd varchar2(100),
+	name varchar2(100),
+	auth varchar2(100),
+	point number,
+	address varchar2(100)
+);
+ */
+	
 	private String id;
 	private String passwd;
 	private String name;

@@ -8,6 +8,8 @@ SELECT * FROM emp100;
 
 SELECT * FROM MEMBER;
 
+INSERT INTO member values('himan','0000','홍길동','회원',200,'인천');
+
 SELECT * FROM dept100;
 
 select * from dept where deptno=30 and dname='SALES';

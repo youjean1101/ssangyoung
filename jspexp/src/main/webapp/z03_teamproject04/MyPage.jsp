@@ -108,7 +108,7 @@
 
 </head>
 <body>
-	<jsp:include page="frame.jsp"></jsp:include>
+	<jsp:include page="\frame\frame.jsp"></jsp:include>
 	<box id="mypage">
 		<box id="userInfo">
 			<%

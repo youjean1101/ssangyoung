@@ -395,6 +395,41 @@ public boolean chkDept(int deptno,String dname){
       }
       return isSuccess;
    }
+	// 조회 처리
+   public Member login(Member m){
+	  Member mem = null;
+      String sql = "SELECT *\r\n"
+				+ "FROM member\r\n"
+				+ "WHERE id=?\r\n"
+				+ "AND pass=?";
+      try {
+         con = DB.con();
+         pstmt = con.prepareStatement(sql);
+         pstmt.setString(1, m.getId());
+         pstmt.setString(2, m.getPasswd());
+         rs = pstmt.executeQuery(); 
+         //public Member(String id, String passwd, String name, 
+         //String auth, int point, String address)
+         if( rs.next()) {// 해당 id, pass로 조회 될때만 true 그 외는 false
+        	 mem = new Member(
+		        			 rs.getString(1),
+		        			 rs.getString(2),
+		        			 rs.getString(3),
+		        			 rs.getString(4),
+		        			 rs.getInt(5),
+		        			 rs.getString(6)
+        			 );
+         };	
+         
+      } catch (SQLException e) {
+         System.out.println("DB에러:"+e.getMessage());
+      } catch(Exception e) {
+         System.out.println("일반 에러:"+e.getMessage());
+      }finally {
+         DB.close(rs, pstmt, con);
+      }
+      return mem;
+   }
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
