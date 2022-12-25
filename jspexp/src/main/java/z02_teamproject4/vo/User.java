@@ -75,6 +75,13 @@ public class User {
 		this.sId = sId;
 		this.sPassword = sPassword;
 	}
+	
+	public User(String sId, String sAddress, String sDetailaddress) {
+		super();
+		this.sId = sId;
+		this.sAddress = sAddress;
+		this.sDetailaddress = sDetailaddress;
+	}
 	public String getsId() {
 		return sId;
 	}

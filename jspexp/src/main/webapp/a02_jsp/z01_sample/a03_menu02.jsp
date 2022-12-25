@@ -22,14 +22,11 @@
 
 </head>
 <body>
-	<c:remove var="mem" scope="session" />
-	
-	<h2>로그인</h2>
-	<form method="post" action="a02_makeSession_DB.jsp">
-	아이디: <input type="text" name="id" />
-	패스워드: <input type="password" name="passwd" />
-	<input type="submit" value="로그인"/>
-	</form>
+<%-- 
+
+
+--%>
+
 
 </body>
 <script type="text/javascript">

@@ -41,7 +41,6 @@
 <script type="text/javascript">
 	function cancel(){
 		window.close();
-		window.open('main.jsp')
 	} 
 	/* if(confirm("[안내메시지]정말로 회원탈퇴를 하시겠습니까?")){
 		go()

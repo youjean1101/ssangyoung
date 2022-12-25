@@ -75,8 +75,79 @@
 			a01_login_DB.jsp
 				<c:remove var="mem" scope="session" />
 	4) 로그인 후, session 범위 안에 특정 메뉴 접근 가능
+		해당 session 있는 페이지 a03_checkSession.jsp
+		메뉴리스트
+		ul li
+		a href
+		해당 리스트를 처리할 때, 권한을 표기(접근)
+		해당 권한이 있을 때만 접근이 가능하게 처리...
+		- 메뉴화면 구현
+		<ul>
+			<li onclick="goPage('all','a01_login.jsp')">로그인</li>
+			<li onclick="goPage('user01','a02_menu01.jsp')">메뉴1</li>
+			<li onclick="goPage('user02','a03_menu02.jsp'))">메뉴2</li>
+			<li onclick="goPage('user03','a04_menu03.jsp'))">메뉴3</li>
+			<li onclick="goPage('admin','a05_admin.jsp'))">관리자</li>
+		</ul>
+		// # 세션권한
+		// 1. 세션권한이 admin은 모든 페이지 접근 가능
+		// 2. all은 모든 사용자 접근 가능
+		// 3. 사용자에 따라 메뉴별로 접근 가능, 해당 관리자와 사용자 이외는 접근이 불가능
+		function goPage(auth, page){
+			var loginAuth = "${mem.auth}" #세션값에 권한 부분을 가져와서
+			if(loginAuth == 'admin' || auth == 'all'){
+				location.href=page
+			}else if(auth == loginAuth){
+				location.href=page
+			}else{
+				alert("페이지에 대한 접근 권한이 없습니다");
+			}
+		}
 	5) 게시판에서 등록한 사용자만 해당 게시물을 수정/삭제 처리 가능 등..
+		cread table board(
+			no number primary key,
+			title varchar2(500),
+			content varchar2(2000),
+			regdte date,
+			readcnt number, -- 조회수 (상세클릭시, update)
+			writer varchar2(50) -- 등록 session 아이디로 등록	
+		)	
+		등록 화면에
+		등록자 : <input type="text" readOnly value-"${mem.id"/>
+				등록 시 외부에서 입력해서 등록하는 것이 아니라 session으로 자동등록하게 처리
+		DB 등록된 내용
+		1000, '첫 게시물(타이틀)', '게시물입니다', sysdate
+		0, 'himan'
+		게시판 리스트에서
+		<C:forEach id="bd" items="${dao.getBoard()}"
+		<tr><td ondblclick="goPage(${bd.no})">${bd.no}</td><td>첫 게시물(타이틀)</td...></tr>
+		<script>
+			function goPage(no){
+				location.href="상세화면jsp?no="+no
+			}
+		상세화면 jsp에서는 
+			상세조회화면 
+			dao Board getBoard(int no)
+				update board
+					set readcnt = readcnt+1
+					where no = ?
+					
+				select * from board where no=?
+			<C:set var="bd" value="${dao.getBoard(param.no)}">
 	
-
-	
-	
+			번호: <input type="text" value="${bd.no}"
+			...
+			작성자: <input type="text" name="writer"
+						readOnly value="${bd.writer" />
+			<input type="button" id="uptBtn" value="수정" onclick="uptRroc()"
+			<script>
+				function uptRroc(){
+					var sessId = "${mem.id}"
+					var writer = document.querySelector("[name=writer]").value
+					if(writer!=sessId){
+						alert("작성자만 수정을 할 수 있습니다.");
+						return;
+					}
+					...
+					.. 수정 submit 처리..
+				}

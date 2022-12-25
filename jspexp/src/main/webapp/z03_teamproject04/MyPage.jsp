@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>중고월드 마이페이지</title>
 <style>
 	#mypage{
 		width:1000px;
@@ -132,11 +132,11 @@
 			<h2 class="menuTitle">사용자 설정: </h2>
 			<ul>
 				<a class="hiperlink" href="userView.jsp"><li>나의 계정 정보보기</a>
-				<a class="hiperlink" href="#"><li>차단한 회원보기</a>
-				<a class="hiperlink" href="#"><li>모아보기 회원보기</a>
-				<li onclick="declaration()">나의 신고횟수 보기
-				<li onclick="buycount()">나의 구매횟수 보기
-				<li onclick="salecount()">나의 판매횟수 보기
+				<a class="hiperlink" href="cutoutView.jsp"><li>차단한 회원보기</a>
+				<a class="hiperlink" href="collectView.jsp"><li>모아보기 회원보기</a>
+				<li onclick="count('declaration')">나의 신고횟수 보기
+				<li onclick="count('buy')">나의 구매횟수 보기
+				<li onclick="count('sale')">나의 판매횟수 보기
 			</ul>
 		</box>
 		<box id="dealMenu">
@@ -162,11 +162,23 @@
 		</box>
 	</box>
 
-
 </body>
 <script type="text/javascript">
 	function alerthistory(){
 		alert("알람기능넣기")
+	}
+//---------------------------------신고/구매/판매 횟수출력 기능메서드------------------------------
+	function count(whatcnt){
+		if(whatcnt=='declaration'){
+			alert("나의 신고횟수: "+<%=loginUser.getiDeclarationcount()%>
+					+"회\n[안내메시지]신고를 30회이상 당하시면 거래왕이 되실 수 없습니다.");
+		}else if(whatcnt=='buy'){
+			alert("나의 구매횟수: "+<%=loginUser.getiBuycount()%>
+					+"회\n[안내메시지]거래왕이 되시면 소정의 선물을 드립니다.\n거래왕에 도전하세요!");
+		}else{
+			alert("나의 판매횟수: "+<%=loginUser.getiSalecount()%>
+				+"회\n[안내메시지]거래왕이 되시면 소정의 선물을 드립니다.\n거래왕에 도전하세요!");
+		}
 	}
 </script>
 </html>

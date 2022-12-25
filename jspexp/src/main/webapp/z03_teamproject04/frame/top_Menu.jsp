@@ -98,7 +98,7 @@
 			<ul>
 				<tr>
 					<td><a href="main.jsp"><img name="logo" src=".\img\olderword Logo.png" /></a></td>
-					<td width="12.5%"><a class="textclass" href="#">구매하기</a></td>
+					<td width="12.5%"><a class="textclass" href="productDetailView.jsp">구매하기</a></td>
 					<td width="12.5%"><a class="textclass" href="#">판매하기</a></td>
 					<td width="20%"><a class="textclass" href="#">문의하기</a></td>
 					<form method="get">
@@ -165,28 +165,35 @@
 		document.getElementById('usermenu').size = 4
 		li.show();
 	} */
+//----------------------------메뉴선택에따른 페이지이동 기능메서드-------------------------------
 	var usermenu = document.querySelector("#usermenu")
 	usermenu.onclick=function(){
 		if(usermenu.value=="userSet"){
 			location.href="userInfoUpdate.jsp"
+			usermenu.value=""
 			
 		}else if(usermenu.value=="logout"){
 			/* session.removeAttribute("loginUserInfo"); */
 			/* location.href="main.jsp" */
 			response.sendRedirect("main.jsp");
+			usermenu.value=""
 			
 		}else if(usermenu.value=="MyPage"){
 			location.href="MyPage.jsp"
+			usermenu.value=""
 			
 		}else if(usermenu.value=="userDelete"){
 			window.open("userRemove.jsp", "탈퇴확인하기", "width=500, height=210, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
-			window.close();
+			//window.close();
 			//location.href="userRemove.jsp"
+			usermenu.value=""
 		}else if(usermenu.value=="loginGo"){
 			location.href="login.jsp"
+			usermenu.value=""
 			
 		}else if(usermenu.value=="mainGo"){
 			location.href="main.jsp"
+			usermenu.value=""
 		}
 	}
 	

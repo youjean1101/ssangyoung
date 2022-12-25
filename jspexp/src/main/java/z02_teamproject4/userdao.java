@@ -39,6 +39,49 @@ public class userdao {
 		}
 		return isIdhave;
 	}
+//---------------------------------아이디로 회원정보 불러오기 기능메서드------------------------------
+	public List<User> productWriterInfo(String id){
+		List<User> userlist = new ArrayList<User>();
+		String sql = "SELECT * FROM olddealuser WHERE id=?";
+		
+		try {
+			con = DB.con();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			/*
+			public User(String sId, String sPassword, String sDiv, String sProfileimg, String sUsername, String sPhonenumber,
+			String sBirthday, String sGender, String sAddress, String sDetailaddress, String sEmail, int iPoint,
+			int iSalecount, int iBuycount, int iDeclarationcount)
+			 */
+			while(rs.next()) {
+				userlist.add(new User(rs.getString("id"),
+									  rs.getString("password"),
+									  rs.getString("div"),
+									  rs.getString("profileimg"),
+									  rs.getString("username"),
+									  rs.getString("phonenumber"),
+									  rs.getString("birthday"),
+									  rs.getString("gender"),
+									  rs.getString("address"),
+									  rs.getString("detailaddress"),
+									  rs.getString("email"),
+									  rs.getInt("point"),
+									  rs.getInt("salecount"),
+									  rs.getInt("buycount"),
+									  rs.getInt("declarationcount")
+						));
+			}
+			con.commit();
+		} catch (SQLException e) {
+			System.out.println("DB에러:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("일반 에러:"+e.getMessage());
+		}finally {
+			DB.close(rs, pstmt, con);
+		}
+		return userlist;
+	}
 //------------------------------------------회원가입 기능메서드------------------------------------------------	
 	public List<User> userAdd(User ins){
 		List<User> userlist = new ArrayList<User>();
@@ -63,20 +106,6 @@ public class userdao {
 			public User(String sId, String sPassword, String sProfileimg, String sUsername, String sPhonenumber,
 			String sBirthday, String sGender, String sAddress, String sDetailaddress, String sEmail)
 			 */
-			while(rs.next()) {
-				userlist.add(new User
-									(rs.getString("id"),
-									 rs.getString("password"),
-									 rs.getString("profileimg"),
-									 rs.getString("username"),
-									 rs.getString("phonenumber"),
-									 rs.getString("birthday"),
-									 rs.getString("gender"),
-									 rs.getString("address"),
-									 rs.getString("detailaddress"),
-									 rs.getString("email")
-								));
-			}
 			
 		} catch (SQLException e) {
 			System.out.println("DB에러:"+e.getMessage());

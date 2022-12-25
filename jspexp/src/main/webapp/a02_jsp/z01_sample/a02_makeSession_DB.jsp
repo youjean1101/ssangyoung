@@ -21,10 +21,13 @@
 */
 </script>
 </head>
+<%--Bean DB를 로딩하고, 요청값 받은 VO객체 처리 --%>
 <jsp:useBean id="dao" class="jspexp.a13_database.A06_PareparedDao"/>
+<%--id, pass 값을 받는 객체--%>
 <jsp:useBean id="reMem" class="jspexp.vo.Member"/>
 <jsp:setProperty property="*" name="reMem" />
 <body>
+	<%--dao를 통해서 객체가 있을 때만 session 객체 선언 --%>
 	<c:if test="${not empty dao.login(reMem)}">
 		<c:set var="mem" scope="session" value="${dao.login(reMem)}"/>
 	</c:if>
@@ -34,7 +37,7 @@
 	var isFail='${mem.id}'
 	if(isFail==""){
 		alert("로그인 실패\n로그인 페이지 이동")
-		location.href="a01_login.jsp"
+		location.href="a01_login_DB.jsp"
 	}else{
 		alert("로그인 성공\n메인페이지이동")
 		location.href="a03_checkSession.jsp"

@@ -135,10 +135,10 @@
 			int iSalecount, int iBuycount, int iDeclarationcount)
 			*/
 			for(User user:dao.userInfo(sel)){
-				User loginuser = new User(id,password,user.getsDiv(),user.getsProfileimg(),user.getsUsername(),user.getsPhonenumber(),
-											user.getsBirthday(),user.getsGender(),user.getsAddress(),user.getsDetailaddress(),
-											user.getsEmail(),user.getiPoint(),user.getiSalecount(),user.getiBuycount(),
-											user.getiDeclarationcount()); //12개
+				User loginuser = new User(id,password,user.getsDiv(),user.getsProfileimg(),user.getsUsername(),
+											user.getsPhonenumber(),user.getsBirthday(),user.getsGender(),user.getsAddress(),
+											user.getsDetailaddress(),user.getsEmail(),user.getiPoint(),
+											user.getiSalecount(),user.getiBuycount(),user.getiDeclarationcount()); 
 				session.setAttribute("loginUserInfo",loginuser);
 
 				/* session.setAttribute("loginAuth",user.getsDiv());
