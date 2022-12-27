@@ -32,7 +32,7 @@
 		position:fixed;
 		left:38%;
 		top:11%;
-		width:400px;
+		width:500px;
 		height:500px;
 		/* border:1px solid black;  */
 	}
@@ -50,12 +50,26 @@
 		border-bottom: solid 1px rgb(243, 156, 18);
 		opacity:0.6;
 		width:100%;
-		height:80%
+		height:100%
 	}
 	.email{
 		border:none;
 		border-bottom: solid 1px rgb(243, 156, 18);
 		opacity:0.6;
+		width:100%;
+	}
+	input[name=rrn1]{
+		width:170px;
+	}
+	input[name=rrn2]{
+		width:170px;
+	}
+	
+	#signuptab td input[name=email1]{
+		width:140px;
+	}
+	#signuptab td input[name=email2]{
+		width:140px;
 	}
 	#infoupdatebox .button{
 		width:120px;
@@ -88,17 +102,20 @@
 	#emailaddress{
 		border:none;
 	}
+	#signuptab td #bar{
+		position:absolute;
+		left:48%;
+		font-size:18pt;
+	}
 </style>
 <script>
-	function userUpdate(){
+	function userUpdate(){ // 수정은 입력하지 않았을 시, 그전데이터로 받아오기 기능넣기 
 		var password = document.querySelector("[name=password]")
 		var passwordV = password.value.trim();
 		var passwordConfirm = document.querySelector("[name=passwordConfirm]")
 		var passwordConfirmV = passwordConfirm.value.trim();
 		var phonenumber = document.querySelector("[name=phonenumber]")
 		var phonenumberV = phonenumber.value.trim();
-		var gender = document.querySelector("[name=gender]")
-		var genderV = gender.value.trim();
 		var address = document.querySelector("[name=address]")
 		var addressV = address.value.trim();
 		if(passwordV==""){
@@ -121,11 +138,6 @@
 			phonenumber.focus()
 			return;
 		}
-		if(genderV==""){
-			alert("[안내메시지]성별을 선택해주세요.")
-			gender.focus()
-			return;
-		}
 		if(addressV==""){
 			alert("[안내메시지]주소를 입력해주세요.")
 			address.focus()
@@ -141,39 +153,41 @@
 			<%
 				boolean isUpdate = false;
 				boolean loginalert=false;
-				User loginUser = (User)session.getAttribute("loginUserInfo");
-				boolean hasSess = loginUser!=null; // 로그인한계정정보가 null아니면 true
+				Olddealuser Login = (Olddealuser)session.getAttribute("Login");
+				boolean hasSess = Login!=null; // 로그인한계정정보가 null아니면 true
 				
-				String []emailArr = loginUser.getsEmail().split("@");
-				String emailArr1 = emailArr[0];
-				String emailArr2 = emailArr[1];
-				String beforegender = loginUser.getsGender();
-				//String gender = 
 				if(hasSess){
+					String []emailArr = Login.getEmail().split("@");
+					String emailArr1 = emailArr[0];
+					String emailArr2 = emailArr[1];
+					String []rrnArr = Login.getRrn().split("-");
+					String rrnArr1 = rrnArr[0];
+					String rrnArr2 = rrnArr[1];
 			%>
 		<box id="infoupdatebox">
 		<table id="signuptab">
 			<tr><th colspan="2">회원정보</th></tr>
 			<tr><td colspan="2"><hr></td></tr>
 			<tr><td>아이디</td><td></td></tr>
-			<tr><td colspan="2"><input class="input" type="text" name="id" value="<%=loginUser.getsId()%>" readonly/></td></tr>
+			<tr><td colspan="2"><input class="input" type="text" name="id" value="<%=Login.getId()%>" readonly/></td></tr>
 			<tr><td>비밀번호</td><td></td></tr>
-			<tr><td colspan="2"><input class="input" type="password" name="password" value="<%=loginUser.getsPassword()%>"/></td></tr>
+			<tr><td colspan="2"><input class="input" type="password" name="password" value="<%=Login.getPassword()%>"/></td></tr>
 			<tr><td>비밀번호 확인</td><td></td></tr>
-			<tr><td colspan="2"><input class="input" type="password" name="passwordConfirm" value="<%=loginUser.getsPassword()%>"/></td></tr>
+			<tr><td colspan="2"><input class="input" type="password" name="passwordConfirm" value="<%=Login.getPassword()%>"/></td></tr>
 			<tr><td>이름</td><td></td></tr>
-			<tr><td colspan="2"><input class="input" type="text" name="username" value="<%=loginUser.getsUsername()%>" readonly/></td></tr>
+			<tr><td colspan="2"><input class="input" type="text" name="username" value="<%=Login.getUsername()%>" readonly/></td></tr>
+			<tr><td>닉네임</td><td></td></tr>
+			<tr><td colspan="2"><input class="input" type="text" name="nickname" value="<%=Login.getNickname()%>"/></td></tr>
+			<tr><td>주민등록번호</td><td></td></tr>
+			<tr><td><input class="input" type="text" name="rrn1" value="<%=rrnArr1%>" readonly/><span id="bar">-</span></td>
+				<td><input class="input" type="password" name="rrn2" value="<%=rrnArr2%>" readonly/></td></tr>
 			<tr><td>휴대폰 번호</td><td></td></tr>
-			<tr><td colspan="2"><input class="input" type="text" name="phonenumber" value="<%=loginUser.getsPhonenumber()%>"/></td></tr>
-			<tr><td>생년월일</td><td></td></tr>
-			<tr><td colspan="2"><input class="input" type="text" name="birthday" value="<%=loginUser.getsBirthday()%>"/></td></tr>
-			<tr><td>성별</td><td></td></tr>
-			<tr><td colspan="2"><input type="radio" name="gender" value="남성" selected>남성
-								<input type="radio" name="gender" value="여성">여성</td></tr>
+			<tr><td colspan="2"><input class="input" type="text" name="phonenumber" value="<%=Login.getPhonenumber()%>"/></td></tr>
 			<tr><td>주소</td><td></td></tr>
-			<tr><td><input type="text" class="input" name="address" value="<%=loginUser.getsAddress()%>"/></td>
+			<tr><td><input type="text" class="input" name="address" value="<%=Login.getAddress()%>"/></td>
 				<td><input id="addresschage" type="button" value="주소변경"></td></tr>
-			<tr><td colspan="2"><input class="input" type="text" name="addressDetail" value="<%=loginUser.getsDetailaddress()%>"/></td></tr>
+			<tr><td><input class="input" type="text" name="detailaddress" value="<%=Login.getDetailaddress()%>"/></td>
+					<td><input class="input" type="text" name="zipcode" value="<%=Login.getZipcode()%>"/></td></tr>
 			<tr><td>이메일</td><td></td></tr>
 			<tr><td><input class="email" type="text" name="email1" placeholder="이메일 아이디" size="15" value="<%=emailArr1%>">@
 					<input class="email" type="text" name="email2" placeholder="이메일주소" size="15" value="<%=emailArr2%>"/>
@@ -197,27 +211,30 @@
 			String id = request.getParameter("id"); if(id==null) id="";
 			String password = request.getParameter("password"); if(password==null) password="";
 			String passwordConfirm = request.getParameter("passwordConfirm"); if(passwordConfirm==null) passwordConfirm="";
-			String name = request.getParameter("name"); if(name==null) name="";
+			String username = request.getParameter("username"); if(username==null) username="";
+			String nickname = request.getParameter("nickname"); if(nickname==null) nickname="";
+			String rrn1 = request.getParameter("rrn1"); if(rrn1==null) rrn1="";
+			String rrn2 = request.getParameter("rrn2"); if(rrn2==null) rrn2="";
+			String rrn = rrn1 +"-"+rrn2;
 			String phonenumber = request.getParameter("phonenumber"); if(phonenumber==null) phonenumber="";
-			String birthday = request.getParameter("birthday"); if(birthday==null) birthday="";
-			String gender = request.getParameter("gender"); if(gender==null) gender="";
+			String zipcode = request.getParameter("zipcode"); if(zipcode==null) zipcode="";
 			String address = request.getParameter("address"); if(address==null) address="";
-			String addressDetail = request.getParameter("addressDetail"); if(addressDetail==null) addressDetail="";
+			String detailaddress = request.getParameter("detailaddress"); if(detailaddress==null) detailaddress="";
 			String email1 = request.getParameter("email1"); if(email1==null) email1="";
 			String email2 = request.getParameter("email2"); if(email2==null) email2="";
 			String email = email1+"@"+email2;
 			if(id!=""&&password!=""){
-				//new User("test2","1234","프로필사진","010-7985-4444","20221231","여자","서울","홍대입구역","test2@daum.net")
-				User upt = new User(id, passwordConfirm, null, phonenumber, birthday, gender, address, addressDetail, email);
+				//public Olddealuser(String id, String password, String nickname, String phonenumber, 
+				//String zipcode, String address,String detailaddress, String email)
+				Olddealuser upt = new Olddealuser(id, passwordConfirm, nickname, phonenumber, zipcode, address, detailaddress, email);
 				dao.userUpdate(upt); // null값은 프로필
 				isUpdate = true;
-				User sel = new User(loginUser.getsId(),loginUser.getsPassword());
-				for(User user:dao.userInfo(sel)){
-					User loginuser = new User(id,password,user.getsDiv(),user.getsProfileimg(),user.getsUsername(),user.getsPhonenumber(),
-												user.getsBirthday(),user.getsGender(),user.getsAddress(),user.getsDetailaddress(),
-												user.getsEmail(),user.getiPoint(),user.getiSalecount(),user.getiBuycount(),
-												user.getiDeclarationcount()); //12개
-					session.setAttribute("loginUserInfo",loginuser);
+				Olddealuser sel = new Olddealuser(Login.getId(),Login.getPassword());
+				for(Olddealuser user:dao.userInfo(sel)){
+					/* Olddealuser loginuser = 
+							new Olddealuser(id, passwordConfirm,"회원", username, nickname, rrn, 
+									phonenumber, zipcode, address, detailaddress, email); */
+					session.setAttribute("Login",upt);
 				}
 			}
 		}else{ 
@@ -243,17 +260,32 @@ if( isUpdate ){
 //--------------------------아이디/이름 수정 불가기능메서드-------------------------------------
 	var id = document.querySelector("[name='id']");
 	var username = document.querySelector("[name='username']");
+	var rrn1 = document.querySelector("[name='rrn1']");
+	var rrn2 = document.querySelector("[name='rrn2']");
 	id.onclick=function(){
 		alert("[안내메시지]아이디는 수정 불가합니다.");
 	}
 	username.onclick=function(){
 		alert("[안내메시지]이름은 수정 불가합니다.");
 	}
-//-------------------------여성/남성 selected 기능메서드------------------------------------
-	var genderOb = <%=beforegender%>
-	var genderck = document.querySelector("[name=gender]")
-	if(genderOb=="여성"){
-		genderck.checked = true;
+	rrn1.onclick=function(){
+		alert("[안내메시지]주민번호는 수정 불가합니다.");
+	}
+	rrn2.onclick=function(){
+		alert("[안내메시지]주민번호는 수정 불가합니다.");
+	}
+//---------------------------------이메일 선택 기능-------------------------------
+	var emailaddressSel=document.querySelector("#emailaddress");
+	var email2input=document.querySelector("[name=email2]");
+	emailaddressSel.onchange=function(){
+		if(emailaddressSel.value=="직접입력하기"){
+			email2input.focus()
+			email2input.readOnly=false
+		}
+		else{
+			email2input.value=emailaddressSel.value
+			email2input.readOnly=true
+		}
 	}
 
 

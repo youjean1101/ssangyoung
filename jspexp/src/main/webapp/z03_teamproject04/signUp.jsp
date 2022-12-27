@@ -23,9 +23,9 @@
 	}
 	#signuptab{
 		position:fixed;
-		left:38%;
+		left:35%;
 		top:12%;
-		width:400px;
+		width:500px;
 		height:500px;
 		/* border:1px solid black; */
 	}
@@ -43,6 +43,21 @@
 		width:100%;
 		height:100%
 	}
+	input[name=rrn1]{
+		width:180px;
+	}
+	input[name=rrn2]{
+		width:180px;
+	}
+	
+	#signuptab td input[name=email1]{
+		width:140px;
+		
+	}
+	#signuptab td input[name=email2]{
+		width:140px;
+		
+	}
 	#dosignup{
 		width:100%;
 		height:50px;
@@ -56,25 +71,24 @@
 		border:none;
 		border-bottom: solid 1px rgb(243, 156, 18);
 		opacity:0.6;
-	}
-	#dosignup{
 		width:100%;
-		height:50px;
-		border-radius:50px;
-		background:rgb(142, 68, 173);
-		color:white;
-		border:none;
-		font-size:15pt;
 	}
 	#signuptab option[value=""][disabled] {
 		display:none;
 	}
-	#emailaddress{
+	#signuptab td #emailaddress{
 		border:none;
+		width:130px;
 	}
 	.guide{
 		color:red;
-	} 
+	}
+	#signuptab td #bar{
+		position:absolute;
+		left:48%;
+		top:50%;
+		font-size:18pt;
+	}
 </style>
 <script>
 	function useradd(){
@@ -84,12 +98,14 @@
 		var passwordV = password.value.trim();
 		var passwordConfirm = document.querySelector("[name=passwordConfirm]")
 		var passwordConfirmV = passwordConfirm.value.trim();
-		var name = document.querySelector("[name=name]")
-		var nameV = name.value.trim();
+		var username = document.querySelector("[name=username]")
+		var usernameV = username.value.trim();
+		var rrn1 = document.querySelector("[name=rrn1]")
+		var rrn1V = rrn1.value.trim();
+		var rrn2 = document.querySelector("[name=rrn2]")
+		var rrn2V = rrn2.value.trim();
 		var phonenumber = document.querySelector("[name=phonenumber]")
 		var phonenumberV = phonenumber.value.trim();
-		var gender = document.querySelectorAll("[name=gender]")
-		var genderV = gender.value.trim();
 		var address = document.querySelector("[name=address]")
 		var addressV = address.value.trim();
 		if(idV==""){
@@ -112,9 +128,19 @@
 			passwordConfirm.focus()
 			return;
 		}
-		if(nameV==""){
+		if(usernameV==""){
 			alert("[안내메시지]이름를 입력해주세요.")
-			name.focus()
+			username.focus()
+			return;
+		}
+		if(rrn1V==""){
+			alert("[안내메시지]주민번호를 입력해주세요.")
+			rrn1.focus()
+			return;
+		}
+		if(rrn2V==""){
+			alert("[안내메시지]주민번호 뒷자리를 입력해주세요.") //유효성체크 하기(UNIQUE)
+			rrn2.focus()
 			return;
 		}
 		if(phonenumberV==""){
@@ -145,22 +171,22 @@
 			<tr><td><span class="guide">*</span> 비밀번호 확인</td><td></td></tr>
 			<tr><td colspan="2"><input class="input" type="password" name="passwordConfirm" placeholder="비밀번호 확인" /></td></tr>
 			<tr><td><span class="guide">*</span> 이름</td><td></td></tr>
-			<tr><td colspan="2"><input class="input" type="text" name="name" placeholder="실명을 입력하세요." /></td></tr>
+			<tr><td colspan="2"><input class="input" type="text" name="username" placeholder="실명을 입력하세요." /></td></tr>
+			<tr><td> 닉네임</td><td></td></tr>
+			<tr><td colspan="2"><input class="input" type="text" name="nickname" placeholder="8자안으로 설정하세요." /></td></tr>
+			<tr><td><span class="guide">*</span> 주민등록번호</td><td></td></tr>
+			<tr><td><input class="input" type="text" name="rrn1" placeholder="주민번호 앞 6자리" /><span id="bar">-</span></td>
+								<td><input class="input" type="password" name="rrn2" placeholder="주민번호 뒤 7자리" /></td></tr>
 			<tr><td><span class="guide">*</span> 휴대폰 번호</td><td></td></tr>
 			<tr><td colspan="2"><input class="input" type="text" name="phonenumber" placeholder="'-'구분없이 입력" /></td></tr>
-			<tr><td>생년월일</td><td></td></tr>
-			<tr><td colspan="2"><input class="input" type="text" name="birthday" placeholder="8자리 입력" /></td></tr>
-			<tr><td><span class="guide">*</span>성별</td><td></td></tr>
-			<tr><td colspan="2"><input type="radio" name="gender" value="남성" checked="checked">남성
-								<input type="radio" name="gender" value="여성">여성</td></tr>
 			<tr><td><span class="guide">*</span> 주소</td><td></td></tr>
 			<tr><td><input type="text" class="input" name="address" placeholder="주소를 검색해주세요."/></td>
 				<td><input class="button" type="button" value="주소검색"></td></tr>
-			<tr><td colspan="2"><input class="input" type="text" name="addressDetail" placeholder="상세주소를 입력해주세요."/></td></tr>
+			<tr><td><input class="input" type="text" name="detailaddress" placeholder="상세주소를 입력해주세요."/></td>
+				<td><input class="input" type="text" name="zipcode" placeholder="우편번호를 입력해주세요."/></td></tr>
 			<tr><td>이메일</td><td></td></tr>
-			<tr><td><input class="email" type="text" name="email1" placeholder="이메일 아이디" size="15">@
-					<input class="email" type="text" name="email2" placeholder="이메일주소" size="15"/>
-				</td>
+			<tr><td id="emailtd"><input class="email" type="text" name="email1" placeholder="이메일 아이디"/>@
+						<input class="email" type="text" name="email2" placeholder="이메일주소"/></td>
 				<td><select id="emailaddress">
 						<option selected disabled value="">메일선택하기</option>
 						<option value="naver.com">naver.com</option>
@@ -180,28 +206,33 @@
 		String id = request.getParameter("id"); if(id==null) id="";
 		String password = request.getParameter("password"); if(password==null) password="";
 		String passwordConfirm = request.getParameter("passwordConfirm"); if(passwordConfirm==null) passwordConfirm="";
-		String name = request.getParameter("name"); if(name==null) name="";
+		String username = request.getParameter("username"); if(username==null) username="";
+		String nickname = request.getParameter("nickname"); if(nickname==null) nickname="";
+		String rrn1 = request.getParameter("rrn1"); if(rrn1==null) rrn1="";
+		String rrn2 = request.getParameter("rrn2"); if(rrn2==null) rrn2="";
+		String rrn = rrn1+"-"+rrn2;
 		String phonenumber = request.getParameter("phonenumber"); if(phonenumber==null) phonenumber="";
-		String birthday = request.getParameter("birthday"); if(birthday==null) birthday="";
-		String gender = request.getParameter("gender"); if(gender==null) gender="";
+		String zipcode = request.getParameter("zipcode"); if(zipcode==null) zipcode="";
 		String address = request.getParameter("address"); if(address==null) address="";
-		String addressDetail = request.getParameter("addressDetail"); if(addressDetail==null) addressDetail="";
+		String detailaddress = request.getParameter("detailaddress"); if(detailaddress==null) detailaddress="";
 		String email1 = request.getParameter("email1"); if(email1==null) email1="";
 		String email2 = request.getParameter("email2"); if(email2==null) email2="";
 		String email = email1+"@"+email2;
-/* 		User(String sId, String sPassword, String sProfileimg, String sUsername, String sPhonenumber,
-				String sBirthday, String sGender, String sAddress, String sDetailaddress, String sEmail) */
+/* 		public Olddealuser(String id, String password, String div, String username, String nickname, String rrn,
+			String phonenumber, String zipcode, String address, String detailaddress, String email)*/
 		boolean isInsert = false;
 		if(id!=""&&password!=""){
-			User ins = new User(id, passwordConfirm, null,name, phonenumber, birthday, gender, address, addressDetail, email);
-			dao.userAdd(ins); // null값은 프로필
+			Olddealuser ins = 
+					new Olddealuser(id, passwordConfirm,"회원", username, nickname, rrn, 
+							phonenumber, zipcode, address, detailaddress, email);
+			dao.userAdd(ins); 
 			isInsert = true;
 		}
 	%>
 </body>
 <script type="text/javascript">
 //----------------------------회원가입 등록 후 로그인 페이지 이동 기능-------------------------------
-	var isInsert = <%=isInsert%>; 
+	 var isInsert = <%=isInsert%>; 
 	if( isInsert ){
 		if(confirm("[안내메시지]회원가입이 완료되었습니다. \n로그인 화면으로 이동하시겠습니까?")){
 			location.href="login.jsp";

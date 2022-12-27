@@ -52,12 +52,12 @@
 </head>
 <body>
 	<%
-		User loginUser = (User)session.getAttribute("loginUserInfo");
+		Olddealuser Login = (Olddealuser)session.getAttribute("Login");
 		//boolean hasSess = loginUser!=null; // 로그인한계정정보가 null아니면 true
 	%>
 	<form method="get">
-		<input type="hidden" name="id" value=<%=loginUser.getsId()%> />
-		<input type="hidden" name="password" value=<%=loginUser.getsPassword()%> />
+		<input type="hidden" name="id" value=<%=Login.getId()%> />
+		<input type="hidden" name="password" value=<%=Login.getPassword()%> />
 		<table>
 			<tr><th colspan="2"><h2>* 정말로 회원탈퇴를 하시겠습니까?</h2></th></tr>
 			<tr><td><input class="button" type="submit" value="확인" /></td>
@@ -70,7 +70,7 @@
 		boolean isInsert = false;
 		if(id!=""&&password!=""){
 			userdao dao = new userdao();
-			dao.userdel(new User(id,password));
+			dao.userdel(new Olddealuser(id,password));
 			isInsert = true;
 		}
 	%>

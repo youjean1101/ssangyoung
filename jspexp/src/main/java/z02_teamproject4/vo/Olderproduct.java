@@ -1,117 +1,138 @@
 package z02_teamproject4.vo;
 
 public class Olderproduct {
-	private int iProductno;
-	private String sKind;
-	private String sProductname;
-	private int iPrice;
-	private String sInformation;
-	private String sRegistdate;
-	private String sDealmethod;
-	private String sDealstat;
-	private String sSharewhether;
-	private String sPriceoffer;
-	private String sWriterID;
+	private int productno;
+	private String productname;
+	private String kind;
+	private String dealmethod;
+	private int price;
+	private String sharewhether;
+	private String priceoffer;
+	private String information;
+	private String registdate;
+	private String dealstat;
+	private String faddressval;
+	private String saddressval;
+	private String caddressval;
+	private String daddressval;
+	private String writerid;
 	public Olderproduct() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Olderproduct(int iProductno, String sKind, String sProductname, int iPrice, String sInformation,
-			String sRegistdate, String sDealmethod, String sDealstat, String sSharewhether, String sPriceoffer,
-			String sWriterID) {
+	public Olderproduct(int productno, String productname, String kind, String dealmethod, int price,
+			String sharewhether, String priceoffer, String information, String registdate, String dealstat,
+			String faddressval, String saddressval, String caddressval, String daddressval, String writerid) {
 		super();
-		this.iProductno = iProductno;
-		this.sKind = sKind;
-		this.sProductname = sProductname;
-		this.iPrice = iPrice;
-		this.sInformation = sInformation;
-		this.sRegistdate = sRegistdate;
-		this.sDealmethod = sDealmethod;
-		this.sDealstat = sDealstat;
-		this.sSharewhether = sSharewhether;
-		this.sPriceoffer = sPriceoffer;
-		this.sWriterID = sWriterID;
+		this.productno = productno;
+		this.productname = productname;
+		this.kind = kind;
+		this.dealmethod = dealmethod;
+		this.price = price;
+		this.sharewhether = sharewhether;
+		this.priceoffer = priceoffer;
+		this.information = information;
+		this.registdate = registdate;
+		this.dealstat = dealstat;
+		this.faddressval = faddressval;
+		this.saddressval = saddressval;
+		this.caddressval = caddressval;
+		this.daddressval = daddressval;
+		this.writerid = writerid;
 	}
-	public Olderproduct(String sKind, String sProductname, int iPrice, String sInformation, String sRegistdate,
-			String sDealmethod, String sSharewhether, String sWriterID) {
+	
+	public Olderproduct(int productno) {
 		super();
-		this.sKind = sKind;
-		this.sProductname = sProductname;
-		this.iPrice = iPrice;
-		this.sInformation = sInformation;
-		this.sRegistdate = sRegistdate;
-		this.sDealmethod = sDealmethod;
-		this.sSharewhether = sSharewhether;
-		this.sWriterID = sWriterID;
+		this.productno = productno;
 	}
-	public Olderproduct(int iProductno) {
-		super();
-		this.iProductno = iProductno;
+	public int getProductno() {
+		return productno;
 	}
-	public int getiProductno() {
-		return iProductno;
+	public void setProductno(int productno) {
+		this.productno = productno;
 	}
-	public void setiProductno(int iProductno) {
-		this.iProductno = iProductno;
+	public String getProductname() {
+		return productname;
 	}
-	public String getsKind() {
-		return sKind;
+	public void setProductname(String productname) {
+		this.productname = productname;
 	}
-	public void setsKind(String sKind) {
-		this.sKind = sKind;
+	public String getKind() {
+		return kind;
 	}
-	public String getsProductname() {
-		return sProductname;
+	public void setKind(String kind) {
+		this.kind = kind;
 	}
-	public void setsProductname(String sProductname) {
-		this.sProductname = sProductname;
+	public String getDealmethod() {
+		return dealmethod;
 	}
-	public int getiPrice() {
-		return iPrice;
+	public void setDealmethod(String dealmethod) {
+		this.dealmethod = dealmethod;
 	}
-	public void setiPrice(int iPrice) {
-		this.iPrice = iPrice;
+	public int getPrice() {
+		return price;
 	}
-	public String getsInformation() {
-		return sInformation;
+	public void setPrice(int price) {
+		this.price = price;
 	}
-	public void setsInformation(String sInformation) {
-		this.sInformation = sInformation;
+	public String getSharewhether() {
+		return sharewhether;
 	}
-	public String getsRegistdate() {
-		return sRegistdate;
+	public void setSharewhether(String sharewhether) {
+		this.sharewhether = sharewhether;
 	}
-	public void setsRegistdate(String sRegistdate) {
-		this.sRegistdate = sRegistdate;
+	public String getPriceoffer() {
+		return priceoffer;
 	}
-	public String getsDealmethod() {
-		return sDealmethod;
+	public void setPriceoffer(String priceoffer) {
+		this.priceoffer = priceoffer;
 	}
-	public void setsDealmethod(String sDealmethod) {
-		this.sDealmethod = sDealmethod;
+	public String getInformation() {
+		return information;
 	}
-	public String getsDealstat() {
-		return sDealstat;
+	public void setInformation(String information) {
+		this.information = information;
 	}
-	public void setsDealstat(String sDealstat) {
-		this.sDealstat = sDealstat;
+	public String getRegistdate() {
+		return registdate;
 	}
-	public String getsSharewhether() {
-		return sSharewhether;
+	public void setRegistdate(String registdate) {
+		this.registdate = registdate;
 	}
-	public void setsSharewhether(String sSharewhether) {
-		this.sSharewhether = sSharewhether;
+	public String getDealstat() {
+		return dealstat;
 	}
-	public String getsPriceoffer() {
-		return sPriceoffer;
+	public void setDealstat(String dealstat) {
+		this.dealstat = dealstat;
 	}
-	public void setsPriceoffer(String sPriceoffer) {
-		this.sPriceoffer = sPriceoffer;
+	public String getFaddressval() {
+		return faddressval;
 	}
-	public String getsWriterID() {
-		return sWriterID;
+	public void setFaddressval(String faddressval) {
+		this.faddressval = faddressval;
 	}
-	public void setsWriterID(String sWriterID) {
-		this.sWriterID = sWriterID;
+	public String getSaddressval() {
+		return saddressval;
+	}
+	public void setSaddressval(String saddressval) {
+		this.saddressval = saddressval;
+	}
+	public String getCaddressval() {
+		return caddressval;
+	}
+	public void setCaddressval(String caddressval) {
+		this.caddressval = caddressval;
+	}
+	public String getDaddressval() {
+		return daddressval;
+	}
+	public void setDaddressval(String daddressval) {
+		this.daddressval = daddressval;
+	}
+	public String getWriterid() {
+		return writerid;
+	}
+	public void setWriterid(String writerid) {
+		this.writerid = writerid;
 	}
 }

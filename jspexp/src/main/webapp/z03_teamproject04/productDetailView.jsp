@@ -149,12 +149,29 @@ input[name='complete']{
 		olderproductdao proDao = new olderproductdao();
 		userdao userDao = new userdao();
 		for(Olderproduct product:proDao.productInfo(new Olderproduct(0))){ 
-			for(User user:userDao.productWriterInfo(product.getsWriterID())){ 
-				User registerUser = new User(user.getsId(),user.getsPassword(),user.getsDiv(),user.getsProfileimg(),user.getsUsername(),
-							user.getsPhonenumber(),user.getsBirthday(),user.getsGender(),user.getsAddress(),
-							user.getsDetailaddress(),user.getsEmail(),user.getiPoint(),
-							user.getiSalecount(),user.getiBuycount(),user.getiDeclarationcount()); 
+			for(Olddealuser user:userDao.productWriterInfo(product.getWriterid())){ //로그인유저 아님 (판매자정보)
+				Olddealuser registerUser = new Olddealuser(user.getId(),user.getPassword(),user.getDiv(),user.getUsername(),
+											user.getNickname(),user.getRrn(),user.getPhonenumber(),user.getZipcode(),
+											user.getAddress(),user.getDetailaddress(),user.getEmail(),user.getPoint(),
+											user.getSalecount(),user.getBuycount(),user.getDeclarationcount()); 
+				/*
+				public Olddealuser(String id, String password, String div, String username, String nickname, String rrn,
+			String phonenumber, String zipcode, String address, String detailaddress, String email, int point,
+			int salecount, int buycount, int declarationcount)
+				*/
 				session.setAttribute("userCutCollect",registerUser);
+				/*
+				Olderproduct(int productno, String productname, String kind, String dealmethod, int price,
+				String sharewhether, String priceoffer, String information, String registdate, String dealstat,
+				String faddressval, String saddressval, String caddressval, String daddressval, String writerid)
+				*/
+				Olderproduct basketProductInfo = 
+				new Olderproduct(product.getProductno(),product.getProductname(),product.getKind(),product.getDealmethod(),
+								product.getPrice(),product.getSharewhether(),product.getPriceoffer(),product.getInformation(),
+								product.getRegistdate(),product.getDealstat(),product.getFaddressval(),product.getSaddressval(),
+								product.getCaddressval(),product.getDaddressval(),product.getWriterid());
+				session.setAttribute("basket",basketProductInfo);
+				
 	%>
 	<box id="productbox">
 	<h2 id="previous"><</h2>
@@ -166,8 +183,8 @@ input[name='complete']{
 		<box id="idbox">
 			<table>
 			<tr><td></td></tr>
-				<div id="ID"><%=product.getsWriterID() %></div>
-				<div id="local" class="font"><%=user.getsAddress() %></div>
+				<div id="ID"><%=product.getWriterid() %></div>
+				<div id="local" class="font"><%=user.getAddress() %></div>
 				<select id="userManagerSel">
 					<option value="" disabled selected>●●●</option>
 					<option value="collect">모아보기</option>
@@ -178,10 +195,10 @@ input[name='complete']{
 		<box id="productinfobox">
 			<br>
 			<hr width="100%">
-				<div id="productname"><%=product.getsProductname() %></div>
-				<div class="font"><%=product.getsKind() %></div>
-				<div id="price">[<%=product.getiPrice() %>원]</div>
-				<div class="content"><%=product.getsInformation() %></div>
+				<div id="productname"><%=product.getProductname() %> </div>
+				<div class="font"><%=product.getKind() %></div>
+				<div id="price">[<%=product.getPrice() %>원]</div>
+				<div class="content"><%=product.getInformation() %></div>
 				<div id="likecnt" class="font">관심5(찜 수 기능메서드)</div>
 			<hr width="100%">
 				<input name="like" type="button" value="♡" onclick="basket()"/>
@@ -235,7 +252,7 @@ userMgrSelOb.onclick=function(){
 
 //-------------------------------찜하기 기능메서드-----------------------------------------
 function basket(){
-	alert();
+	location.href="basketInsert.jsp"
 }
 //-------------------------------예약하기 기능메서드---------------------------------------
 var selpositionOb = document.querySelector("#selposition")

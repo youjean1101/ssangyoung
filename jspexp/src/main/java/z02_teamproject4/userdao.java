@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jspexp.a13_database.DB;
-import z01_studyteam01.vo.NoticeBoardUser;
+import z02_teamproject4.vo.Olddealuser;
 import z02_teamproject4.vo.User;
 
 //z02_teamproject4.userdao
@@ -40,8 +40,8 @@ public class userdao {
 		return isIdhave;
 	}
 //---------------------------------아이디로 회원정보 불러오기 기능메서드------------------------------
-	public List<User> productWriterInfo(String id){
-		List<User> userlist = new ArrayList<User>();
+	public List<Olddealuser> productWriterInfo(String id){
+		List<Olddealuser> userlist = new ArrayList<Olddealuser>();
 		String sql = "SELECT * FROM olddealuser WHERE id=?";
 		
 		try {
@@ -55,21 +55,21 @@ public class userdao {
 			int iSalecount, int iBuycount, int iDeclarationcount)
 			 */
 			while(rs.next()) {
-				userlist.add(new User(rs.getString("id"),
-									  rs.getString("password"),
-									  rs.getString("div"),
-									  rs.getString("profileimg"),
-									  rs.getString("username"),
-									  rs.getString("phonenumber"),
-									  rs.getString("birthday"),
-									  rs.getString("gender"),
-									  rs.getString("address"),
-									  rs.getString("detailaddress"),
-									  rs.getString("email"),
-									  rs.getInt("point"),
-									  rs.getInt("salecount"),
-									  rs.getInt("buycount"),
-									  rs.getInt("declarationcount")
+				userlist.add(new Olddealuser(rs.getString("id"),
+											  rs.getString("password"),
+											  rs.getString("div"),
+											  rs.getString("username"),
+											  rs.getString("nickname"),
+											  rs.getString("rrn"),
+											  rs.getString("phonenumber"),
+											  rs.getString("zipcode"),
+											  rs.getString("address"),
+											  rs.getString("detailaddress"),
+											  rs.getString("email"),
+											  rs.getInt("point"),
+											  rs.getInt("salecount"),
+											  rs.getInt("buycount"),
+											  rs.getInt("declarationcount")
 						));
 			}
 			con.commit();
@@ -83,23 +83,24 @@ public class userdao {
 		return userlist;
 	}
 //------------------------------------------회원가입 기능메서드------------------------------------------------	
-	public List<User> userAdd(User ins){
-		List<User> userlist = new ArrayList<User>();
-		String sql = "INSERT INTO olddealuser values(?,?,'회원',?,?,?,?,?,?,?,?,0,0,0,0)";
+	public List<Olddealuser> userAdd(Olddealuser ins){
+		List<Olddealuser> userlist = new ArrayList<Olddealuser>();
+		String sql = "INSERT INTO olddealuser values(?,?,?,?,?,?,?,?,?,?,?,0,0,0,0)";
 		
 		try {
 			con = DB.con();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, ins.getsId());
-			pstmt.setString(2, ins.getsPassword());
-			pstmt.setString(3, ins.getsProfileimg());
-			pstmt.setString(4, ins.getsUsername());
-			pstmt.setString(5, ins.getsBirthday());
-			pstmt.setString(6, ins.getsGender());
-			pstmt.setString(7, ins.getsPhonenumber());
-			pstmt.setString(8, ins.getsAddress());
-			pstmt.setString(9, ins.getsDetailaddress());
-			pstmt.setString(10, ins.getsEmail());
+			pstmt.setString(1, ins.getId());
+			pstmt.setString(2, ins.getPassword());
+			pstmt.setString(3, ins.getDiv());
+			pstmt.setString(4, ins.getUsername());
+			pstmt.setString(5, ins.getNickname());
+			pstmt.setString(6, ins.getRrn());
+			pstmt.setString(7, ins.getPhonenumber());
+			pstmt.setString(8, ins.getZipcode());
+			pstmt.setString(9, ins.getAddress());
+			pstmt.setString(10, ins.getDetailaddress());
+			pstmt.setString(11, ins.getEmail());
 			rs = pstmt.executeQuery();
 			con.commit();
 			/*
@@ -141,37 +142,37 @@ public class userdao {
 		return isIdhave;
 	}
 //------------------------------------------로그인 기능메서드------------------------------------------------
-	public List<User> userInfo(User sel){
-		List<User> userlist = new ArrayList<User>();
+	public List<Olddealuser> userInfo(Olddealuser sel){
+		List<Olddealuser> userlist = new ArrayList<Olddealuser>();
 		String sql = "SELECT * FROM olddealuser WHERE id=? AND password=?";
 		
 		try {
 			con = DB.con();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, sel.getsId());
-			pstmt.setString(2, sel.getsPassword());
+			pstmt.setString(1, sel.getId());
+			pstmt.setString(2, sel.getPassword());
 			rs = pstmt.executeQuery();
 			/*
-			public User(String sId, String sPassword, String sDiv, String sProfileimg, String sUsername, String sPhonenumber,
-			String sBirthday, String sGender, String sAddress, String sDetailaddress, String sEmail, int iPoint,
-			int iSalecount, int iBuycount, int iDeclarationcount)
+			public Olddealuser(String id, String password, String div, String username, String nickname, String rrn,
+			String phonenumber, String zipcode, String address, String detailaddress, String email, int point,
+			int salecount, int buycount, int declarationcount)
 			 */
 			while(rs.next()) {
-				userlist.add(new User(rs.getString("id"),
-									  rs.getString("password"),
-									  rs.getString("div"),
-									  rs.getString("profileimg"),
-									  rs.getString("username"),
-									  rs.getString("phonenumber"),
-									  rs.getString("birthday"),
-									  rs.getString("gender"),
-									  rs.getString("address"),
-									  rs.getString("detailaddress"),
-									  rs.getString("email"),
-									  rs.getInt("point"),
-									  rs.getInt("salecount"),
-									  rs.getInt("buycount"),
-									  rs.getInt("declarationcount")
+				userlist.add(new Olddealuser(rs.getString("id"),
+											  rs.getString("password"),
+											  rs.getString("div"),
+											  rs.getString("username"),
+											  rs.getString("nickname"),
+											  rs.getString("rrn"),
+											  rs.getString("phonenumber"),
+											  rs.getString("zipcode"),
+											  rs.getString("address"),
+											  rs.getString("detailaddress"),
+											  rs.getString("email"),
+											  rs.getInt("point"),
+											  rs.getInt("salecount"),
+											  rs.getInt("buycount"),
+											  rs.getInt("declarationcount")
 						));
 			}
 			con.commit();
@@ -185,15 +186,15 @@ public class userdao {
 		return userlist;
 	}
 //------------------------------------------회원탈퇴 기능메서드------------------------------------------------	
-	public List<User> userdel(User del){
-		List<User> userlist = new ArrayList<User>();
+	public List<Olddealuser> userdel(Olddealuser del){
+		List<Olddealuser> userlist = new ArrayList<Olddealuser>();
 		String sql = "DELETE FROM olddealuser WHERE id=? AND password=?";
 		
 		try {
 			con = DB.con();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, del.getsId());
-			pstmt.setString(2, del.getsPassword());
+			pstmt.setString(1, del.getId());
+			pstmt.setString(2, del.getPassword());
 			rs = pstmt.executeQuery();
 			if(rs.next()==true) System.out.println("삭제가 완료되었습니다.");
 			con.commit();
@@ -208,25 +209,26 @@ public class userdao {
 		return userlist;
 	}
 //------------------------------------------회원수정 기능메서드------------------------------------------------	
-	public List<User> userUpdate(User upt){
-		List<User> userlist = new ArrayList<User>();
+	public List<Olddealuser> userUpdate(Olddealuser upt){
+		List<Olddealuser> userlist = new ArrayList<Olddealuser>();
 		String sql = "UPDATE olddealuser \r\n"
-				+ "SET password=?, profileimg=?,birthday=?, \r\n"
-				+ "gender=?,phonenumber=?,address=?,detailaddress=?,email=? WHERE id=?";
+				+ "SET password=? ,nickname=?,phonenumber=?,zipcode=?,address=?,detailaddress=?,email=? WHERE id=?";
 		
-		
+		/*
+		 public Olddealuser(String id, String password, String nickname, String phonenumber, String zipcode, String address,
+			String detailaddress, String email) 
+		 */
 		try {
 			con = DB.con();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, upt.getsPassword());
-			pstmt.setString(2, upt.getsProfileimg());
-			pstmt.setString(3, upt.getsBirthday());
-			pstmt.setString(4, upt.getsGender());
-			pstmt.setString(5, upt.getsPhonenumber());
-			pstmt.setString(6, upt.getsAddress());
-			pstmt.setString(7, upt.getsDetailaddress());
-			pstmt.setString(8, upt.getsEmail());
-			pstmt.setString(9, upt.getsId());
+			pstmt.setString(1, upt.getPassword());
+			pstmt.setString(2, upt.getNickname());
+			pstmt.setString(3, upt.getPhonenumber());
+			pstmt.setString(4, upt.getZipcode());
+			pstmt.setString(5, upt.getAddress());
+			pstmt.setString(6, upt.getDetailaddress());
+			pstmt.setString(7, upt.getEmail());
+			pstmt.setString(8, upt.getId());
 			rs = pstmt.executeQuery();
 			//System.out.println(pstmt.executeUpdate());
 			if(pstmt.executeUpdate()>=1) System.out.println("수정이 완료되었습니다.");

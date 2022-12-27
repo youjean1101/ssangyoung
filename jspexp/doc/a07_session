@@ -113,7 +113,7 @@
 			writer varchar2(50) -- 등록 session 아이디로 등록	
 		)	
 		등록 화면에
-		등록자 : <input type="text" readOnly value-"${mem.id"/>
+		등록자 : <input type="text" readOnly="readOnly" value-"${mem.id"/>
 				등록 시 외부에서 입력해서 등록하는 것이 아니라 session으로 자동등록하게 처리
 		DB 등록된 내용
 		1000, '첫 게시물(타이틀)', '게시물입니다', sysdate
@@ -138,7 +138,7 @@
 			번호: <input type="text" value="${bd.no}"
 			...
 			작성자: <input type="text" name="writer"
-						readOnly value="${bd.writer" />
+						readOnly="readOnly" value="${bd.writer}" />
 			<input type="button" id="uptBtn" value="수정" onclick="uptRroc()"
 			<script>
 				function uptRroc(){

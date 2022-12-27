@@ -57,7 +57,8 @@
 	font-size:15pt;
 	text-align:center;
 	height:40px;
-	border:1px solid black;
+	border-bottom:0.02px solid rgb(244,190,61);
+	/* border:1px solid black; */
 	/* width:25%; */
 }
 #collectTab td input[type="checkbox"]{
@@ -124,6 +125,15 @@ input[name="next"]:active{
 </style>
 
 <script type="text/javascript">
+function collectremove(){
+	/* var collectRemoveUserSelArr = document.querySelectorAll("[name=removeUserSel]")
+	for(var idx=0;idx<collectRemoveUserSelArr.length;idx++){
+		if(!collectRemoveUserSelArr[idx].checked){
+			alert("[안내메시지]모아보기해제할 회원을 선택해주세요.")
+		}
+	} */
+	document.querySelector("#collectRemoveform").submit();
+}
 </script>
 </head>
 <body>
@@ -140,20 +150,35 @@ input[name="next"]:active{
 		%>
 		<h2><%=loginUser.getsUsername() %>님이 모아보기한 사용자 정보</h2>
 		<hr>
+		<form id="collectRemoveform">
 		<table id="collectTab">
 			<tr><th width="15%">checkBox</th><th width="15%">No.</th><th width="20%">ID</th><th width="50%">지역</th></tr>
 			<%for(User collectuserinfo:socialDao.cutoutView(new Social(loginUser.getsId(),"모아"))){ %>
-			<tr><td width="15%"><Input type="checkbox"/></td>
+			<tr><td width="15%"><Input type="checkbox" name="removeUserSel" value='<%=collectuserinfo.getsId() %>'/></td>
 				<td width="15%"><%=i++ %></td><td width="20%"><%=collectuserinfo.getsId() %></td>
-				<td width="50%"><%=collectuserinfo.getsAddress()%><%=collectuserinfo.getsDetailaddress()%></td></tr>
-			<%} %>
+				<td width="50%"><%=collectuserinfo.getsAddress()%></td></tr>
+				
+			<%String []colRomoveUserSels= request.getParameterValues("[name=removeUserSel]");
+				if(colRomoveUserSels!=null){
+					for(String colRomoveUserSel:colRomoveUserSels){
+						socialDao.collcutremove(new Social(loginUser.getsId(),"모아",colRomoveUserSel));
+					}
+				}
+			
+			} 
+			
+			//if(colRomoveUserSel==null) colRomoveUserSel="";
+			//socialDao.collcutremove(new Social(loginUser.getsId(),"모아",colRomoveUserSel));
+			%>
 		</table>
-		<input type="button" name="collectCancel" value="모아보기해제"/>
+		<input type="button" name="collectCancel" value="모아보기해제" onclick="collectremove()"/>
 		<input type="button" class="nextorprev" name="previous" value="◀"/>
 		<input type="button" class="nextorprev" name="next" value="▶"/>
+		</form>
 		<%}else{
 			loginalert=true;
 		}
+		
 		%>
 	</box>
 </body>
@@ -164,5 +189,6 @@ if(alertis){
 	alert("[안내메시지]로그인을 해주세요.")
 	location.href="login.jsp";
 }
+
 </script>
 </html>

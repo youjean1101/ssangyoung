@@ -109,8 +109,8 @@
 		<input id="useGo" type="button" value="중고나라 이용하기" />
 	</box>
 	<%
-		User loginUser = (User)session.getAttribute("loginUserInfo");
-		boolean hasSess = loginUser!=null; // 로그인한계정정보가 null아니면 true
+		Olddealuser Login = (Olddealuser)session.getAttribute("Login");
+		boolean hasSess = Login!=null; // 로그인한계정정보가 null아니면 true
 		if(!hasSess){
 	%>
 	<box id="login">

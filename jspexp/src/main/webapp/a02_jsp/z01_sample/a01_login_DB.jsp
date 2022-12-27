@@ -22,6 +22,7 @@
 
 </head>
 <body>
+<%-- 로그아웃을 하거나 로그인 할때, 기존의 session을 필요없으므로 초기화 처리 --%>
 	<c:remove var="mem" scope="session" />
 	
 	<h2>로그인</h2>

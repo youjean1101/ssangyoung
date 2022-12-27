@@ -30,6 +30,14 @@
 	<%--dao를 통해서 객체가 있을 때만 session 객체 선언 --%>
 	<c:if test="${not empty dao.login(reMem)}">
 		<c:set var="mem" scope="session" value="${dao.login(reMem)}"/>
+		<%--
+		1. el : 객체를 생성된 내용을 선언한 참조값인 reMem을 활용(${reMem}), 
+			비교연산자 처리(${not empty dao.login(reMem)}
+		2. jstl : 객체 생성
+			<c:set var="변수명 scope="session"
+				value="${dao의 기능메서드}"
+				
+		 --%>
 	</c:if>
 
 </body>

@@ -112,16 +112,16 @@
 	<box id="mypage">
 		<box id="userInfo">
 			<%
-					User loginUser = (User)session.getAttribute("loginUserInfo");
-					boolean hasSess = loginUser!=null; // 로그인한계정정보가 null아니면 true
+					Olddealuser Login = (Olddealuser)session.getAttribute("Login");
+					boolean hasSess = Login!=null; // 로그인한계정정보가 null아니면 true
 					if(hasSess){
 			%>
 			<table id="userInfoTab">
 				<tr><td width="5%"><img src=".\img\profile2.png"></td>
-					<td width="25%"><%=loginUser.getsUsername() %>님의 MyPage</td>
+					<td width="25%"><%=Login.getUsername() %>님의 MyPage</td>
 					<td width="15%"><input id="alert" type="button" value="나에게 온 알람보기" onclick="alerthistory()"/></td>
 					<td width="10%"></td>
-					<td width="15%">Point:<%=loginUser.getiPoint() %>P</td></tr>
+					<td width="15%">Point:<%=Login.getPoint() %>P</td></tr>
 			</table>
 			<%}else{%>
 				<h2 id="loginguide">로그인을 해주세요.</h2>
@@ -168,15 +168,15 @@
 		alert("알람기능넣기")
 	}
 //---------------------------------신고/구매/판매 횟수출력 기능메서드------------------------------
-	function count(whatcnt){
+	function count(whatcnt){ // 로그인하라는 알림창 기능넣기
 		if(whatcnt=='declaration'){
-			alert("나의 신고횟수: "+<%=loginUser.getiDeclarationcount()%>
+			alert("나의 신고횟수: "+<%=Login.getDeclarationcount()%>
 					+"회\n[안내메시지]신고를 30회이상 당하시면 거래왕이 되실 수 없습니다.");
 		}else if(whatcnt=='buy'){
-			alert("나의 구매횟수: "+<%=loginUser.getiBuycount()%>
+			alert("나의 구매횟수: "+<%=Login.getBuycount()%>
 					+"회\n[안내메시지]거래왕이 되시면 소정의 선물을 드립니다.\n거래왕에 도전하세요!");
 		}else{
-			alert("나의 판매횟수: "+<%=loginUser.getiSalecount()%>
+			alert("나의 판매횟수: "+<%=Login.getSalecount()%>
 				+"회\n[안내메시지]거래왕이 되시면 소정의 선물을 드립니다.\n거래왕에 도전하세요!");
 		}
 	}

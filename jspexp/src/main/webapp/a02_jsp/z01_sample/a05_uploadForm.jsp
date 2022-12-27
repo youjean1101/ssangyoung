@@ -26,6 +26,9 @@
 
 <%-- 
 # fileupload 처리
+0. 업로드 프로세스
+	client	===========네트웤환경===========> server
+	 파일		==> 변환(multipart)	==>	서버에서 multipart ==> File 
 1. 환경설정
 	1) 업로드 모듈 설정
 		cos.jar WEB-INF/lib
@@ -61,6 +64,12 @@
 			multi.getContentType(ele); // content타입
 			multi.getFile(ele).length(); // 파일의 길이
 		}
+	# 이미지 활용 예제
+	1. 회원정보에 사진 이미지 올리기
+		회원테이블에 이미지명을 저장한느 컬럼 필요
+	2. 물건의 정보에 물건 이미지 올리기
+		물건테이블 정보에 물건의 이미지명을 저장하는 컬럼 필요
+	
 --%>
 
 

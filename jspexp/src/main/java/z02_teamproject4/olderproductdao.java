@@ -23,25 +23,29 @@ public class olderproductdao {
 		try {
 			con = DB.con();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, sel.getiProductno());
+			pstmt.setInt(1, sel.getProductno());
 			rs = pstmt.executeQuery();
 			/*
-			public Olderproduct(int iProductno, String sKind, String sProductname, int iPrice, 
-			String sInformation,String sRegistdate, String sDealmethod, String sDealstat, 
-			String sSharewhether, String sPriceoffer,String sWriterID)
+			public Olderproduct(int productno, String productname, String kind, String dealmethod, int price,
+			String sharewhether, String priceoffer, String information, String registdate, String dealstat,
+			String faddressval, String saddressval, String caddressval, String daddressval, String writerid) 
 			 */
 			while(rs.next()) {
 				productlist.add(new Olderproduct(rs.getInt(1),
 									  rs.getString(2),
 									  rs.getString(3),
-									  rs.getInt(4),
-									  rs.getString(5),
+									  rs.getString(4),
+									  rs.getInt(5),
 									  rs.getString(6),
 									  rs.getString(7),
 									  rs.getString(8),
 									  rs.getString(9),
 									  rs.getString(10),
-									  rs.getString(11)
+									  rs.getString(11),
+									  rs.getString(12),
+									  rs.getString(13),
+									  rs.getString(14),
+									  rs.getString(15)
 						));
 			}
 			con.commit();

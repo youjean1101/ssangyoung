@@ -128,18 +128,17 @@
 			response.sendRedirect("main.jsp");
 			/* session.setAttribute("loginID",id);
 			session.setAttribute("loginPassword",password); */
-			User sel= new User(id,password);
+			Olddealuser sel= new Olddealuser(id,password);
 			/*
-			public User(String sId, String sPassword, String sDiv, String sProfileimg, String sUsername, String sPhonenumber,
-			String sBirthday, String sGender, String sAddress, String sDetailaddress, String sEmail, int iPoint,
-			int iSalecount, int iBuycount, int iDeclarationcount)
+			public Olddealuser(String id, String password, String div, String username, String nickname, String rrn,
+			String phonenumber, String zipcode, String address, String detailaddress, String email, int point,
+			int salecount, int buycount, int declarationcount)
 			*/
-			for(User user:dao.userInfo(sel)){
-				User loginuser = new User(id,password,user.getsDiv(),user.getsProfileimg(),user.getsUsername(),
-											user.getsPhonenumber(),user.getsBirthday(),user.getsGender(),user.getsAddress(),
-											user.getsDetailaddress(),user.getsEmail(),user.getiPoint(),
-											user.getiSalecount(),user.getiBuycount(),user.getiDeclarationcount()); 
-				session.setAttribute("loginUserInfo",loginuser);
+			for(Olddealuser user:dao.userInfo(sel)){
+				Olddealuser loginuser = new Olddealuser(id,password,user.getDiv(),user.getUsername(),user.getNickname(),user.getRrn(),
+														user.getPhonenumber(),user.getZipcode(),user.getAddress(),user.getDetailaddress(),
+														user.getEmail(),user.getPoint(),user.getSalecount(),user.getBuycount(),user.getDeclarationcount()); 
+				session.setAttribute("Login",loginuser);
 
 				/* session.setAttribute("loginAuth",user.getsDiv());
 				session.setAttribute("loginName",user.getsUsername());

@@ -56,7 +56,8 @@
 	font-size:15pt;
 	text-align:center;
 	height:40px;
-	border:1px solid black;
+	border-bottom:0.02px solid rgb(244,190,61);
+	/* border:1px solid black; */
 	/* width:25%; */
 }
 #cutoutTab td input[type="checkbox"]{
@@ -143,7 +144,7 @@ input[name="next"]:active{
 			<%//for(int idx=1;idx<cutUserList.size();idx++){ %>
 			<tr><td width="15%"><Input type="checkbox"/></td>
 				<td width="15%"><%=i++ %></td><td width="20%"><%=cutoutuserinfo.getsId() %></td>
-				<td width="50%"><%=cutoutuserinfo.getsAddress() %><%=cutoutuserinfo.getsDetailaddress() %></td></tr>
+				<td width="50%"><%=cutoutuserinfo.getsAddress() %></td></tr>
 			<%} %>
 		</table>
 		<input type="button" name="cutoutCancel" value="차단해제"/>

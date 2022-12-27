@@ -26,6 +26,15 @@
 	<h2>이름:${mem.name}</h2>
 	<h2>권한:${mem.auth}</h2>
 	<input type="button" value="로그아웃" onclick="logout()">
+	<%--
+	# 메뉴 페이지별로 권한 설정 테이블 
+	no	메뉴명	페이지소스				권한
+	100	로그인	a01_login_DB.jsp	all
+	101	메뉴1		a02_menu01.jsp		user01
+	102	관리자	a05_admin.jsp		admin
+	
+	--%>
+	
 	<ul>
 		<li onclick="goPage('all','a01_login_DB.jsp')">로그인</li>
 		<li onclick="goPage('user01','a02_menu01.jsp')">메뉴1</li>

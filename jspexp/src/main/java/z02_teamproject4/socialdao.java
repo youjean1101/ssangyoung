@@ -16,16 +16,15 @@ public class socialdao {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 //-----------------------------모아보기/차단하기 추가-----------------------------------
-	public List<Social> collectAdd(Social ins){
-		List<Social> collectlist = new ArrayList<Social>();
-		String sql = "INSERT INTO appointed values(?,?,?)";
+	public void collectAdd(Social ins){
+		String sql = "INSERT INTO social values(?,?,?)";
 		
 		try {
 			con = DB.con();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, ins.getsId());
-			pstmt.setString(2, ins.getsTypediv());
-			pstmt.setString(3, ins.getsOtherid());
+			pstmt.setString(1, ins.getId());
+			pstmt.setString(2, ins.getTypediv());
+			pstmt.setString(3, ins.getOtherid());
 			rs = pstmt.executeQuery();
 			con.commit();
 		} catch (SQLException e) {
@@ -35,21 +34,44 @@ public class socialdao {
 		}finally {
 			DB.close(rs, pstmt, con);
 		}
-		return collectlist;
+	}
+//-----------------------------모아보기/차단하기 삭제하기-----------------------------------
+	public void collcutremove(Social ins){
+		String sql = "DELETE FROM social \r\n"
+					+ "WHERE id=? \r\n"
+					+ "AND typediv=?\r\n"
+					+ "AND otherid=?";
+		try {
+			con = DB.con();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ins.getId());
+			pstmt.setString(2, ins.getTypediv());
+			pstmt.setString(3, ins.getOtherid());
+			System.out.println(pstmt);
+			rs = pstmt.executeQuery();
+			con.commit();
+			
+		} catch (SQLException e) {
+			System.out.println("DB에러:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("일반 에러:"+e.getMessage());
+		}finally {
+			DB.close(rs, pstmt, con);
+		}
 	}
 //--------------------------------차단하기/모아보기 회원 조회하기------------------------------
 	public List<User> cutoutView(Social sel){
 		List<User> socialUserlist = new ArrayList<User>();
-		String sql = "SELECT*FROM appointed a, olddealuser u\r\n"
-					+ "WHERE a.otherid = u.id\r\n"
-					+ "AND a.id=? \r\n"
-					+ "AND a.typediv=?";
+		String sql = "SELECT*FROM social s, olddealuser u\r\n"
+					+ "WHERE s.otherid = u.id\r\n"
+					+ "AND s.id=? \r\n"
+					+ "AND s.typediv=?";
 		
 		try {
 			con = DB.con();
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, sel.getsId());
-			pstmt.setString(2, sel.getsTypediv());
+			pstmt.setString(1, sel.getId());
+			pstmt.setString(2, sel.getTypediv());
 			rs = pstmt.executeQuery();
 			/*
 			public Social(String sId, String sTypediv, String sOtherid)

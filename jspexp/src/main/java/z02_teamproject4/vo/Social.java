@@ -1,49 +1,50 @@
 package z02_teamproject4.vo;
 
 public class Social {
-	private String sId;
-	private String sTypediv;
-	private String sOtherid;
+	private String id;
+	private String typediv;
+	private String otherid;
 	
 	public Social() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Social(String sId, String sTypediv, String sOtherid) {
+	public Social(String id, String typediv, String otherid) {
 		super();
-		this.sId = sId;
-		this.sTypediv = sTypediv;
-		this.sOtherid = sOtherid;
+		this.id = id;
+		this.typediv = typediv;
+		this.otherid = otherid;
 	}
 
-	public Social(String sId, String sTypediv) {
+	public Social(String id, String typediv) {
 		super();
-		this.sId = sId;
-		this.sTypediv = sTypediv;
+		this.id = id;
+		this.typediv = typediv;
 	}
 
-	public String getsId() {
-		return sId;
+	public String getId() {
+		return id;
 	}
 
-	public void setsId(String sId) {
-		this.sId = sId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public String getsTypediv() {
-		return sTypediv;
+	public String getTypediv() {
+		return typediv;
 	}
 
-	public void setsTypediv(String sTypediv) {
-		this.sTypediv = sTypediv;
+	public void setTypediv(String typediv) {
+		this.typediv = typediv;
 	}
 
-	public String getsOtherid() {
-		return sOtherid;
+	public String getOtherid() {
+		return otherid;
 	}
 
-	public void setsOtherid(String sOtherid) {
-		this.sOtherid = sOtherid;
+	public void setOtherid(String otherid) {
+		this.otherid = otherid;
 	}
+	
 }

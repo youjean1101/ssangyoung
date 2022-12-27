@@ -110,15 +110,15 @@
 					</form>
 					</td>
 					<%
-						User loginUser = (User)session.getAttribute("loginUserInfo");
-						boolean hasSess = loginUser!=null; // 로그인한계정정보가 null아니면 true
+						Olddealuser Login = (Olddealuser)session.getAttribute("Login");
+						boolean hasSess = Login!=null; // 로그인한계정정보가 null아니면 true
 						if(hasSess){
 					%>
 					<td width="14%">
 						<table id="countTab">
-							<tr><td>나의 판매횟수: </td><td><%=loginUser.getiSalecount() %>회</td></tr>
-							<tr><td>나의 구매횟수: </td><td><%=loginUser.getiBuycount() %>회</td></tr>
-							<tr><td>나의 신고당한횟수: </td><td><%=loginUser.getiDeclarationcount() %>회</td></tr>
+							<tr><td>나의 판매횟수: </td><td><%=Login.getSalecount() %>회</td></tr>
+							<tr><td>나의 구매횟수: </td><td><%=Login.getBuycount() %>회</td></tr>
+							<tr><td>나의 신고당한횟수: </td><td><%=Login.getDeclarationcount() %>회</td></tr>
 						</table>
 					</td>
 						<td width="5%">
@@ -127,7 +127,7 @@
 						</td>
 						<td>
 						<select id="usermenu">
-							<option value="" disabled selected><%=loginUser.getsId() %>님</option>
+							<option value="" disabled selected><%=Login.getId() %>님</option>
 							<option value="userSet">회원정보수정</option>
 							<option value="logout">로그아웃</option>
 							<option value="MyPage">MyPage</option>

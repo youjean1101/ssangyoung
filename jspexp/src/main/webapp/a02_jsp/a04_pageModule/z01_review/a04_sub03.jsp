@@ -15,7 +15,9 @@
 <title>Insert title here</title>
 <link href="/a00_com/a01_common.css" rel="stylesheet">
 <script type="text/javascript">
-	
+/*
+ 
+*/
 </script>
 
 </head>
@@ -24,12 +26,13 @@
 
 
 --%>
-
+<h2>프레임3</h2>
 
 </body>
 <script type="text/javascript">
-	var islogout = confirm("정말 로그아웃을 하시겠습니까?")
-	(islogout?session.removeAttribute("Login"):location.href="main.jsp")
+/*
+ 
+*/
 
 </script>
 </html>

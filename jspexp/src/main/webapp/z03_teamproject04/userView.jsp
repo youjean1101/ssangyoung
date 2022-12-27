@@ -54,7 +54,7 @@
 		font-size:16pt;
 		font-weight:bold;
 		position:absolute;
-		bottom:0%;
+		bottom:-5%;
 	}
 	input[value="수정하기"]{
 		position:absolute;
@@ -75,27 +75,28 @@
 		<jsp:include page="\frame\frame.jsp"></jsp:include>
 		<%
 			boolean loginalert=false;
-			User loginUser = (User)session.getAttribute("loginUserInfo");
-			boolean hasSess = loginUser!=null; // 로그인한계정정보가 null아니면 true
+			Olddealuser Login = (Olddealuser)session.getAttribute("Login");
+			boolean hasSess = Login!=null; // 로그인한계정정보가 null아니면 true
 			if(hasSess){
 		%>
 		<box id="infobox">
 			<fieldset id="infofield">
-				<legend><%=loginUser.getsUsername() %>님의 회원정보</legend>
+				<legend><%=Login.getUsername() %>님의 회원정보</legend>
 				<table id="userInfotab">
-					<tr><th>아이디:</th><td><%=loginUser.getsId() %></td></tr>
-					<tr><th>권한:</th><td><%=loginUser.getsDiv() %></td></tr>
-					<tr><th>이름:</th><td><%=loginUser.getsUsername() %></td></tr>
-					<tr><th>생년월일:</th><td><%=loginUser.getsBirthday() %></td></tr>
-					<tr><th>성별:</th><td><%=loginUser.getsGender() %></td></tr>
-					<tr><th>휴대폰번호:</th><td><%=loginUser.getsPhonenumber() %></td></tr>
-					<tr><th>주소:</th><td><%=loginUser.getsAddress() %></td></tr>
-					<tr><th>상세주소:</th><td><%=loginUser.getsDetailaddress() %></td></tr>
-					<tr><th>이메일:</th><td><%=loginUser.getsEmail() %></td></tr>
-					<tr><th>포인트:</th><td><%=loginUser.getiPoint() %></td></tr>
-					<tr><th>판매횟수:</th><td><%=loginUser.getiSalecount() %></td></tr>
-					<tr><th>구매횟수:</th><td><%=loginUser.getiBuycount() %></td></tr>
-					<tr><th>신고당한횟수:</th><td><%=loginUser.getiDeclarationcount() %></td></tr>
+					<tr><th>아이디:</th><td><%=Login.getId() %></td></tr>
+					<tr><th>권한:</th><td><%=Login.getDiv() %></td></tr>
+					<tr><th>이름:</th><td><%=Login.getUsername() %></td></tr>
+					<tr><th>닉네임:</th><td><%=Login.getNickname()%></td></tr>
+					<tr><th>주민번호:</th><td><%=Login.getRrn() %></td></tr>
+					<tr><th>휴대폰번호:</th><td><%=Login.getPhonenumber() %></td></tr>
+					<tr><th>주소:</th><td><%=Login.getAddress() %></td></tr>
+					<tr><th>상세주소:</th><td><%=Login.getDetailaddress() %></td></tr>
+					<tr><th>우편번호:</th><td><%=Login.getZipcode() %></td></tr>
+					<tr><th>이메일:</th><td><%=Login.getEmail() %></td></tr>
+					<tr><th>포인트:</th><td><%=Login.getPoint() %></td></tr>
+					<tr><th>판매횟수:</th><td><%=Login.getSalecount() %></td></tr>
+					<tr><th>구매횟수:</th><td><%=Login.getBuycount() %></td></tr>
+					<tr><th>신고당한횟수:</th><td><%=Login.getDeclarationcount() %></td></tr>
 					</table>
 			</fieldset>
 		<input class="button" type="button" value="수정하기" onclick="location.href='userInfoUpdate.jsp'"/>

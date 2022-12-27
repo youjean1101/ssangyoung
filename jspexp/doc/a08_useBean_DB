@@ -1,0 +1,17 @@
+# useBean을 활용한 요청 및 DB 처리
+1. 개발 처리 프로세스
+	client <========>	server
+	1) css, html		1) java + html(css/js) 만들어서 client 전달(화면전체 전달)
+						2) ajax (json데이터만 전달)
+	3) 요청값(key=val)	3) usebean의 setProperty로 처리
+2. useBean
+	1) 객체를 선언해서 활용 할 수 있는 처리(session scope)
+		- VO, Dao 선언해서 객체 생성
+			<jsp:useBean id="p01" class="@@@@.vo" />
+		- el, jstl로 사용가능
+			${p01}
+			<c:if test="${p0.price>=3000}>
+			<c.forEach var="emp" items="${dao.getEmpList}">
+	2) 요청값을 처리하는 기능
+		query string(name=himan&age=25)
+			<jsp:setProperty property="*" name="p01"
