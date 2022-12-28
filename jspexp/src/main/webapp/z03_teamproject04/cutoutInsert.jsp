@@ -16,10 +16,10 @@
 </head>
 <body>
 	<%
-		User loginUser = (User)session.getAttribute("loginUserInfo");
-		User registerUser = (User)session.getAttribute("userCutCollect"); 
+		Olddealuser Login = (Olddealuser)session.getAttribute("Login");
+		Olddealuser registerUser = (Olddealuser)session.getAttribute("userCutCollect"); 
 		socialdao socialDao = new socialdao();
-		socialDao.collectAdd(new Social(loginUser.getsId(),"차단",registerUser.getsId()));
+		socialDao.collectAdd(new Social(Login.getId(),"차단",registerUser.getId()));
 		//boolean isCutout = true;
 	%>
 

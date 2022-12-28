@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jspexp.a13_database.DB;
+import z02_teamproject4.vo.Olddealuser;
 import z02_teamproject4.vo.Social;
-import z02_teamproject4.vo.User;
 
 public class socialdao {
 	private Connection con;
@@ -60,8 +60,8 @@ public class socialdao {
 		}
 	}
 //--------------------------------차단하기/모아보기 회원 조회하기------------------------------
-	public List<User> cutoutView(Social sel){
-		List<User> socialUserlist = new ArrayList<User>();
+	public List<Olddealuser> cutoutView(Social sel){
+		List<Olddealuser> socialUserlist = new ArrayList<Olddealuser>();
 		String sql = "SELECT*FROM social s, olddealuser u\r\n"
 					+ "WHERE s.otherid = u.id\r\n"
 					+ "AND s.id=? \r\n"
@@ -78,7 +78,7 @@ public class socialdao {
 			public User(String sId, String sAddress, String sDetailaddress)
 			 */
 			while(rs.next()) {
-				socialUserlist.add(new User(rs.getString("otherid"),
+				socialUserlist.add(new Olddealuser(rs.getString("otherid"),
 										  rs.getString("address"),
 										  rs.getString("detailaddress")
 						));
@@ -100,7 +100,7 @@ public class socialdao {
 		socialdao dao = new socialdao();
 		//dao.collectAdd(new Social("test","차단","yujin"));
 		//dao.cutoutView(new Social("yujin","모아"));
-		List<User> cutUserList= dao.cutoutView(new Social("yujin","모아"));
+		List<Olddealuser> cutUserList= dao.cutoutView(new Social("yujin","모아"));
 		for(int idx=1;idx<cutUserList.size();idx++) {
 			System.out.println(idx);
 			System.out.println(cutUserList.get(idx));

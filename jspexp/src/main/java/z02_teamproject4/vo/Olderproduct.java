@@ -20,6 +20,7 @@ public class Olderproduct {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	//전페 상품정보
 	public Olderproduct(int productno, String productname, String kind, String dealmethod, int price,
 			String sharewhether, String priceoffer, String information, String registdate, String dealstat,
 			String faddressval, String saddressval, String caddressval, String daddressval, String writerid) {
@@ -40,6 +41,7 @@ public class Olderproduct {
 		this.daddressval = daddressval;
 		this.writerid = writerid;
 	}
+	// 찜 상품정보 불러오기
 	
 	public Olderproduct(int productno) {
 		super();

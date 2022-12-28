@@ -70,6 +70,14 @@ public class Olddealuser {
 		this.detailaddress = detailaddress;
 		this.email = email;
 	}
+	// 모아보기회원조회
+	public Olddealuser(String id, String address, String detailaddress) {
+		super();
+		this.id = id;
+		this.address = address;
+		this.detailaddress = detailaddress;
+	}
+	
 	// 로그인
 	public Olddealuser(String id, String password) {
 		super();

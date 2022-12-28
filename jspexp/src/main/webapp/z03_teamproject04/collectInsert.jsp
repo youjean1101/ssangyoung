@@ -16,10 +16,10 @@
 </head>
 <body>
 	<%	
-		User loginUser = (User)session.getAttribute("loginUserInfo");
-		User registerUser = (User)session.getAttribute("userCutCollect"); 
+		Olddealuser Login = (Olddealuser)session.getAttribute("Login");
+		Olddealuser registerUser = (Olddealuser)session.getAttribute("userCutCollect"); 
 		socialdao socialDao = new socialdao();
-		socialDao.collectAdd(new Social(loginUser.getsId(),"모아",registerUser.getsId()));
+		socialDao.collectAdd(new Social(Login.getId(),"모아",registerUser.getId()));
 		//boolean isCollect = true;
 	%>
 
@@ -27,7 +27,6 @@
 <script type="text/javascript">
 	<%-- var isCollectOb = <%=isCollect%> --%>
 	var isCollectOb = confirm("[안내메시지]모아보기 회원등록이 완료되었습니다.\n모아보기 조회화면으로 이동하시겠습니까?")
-	
 	if(isCollectOb){
 		location.href="collectView.jsp"
 	}else{

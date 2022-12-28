@@ -127,24 +127,24 @@ input[name="next"]:active{
 	<jsp:include page=".\frame\frame.jsp"></jsp:include>
 	<box id="cutoutViewbox">
 		<%	
-			User loginUser = (User)session.getAttribute("loginUserInfo");
+			Olddealuser Login = (Olddealuser)session.getAttribute("Login");
 			// User registerUser = (User)session.getAttribute("userCutCollect"); 차단해지시 삭제 해야하므로 쓸수동..
 			socialdao socialDao = new socialdao();
-			//List<User> cutUserList= socialDao.cutoutView(new Social(loginUser.getsId(),"차단"));
+			//List<User> cutUserList= socialDao.cutoutView(new Social(Login.getsId(),"차단"));
 			int i = 1;
-			boolean hasSess = loginUser!=null; 
+			boolean hasSess = Login!=null; 
 			boolean loginalert=false;
 			if(hasSess){
 		%>
-		<h2><%=loginUser.getsUsername() %>님이 차단한 사용자 정보</h2>
+		<h2><%=Login.getUsername() %>님이 차단한 사용자 정보</h2>
 		<hr>
 		<table id="cutoutTab">
 			<tr><th width="15%">checkBox</th><th width="15%">No.</th><th width="20%">ID</th><th width="50%">지역</th></tr>
-			<%for(User cutoutuserinfo:socialDao.cutoutView(new Social(loginUser.getsId(),"차단"))){ %>
+			<%for(Olddealuser cutoutuserinfo:socialDao.cutoutView(new Social(Login.getId(),"차단"))){ %>
 			<%//for(int idx=1;idx<cutUserList.size();idx++){ %>
 			<tr><td width="15%"><Input type="checkbox"/></td>
-				<td width="15%"><%=i++ %></td><td width="20%"><%=cutoutuserinfo.getsId() %></td>
-				<td width="50%"><%=cutoutuserinfo.getsAddress() %></td></tr>
+				<td width="15%"><%=i++ %></td><td width="20%"><%=cutoutuserinfo.getId() %></td>
+				<td width="50%"><%=cutoutuserinfo.getAddress() %></td></tr>
 			<%} %>
 		</table>
 		<input type="button" name="cutoutCancel" value="차단해제"/>

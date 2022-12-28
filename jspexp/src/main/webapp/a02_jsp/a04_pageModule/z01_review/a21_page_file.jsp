@@ -22,27 +22,26 @@
 
 </head>
 <body>
+<h2>메인화면</h2>
 <%-- 
-# jsp에서 화면 분할 방식
-1. 다른 객체를 포함하는 방식
-	jsp 액션 태그 사용
-2. 파일은 2개이지만 하나의 객체로 다시 만들어 처리하는 방식
-	page 지시자 사용
+a22_sub.jsp
+/ 공통화면과 공통 변수 선언
+String name="홍길동";
+int age=25;
+String loc="서울강남";
+%>
+<h2>공통 화면내용입니다. ^^</h2>
 --%>
-<h2>메인 페이지</h2>
-<jsp:include page="a11_sub01.jsp">
-	<jsp:param value="사과" name="name" />
-	<jsp:param value="3000" name="price" />
-	<jsp:param value="2" name="cnt" />
-</jsp:include>
+<%@ include file="a22_sub.jsp" %>
 <%--
-#a11_sub01.jsp
-<h2>포함된 페이지</h2>
-물건명:${param.name}
-가격:${param.price}
-갯수:${param.cnt}
+1. 활용 예제
+	1) 공통적인 jsp(java)단 처리할 변수와 함께 처리되는 js, css가 
+		있을 때, 이러한 형태로 처리해주어 include file로 선언하는 것을 효율적
+		ex) 세션처리, 권한처리, 유효성처리
  --%>
-
+<h2>이름:<%=name %></h2>
+<h2>나이:<%=age %></h2>
+<h2>사는곳:<%=loc %></h2>
 </body>
 <script type="text/javascript">
 /*

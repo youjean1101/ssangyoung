@@ -9,7 +9,6 @@ import java.util.List;
 
 import jspexp.a13_database.DB;
 import z02_teamproject4.vo.Olderproduct;
-import z02_teamproject4.vo.User;
 
 public class productImgdao {
 	private Connection con;

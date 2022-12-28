@@ -44,9 +44,9 @@ while(files.hasMoreElements()){
 	<h2>유저 업로드파일명:<%=multi.getOriginalFileName(ele) %></h2>
 	<h2>파일 타입:<%=multi.getContentType(ele) %></h2>
 	<h2>파일 길이:<%=multi.getFile(ele).length() %></h2>
-	<img src="/a02_jsp/z02_upload/<%=multi.getFilesystemName(ele) %>"/>
-
-<%} %>
+	<%-- <img src="./a02_jsp/z02_upload/<%=multi.getFilesystemName(ele) %>"/> --%>
+	<%-- <img src="./a02_jsp/z02_upload/"<%=URLDecoder.decode(multi.getFilesystemName(ele),"utf-8")/> --%>
+<% } %>
 
 </body>
 <script type="text/javascript">

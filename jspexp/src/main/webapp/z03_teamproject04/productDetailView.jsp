@@ -147,8 +147,10 @@ input[name='complete']{
 	<jsp:include page=".\frame\frame.jsp"></jsp:include>
 	<%
 		olderproductdao proDao = new olderproductdao();
+		cartlistdao cartlistDao = new cartlistdao();
+		int cartCnt=0;
 		userdao userDao = new userdao();
-		for(Olderproduct product:proDao.productInfo(new Olderproduct(0))){ 
+		for(Olderproduct product:proDao.productInfo(new Olderproduct(1))){ 
 			for(Olddealuser user:userDao.productWriterInfo(product.getWriterid())){ //로그인유저 아님 (판매자정보)
 				Olddealuser registerUser = new Olddealuser(user.getId(),user.getPassword(),user.getDiv(),user.getUsername(),
 											user.getNickname(),user.getRrn(),user.getPhonenumber(),user.getZipcode(),
@@ -165,19 +167,20 @@ input[name='complete']{
 				String sharewhether, String priceoffer, String information, String registdate, String dealstat,
 				String faddressval, String saddressval, String caddressval, String daddressval, String writerid)
 				*/
-				Olderproduct basketProductInfo = 
+				cartCnt = cartlistDao.cartProductCnt(product.getProductno());
+				Olderproduct cartProductInfo = 
 				new Olderproduct(product.getProductno(),product.getProductname(),product.getKind(),product.getDealmethod(),
 								product.getPrice(),product.getSharewhether(),product.getPriceoffer(),product.getInformation(),
 								product.getRegistdate(),product.getDealstat(),product.getFaddressval(),product.getSaddressval(),
 								product.getCaddressval(),product.getDaddressval(),product.getWriterid());
-				session.setAttribute("basket",basketProductInfo);
+				session.setAttribute("cartlist",cartProductInfo);
 				
 	%>
 	<box id="productbox">
 	<h2 id="previous"><</h2>
 	<h2 id="next">></h2>
 		<box id="imgbox">
-			<img id="proimg" src=".\img\productPhoto\babyshose.png"/>
+			<img id="proimg" src=".\img\productPhoto\<%=product.getProductname() %>.png"/>
 			<div id="order">● ○ ○ ○</div>
 		</box>
 		<box id="idbox">
@@ -199,7 +202,7 @@ input[name='complete']{
 				<div class="font"><%=product.getKind() %></div>
 				<div id="price">[<%=product.getPrice() %>원]</div>
 				<div class="content"><%=product.getInformation() %></div>
-				<div id="likecnt" class="font">관심5(찜 수 기능메서드)</div>
+				<div id="likecnt" class="font">관심 <%=cartCnt %></div>
 			<hr width="100%">
 				<input name="like" type="button" value="♡" onclick="basket()"/>
 				<input name="reservation" type="button" value="약속잡기" onclick="reservation()"/><br>
@@ -252,7 +255,7 @@ userMgrSelOb.onclick=function(){
 
 //-------------------------------찜하기 기능메서드-----------------------------------------
 function basket(){
-	location.href="basketInsert.jsp"
+	location.href="cartInsert.jsp"
 }
 //-------------------------------예약하기 기능메서드---------------------------------------
 var selpositionOb = document.querySelector("#selposition")

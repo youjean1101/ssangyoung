@@ -59,7 +59,7 @@ CREATE TABLE olderproduct(
 	saddressval varchar(20), -- 거래위치(중분류)
 	caddressval varchar(20), -- 거래위치(소분류)
 	daddressval varchar(300), -- 상세 거래위치
-	writerid varchar2(20) CONSTRAINT olddealuser_id_fk REFERENCES olddealuser(id)-- 판매자 아이디
+	writerid varchar2(20) CONSTRAINT olderproduct_writerid_fk REFERENCES olddealuser(id)-- 판매자 아이디
 );
 DROP TABLE olderproduct;
 
@@ -69,7 +69,7 @@ CREATE SEQUENCE productno_seq
 		MINVALUE 0
 		MAXVALUE 100000;
 DROP SEQUENCE productno_seq;
-DELETE FROM olderproduct WHERE productno=22;
+DELETE FROM olderproduct WHERE productno=0;
 
 SELECT* FROM olderproduct;
 SELECT * FROM olderproduct WHERE productno=0;
@@ -152,13 +152,20 @@ SELECT*FROM notice;
 INSERT INTO notice values();
 -------------------------------찜 sql--------------------------------------------
 CREATE TABLE cartlist(
-	productno varchar2(20) CONSTRAINT olderproduct_productno_fk REFERENCES olderproduct(productno), --상품번호
-	id varchar2(20) CONSTRAINT olddealuser_id_fk REFERENCES olddealuser(id)--아이디
+	productno number CONSTRAINT olderproduct_productno_fk REFERENCES olderproduct(productno), --상품번호
+	id varchar2(20) CONSTRAINT cartlist_id_fk REFERENCES olddealuser(id)--아이디
 );
 DROP TABLE cartlist;
 
 SELECT*FROM cartlist;
-INSERT INTO cartlist values();
+INSERT INTO cartlist values(1,'yujin');
+INSERT INTO cartlist values(2,'yujin');
+DELETE FROM cartlist WHERE productno=1; 
+
+SELECT count(productno) FROM cartlist WHERE productno=1;
+SELECT * FROM olderproduct p,cartlist c
+WHERE c.productno = p.productno
+and id='yujin'; 
 -------------------------------알람 sql--------------------------------------------
 CREATE TABLE alert(
 	alertno varchar2(20) PRIMARY key, -- 알람번호
@@ -167,7 +174,7 @@ CREATE TABLE alert(
 	alerttime DATE,	--알람일시
 	moveurl varchar2(300), -- url
 	qno varchar2(20) CONSTRAINT qna_callno_fk REFERENCES qna(callno),	-- 문의번호
-	productno varchar2(20) CONSTRAINT olderproduct_productno_fk REFERENCES olderproduct(productno)	-- 상품번호
+	productno varchar2(20) CONSTRAINT alert_productno_fk REFERENCES olderproduct(productno)	-- 상품번호
 );
 DROP TABLE alert;
 
@@ -181,9 +188,9 @@ DROP SEQUENCE alertno_seq;
 SELECT*FROM alert;
 -------------------------------소셜 sql--------------------------------------------
 CREATE TABLE social(
-	id varchar2(20) CONSTRAINT appointed_id_fk REFERENCES olddealuser(id), --아이디(본인)
-	typediv char(6) CONSTRAINT appointed_typediv_ck check(typediv IN('모아','차단')),	-- 모아/차단 구분
-	otherid varchar2(20) CONSTRAINT appointed_otherid_fk REFERENCES olddealuser(id)	--아이디(타 회원)
+	id varchar2(20) CONSTRAINT social_id_fk REFERENCES olddealuser(id), --아이디(본인)
+	typediv char(6) CONSTRAINT social_typediv_ck check(typediv IN('모아','차단')),	-- 모아/차단 구분
+	otherid varchar2(20) CONSTRAINT social_otherid_fk REFERENCES olddealuser(id)	--아이디(타 회원)
 );
 DROP TABLE social;
 

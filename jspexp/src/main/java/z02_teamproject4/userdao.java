@@ -9,7 +9,6 @@ import java.util.List;
 
 import jspexp.a13_database.DB;
 import z02_teamproject4.vo.Olddealuser;
-import z02_teamproject4.vo.User;
 
 //z02_teamproject4.userdao
 public class userdao {

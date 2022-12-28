@@ -81,6 +81,7 @@
 		font-size:15pt;
 		position:absolute;
 		bottom:-2%;
+		left:60%;
 	}
 	#infoupdatebox .button:hover{
 		background:white;
@@ -203,7 +204,7 @@
 			<tr><td> </td><td></td></tr>
 		</table>
 		<input class="button" id="doupdate" type="button" value="수정" onclick="userUpdate()">
-		<input class="button" id="cancel" type="button" value="취소" onclick="location.href='userInfoUpdate.jsp'">
+		<input class="button" id="cancel" type="button" value="취소" onclick="location.href='userView.jsp'">
 		</box>
 	</form>
 		<%

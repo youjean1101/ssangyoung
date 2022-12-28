@@ -126,12 +126,13 @@ input[name="next"]:active{
 
 <script type="text/javascript">
 function collectremove(){
-	/* var collectRemoveUserSelArr = document.querySelectorAll("[name=removeUserSel]")
-	for(var idx=0;idx<collectRemoveUserSelArr.length;idx++){
-		if(!collectRemoveUserSelArr[idx].checked){
-			alert("[안내메시지]모아보기해제할 회원을 선택해주세요.")
-		}
-	} */
+	var collectRemoveUserSelArr = document.querySelectorAll("[name=removeUserSel]")
+	//alert(collectRemoveUserSelArr[0].checked);
+	//for(int i=0;i<collectRemoveUserSelArr.length;i++) {
+	if(!collectRemoveUserSelArr[0].checked){
+		alert("[안내메시지]모아보기 해제할 회원을 선택해주세요.")
+	} 
+	//}
 	document.querySelector("#collectRemoveform").submit();
 }
 </script>
@@ -140,35 +141,44 @@ function collectremove(){
 	<jsp:include page=".\frame\frame.jsp"></jsp:include>
 	<box id="collectViewbox">
 		<%	
-			User loginUser = (User)session.getAttribute("loginUserInfo");
+			Olddealuser Login = (Olddealuser)session.getAttribute("Login");
 			//User registerUser = (User)session.getAttribute("userCutCollect"); 
 			socialdao socialDao = new socialdao();
 			int i = 1;
-			boolean hasSess = loginUser!=null; 
+			boolean hasSess = Login!=null; 
 			boolean loginalert=false;
 			if(hasSess){
 		%>
-		<h2><%=loginUser.getsUsername() %>님이 모아보기한 사용자 정보</h2>
+		<h2><%=Login.getUsername() %>님이 모아보기한 사용자 정보</h2>
 		<hr>
 		<form id="collectRemoveform">
 		<table id="collectTab">
 			<tr><th width="15%">checkBox</th><th width="15%">No.</th><th width="20%">ID</th><th width="50%">지역</th></tr>
-			<%for(User collectuserinfo:socialDao.cutoutView(new Social(loginUser.getsId(),"모아"))){ %>
-			<tr><td width="15%"><Input type="checkbox" name="removeUserSel" value='<%=collectuserinfo.getsId() %>'/></td>
-				<td width="15%"><%=i++ %></td><td width="20%"><%=collectuserinfo.getsId() %></td>
-				<td width="50%"><%=collectuserinfo.getsAddress()%></td></tr>
+			<%for(Olddealuser collectuserinfo:socialDao.cutoutView(new Social(Login.getId(),"모아"))){ %>
+			<tr><td width="15%"><input type="checkbox" name="removeUserSel" value='<%=collectuserinfo.getId() %>'/></td>
+				<td width="15%"><%=i++ %></td><td width="20%"><%=collectuserinfo.getId() %></td>
+				<td width="50%"><%=collectuserinfo.getAddress()%></td></tr>
 				
-			<%String []colRomoveUserSels= request.getParameterValues("[name=removeUserSel]");
-				if(colRomoveUserSels!=null){
-					for(String colRomoveUserSel:colRomoveUserSels){
-						socialDao.collcutremove(new Social(loginUser.getsId(),"모아",colRomoveUserSel));
-					}
-				}
+			<%String colRomoveUserSels= request.getParameter("[name=removeUserSel]");
+			if(colRomoveUserSels == null) colRomoveUserSels="";
+			if(colRomoveUserSels!=""){
+				System.out.println(colRomoveUserSels);
+			}
 			
+			
+			
+			/* 	 if(colRomoveUserSels[0]!=null){	
+					for(int idx=0;idx<colRomoveUserSels.length;idx++){
+						for(String colRomoveUserSel:colRomoveUserSels){
+							log(colRomoveUserSels[0]); 
+							socialDao.collcutremove(new Social(Login.getId(),"모아",colRomoveUserSels[idx]));
+						}
+					}
+				}  */
 			} 
 			
 			//if(colRomoveUserSel==null) colRomoveUserSel="";
-			//socialDao.collcutremove(new Social(loginUser.getsId(),"모아",colRomoveUserSel));
+			//socialDao.collcutremove(new Social(Login.getId(),"모아",colRomoveUserSel));
 			%>
 		</table>
 		<input type="button" name="collectCancel" value="모아보기해제" onclick="collectremove()"/>
