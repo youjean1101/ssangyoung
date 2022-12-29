@@ -12,3 +12,5 @@
 import cx_Oracle
 '''
 import numpy as np
+
+import cx_Oracle

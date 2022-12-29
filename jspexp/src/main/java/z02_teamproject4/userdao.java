@@ -56,7 +56,7 @@ public class userdao {
 			while(rs.next()) {
 				userlist.add(new Olddealuser(rs.getString("id"),
 											  rs.getString("password"),
-											  rs.getString("div"),
+											  rs.getString("userdiv"),
 											  rs.getString("username"),
 											  rs.getString("nickname"),
 											  rs.getString("rrn"),
@@ -91,7 +91,7 @@ public class userdao {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, ins.getId());
 			pstmt.setString(2, ins.getPassword());
-			pstmt.setString(3, ins.getDiv());
+			pstmt.setString(3, ins.getUserdiv());
 			pstmt.setString(4, ins.getUsername());
 			pstmt.setString(5, ins.getNickname());
 			pstmt.setString(6, ins.getRrn());
@@ -159,7 +159,7 @@ public class userdao {
 			while(rs.next()) {
 				userlist.add(new Olddealuser(rs.getString("id"),
 											  rs.getString("password"),
-											  rs.getString("div"),
+											  rs.getString("userdiv"),
 											  rs.getString("username"),
 											  rs.getString("nickname"),
 											  rs.getString("rrn"),

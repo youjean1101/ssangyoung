@@ -3,7 +3,7 @@ package z02_teamproject4.vo;
 public class Olddealuser {
 	private String id;
 	private String password;
-	private String div;
+	private String userdiv;
 	private String username;
 	private String nickname;
 	private String rrn;
@@ -21,13 +21,13 @@ public class Olddealuser {
 		// TODO Auto-generated constructor stub
 	}
 	//전체필드
-	public Olddealuser(String id, String password, String div, String username, String nickname, String rrn,
+	public Olddealuser(String id, String password, String userdiv, String username, String nickname, String rrn,
 			String phonenumber, String zipcode, String address, String detailaddress, String email, int point,
 			int salecount, int buycount, int declarationcount) {
 		super();
 		this.id = id;
 		this.password = password;
-		this.div = div;
+		this.userdiv = userdiv;
 		this.username = username;
 		this.nickname = nickname;
 		this.rrn = rrn;
@@ -42,12 +42,12 @@ public class Olddealuser {
 		this.declarationcount = declarationcount;
 	}
 	//회원가입필드
-	public Olddealuser(String id, String password, String div, String username, String nickname, String rrn,
+	public Olddealuser(String id, String password, String userdiv, String username, String nickname, String rrn,
 			String phonenumber, String zipcode, String address, String detailaddress, String email) {
 		super();
 		this.id = id;
 		this.password = password;
-		this.div = div;
+		this.userdiv = userdiv;
 		this.username = username;
 		this.nickname = nickname;
 		this.rrn = rrn;
@@ -97,11 +97,11 @@ public class Olddealuser {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getDiv() {
-		return div;
+	public String getUserdiv() {
+		return userdiv;
 	}
-	public void setDiv(String div) {
-		this.div = div;
+	public void setUserDiv(String userdiv) {
+		this.userdiv = userdiv;
 	}
 	public String getUsername() {
 		return username;
