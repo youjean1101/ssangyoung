@@ -1,5 +1,5 @@
 package z02_teamproject4.vo;
-
+//z02_teamproject4.vo.Social
 public class Social {
 	private String id;
 	private String typediv;
@@ -22,7 +22,7 @@ public class Social {
 		this.id = id;
 		this.typediv = typediv;
 	}
-
+	
 	public String getId() {
 		return id;
 	}

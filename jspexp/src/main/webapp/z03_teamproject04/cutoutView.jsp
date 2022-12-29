@@ -122,6 +122,18 @@ input[name="next"]:active{
 	box-shadow : none;
 }
 </style>
+<script>
+	/* function cutoutremove(){
+		var collectRemoveUserSelArr = document.querySelectorAll("[name=removeUserSel]")
+		//alert(collectRemoveUserSelArr[0].checked);
+		//for(int i=0;i<collectRemoveUserSelArr.length();i++) {
+			if(!collectRemoveUserSelArr[0].checked){
+				alert("[안내메시지]모아보기 해제할 회원을 선택해주세요.")
+			} 
+		//}
+		document.querySelector("#cutoutRemoveform").submit();
+	} */
+</script>
 </head>
 <body>
 	<jsp:include page=".\frame\frame.jsp"></jsp:include>
@@ -138,18 +150,27 @@ input[name="next"]:active{
 		%>
 		<h2><%=Login.getUsername() %>님이 차단한 사용자 정보</h2>
 		<hr>
+		<form id="cutoutRemoveform" action="cutoutRemove.jsp">
 		<table id="cutoutTab">
 			<tr><th width="15%">checkBox</th><th width="15%">No.</th><th width="20%">ID</th><th width="50%">지역</th></tr>
 			<%for(Olddealuser cutoutuserinfo:socialDao.cutoutView(new Social(Login.getId(),"차단"))){ %>
 			<%//for(int idx=1;idx<cutUserList.size();idx++){ %>
-			<tr><td width="15%"><Input type="checkbox"/></td>
+			<tr><td width="15%"><Input type="checkbox" name="removeUserSel" value='<%=cutoutuserinfo.getId() %>'/></td>
 				<td width="15%"><%=i++ %></td><td width="20%"><%=cutoutuserinfo.getId() %></td>
 				<td width="50%"><%=cutoutuserinfo.getAddress() %></td></tr>
-			<%} %>
+			<%
+				String colRomoveUserSel= request.getParameter("[name=removeUserSel]");
+				if(colRomoveUserSel == null) colRomoveUserSel="";
+				if(colRomoveUserSel!=""){
+					socialDao.collcutremove(new Social(Login.getId(),"차단",colRomoveUserSel));
+				}
+			
+			} %>
 		</table>
-		<input type="button" name="cutoutCancel" value="차단해제"/>
+		<input type="submit" name="cutoutCancel" value="차단해제"/>
 		<input type="button" class="nextorprev" name="previous" value="◀"/>
 		<input type="button" class="nextorprev" name="next" value="▶"/>
+		</form>
 		<%}else{
 			loginalert=true;
 		}
@@ -158,6 +179,20 @@ input[name="next"]:active{
 
 </body>
 <script type="text/javascript">
+//------------------------------미체크 시, 유효성체크 기능메서드-------------------------------------------- 
+function collectremove(){
+	var cutoutRemoveUserSelArr = document.querySelectorAll("[name=removeUserSel]")
+	var is_checked = false;
+	cutoutRemoveUserSelArr.forEach(function(userck){
+		if(userck.checked==true){
+			is_checked=true
+		}
+	})
+	if(!is_checked){
+		alert("[안내메시지]모아보기 해제할 회원을 선택해주세요.")
+	}
+	document.querySelector("#collectRemoveform").submit();
+} 
 //--------------------------미로그인으로 회원수정화면접속 시, 기능메서드-------------------------------------
 var alertis = <%=loginalert%>
 if(alertis){

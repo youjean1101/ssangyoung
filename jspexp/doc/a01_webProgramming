@@ -125,6 +125,33 @@
 		서버에 특정페이지에 전송 ==> jsp/php/asp(어플리케이션 프로그램)에서
 		요청값을 받아서 해석(로직/DB접속)해서 화면을 다시 구성 ==> client에 전달.
 	cf) Ajax는 구성한 화면에서 화면이 변경하지 않고, js명령어로 바로 서버를 접속해서 처리할 결과를 js받아 처리하는 것을 말한다.
+3. 요청값..
+	1) 클라이언트 서버로 요청 : page(어떤 자원 - url), 데이터
+		a href = "페이지?key=요청val&key=val&key=val"
+		location.href = "페이지"
+		location.href = "페이지?key=val&key=val"
+		form action="이동될 페이지"
+			name value 이동할 값
+	2) 데이터(key=value) = query string
+		- url에 주소로 페이지와 함께 요청처리도 가능
+		- form action = "이동할 페이지"
+			<input name="요청 key" value="요청val"
+			<select : 선택된 값이 value
+			<textarea : 다중 행의 입력된 값..
+			
+		submit 버튼을 클릭시,
+		이동할페이지?요청 key=요청val&key=val&key=val
+	
+4. session 이해
+	pageContext, [request, session], application
+		request.setAttribute(key, value)
+		request.getAttribute(key)
+		.removeAttribute(key)
+		.invalidate()
+	<C:set var="" value="" scope="page|request|session|application"/>
+	<jsp:useBean scope="page|request|session|application"/>	
+5. DB연동 처리 
+
 # 에러
 1. jsp는 ==> java ==> class ==> 클라이언트 결과물 전달 
 	이 과정을 거치기 때문에 저장해서 서버에 올릴 때, 정상적으로 전달이 안되는 경우가 많다.

@@ -19,11 +19,15 @@
 		cartlistdao cartlistDao = new cartlistdao();
 		Olddealuser Login = (Olddealuser)session.getAttribute("Login");
 		boolean hasSess = Login!=null; 
-		boolean cart = false;
+		boolean isCartSuss = false;
+		boolean iscart = false;
 		if(hasSess){
 			Olderproduct cartproInfo= (Olderproduct)session.getAttribute("cartlist");
-			cartlistDao.cartlistAdd(new Cartlist(cartproInfo.getProductno(),Login.getId()));
-			cart = true;
+			iscart = cartlistDao.isCartlist(new Cartlist(cartproInfo.getProductno(),Login.getId()));
+			if(!iscart){
+				cartlistDao.cartlistAdd(new Cartlist(cartproInfo.getProductno(),Login.getId()));
+				isCartSuss = true;
+			}
 		}
 	%>
 	
@@ -37,9 +41,17 @@ if(!hasSess){
 	alert("[안내메시지]로그인을 해주세요.")
 	location.href="login.jsp"
 }
+
+//-----------------------------------찜 중복 확인 기능메서드---------------------------------------
+var isCartOb = <%=iscart%>
+if(isCartOb){
+	alert("[안내메시지]이미 찜 항목에 등록되어있는 상품입니다.")
+	location.href="productDetailView.jsp"
+}
+
 //---------------------------------------찜등록 완료 후 조회화면 기능 메서드--------------------------------------
-var cart = <%=cart%>
-if(cart){
+var isCartSussOb = <%=isCartSuss%>
+if(isCartSussOb){
 	var isCollectOb = confirm("[안내메시지]찜등록이 완료되었습니다.\n찜 조회화면으로 이동하시겠습니까?")
 	
 	if(isCollectOb){

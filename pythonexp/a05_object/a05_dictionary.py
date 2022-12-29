@@ -71,4 +71,13 @@ for deptno in dept:
     print(deptno,dept[deptno])
 print("#전체삭제")
 del(dept);
+'''
+# set
+1. 중복을 제거하는 key값만 저장하는 데이터 구조체
+2. 순서확보를 하지 못한다.
+'''
+set01 = {'홍길동','김길동','마길동','김길동'}
+set02= {3000,1000,2000,1000}
+print(type(set01),set01)
+print(type(set02),set02)
 

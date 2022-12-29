@@ -13,7 +13,7 @@ public class A02_wish {
 		static Scanner sc = new Scanner(System.in);
 		// 구분자(&SEP&)
 		static String sSEP = "&SEP&";
-		static String path = "C:\\a01_javaexp\\workspace\\javaexp\\src\\javaexp\\z01_teamproject1\\mouse,keyboard.txt";
+		static String path = "C:\\a01_javaexp\\workspace\\javaexp\\src\\javaexp\\z01_teamproject\\mouse,keyboard.txt";
 		static File file = new File(path);
 		static ArrayList<String> listOfLines = new ArrayList<String>();
 		static String []arrDivision = new String[] {};

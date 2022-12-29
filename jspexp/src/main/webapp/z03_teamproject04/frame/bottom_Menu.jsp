@@ -69,7 +69,7 @@
 		<table id="footerright">
 			<tr><td colspan="2">중고월드 앱 다운로드</td></tr>
 			<tr><td><a href="https://apps.apple.com/kr/app/%EB%8B%B9%EA%B7%BC%EB%A7%88%EC%BC%93/id1018769995"><input id="appsto" type="image" src=".\img\appstore.png" alt=""></a></td>
-			<td><a href="https://play.google.com/store/apps/details?id=com.towneers.www"><input id="googlesto" type="image" src=".\img\googleplay.png" alt=""></a></td></tr>
+			<td><a href="https://play.google.com/store/apps/details?id=com.towneers.www"><input id="googlesto" type="image" src="/z03_teamproject04/img/googleplay.png" alt=""></a></td></tr>
 		</table>
 	</box>
 	

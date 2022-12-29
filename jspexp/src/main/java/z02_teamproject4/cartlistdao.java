@@ -11,6 +11,7 @@ import jspexp.a13_database.DB;
 import z02_teamproject4.vo.Cartlist;
 import z02_teamproject4.vo.Olddealuser;
 import z02_teamproject4.vo.Olderproduct;
+import z02_teamproject4.vo.Social;
 
 public class cartlistdao {
 	private Connection con;
@@ -34,6 +35,30 @@ public class cartlistdao {
 		}finally {
 			DB.close(rs, pstmt, con);
 		}
+	}
+//---------------------------------------찜 중복추가방지기능메서드-------------------------------------
+	public boolean isCartlist(Cartlist sel){
+		boolean isCarthave = false;
+		String sql = "SELECT * FROM cartlist WHERE productno=? AND id=?";
+		
+		try {
+			con = DB.con();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, sel.getProductno());
+			pstmt.setString(2, sel.getId());
+			rs = pstmt.executeQuery();
+			isCarthave=rs.next();
+			System.out.println("찜 유무:"+isCarthave);
+			con.commit();
+			
+		} catch (SQLException e) {
+			System.out.println("DB에러:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("일반 에러:"+e.getMessage());
+		}finally {
+			DB.close(rs, pstmt, con);
+		}
+		return isCarthave;
 	}
 //----------------------------------------찜 조회--------------------------------------------------------
 	public List<Olderproduct> cartProductInfo(String id){

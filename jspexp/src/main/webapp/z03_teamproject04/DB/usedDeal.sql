@@ -2,7 +2,7 @@
 CREATE TABLE olddealuser(
 	id varchar2(20) PRIMARY key, -- 아이디
 	password varchar2(20) NOT null,	--패스워드
-	div varchar2(20) CONSTRAINT olddealuser_auth_ck check(div IN('관리자','회원')),	-- 권한구분
+	userdiv varchar2(20) CONSTRAINT olddealuser_auth_ck check(div IN('관리자','회원')),	-- 권한구분
 	username varchar2(20),	-- 이름
 	nickname varchar2(20) CONSTRAINT olddealuser_nickname_uq UNIQUE,--닉네임
 	rrn varchar2(14) not NULL CONSTRAINT olddealuser_rrn_uq UNIQUE,	-- 주민번호
@@ -77,6 +77,7 @@ INSERT INTO olderproduct values(productno_seq.nextval,'아기신발','신발','�
 '아기가 금방 자라서 얼마신지 못 했네요.. 깨끗합니다.','20221222','판매중','서울특별시','마포구','월드컵북로','21 풍성빌딩2층','test');
 INSERT INTO olderproduct values(productno_seq.nextval,'애플마우스','마우스','현금결제',50000,'X','X',
 '더 좋은 마우스가 생겨서 미개봉마우스 올립니다.','20221222','판매중','서울특별시','마포구','월드컵북로','21 풍성빌딩2층','test');
+UPDATE olderproduct SET writerid='test2' WHERE productno=2;
 -------------------------------상품이미지 sql--------------------------------------------
 CREATE TABLE productimg(
 	imageno varchar2(20) PRIMARY KEY,	-- 이미지구분번호
@@ -158,9 +159,10 @@ CREATE TABLE cartlist(
 DROP TABLE cartlist;
 
 SELECT*FROM cartlist;
+SELECT * FROM cartlist WHERE productno='1' AND id='yujin'; 
 INSERT INTO cartlist values(1,'yujin');
 INSERT INTO cartlist values(2,'yujin');
-DELETE FROM cartlist WHERE productno=1; 
+DELETE FROM cartlist WHERE productno=2; 
 
 SELECT count(productno) FROM cartlist WHERE productno=1;
 SELECT * FROM olderproduct p,cartlist c
@@ -200,14 +202,16 @@ WHERE s.otherid = u.id
 AND s.id='yujin' 
 AND s.typediv='모아';
 SELECT * FROM social;
+SELECT * FROM social WHERE id='yujin' AND typediv='모아' AND otherid='test';
 
 SELECT*FROM social WHERE typediv='모아' AND id='yujin';
 INSERT INTO social values('yujin','모아','test');
 INSERT INTO social values('yujin','모아','test2');
+INSERT INTO social values('test','모아','test2');
 INSERT INTO social values('yujin','차단','test2');
 INSERT INTO social values('yujin','차단','test');
 
 DELETE FROM social 
 WHERE id='yujin' 
-AND typediv='차단'
-AND otherid='test2';
+AND typediv='모아'
+AND otherid='test';

@@ -145,6 +145,12 @@
 		boolean hasSess = Login!=null; 
 		boolean loginalert=false;
 		int cartCnt=0;
+		/* int productno[] = null;
+		String productname[] = null;
+		String faddressval[] = null;
+		String saddressval[] = null;
+		String caddressval[]= null;
+		int price[] = null; */
 		if(hasSess){
 	%>
 	<form>
@@ -154,22 +160,37 @@
 				<tr>
 					<%for(Olderproduct productInfo:cartlistDao.cartProductInfo(Login.getId())){ 
 						cartCnt = cartlistDao.cartProductCnt(productInfo.getProductno());
+						/* for(int i=0;i<productInfo.length;i++){
+							productno[i] = productInfo.getProductno();
+							productname[i] = productInfo.getProductname();
+							faddressval[i] = productInfo.getFaddressval();
+							saddressval[i] = productInfo.getSaddressval();
+							caddressval[i]= productInfo.getCaddressval();
+							price[i] = productInfo.getPrice();
+						}
+							System.out.println(productno);
+							System.out.println(productname);
+							System.out.println(faddressval);
+							System.out.println(saddressval);
+							System.out.println(caddressval);
+							System.out.println(price);
+						} */
+						
 					%>
-					<td>
-						<table id="cartproTab">
+					<!-- <tbody></tbody> -->
+						<td>
+							<table id="cartproTab">
 							<tr><th><input type="checkbox" name="cartremove" value="<%=productInfo.getProductno()%>"/></th>
-								<td><img src=".\img\productPhoto\<%=productInfo.getProductname()%>.png"/></td></tr><!-- 이미지테이블 생성 시, 기능구현 /찜수 기능구현 -->
-							<tr><th></th><td class="title"><%=productInfo.getProductname() %></td></tr>
-							<tr><th></th><td class="local"><%=productInfo.getFaddressval()%> <%=productInfo.getSaddressval()%> <%=productInfo.getCaddressval()%></td></tr>
-							<tr><th></th><td class="cost"><%=productInfo.getPrice()%>원&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-																<span id="like">♡ <%=cartCnt %></span></td></tr>
-						</table>
-					</td> <!-- 반복문으로 나타내야함 4X2테이블로 -->
-					<%} %>
+									<td><img src=".\img\productPhoto\<%=productInfo.getProductname()%>.png"/></td></tr><!-- 이미지테이블 생성 시, 기능구현 /찜수 기능구현 -->
+								<tr><th></th><td class="title"><%=productInfo.getProductname() %></td></tr>
+								<tr><th></th><td class="local"><%=productInfo.getFaddressval()%> <%=productInfo.getSaddressval()%> <%=productInfo.getCaddressval()%></td></tr>
+								<tr><th></th><td class="cost"><%=productInfo.getPrice()%>원&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+								<span id="like">♡ <%=cartCnt %></span></td></tr>
+							</table>
+						</td> <!-- 반복문으로 나타내야함 4X2테이블로 -->
+				<%} %>
 				</tr>
-				<tr>
-					<td></td><td></td><td></td><td></td>
-				</tr>
+				<tr><td></td><td></td><td></td><td></td></tr>
 			</table>
 			<input type="button" name="cartCancel" value="찜 삭제하기" onclick="#"/>
 			<input type="button" class="nextorprev" name="previous" value="◀"/>
@@ -181,11 +202,42 @@
 	} %>
 </body>
 <script type="text/javascript">
-//--------------------------미로그인으로 회원수정화면접속 시, 기능메서드-------------------------------------
+
+//--------------------------미로그인으로 접속 시, 기능메서드-------------------------------------
 	var alertis = <%=loginalert%>
 	if(alertis){
 		alert("[안내메시지]로그인을 해주세요.")
 		location.href="login.jsp";
 	}
+//------------------------조회화면 4행2열 만들기 기능메서드---------------------------------------
+
+<%-- 	var cartlistTabOb = document.querySelector("#cartlistTab tbody");
+	var show = "";
+	var i =1;
+	for(var rowIdx=0;rowIdx<2;rowIdx++){
+		show += "<tr>"
+		for(var colIdx=0;colIdx<4;colIdx++){
+			show+="<td><table id='cartproTab'>"
+			show+="<tr><th><input type='checkbox' name='cartremove' value='<%=productno[i]%>'/></th>"
+			show+="<td><img src='.\img\productPhoto\애플마우스.png'/></td></tr>"
+			//show+= productnameOb
+			//show+=".png'/></td></tr>"
+			show+="<tr><th></th><td class='title'><%=productname[0]%></td></tr>"
+				show+="<tr><th></th><td class='local'><%=faddressval[0] %> <%=saddressval[0]%> <%=caddressval[0]%></td></tr>"
+					show+="<tr><th></th><td class='cost'><%=price[0]%>원&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"
+					show+="<span id='like'>♡ <%=cartCnt[0]%></span></td></tr>"
+			show+="</table></td>"
+		}
+		show += "</tr>"
+	}
+	/* for(var rowIdx=0;rowIdx<=2;rowIdx++){
+		show+="<tr>"
+		for(var colIdx=0;colIdx<=4;colIdx++){
+			show += "<td><table><tr><th>테이블안에테이블<th></tr></table><td>"
+		}
+		show+="</tr>"
+	} */
+	cartlistTabOb.innerHTML = show;
+ --%>
 </script>
 </html>

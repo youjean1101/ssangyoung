@@ -150,7 +150,7 @@ input[name='complete']{
 		cartlistdao cartlistDao = new cartlistdao();
 		int cartCnt=0;
 		userdao userDao = new userdao();
-		for(Olderproduct product:proDao.productInfo(new Olderproduct(1))){ 
+		for(Olderproduct product:proDao.productInfo(new Olderproduct(2))){ 
 			for(Olddealuser user:userDao.productWriterInfo(product.getWriterid())){ //로그인유저 아님 (판매자정보)
 				Olddealuser registerUser = new Olddealuser(user.getId(),user.getPassword(),user.getDiv(),user.getUsername(),
 											user.getNickname(),user.getRrn(),user.getPhonenumber(),user.getZipcode(),

@@ -1,5 +1,5 @@
 package z02_teamproject4;
-
+//z02_teamproject4.socialdao
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +15,8 @@ public class socialdao {
 	private Connection con;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
+//----------------------------모아보기/차단하기 회원조회---------------------------------
+	
 //-----------------------------모아보기/차단하기 추가-----------------------------------
 	public void collectAdd(Social ins){
 		String sql = "INSERT INTO social values(?,?,?)";
@@ -35,6 +37,32 @@ public class socialdao {
 			DB.close(rs, pstmt, con);
 		}
 	}
+//---------모아보기 중복 방지(차단하기에 있을경우 차단하기에있어서 모아보기를 할수 없다고 조건)-----------
+	public boolean isCollectCut(Social sel){
+		boolean isCollecterhave = false;
+		String sql = "SELECT * FROM social WHERE id=? AND typediv=? AND otherid=?";
+		
+		try {
+			con = DB.con();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, sel.getId());
+			pstmt.setString(2, sel.getTypediv());
+			pstmt.setString(3, sel.getOtherid());
+			rs = pstmt.executeQuery();
+			isCollecterhave=rs.next();
+			System.out.println("모아/차단 유무:"+isCollecterhave);
+			con.commit();
+			
+		} catch (SQLException e) {
+			System.out.println("DB에러:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("일반 에러:"+e.getMessage());
+		}finally {
+			DB.close(rs, pstmt, con);
+		}
+		return isCollecterhave;
+	}
+	
 //-----------------------------모아보기/차단하기 삭제하기-----------------------------------
 	public void collcutremove(Social ins){
 		String sql = "DELETE FROM social \r\n"
@@ -47,8 +75,8 @@ public class socialdao {
 			pstmt.setString(1, ins.getId());
 			pstmt.setString(2, ins.getTypediv());
 			pstmt.setString(3, ins.getOtherid());
-			System.out.println(pstmt);
 			rs = pstmt.executeQuery();
+			System.out.println(ins.getOtherid());
 			con.commit();
 			
 		} catch (SQLException e) {
@@ -100,16 +128,17 @@ public class socialdao {
 		socialdao dao = new socialdao();
 		//dao.collectAdd(new Social("test","차단","yujin"));
 		//dao.cutoutView(new Social("yujin","모아"));
-		List<Olddealuser> cutUserList= dao.cutoutView(new Social("yujin","모아"));
-		for(int idx=1;idx<cutUserList.size();idx++) {
-			System.out.println(idx);
-			System.out.println(cutUserList.get(idx));
-		}
+//		List<Olddealuser> cutUserList= dao.cutoutView(new Social("yujin","모아"));
+//		for(int idx=1;idx<cutUserList.size();idx++) {
+//			//System.out.println(idx);
+//			//System.out.println(cutUserList.get(idx));
+//		}
 //		for(User userinfo:dao.cutoutView(new Social("yujin","모아"))) {
 //			System.out.println(userinfo.getsId());
 //			System.out.println(userinfo.getsAddress());
 //			System.out.println(userinfo.getsDetailaddress());
 //		}
+		dao.collcutremove(new Social("yujin","모아","test"));
 	}
 
 }

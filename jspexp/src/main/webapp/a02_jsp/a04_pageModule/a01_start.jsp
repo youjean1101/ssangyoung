@@ -33,9 +33,34 @@
 			각각의 jsp로 <jsp:include page=""/>
 				main.jsp/sub.jsp따로 컴파일되어 독립적인 객체가 모듈화된 내용
 				request로 전달한다.
-			하나의 jsp로 최종적으로<%@ page file=""/>
+			하나의 jsp로 최종적으로<%@ include file=""/>
 				main.jsp/sub.jsp가 결국은 하나의 파일로 객체로 만들어져서 모듈화된 내용
 				하나의 파일로 변수를 상호 공유한다.
+				주로 실무에서 활용되는 코드
+				상단에 session 설정, js코드와 함께 처리하는 내용
+				자바 코드 + 공통화면 + js/css 등 모두 선언하여 사용할 수 있다.
+				
+	2) BOM, DOM의 계층 구조
+		- 계층구조
+			최종적으로 client에 전달된 html코드를 렌더링한 상태에 이해..
+			BOM : Browser Object Model
+				window 창, frame을 지칭
+			DOM : Document Object Model
+				창안에 있는 html태그로 객체화된 요소들
+			상위 ==> 하위 접근
+				 BOM.DOM.속성
+				 ex) frame01.document.querySeleector("h1").innerText
+				 ex) var win = window.open("","","")
+				 	 win.document.querySelector("h1").innerHTML
+			하위 ==> 상위 접근
+				 parent.DOM.속성
+				 현재 화면(frame)을 포함(선언)하고 있는 상위를 지칭
+				 현재 윈도우창을 호출한 화면
+				 ex) parent.document.querySelector("h1").style...
+				 	 parent.call()				
+				 	 상위로 가서, 상위에서 선언된 frame02안에 있는 DOM객체
+				 	 parent.frame02.document.querySelector("h2")				
+		- 접근방식
 	
 1. jsp는 외부페이지를 모듈화하여 포함되어 처리할 수 있다.
 	jsp ==> java라는 개념에 의해, 외부의 다른 컴파일된 파일을 포함시켜서 처리하는 방법과
