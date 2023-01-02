@@ -44,6 +44,13 @@ public class Emp {
 		this.deptno = deptno;
 	}	
 	
+	public Emp(int empno, String ename, double sal) {
+		super();
+		this.empno = empno;
+		this.ename = ename;
+		this.sal = sal;
+	}
+
 	public Emp(int empno, String ename, double sal, int deptno) {
 		super();
 		this.empno = empno;

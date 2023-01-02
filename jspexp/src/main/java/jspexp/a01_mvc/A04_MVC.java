@@ -9,33 +9,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jspexp.vo.Dept;
+import jspexp.vo.Emp;
 
 /**
- * Servlet implementation class A03_MVC
+ * Servlet implementation class A04_MVC
  */
-@WebServlet(name = "mvc02_1.do", urlPatterns = { "/mvc02_1.do" })
-public class A03_MVC extends HttpServlet {
+@WebServlet(name = "a04_mvc.do", urlPatterns = { "/a04_mvc.do" })
+public class A04_MVC extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
-	 http://localhost:7080/mvc02_1.do
+	 	 ex) A04_MVC.java로 모델 데이터를 사원번호, 사원명, 급여를 설정하여,
+		a04_view.jsp에서 호출하여 출력하게 하세요.
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// 1. 요청처리
+		request.setAttribute("emp", new Emp(7000,"홍길동",3000.0));
 		
-		// 2. 모델 데이터 처리
-		request.setAttribute("model01", "홍길동");
-		request.setAttribute("model02", 25);
-		request.setAttribute("dept", new Dept(10,"인사","서울강북"));
-		
-		// 3. view단 호출
-		String page="\\WEB-INF\\a01_mvc\\a02_1_view.jsp"; //<h2>MVC 2단계(모델 처리)</h2>
+		String page="\\WEB-INF\\a01_mvc\\a04_view.jsp"; //<h2>MVC 2단계(모델 처리)</h2>
 		RequestDispatcher rd = request.getRequestDispatcher(page);
 		rd.forward(request, response);
-		
 	}
 
 }
