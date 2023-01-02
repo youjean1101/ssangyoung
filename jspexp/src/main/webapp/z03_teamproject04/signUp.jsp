@@ -218,7 +218,7 @@
 		String email1 = request.getParameter("email1"); if(email1==null) email1="";
 		String email2 = request.getParameter("email2"); if(email2==null) email2="";
 		String email = email1+"@"+email2;
-/* 		public Olddealuser(String id, String password, String div, String username, String nickname, String rrn,
+/* 		public Olddealuser(String id, String password, String userdiv, String username, String nickname, String rrn,
 			String phonenumber, String zipcode, String address, String detailaddress, String email)*/
 		boolean isInsert = false;
 		if(id!=""&&password!=""){

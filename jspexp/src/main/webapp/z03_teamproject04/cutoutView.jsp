@@ -150,14 +150,16 @@ input[name="next"]:active{
 		%>
 		<h2><%=Login.getUsername() %>님이 차단한 사용자 정보</h2>
 		<hr>
-		<form id="cutoutRemoveform" action="cutoutRemove.jsp">
+		<form id="cutoutRemoveform" ><!--action="cutoutRemove.jsp"  -->
 		<table id="cutoutTab">
 			<tr><th width="15%">checkBox</th><th width="15%">No.</th><th width="20%">ID</th><th width="50%">지역</th></tr>
 			<%for(Olddealuser cutoutuserinfo:socialDao.cutoutView(new Social(Login.getId(),"차단"))){ %>
 			<%//for(int idx=1;idx<cutUserList.size();idx++){ %>
-			<tr><td width="15%"><Input type="checkbox" name="removeUserSel" value='<%=cutoutuserinfo.getId() %>'/></td>
+			<tr>
+				<td width="15%"><Input type="checkbox" name="removeUserSel" value='<%=cutoutuserinfo.getId() %>'/></td>
 				<td width="15%"><%=i++ %></td><td width="20%"><%=cutoutuserinfo.getId() %></td>
-				<td width="50%"><%=cutoutuserinfo.getAddress() %></td></tr>
+				<td width="50%"><%=cutoutuserinfo.getAddress() %></td>
+			</tr>
 			<%
 				String colRomoveUserSel= request.getParameter("[name=removeUserSel]");
 				if(colRomoveUserSel == null) colRomoveUserSel="";
@@ -167,7 +169,7 @@ input[name="next"]:active{
 			
 			} %>
 		</table>
-		<input type="submit" name="cutoutCancel" value="차단해제"/>
+		<input type="submit" name="cutoutCancel" value="차단해제" onclick="cutoutremove()"/>
 		<input type="button" class="nextorprev" name="previous" value="◀"/>
 		<input type="button" class="nextorprev" name="next" value="▶"/>
 		</form>
@@ -180,7 +182,7 @@ input[name="next"]:active{
 </body>
 <script type="text/javascript">
 //------------------------------미체크 시, 유효성체크 기능메서드-------------------------------------------- 
-function collectremove(){
+function cutoutremove(){
 	var cutoutRemoveUserSelArr = document.querySelectorAll("[name=removeUserSel]")
 	var is_checked = false;
 	cutoutRemoveUserSelArr.forEach(function(userck){
@@ -189,7 +191,7 @@ function collectremove(){
 		}
 	})
 	if(!is_checked){
-		alert("[안내메시지]모아보기 해제할 회원을 선택해주세요.")
+		alert("[안내메시지]차단해제할 회원을 선택해주세요.")
 	}
 	document.querySelector("#collectRemoveform").submit();
 } 

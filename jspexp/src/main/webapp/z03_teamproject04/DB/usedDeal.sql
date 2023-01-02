@@ -2,7 +2,7 @@
 CREATE TABLE olddealuser(
 	id varchar2(20) PRIMARY key, -- 아이디
 	password varchar2(20) NOT null,	--패스워드
-	userdiv varchar2(20) CONSTRAINT olddealuser_auth_ck check(div IN('관리자','회원')),	-- 권한구분
+	userdiv varchar2(20) CONSTRAINT olddealuser_auth_ck check(userdiv IN('관리자','회원')),	-- 권한구분
 	username varchar2(20),	-- 이름
 	nickname varchar2(20) CONSTRAINT olddealuser_nickname_uq UNIQUE,--닉네임
 	rrn varchar2(14) not NULL CONSTRAINT olddealuser_rrn_uq UNIQUE,	-- 주민번호
@@ -30,7 +30,7 @@ INSERT INTO olddealuser values('test2','0000','회원','테스트2','테스트no
 UPDATE olddealuser 
 SET declarationcount='2',buycount='5',salecount=3 WHERE id='yujin';
 UPDATE olddealuser 
-SET point=30 WHERE id='yujin';
+SET point=300 WHERE id='yujin';
 
 UPDATE olddealuser 
 SET password='1234' ,nickname='어서오쇼',phonenumber='010-4568-9874',zipcode='40000',address='인천',detailaddress='몰라두됩니다',email='himan@naver.com' WHERE id='test2';
@@ -73,11 +73,27 @@ DELETE FROM olderproduct WHERE productno=0;
 
 SELECT* FROM olderproduct;
 SELECT * FROM olderproduct WHERE productno=0;
+SELECT * FROM olderproduct p, reserve r
+WHERE p.productno = r.productno
+AND r.id='yujin'
+AND p.dealstat='거래완료';
+SELECT * FROM olderproduct 
+WHERE writerid='yujin'
+AND dealstat='판매중';
+
 INSERT INTO olderproduct values(productno_seq.nextval,'아기신발','신발','현금결제',30000,'X','X',
 '아기가 금방 자라서 얼마신지 못 했네요.. 깨끗합니다.','20221222','판매중','서울특별시','마포구','월드컵북로','21 풍성빌딩2층','test');
 INSERT INTO olderproduct values(productno_seq.nextval,'애플마우스','마우스','현금결제',50000,'X','X',
 '더 좋은 마우스가 생겨서 미개봉마우스 올립니다.','20221222','판매중','서울특별시','마포구','월드컵북로','21 풍성빌딩2층','test');
-UPDATE olderproduct SET writerid='test2' WHERE productno=2;
+INSERT INTO olderproduct values(productno_seq.nextval,'짱구마우스','마우스','현금결제',30000,'X','X',
+'더 귀여운 마우스가 생겨서 미개봉마우스 올립니다.','20230101','판매중','인천광역시','계양구','작적동','현대아파트','yujin');
+INSERT INTO olderproduct values(productno_seq.nextval,'애플키보드','키보드','현금결제',60000,'X','X',
+'애플키보드 한개 더생겨서 올립니다. 새거에요~ 가격제안 안받습니다.','20221231','거래완료','경상남도','함양읍','지곡','123','yujin');
+INSERT INTO olderproduct values(productno_seq.nextval,'아기신발','신발','현금결제',60000,'X','X',
+'애플키보드 한개 더생겨서 올립니다. 새거에요~ 가격제안 안받습니다.','20221231','숨김','경상남도','함양읍','지곡','123','yujin');
+UPDATE olderproduct SET dealstat='예약중' WHERE productno=0;
+UPDATE olderproduct SET writerid='test3' WHERE productno=0;
+
 -------------------------------상품이미지 sql--------------------------------------------
 CREATE TABLE productimg(
 	imageno varchar2(20) PRIMARY KEY,	-- 이미지구분번호
@@ -98,30 +114,38 @@ INSERT INTO productimg values();
 -------------------------------구매정보 sql--------------------------------------------
 CREATE TABLE reserve(
 	rno varchar2(20) PRIMARY key, -- 구매번호
-	resdate DATE,	-- 예약날짜
+	resdate varchar(40),	-- 예약날짜
 	sugprice NUMBER,	-- 제안가격
-	reservation char(1) CONSTRAINT buyInfo_salewhether_ck check(salewhether IN('O','X')),	-- 판매여부
-	id varchar2(20) CONSTRAINT olddealuser_id_fk REFERENCES olddealuser(id),	-- 아이디
-	productno NUMBER CONSTRAINT olderproduct_productno_fk REFERENCES olderproduct(productno)	-- 상품번호
+	reservation char(1) CONSTRAINT reserve_salewhether_ck check(reservation IN('O','X')),	-- 판매여부
+	id varchar2(20) CONSTRAINT reserve_id_fk REFERENCES olddealuser(id),	-- 아이디
+	productno NUMBER CONSTRAINT reserve_productno_fk REFERENCES olderproduct(productno)	-- 상품번호
 );
-DROP TABLE totalbuy;
+DROP TABLE reserve;
 
-CREATE SEQUENCE buyno_seq
+CREATE SEQUENCE reserve_seq
 		increment by 1
 		start with 0
 		MINVALUE 0
 		MAXVALUE 100000;
-DROP SEQUENCE buyno_seq;
+DROP SEQUENCE reserve_seq;
 
-SELECT*FROM totalbuy;
-INSERT INTO totalbuy values();
+SELECT*FROM reserve;
+SELECT*FROM reserve r,olderproduct p 
+WHERE r.productno=p.productno
+AND r.id='yujin'
+AND dealstat ='거래완료'; -- 구매내역검색
+INSERT INTO reserve values('buy'||reserve_seq.nextval,sysdate,15000,'O','test',0);
+INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-28 16:01',15000,'O','yujin',0);
+INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-31 17:00',15000,'O','test',2);
+INSERT INTO reserve values('buy'||reserve_seq.nextval,'2023-01-01 13:00',15000,'O','yujin',4);
 -------------------------------문의하기 sql--------------------------------------------
 CREATE TABLE qna(
 	qno varchar2(20) PRIMARY key,	-- 문의번호
 	id varchar2(20) CONSTRAINT olddealuser_id_fk REFERENCES olddealuser(id),	-- 아이디
-	title varchar2(200),	-- 문의내용
-	cont varchar2(2000),
-	ano varchar2(20)	CONSTRAINT qna_ano_fk REFERENCES qna(qno)--답변번호
+	title varchar2(200),	-- 문의제목
+	cont varchar2(2000),	-- 문의내용
+	acont varchar2(2000),	-- 답변내용
+	status varchar(20);		-- 답변상태
 );
 DROP TABLE qna;
 
@@ -158,11 +182,15 @@ CREATE TABLE cartlist(
 );
 DROP TABLE cartlist;
 
-SELECT*FROM cartlist;
+SELECT * FROM cartlist WHERE id='yujin';
 SELECT * FROM cartlist WHERE productno='1' AND id='yujin'; 
 INSERT INTO cartlist values(1,'yujin');
-INSERT INTO cartlist values(2,'yujin');
-DELETE FROM cartlist WHERE productno=2; 
+INSERT INTO cartlist values(0,'yujin');
+INSERT INTO cartlist values(0,'test');
+INSERT INTO cartlist values(1,'test2');
+INSERT INTO cartlist values(1,'test3');
+DELETE FROM cartlist WHERE productno=1; 
+DELETE FROM cartlist WHERE id='yujin'; 
 
 SELECT count(productno) FROM cartlist WHERE productno=1;
 SELECT * FROM olderproduct p,cartlist c
@@ -201,7 +229,7 @@ SELECT*FROM social s, olddealuser u
 WHERE s.otherid = u.id
 AND s.id='yujin' 
 AND s.typediv='모아';
-SELECT * FROM social;
+SELECT * FROM social WHERE typediv='차단' AND id='yujin';
 SELECT * FROM social WHERE id='yujin' AND typediv='모아' AND otherid='test';
 
 SELECT*FROM social WHERE typediv='모아' AND id='yujin';
@@ -215,3 +243,8 @@ DELETE FROM social
 WHERE id='yujin' 
 AND typediv='모아'
 AND otherid='test';
+DELETE FROM cartlist WHERE productno=1;
+
+SELECT * from social;
+SELECT * from cartlist;
+

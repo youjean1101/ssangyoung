@@ -153,7 +153,7 @@
 		int price[] = null; */
 		if(hasSess){
 	%>
-	<form>
+	<form id="cartremoveform">
 		<box id="cartBox">
 			<h2 id="name"><%=Login.getUsername() %>님의 찜목록♥</h2>
 			<table id="cartlistTab">
@@ -180,11 +180,22 @@
 					<!-- <tbody></tbody> -->
 						<td>
 							<table id="cartproTab">
-							<tr><th><input type="checkbox" name="cartremove" value="<%=productInfo.getProductno()%>"/></th>
-									<td><img src=".\img\productPhoto\<%=productInfo.getProductname()%>.png"/></td></tr><!-- 이미지테이블 생성 시, 기능구현 /찜수 기능구현 -->
-								<tr><th></th><td class="title"><%=productInfo.getProductname() %></td></tr>
-								<tr><th></th><td class="local"><%=productInfo.getFaddressval()%> <%=productInfo.getSaddressval()%> <%=productInfo.getCaddressval()%></td></tr>
-								<tr><th></th><td class="cost"><%=productInfo.getPrice()%>원&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+								<tr>
+								<th><input type="checkbox" name="cartremove" value="<%=productInfo.getProductno()%>"/></th>
+									<td><img src=".\img\productPhoto\<%=productInfo.getProductname()%>.png"/></td>
+								</tr><!-- 이미지테이블 생성 시, 기능구현 /찜수 기능구현 -->
+								<tr>
+								<th></th><td class="title"><%=productInfo.getProductname() %></td>
+								</tr>
+								<tr>
+								<th></th>
+								<td class="local">
+								<%=productInfo.getFaddressval()%> <%=productInfo.getSaddressval()%> <%=productInfo.getCaddressval()%>
+								</td>
+								</tr>
+								<tr>
+								<th></th>
+								<td class="cost"><%=productInfo.getPrice()%>원&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 								<span id="like">♡ <%=cartCnt %></span></td></tr>
 							</table>
 						</td> <!-- 반복문으로 나타내야함 4X2테이블로 -->
@@ -192,7 +203,7 @@
 				</tr>
 				<tr><td></td><td></td><td></td><td></td></tr>
 			</table>
-			<input type="button" name="cartCancel" value="찜 삭제하기" onclick="#"/>
+			<input type="button" name="cartCancel" value="찜 삭제하기" onclick="cartRemove()"/>
 			<input type="button" class="nextorprev" name="previous" value="◀"/>
 			<input type="button" class="nextorprev" name="next" value="▶"/>
 		</box>
@@ -239,5 +250,19 @@
 	} */
 	cartlistTabOb.innerHTML = show;
  --%>
+//-------------------------------------찜삭제 미체크시, 유효성체크 기능-----------------------------------
+function cartRemove(){
+	var cartRemoveSelArr = document.querySelectorAll("[name=cartremove]")
+	var is_checked = false;
+	cartRemoveSelArr.forEach(function(prock){
+		if(prock.checked==true){
+			is_checked=true
+		}
+	})
+	if(!is_checked){
+		alert("[안내메시지]찜 삭제할 상품을 선택해주세요.")
+	}
+	document.querySelector("#cartremoveform").submit();
+}  
 </script>
 </html>

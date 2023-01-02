@@ -19,7 +19,7 @@
 	<%	
 		Olddealuser Login = (Olddealuser)session.getAttribute("Login");
 		boolean hasSess = Login!=null;
-		socialdao socialDao = new socialdao();
+		socialdao socialDao = new socialdao();	
 		boolean loginalert=false;
 		boolean isCollectSuss =false;
 		boolean isCollect = false;

@@ -152,7 +152,7 @@ public class userdao {
 			pstmt.setString(2, sel.getPassword());
 			rs = pstmt.executeQuery();
 			/*
-			public Olddealuser(String id, String password, String div, String username, String nickname, String rrn,
+			public Olddealuser(String id, String password, String userdiv, String username, String nickname, String rrn,
 			String phonenumber, String zipcode, String address, String detailaddress, String email, int point,
 			int salecount, int buycount, int declarationcount)
 			 */

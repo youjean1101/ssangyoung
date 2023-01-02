@@ -141,13 +141,15 @@ input[name="next"]:active{
 		%>
 		<h2><%=Login.getUsername() %>님이 모아보기한 사용자 정보</h2>
 		<hr>
-		<form id="collectRemoveform" action="collectRemove.jsp"><!--  -->
+		<form id="collectRemoveform"><!-- action="collectRemove.jsp"  -->
 		<table id="collectTab">
 			<tr><th width="15%">checkBox</th><th width="15%">No.</th><th width="20%">ID</th><th width="50%">지역</th></tr>
 			<%for(Olddealuser collectuserinfo:socialDao.cutoutView(new Social(Login.getId(),"모아"))){ %>
-			<tr><td width="15%"><input type="checkbox" name="removeUserSel" value="<%=collectuserinfo.getId() %>"/></td>
+			<tr>
+				<td width="15%"><input type="checkbox" name="removeUserSel" value="<%=collectuserinfo.getId() %>"/></td>
 				<td width="15%"><%=i++ %></td><td width="20%"><%=collectuserinfo.getId() %></td>
-				<td width="50%"><%=collectuserinfo.getAddress()%></td></tr>
+				<td width="50%"><%=collectuserinfo.getAddress()%></td>
+			</tr>
 				
 			<%--
 				String colRomoveUserSel= request.getParameter("[name=removeUserSel]");

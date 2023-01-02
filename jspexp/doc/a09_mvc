@@ -15,6 +15,7 @@
 3. MVC란?
 	1) Model-View-Controller
 		-  모델 : 비즈니스 영역의 상태 정보를 처리한다. 주로 DAO에 전달된 데이터를 로직에 의해서 모델 데이터를 만든다.
+			View에 전달될 핵심 데이터 처리
 			controller단에서 이 데이터를 request.setAttribute("모델명", 데이터)로 설정한다.
 		- 뷰 : 비즈니스 영역에 대한 받은 핵심데이터(모델)을 controller에서 전달 받아,
 			사용자가 보게 될 화면을 처리하는 역할을 한다.
@@ -30,11 +31,19 @@
 	
 # MVC 예제
 1. 1단계
-	controller ==> view 바로 호출
+	controller ==> 모델데이터 설정 ==> view 바로 호출
 2. 2단계
 	controller ==> 모델데이터 설정 ==> view 호출
 3. 3단계
 	요청값 ==> controller ==> 모델데이터 설정 ==> view 호출
 4. 4단계
+	1) 화면단 처리
 	요청값 ==> controller ===> dao호출 모델데이터 설정 ==> view 호출
+	2) ajax 처리
+	
+# MVC 2단계
+1. controller단에서 모델 데이터 설정
+	request.setAttribute("모델명", 모델데이터);
+2. view단에서 모델값으로 화면출력
+	${모델명}, ${모델명.property}
 	

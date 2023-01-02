@@ -146,13 +146,15 @@ input[name='complete']{
 <body>
 	<jsp:include page=".\frame\frame.jsp"></jsp:include>
 	<%
+		Olddealuser Login = (Olddealuser)session.getAttribute("Login");
 		olderproductdao proDao = new olderproductdao();
 		cartlistdao cartlistDao = new cartlistdao();
+		reservedao reserveDao = new reservedao();
 		int cartCnt=0;
 		userdao userDao = new userdao();
-		for(Olderproduct product:proDao.productInfo(new Olderproduct(2))){ 
+		for(Olderproduct product:proDao.productInfo(new Olderproduct(1))){ 
 			for(Olddealuser user:userDao.productWriterInfo(product.getWriterid())){ //로그인유저 아님 (판매자정보)
-				Olddealuser registerUser = new Olddealuser(user.getId(),user.getPassword(),user.getDiv(),user.getUsername(),
+				Olddealuser registerUser = new Olddealuser(user.getId(),user.getPassword(),user.getUserdiv(),user.getUsername(),
 											user.getNickname(),user.getRrn(),user.getPhonenumber(),user.getZipcode(),
 											user.getAddress(),user.getDetailaddress(),user.getEmail(),user.getPoint(),
 											user.getSalecount(),user.getBuycount(),user.getDeclarationcount()); 
@@ -168,13 +170,13 @@ input[name='complete']{
 				String faddressval, String saddressval, String caddressval, String daddressval, String writerid)
 				*/
 				cartCnt = cartlistDao.cartProductCnt(product.getProductno());
-				Olderproduct cartProductInfo = 
+				Olderproduct productInfo = 
 				new Olderproduct(product.getProductno(),product.getProductname(),product.getKind(),product.getDealmethod(),
 								product.getPrice(),product.getSharewhether(),product.getPriceoffer(),product.getInformation(),
 								product.getRegistdate(),product.getDealstat(),product.getFaddressval(),product.getSaddressval(),
 								product.getCaddressval(),product.getDaddressval(),product.getWriterid());
-				session.setAttribute("cartlist",cartProductInfo);
-				
+				session.setAttribute("cartlist",productInfo);
+				session.setAttribute("reserveProInfo",productInfo);
 	%>
 	<box id="productbox">
 	<h2 id="previous"><</h2>
@@ -209,7 +211,8 @@ input[name='complete']{
 				<span id="selposition"></span>
 		</box>
 	</box>
-	<%	}
+	<%	
+		}
 	} %>
 </body>
 <script type="text/javascript">
@@ -259,7 +262,7 @@ function basket(){
 }
 //-------------------------------예약하기 기능메서드---------------------------------------
 var selpositionOb = document.querySelector("#selposition")
-var show="<form method='get'>";
+var show="<form method='get' action='reserveInsert.jsp'>";
 show += "<input type='date' class='reserSel' name='reservationDate'>"
 show += "<input type='time' class='reserSel' name='reservationTime'><br>"
 show += "<input type='submit' class='reserSel' name='complete' value='예약잡기'><br>"

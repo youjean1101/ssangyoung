@@ -142,10 +142,10 @@
 		<box id="dealMenu">
 			<h2 class="menuTitle">나의 거래: </h2>
 			<ul>
-				<a class="hiperlink" href="#"><li>판매내역</a>
-				<a class="hiperlink" href="#"><li>구매내역</a>
+				<a class="hiperlink" href="salesVIew.jsp"><li>판매내역</a>
+				<a class="hiperlink" href="buyView.jsp"><li>구매내역</a>
 				<a class="hiperlink" href="cartlistView.jsp"><li>찜(♥)목록</a>
-				<a class="hiperlink" href="#"><li>예약중인 상품조회</a>
+				<a class="hiperlink" href="reserveView.jsp"><li>예약중인 상품조회</a>
 				<a class="hiperlink" href="#"><li>거래왕 조회하기</a>
 			</ul>
 		</box>

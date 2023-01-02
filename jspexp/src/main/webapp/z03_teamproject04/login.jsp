@@ -135,7 +135,7 @@
 			int salecount, int buycount, int declarationcount)
 			*/
 			for(Olddealuser user:dao.userInfo(sel)){
-				Olddealuser loginuser = new Olddealuser(id,password,user.getDiv(),user.getUsername(),user.getNickname(),user.getRrn(),
+				Olddealuser loginuser = new Olddealuser(id,password,user.getUserdiv(),user.getUsername(),user.getNickname(),user.getRrn(),
 														user.getPhonenumber(),user.getZipcode(),user.getAddress(),user.getDetailaddress(),
 														user.getEmail(),user.getPoint(),user.getSalecount(),user.getBuycount(),user.getDeclarationcount()); 
 				session.setAttribute("Login",loginuser);

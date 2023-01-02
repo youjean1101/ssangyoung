@@ -84,7 +84,7 @@
 				<legend><%=Login.getUsername() %>님의 회원정보</legend>
 				<table id="userInfotab">
 					<tr><th>아이디:</th><td><%=Login.getId() %></td></tr>
-					<tr><th>권한:</th><td><%=Login.getDiv() %></td></tr>
+					<tr><th>권한:</th><td><%=Login.getUserdiv() %></td></tr>
 					<tr><th>이름:</th><td><%=Login.getUsername() %></td></tr>
 					<tr><th>닉네임:</th><td><%=Login.getNickname()%></td></tr>
 					<tr><th>주민번호:</th><td><%=Login.getRrn() %></td></tr>
