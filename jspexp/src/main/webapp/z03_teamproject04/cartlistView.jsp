@@ -74,13 +74,14 @@
 	    height: 50px;
 	}
 	.pagination{
+		/* border:1px solid black; */
 	    background: #fff;
 	    padding-top: 20px;
 	    text-align: center;
 	    display: flex;
 	    justify-content: center;
 	    height: 37px;
-	    width: 1600px;
+	    width: 100%;
 	}
 	#numbers{ 
 	   padding:0;

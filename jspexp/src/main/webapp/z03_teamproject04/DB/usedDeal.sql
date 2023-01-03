@@ -69,6 +69,7 @@ CREATE SEQUENCE productno_seq
 		MINVALUE 0
 		MAXVALUE 100000;
 DROP SEQUENCE productno_seq;
+DELETE FROM olderproduct;
 DELETE FROM olderproduct WHERE productno=6;
 
 SELECT* FROM olderproduct WHERE writerid='test';
@@ -77,7 +78,7 @@ SELECT * FROM olderproduct p, reserve r
 WHERE p.productno = r.productno
 AND r.id='yujin'
 AND p.dealstat='거래완료';
-SELECT * FROM olderproduct 
+SELECT * FROM olderproduct;
 WHERE writerid='test'
 AND (dealstat='판매중' OR dealstat='예약중');
 
@@ -89,8 +90,6 @@ INSERT INTO olderproduct values(productno_seq.nextval,'짱구마우스','마우�
 '더 귀여운 마우스가 생겨서 미개봉마우스 올립니다.','20230101','판매중','인천광역시','계양구','작적동','현대아파트','yujin');
 INSERT INTO olderproduct values(productno_seq.nextval,'애플키보드','키보드','현금결제',60000,'X','X',
 '애플키보드 한개 더생겨서 올립니다. 새거에요~ 가격제안 안받습니다.','20221231','거래완료','경상남도','함양읍','지곡','123','yujin');
-INSERT INTO olderproduct values(productno_seq.nextval,'아기신발','신발','현금결제',60000,'X','X',
-'애플키보드 한개 더생겨서 올립니다. 새거에요~ 가격제안 안받습니다.','20221231','숨김','경상남도','함양읍','지곡','123','yujin');
 INSERT INTO olderproduct values(productno_seq.nextval,'띵크패드','노트북','현금결제',1200000,'X','X',
 '회사에서 노트북 지원이 나와서 필요없을거 같아서 올립니다. 거의 안썻고, 사양 좋습니다. #스펙 ','20221209','판매중','경상남도','함양읍','지곡','123','yujin');
 INSERT INTO olderproduct values(productno_seq.nextval,'맥북','노트북','현금결제',1000000,'X','X',
@@ -140,7 +139,7 @@ SELECT*FROM reserve;
 SELECT*FROM reserve r,olderproduct p 
 WHERE r.productno=p.productno
 AND r.id='yujin'
-AND dealstat ='거래완료'; -- 구매내역검색
+AND dealstat ='예약중'; -- 구매내역검색
 INSERT INTO reserve values('buy'||reserve_seq.nextval,sysdate,15000,'O','test',0);
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-28 16:01',15000,'O','yujin',0);
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-28 16:01',15000,'O','yujin',1);
@@ -148,10 +147,10 @@ INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-31 17:00',15000,'
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-31 17:00',15000,'O','test',7);
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2023-01-01 13:00',15000,'O','yujin',4);
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2023-01-01 13:00',15000,'O','yujin',8);
-INSERT INTO reserve values('buy'||reserve_seq.nextval,'2023-01-01 13:00',15000,'O','yujin',7);
+INSERT INTO reserve values('buy'||reserve_seq.nextval,'2023-01-01 13:00',15000,'O','test',7);
 DELETE FROM reserve;
 SELECT * FROM olderproduct
-WHERE writerid='test';
+WHERE writerid='yujin'
 AND dealstat='예약중';
 -------------------------------문의하기 sql--------------------------------------------
 CREATE TABLE qna(
@@ -207,6 +206,7 @@ INSERT INTO cartlist values(0,'test');
 INSERT INTO cartlist values(1,'test2');
 INSERT INTO cartlist values(1,'test3');
 DELETE FROM cartlist WHERE productno=1; 
+DELETE FROM cartlist; 
 DELETE FROM cartlist WHERE id='yujin' and productno=1; 
 
 SELECT count(productno) FROM cartlist WHERE productno=1;

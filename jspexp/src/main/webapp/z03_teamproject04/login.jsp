@@ -139,17 +139,6 @@
 														user.getPhonenumber(),user.getZipcode(),user.getAddress(),user.getDetailaddress(),
 														user.getEmail(),user.getPoint(),user.getSalecount(),user.getBuycount(),user.getDeclarationcount()); 
 				session.setAttribute("Login",loginuser);
-
-				/* session.setAttribute("loginAuth",user.getsDiv());
-				session.setAttribute("loginName",user.getsUsername());
-				session.setAttribute("loginPhonenumber",user.getsPhonenumber());
-				session.setAttribute("loginAddress",user.getsAddress());
-				session.setAttribute("loginDetailAddress",user.getsDetailaddress());
-				session.setAttribute("loginEmail",user.getsEmail());
-				session.setAttribute("loginPoint",user.getiPoint());
-				session.setAttribute("loginSaleCnt",user.getiSalecount());
-				session.setAttribute("loginBuyCnt",user.getiBuycount());
-				session.setAttribute("loginDeclarationCnt",user.getiDeclarationcount()); */
 			}
 		}else{ //false(없으면)
 			isFail = true;

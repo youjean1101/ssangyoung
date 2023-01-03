@@ -13,6 +13,7 @@
 <script type="text/javascript">
 </script>
 <style>
+/* 내가쓴 css*/
 #cutoutViewbox{
 	width:1200px;
 	height:600px;
@@ -129,16 +130,7 @@ input[name="next"]:active{
 }
 </style>
 <script>
-	/* function cutoutremove(){
-		var collectRemoveUserSelArr = document.querySelectorAll("[name=removeUserSel]")
-		//alert(collectRemoveUserSelArr[0].checked);
-		//for(int i=0;i<collectRemoveUserSelArr.length();i++) {
-			if(!collectRemoveUserSelArr[0].checked){
-				alert("[안내메시지]모아보기 해제할 회원을 선택해주세요.")
-			} 
-		//}
-		document.querySelector("#cutoutRemoveform").submit();
-	} */
+	
 </script>
 </head>
 <body>
