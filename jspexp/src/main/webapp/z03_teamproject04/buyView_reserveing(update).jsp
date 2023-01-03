@@ -14,21 +14,21 @@
 
 </script>
 <style>
-	#dealSuccSalesListTab #dealSuccSalesproTab{
+	#reserveingbuylistTab #reserveingbuyproTab{
 		/* border:1px solid lightgrey; */
 		margin:2px 17px;
 	}
-	#dealSuccSalesListTab #dealSuccSalesproTab td{
+	#reserveingbuylistTab #reserveingbuyproTab td{
 		width:100%;
 		height:15px;
 		/* border:2px solid black; */
 	}
-	#dealSuccSalesproTab td #like{
+	#reserveingbuyproTab td #like{
 		position:flex;
 		right:0%;
 		color:black;
 	} 
-	#dealSuccSalesproTab td img{
+	#reserveingbuyproTab td img{
 		width:250px;
 		height:140px;
 		border-radius:5px;
@@ -45,11 +45,17 @@
 		font-size:10pt;
 		color:orange;
 	}
+	#nothing{
+		color:grey;
+		position: absolute;
+		top:40%;
+		left:38%;
+	}
 
 </style>
 </head>
 <body>
-	<table id="dealSuccSalesListTab">
+	<table id="reserveingbuylistTab">
 			<tr>
 				<%
 				reservedao reserveDao = new reservedao();
@@ -59,11 +65,12 @@
 				boolean hasSess = Login!=null; 
 				boolean loginalert=false;
 				if(hasSess){
-					for(Olderproduct productInfo:reserveDao.salesViewPro(Login.getId(),"거래완료")){ 
-					cartCnt = cartlistDao.cartProductCnt(productInfo.getProductno());
+					if(reserveDao.isBuyViewPro(Login.getId(),"예약중")){
+						for(Olderproduct productInfo:reserveDao.buyViewPro(Login.getId(),"예약중")){ 
+						cartCnt = cartlistDao.cartProductCnt(productInfo.getProductno());
 				%>
 					<td>
-						<table id="dealSuccSalesproTab">
+						<table id="reserveingbuyproTab">
 							<tr><td><img src=".\img\productPhoto\<%=productInfo.getProductname()%>.png"/></td></tr>
 							<tr><td class="title"><%=productInfo.getProductname() %></td></tr>
 							<tr><td class="local">
@@ -74,11 +81,15 @@
 							<span id="like">♡ <%=cartCnt %></span></td></tr>
 						</table>
 					</td> <!-- 반복문으로 나타내야함 4X2테이블로 -->
-			<%} 
-			}%>
+					<%	} %>
 			</tr>
 			<tr><td></td><td></td><td></td><td></td></tr>
 	</table>
+			<%		}else{%>
+						<h2 id="nothing">예약중인 구매물품이 없습니다.</h2>
+			<% 		}
+			}%>
+		
 </body>
 <script type="text/javascript">
 

@@ -9,26 +9,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>중고월드 숨김 판매내역</title>
+<title>중고월드 판매중인 판매내역</title>
 <script type="text/javascript">
 
 </script>
 <style>
-	#hiddenSaleslistTab #hiddenSalesproTab{
+	#salesingSalesListTab #salesingSalesproTab{
 		/* border:1px solid lightgrey; */
 		margin:2px 17px;
 	}
-	#hiddenSaleslistTab #hiddenSalesproTab td{
+	#salesingSalesListTab #salesingSalesproTab td{
 		width:100%;
 		height:15px;
 		/* border:2px solid black; */
 	}
-	#hiddenSalesproTab td #like{
+	#salesingSalesproTab td #like{
 		position:flex;
 		right:0%;
 		color:black;
 	} 
-	#hiddenSalesproTab td img{
+	#salesingSalesproTab td img{
 		width:250px;
 		height:140px;
 		border-radius:5px;
@@ -45,11 +45,17 @@
 		font-size:10pt;
 		color:orange;
 	}
+	#nothing{
+		color:grey;
+		position: absolute;
+		top:40%;
+		left:35%;
+	}
 
 </style>
 </head>
 <body>
-	<table id="hiddenSaleslistTab">
+	<table id="salesingSalesListTab">
 			<tr>
 				<%
 				reservedao reserveDao = new reservedao();
@@ -59,11 +65,12 @@
 				boolean hasSess = Login!=null; 
 				boolean loginalert=false;
 				if(hasSess){
-					for(Olderproduct productInfo:reserveDao.salesViewPro(Login.getId(),"숨김")){ 
-					cartCnt = cartlistDao.cartProductCnt(productInfo.getProductno());
+					if(reserveDao.isSalesViewPro(Login.getId(),"판매중")){
+						for(Olderproduct productInfo:reserveDao.salesViewPro(Login.getId(),"판매중")){ 
+						cartCnt = cartlistDao.cartProductCnt(productInfo.getProductno());
 				%>
 					<td>
-						<table id="hiddenSalesproTab">
+						<table id="salesingSalesproTab">
 							<tr><td><img src=".\img\productPhoto\<%=productInfo.getProductname()%>.png"/></td></tr>
 							<tr><td class="title"><%=productInfo.getProductname() %></td></tr>
 							<tr><td class="local">
@@ -74,11 +81,14 @@
 							<span id="like">♡ <%=cartCnt %></span></td></tr>
 						</table>
 					</td> <!-- 반복문으로 나타내야함 4X2테이블로 -->
-			<%} 
-			}%>
+					<%	} %>
 			</tr>
 			<tr><td></td><td></td><td></td><td></td></tr>
 	</table>
+			<%		}else{%>
+						<h2 id="nothing">판매중인 판매물품이 없습니다.</h2>
+			<% 		}
+			}%>
 </body>
 <script type="text/javascript">
 

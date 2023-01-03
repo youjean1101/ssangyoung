@@ -175,7 +175,8 @@
 		}else if(usermenu.value=="logout"){
 			/* session.removeAttribute("loginUserInfo"); */
 			/* location.href="main.jsp" */
-			response.sendRedirect("main.jsp");
+			window.close();
+			location.href="sessionremove.jsp";
 			usermenu.value=""
 			
 		}else if(usermenu.value=="MyPage"){

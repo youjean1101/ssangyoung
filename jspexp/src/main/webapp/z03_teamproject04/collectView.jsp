@@ -122,6 +122,12 @@ input[name="next"]:active{
 	border:5px solid black;
 	box-shadow : none;
 }
+#collectViewbox #nothing{
+		color:grey;
+		position: absolute;
+		top:40%;
+		left:35%;
+}
 </style>
 
 <script type="text/javascript">
@@ -141,7 +147,8 @@ input[name="next"]:active{
 		%>
 		<h2><%=Login.getUsername() %>님이 모아보기한 사용자 정보</h2>
 		<hr>
-		<form id="collectRemoveform"><!-- action="collectRemove.jsp"  -->
+		<form id="collectRemoveform" action="collectRemove.jsp"><!--   -->
+		<%if(socialDao.isCutCollectExist(Login.getId(),"모아")) {%>
 		<table id="collectTab">
 			<tr><th width="15%">checkBox</th><th width="15%">No.</th><th width="20%">ID</th><th width="50%">지역</th></tr>
 			<%for(Olddealuser collectuserinfo:socialDao.cutoutView(new Social(Login.getId(),"모아"))){ %>
@@ -150,38 +157,11 @@ input[name="next"]:active{
 				<td width="15%"><%=i++ %></td><td width="20%"><%=collectuserinfo.getId() %></td>
 				<td width="50%"><%=collectuserinfo.getAddress()%></td>
 			</tr>
-				
-			<%--
-				String colRomoveUserSel= request.getParameter("[name=removeUserSel]");
-				String []colRomoveUserSels= request.getParameterValues("[name=removeUserSel]");
-				 if(colRomoveUserSel == null) colRomoveUserSel="";
-				if(colRomoveUserSel!=""){
-					Social collectSel = new Social(Login.getId(),"모아",colRomoveUserSel);
-					session.setAttribute("collectUsersel",collectSel);
-				} 
-				//if(colRomoveUserSels==null) colRomoveUserSels={};
-				
-			if(colRomoveUserSels!=null){
-				socialDao.collcutremove(new Social(Login.getId(),"모아",colRomoveUserSels[0]));
-				out.print(colRomoveUserSel);
-				out.print(colRomoveUserSels[0]);
-			for(String sel:colRomoveUserSels){
-				//socialDao.collcutremove(new Social(Login.getId(),"모아",sel));
-				//socialDao.collcutremove(new Social(Login.getId(),"모아",sel));
-				//Social collectSel = new Social(Login.getId(),"모아",sel);
-				//session.setAttribute("collectUsersel",collectSel);
-			}
-			//if(colRomoveUserSels!=null){	
-			//		for(int idx=0;idx<colRomoveUserSels.length;idx++){
-			//			for(String colRomoveUserSel:colRomoveUserSels){
-							//socialDao.collcutremove(new Social(Login.getId(),"모아",colRomoveUserSel));
-						//}
-					//}
-				} 
-			} 
-			
-			--%><%}  %>
+		<%}  %>
 		</table>
+		<%} else{ %>
+			<h2 id="nothing">모아보기한 회원이 없습니다.</h2>
+		<%} %>
 		<input type="button" name="collectCancel" value="모아보기해제" onclick="collectremove()"/>
 		<input type="button" class="nextorprev" name="previous" value="◀"/>
 		<input type="button" class="nextorprev" name="next" value="▶"/>
@@ -194,20 +174,6 @@ input[name="next"]:active{
 	</box>
 </body>
 <script type="text/javascript">
-//------------------------------미체크 시, 유효성체크 기능메서드-------------------------------------------- 
-/* function collectremove(){
-	var isSel = false;
-	//var selVal = document.getElementsByName("removeUserSel");
-	//alert(selVal.length);
-	 var collectRemoveUserSelArr = document.querySelectorAll("[name=removeUserSel]")
-	collectRemoveUserSelArr.forEach(function(userck){
-		var ckval= userck.checked.value
-		alert(ckval)
-		
-		
-	}) 
-
-}  */
 
 //------------------------------미체크 시, 유효성체크 기능메서드-------------------------------------------- 
 function collectremove(){
@@ -220,8 +186,11 @@ function collectremove(){
 	})
 	if(!is_checked){
 		alert("[안내메시지]모아보기 해제할 회원을 선택해주세요.")
+	}else{
+		if(confirm("선택하신 회원을 모아보기에서 삭제하시겠습니까?")){
+			document.querySelector("#collectRemoveform").submit();
+		}
 	}
-	document.querySelector("#collectRemoveform").submit();
 }  
 //--------------------------미로그인 시, 기능메서드-------------------------------------
 var alertis = <%=loginalert%>

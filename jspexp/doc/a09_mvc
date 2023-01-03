@@ -46,4 +46,65 @@
 	request.setAttribute("모델명", 모델데이터);
 2. view단에서 모델값으로 화면출력
 	${모델명}, ${모델명.property}
+
+# MVC 3단계
+1. 요청값 처리
+	request.getParameter("요청키")
+2. 모델처리
+	request.setAttribute("모델명", 모델데이터);
+3. view단 호출
+4. jsp
+	el/jsp 활용
+	
+ex) 구구단 예제 :
+	1) 요구사항
+	초기 화면이 입력값 단수(2~9)와 카운트(1~9)
+	select로 선택하게 한다. 결과를 클릭했을 때,
+	해당 값이 아래에 출력된다.
+	2) 사용할 파일 및 프로세스 정
+		Controller(A06_GugMvc.java, \gugu.do)
+		View(WEB-INF\a01_mvc\a06_guguView.jsp)
+		
+		초기에 입력을 할수 있게 form을 만들고, 계산이라는 버튼이 나오게 한다.
+		계산 버튼 클릭시, 요청값과 함게 controller에 호출되고 controller에서는 입력된 값을 받아, 
+		숫자형태로 만들어 최종으로 들어갈 모델 데이터를 @@ X @@ = @@로 설정한다.
+		view단에서 el로 모델 데이터를 호출하게 한다.
+	3) 파일별 핵심 코드
+		Controller(A06_GugMvc, \gugu.do)
+		요청값
+		String num01S = request.getParameter("num01");
+		String num02S = request.getParameter("num02");
+		모델데이터
+		if(num01S!=null){ //초기화면과 구분
+			int num01 = Integer.parseInt(num01S);
+			int num02 = Integer.parseInt(num02S);
+			request.setAttribute("result",
+				num01 +" x " + num02 + " = " +
+			(num01*num02));
+		}
+		뷰단 호출.
+		String page = "\WEB-INF\a01_mvc\a06_guguView.jsp";
+		request.getRequestDispatcher(page).forward(request,response);
+		뷰단 코드
+		
+		<form action="\gugu.do"> // action은 현재 view를 호출할 controller를 호출할 때는 생략 가능
+			<input type="text" name="num01" /> X
+			<input type="text" name="num02" /> ?<br>
+			==> 구구단의 단수/카운트는 select로..
+			<input type="submit" value="계산" />
+		</form>
+		<h2>${result}</h2>
+	4) 적용
+		
+# MVC 4단계
+1. DB연동하여 검색 처리하는 화면 구현
+2. 핵심 로직
+	1) 요청값 처리 : 검색할 데이터
+	2) 모델 데이터 : 검색할 데이터를 VO객체로 만들어
+		Dao를 호출한 후, 해당 메서드의 파라미터로 전달한다.
+		controller ==>	service ==> dao 호출 (생략)
+		controller에서 dao호출하여 모델데이터 설정..
+		
+	3) 뷰단 호출
+		 
 	

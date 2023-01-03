@@ -127,9 +127,10 @@
 	cf) Ajax는 구성한 화면에서 화면이 변경하지 않고, js명령어로 바로 서버를 접속해서 처리할 결과를 js받아 처리하는 것을 말한다.
 3. 요청값..
 	1) 클라이언트 서버로 요청 : page(어떤 자원 - url), 데이터
-		a href = "페이지?key=요청val&key=val&key=val"
+		a href = "페이지"
+		a href = "페이지?key=val&key=val"
 		location.href = "페이지"
-		location.href = "페이지?key=val&key=val"
+		location.href = "페이지?key=val&key=value"
 		form action="이동될 페이지"
 			name value 이동할 값
 	2) 데이터(key=value) = query string

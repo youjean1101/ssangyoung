@@ -36,6 +36,26 @@ public class cartlistdao {
 			DB.close(rs, pstmt, con);
 		}
 	}
+//-------------------------------------------찜 리스트 추가-----------------------------------------------
+	public void cartlistRemove(Cartlist ins){
+		String sql = "DELETE FROM cartlist WHERE productno=? and id=? ";
+		
+		try {
+			con = DB.con();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, ins.getProductno());
+			pstmt.setString(2, ins.getId());
+			rs = pstmt.executeQuery();
+			con.commit();
+			
+		} catch (SQLException e) {
+			System.out.println("DB에러:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("일반 에러:"+e.getMessage());
+		}finally {
+			DB.close(rs, pstmt, con);
+		}
+	}
 //---------------------------------------찜 중복추가방지기능메서드-------------------------------------
 	public boolean isCartlist(Cartlist sel){
 		boolean isCarthave = false;
@@ -105,6 +125,30 @@ public class cartlistdao {
 		}
 		return plist;
 	}
+//----------------------------------------찜 유/무 조회--------------------------------------------------------
+	public boolean isCartProd(String id){
+		boolean haspro = false;
+		String sql = "SELECT * FROM olderproduct p,cartlist c\r\n"
+				+ "WHERE c.productno = p.productno\r\n"
+				+ "and id=?";
+		
+		try {
+			con = DB.con();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			haspro =rs.next();
+			System.out.println("찜상품유무:"+haspro);
+			con.commit();
+		} catch (SQLException e) {
+			System.out.println("DB에러:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("일반 에러:"+e.getMessage());
+		}finally {
+			DB.close(rs, pstmt, con);
+		}
+		return haspro;
+	}
 //-----------------------------------------물건 찜갯수 기능메서드-----------------------------------------------
 	public int cartProductCnt(int pno){
 		String sql = "SELECT * FROM cartlist WHERE productno=?";
@@ -129,6 +173,7 @@ public class cartlistdao {
 		}
 		return productcnt;
 	}
+	
 //-----------------------------------------Main()기능메서드---------------------------------------------------	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

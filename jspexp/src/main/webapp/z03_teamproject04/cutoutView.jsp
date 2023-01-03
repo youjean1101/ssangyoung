@@ -121,6 +121,12 @@ input[name="next"]:active{
 	border:5px solid black;
 	box-shadow : none;
 }
+#cutoutViewbox #nothing{
+	color:grey;
+	position: absolute;
+	top:40%;
+	left:38%;
+}
 </style>
 <script>
 	/* function cutoutremove(){
@@ -150,7 +156,8 @@ input[name="next"]:active{
 		%>
 		<h2><%=Login.getUsername() %>님이 차단한 사용자 정보</h2>
 		<hr>
-		<form id="cutoutRemoveform" ><!--action="cutoutRemove.jsp"  -->
+		<form id="cutoutRemoveform" action="cutoutRemove.jsp"><!--  -->
+		<%if(socialDao.isCutCollectExist(Login.getId(),"차단")) {%>
 		<table id="cutoutTab">
 			<tr><th width="15%">checkBox</th><th width="15%">No.</th><th width="20%">ID</th><th width="50%">지역</th></tr>
 			<%for(Olddealuser cutoutuserinfo:socialDao.cutoutView(new Social(Login.getId(),"차단"))){ %>
@@ -160,15 +167,11 @@ input[name="next"]:active{
 				<td width="15%"><%=i++ %></td><td width="20%"><%=cutoutuserinfo.getId() %></td>
 				<td width="50%"><%=cutoutuserinfo.getAddress() %></td>
 			</tr>
-			<%
-				String colRomoveUserSel= request.getParameter("[name=removeUserSel]");
-				if(colRomoveUserSel == null) colRomoveUserSel="";
-				if(colRomoveUserSel!=""){
-					socialDao.collcutremove(new Social(Login.getId(),"차단",colRomoveUserSel));
-				}
-			
-			} %>
+			<%} %>
 		</table>
+		<%} else{ %>
+			<h2 id="nothing">차단한 회원이 없습니다.</h2>
+		<%} %>
 		<input type="submit" name="cutoutCancel" value="차단해제" onclick="cutoutremove()"/>
 		<input type="button" class="nextorprev" name="previous" value="◀"/>
 		<input type="button" class="nextorprev" name="next" value="▶"/>
@@ -192,8 +195,11 @@ function cutoutremove(){
 	})
 	if(!is_checked){
 		alert("[안내메시지]차단해제할 회원을 선택해주세요.")
+	}else{
+		if(confirm("선택하신 회원을 차단목록에서 삭제하시겠습니까?")){
+			document.querySelector("#collectRemoveform").submit();
+		}
 	}
-	document.querySelector("#collectRemoveform").submit();
 } 
 //--------------------------미로그인으로 회원수정화면접속 시, 기능메서드-------------------------------------
 var alertis = <%=loginalert%>

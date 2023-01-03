@@ -40,8 +40,8 @@ print(ar09)
 2. 기본형식
     ndarray.reshape(행, 열)
 '''
-ar10 = np.arange(10)
-ar11 = ar10.reshape(2,5)
+ar10 = np.arange(10) # 1차원 데이터
+ar11 = ar10.reshape(2,5) # 2차원 데이터
 print(ar10)
 print(ar11)
 # ex) 1~16까지 배열데이터를 4X4 형태의 ndarray로 출력하세요.

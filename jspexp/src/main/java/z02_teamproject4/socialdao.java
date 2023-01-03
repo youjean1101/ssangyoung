@@ -15,7 +15,6 @@ public class socialdao {
 	private Connection con;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
-//----------------------------모아보기/차단하기 회원조회---------------------------------
 	
 //-----------------------------모아보기/차단하기 추가-----------------------------------
 	public void collectAdd(Social ins){
@@ -120,6 +119,29 @@ public class socialdao {
 			DB.close(rs, pstmt, con);
 		}
 		return socialUserlist;
+	}
+//--------------------------------차단하기/모아보기 회원 조회하기------------------------------
+	public boolean isCutCollectExist(String id, String type){
+		boolean hasUser = false;
+		String sql = "SELECT * FROM social WHERE id=? AND typediv=?";
+		
+		try {
+			con = DB.con();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, type);
+			rs = pstmt.executeQuery();
+			hasUser = rs.next();
+			System.out.println("모아보기/차단하기 회원조회유무:"+hasUser);
+			con.commit();
+		} catch (SQLException e) {
+			System.out.println("DB에러:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("일반 에러:"+e.getMessage());
+		}finally {
+			DB.close(rs, pstmt, con);
+		}
+		return hasUser;
 	}
 	
 //------------------------------main()기능메서드----------------------------------

@@ -78,12 +78,12 @@
 <script type="text/javascript">
 	var isInsert = <%=isInsert%>; 
 	if( isInsert ){
-		alert("[안내메시지]회원탈퇴가 완료되었습니다. \n로그인 화면으로 이동합니다.")
+		alert("[안내메시지]회원탈퇴가 완료되었습니다.")
 		go();
 	}
 	function go(){
 		window.close();
-		window.open('login.jsp')
+		window.open('sessionremove.jsp')
 	}
 		
 </script>

@@ -120,13 +120,13 @@ var reserveOb = document.querySelector("[name=reserve]")
 var reservehrOb = document.querySelector("#reservehr")
 var dealsucchrOb = document.querySelector("#dealsucchr")
 var framePosition =document.querySelector("#buyViewframeposition")
-framePosition.innerHTML = "<iframe src='reserveingbuyView.jsp' name='buyreserve' width='100%' height='500'></iframe>"
+framePosition.innerHTML = "<iframe src='buyView_reserveing.jsp' name='buyreserve' width='100%' height='500'></iframe>"
 reserveOb.onclick=function(){
 	this.style.color="black"
 	dealSuccessOb.style.color="grey"
 	reservehrOb.innerHTML="<hr>"
 	dealsucchrOb.innerHTML=""
-	framePosition.innerHTML = "<iframe src='reserveingbuyView.jsp' name='buyreserve' width='100%' height='500'></iframe>"
+	framePosition.innerHTML = "<iframe src='buyView_reserveing.jsp' name='buyreserve' width='100%' height='500'></iframe>"
 }
 //-------------------------거래완료된 구매내역 조회기능메서드------------------------------------
 var dealSuccessOb = document.querySelector("[name=dealSuccess]")
@@ -135,7 +135,7 @@ dealSuccessOb.onclick=function(){
 	this.style.color="black"
 	dealsucchrOb.innerHTML="<hr>"
 	reservehrOb.innerHTML=""
-	framePosition.innerHTML = "<iframe src='dealSuccessbuyView.jsp' name='buyreserve' width='100%' height='500'></iframe>"
+	framePosition.innerHTML = "<iframe src='buyView_dealSuccess(update).jsp' name='buyreserve' width='100%' height='500'></iframe>"
 }
 
 </script>
