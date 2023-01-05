@@ -17,9 +17,9 @@
 		border:4px solid lightgrey;
 		border-radius:10px;
 		width:1200px;
-		height:600px;
+		height:700px;
 		position:fixed;
-		left:15%;
+		left:20%;
 		top:12%;
 	}
 	#salesViewBox #name{
@@ -27,7 +27,7 @@
 		margin:15px 30px;
 	}
 	#salesViewBox hr{
-		width:95%;
+		width:92%;
 		position:absolute;
 		top:11%;
 		left:3%;
@@ -138,7 +138,7 @@ var salesinghrOb = document.querySelector("#salesinghr")
 var dealsucchrOb = document.querySelector("#dealsucchr")
 var hiddenhrOb = document.querySelector("#hiddenhr")
 var framePosition =document.querySelector("#salesViewframeposition")
-framePosition.innerHTML = "<iframe src='salesVIew_salesing.jsp' name='buyreserve' width='100%' height='600'></iframe>"
+framePosition.innerHTML = "<iframe src='salesVIew_salesing.jsp' name='buyreserve' width='100%' height='700'></iframe>"
 salesingOb.onclick=function(){
 	this.style.color="black"
 	dealSuccessOb.style.color="grey"
@@ -146,7 +146,7 @@ salesingOb.onclick=function(){
 	dealsucchrOb.innerHTML=""
 	hiddenhrOb.innerHTML=""
 	salesinghrOb.innerHTML="<hr>"
-	framePosition.innerHTML = "<iframe src='salesVIew_salesing.jsp' name='buyreserve' width='100%' height='600'></iframe>"
+	framePosition.innerHTML = "<iframe src='salesVIew_salesing.jsp' name='buyreserve' width='100%' height='700'></iframe>"
 }
 //-------------------------구매완료된 구매내역 조회기능메서드------------------------------------
 var dealSuccessOb = document.querySelector("[name=dealSuccess]")
@@ -157,7 +157,7 @@ dealSuccessOb.onclick=function(){
 	dealsucchrOb.innerHTML="<hr>"
 	salesinghrOb.innerHTML=""
 	hiddenhrOb.innerHTML=""
-	framePosition.innerHTML = "<iframe src='salesView_dealSuccess.jsp' name='buyreserve' width='100%' height='600'></iframe>"
+	framePosition.innerHTML = "<iframe src='salesView_dealSuccess.jsp' name='buyreserve' width='100%' height='700'></iframe>"
 }
 //-------------------------숨김처리된 구매내역 조회기능메서드------------------------------------
 var hiddenOb = document.querySelector("[name=hidden]")
@@ -168,7 +168,7 @@ hiddenOb.onclick=function(){
 	hiddenhrOb.innerHTML="<hr>"
 	salesinghrOb.innerHTML=""
 	dealsucchrOb.innerHTML=""
-	framePosition.innerHTML = "<iframe src='salesView_hidden.jsp' name='buyreserve' width='100%' height='600'></iframe>"
+	framePosition.innerHTML = "<iframe src='salesView_hidden.jsp' name='buyreserve' width='100%' height='700'></iframe>"
 }
 
 </script>

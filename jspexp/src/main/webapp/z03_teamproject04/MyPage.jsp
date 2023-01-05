@@ -15,8 +15,8 @@
 		width:1000px;
 		height:650px;
 		position:fixed;
-		bottom: 25%;
-	    margin:auto 360px;
+		bottom: 30%;
+	    margin:auto 470px;
 	}
 	#mypage hr{
 		width:100%;
@@ -112,9 +112,9 @@
 	<box id="mypage">
 		<box id="userInfo">
 			<%
-					Olddealuser Login = (Olddealuser)session.getAttribute("Login");
-					boolean hasSess = Login!=null; // 로그인한계정정보가 null아니면 true
-					if(hasSess){
+				Olddealuser Login = (Olddealuser)session.getAttribute("Login");
+				boolean hasSess = Login!=null; // 로그인한계정정보가 null아니면 true
+				if(hasSess){
 			%>
 			<table id="userInfoTab">
 				<tr><td width="5%"><img src=".\img\profile2.png"></td>
@@ -125,7 +125,7 @@
 			</table>
 			<%}else{%>
 				<h2 id="loginguide">로그인을 해주세요.</h2>
-			<%} %>
+		<%} %>
 		</box>
 		<hr>
 		<box id="userMenu">
@@ -139,6 +139,7 @@
 				<li onclick="count('sale')">나의 판매횟수 보기
 			</ul>
 		</box>
+		
 		<box id="dealMenu">
 			<h2 class="menuTitle">나의 거래: </h2>
 			<ul>

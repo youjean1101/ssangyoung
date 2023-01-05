@@ -25,8 +25,8 @@
 	    list-style:none;
 	 }
 	.flex-container{
-	    width: 1000px;
-	    height: 640px;
+	    width: 1200px;
+	    height: 700px;
 	    border: 4px solid lightgray;
 	    border-radius: 12px 12px;
 	    margin: 0 auto;
@@ -34,12 +34,12 @@
 	  
 	  }
 	.flex-item{
-	    /* border: 1px solid lightgray; */
+	   /*  border: 1px solid lightgray; */
 	    display: inline-grid;
-	    width: 200px;
-	    height: 250px;
+	    width: 240px;
+	    height: 300px;
 	    float: left;
-	    margin: 10px 20px 10px 20px;
+	    margin: 0px 20px 10px 20px;
 	}
 	  
 	#poster{
@@ -47,8 +47,8 @@
 	    padding: 6px;
 	    /* border: 1px solid #d3d3d3; */
 	    border-radius: 10px 10px 10px 10px;
-	    width: 80%;
-	    height: 120px;
+	    width: 220px;
+	    height: 200px;
 	    margin-left: 20px;
 	    margin-top: 10px;
 	}  
@@ -59,10 +59,11 @@
 	
 	.title{
 	  font-weight: 800;
-	  fint-size:16px;
+	  font-size:14pt;
 	}
 	.loc{
-	  color:lightgray;
+	  color:grey;
+	  font-size:10pt;
 	}
 	.price{
 	  color:orange;
@@ -120,10 +121,10 @@
 		color:white;
 		border:1px solid rgb(142, 68, 173);
 		border-radius:5px;
-		position:absolute;
-		right:22%;
-		bottom:18%;
-		font-size:14pt;
+		position:fixed;
+		right:20%;
+		bottom:20%;
+		font-size:16pt;
 		font-weight:bold;
 		width:140px;
 		height:50px;
@@ -131,8 +132,8 @@
 	#nothing{
 		color:grey;
 		position: absolute;
-		top:40%;
-		left:38%;
+		top: 40%;
+   	 	left: 42%;
 		font-size:25pt;
 	}
 	#name{
@@ -167,7 +168,7 @@
 							<div id="poster"><img src=".\img\productPhoto\<%=productInfo.getProductname()%>.png" style="width:100%; height:100%; border-radius:10px 10px;"/></div>
 							<div id="title_price">
 								<div class="title"><%=productInfo.getProductname() %></div>
-								<div class="loc" style="font-size:8px;"><%=productInfo.getFaddressval()%> <%=productInfo.getSaddressval()%> <%=productInfo.getCaddressval()%></div>
+								<div class="loc"><%=productInfo.getFaddressval()%> <%=productInfo.getSaddressval()%> <%=productInfo.getCaddressval()%></div>
 								<div class="price"><%=productInfo.getPrice()%>원&nbsp; &nbsp; &nbsp;	<span id="like">♡ <%=cartCnt %></span></div>
 							</div>
 					</div>

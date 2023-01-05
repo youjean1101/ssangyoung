@@ -17,9 +17,9 @@
 		border:4px solid lightgrey;
 		border-radius:10px;
 		width:1200px;
-		height:600px;
+		height:700px;
 		position:fixed;
-		left:15%;
+		left:20%;
 		top:12%;
 	}
 	#buyViewBox #name{
@@ -27,7 +27,7 @@
 		margin:15px 30px;
 	}
 	#buyViewBox hr{
-		width:95%;
+		width:92%;
 		position:absolute;
 		top:11%;
 		left:3%;
@@ -75,7 +75,7 @@
 	}
 	#buyViewframeposition iframe{
 		border:none;
-		scroll:none;
+		scroll:no;
 	}
 </style>
 </head>
@@ -121,13 +121,13 @@ var reserveOb = document.querySelector("[name=reserve]")
 var reservehrOb = document.querySelector("#reservehr")
 var dealsucchrOb = document.querySelector("#dealsucchr")
 var framePosition =document.querySelector("#buyViewframeposition")
-framePosition.innerHTML = "<iframe src='buyView_reserveing.jsp' name='buyreserve' width='100%' height='600'></iframe>"
+framePosition.innerHTML = "<iframe src='buyView_reserveing.jsp' name='buyreserve' width='100%' height='700'></iframe>"
 reserveOb.onclick=function(){
 	this.style.color="black"
 	dealSuccessOb.style.color="grey"
 	reservehrOb.innerHTML="<hr>"
 	dealsucchrOb.innerHTML=""
-	framePosition.innerHTML = "<iframe src='buyView_reserveing.jsp' name='buyreserve' width='100%' height='600'></iframe>"
+	framePosition.innerHTML = "<iframe src='buyView_reserveing.jsp' name='buyreserve' width='100%' height='700'></iframe>"
 }
 //-------------------------거래완료된 구매내역 조회기능메서드------------------------------------
 var dealSuccessOb = document.querySelector("[name=dealSuccess]")
@@ -136,7 +136,7 @@ dealSuccessOb.onclick=function(){
 	this.style.color="black"
 	dealsucchrOb.innerHTML="<hr>"
 	reservehrOb.innerHTML=""
-	framePosition.innerHTML = "<iframe src='buyView_dealSuccess.jsp' name='buyreserve' width='100%' height='600'></iframe>"
+	framePosition.innerHTML = "<iframe src='buyView_dealSuccess.jsp' name='buyreserve' width='100%' height='700'></iframe>"
 }
 
 </script>

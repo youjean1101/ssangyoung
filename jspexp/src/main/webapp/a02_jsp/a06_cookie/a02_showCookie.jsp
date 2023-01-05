@@ -24,9 +24,11 @@
 
 
 --%>
-	<h2>쿠기값 보기</h2>
+	<h2>쿠키값 보기</h2>
 <%
 	// a02_showCookie.jsp
+	// 로딩되는 순간, client(브라우저)에서 저장된 쿠키정보를
+	// 서버에서 확인하기 위해서
 	Cookie []cookies = request.getCookies();
 	for(Cookie c:cookies){
 		if(!c.getName().equals("JSESSIONID")){ // JSESSIONID : 쿠키 default값

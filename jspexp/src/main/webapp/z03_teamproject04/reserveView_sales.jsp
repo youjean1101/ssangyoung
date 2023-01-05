@@ -26,8 +26,8 @@
 	    list-style:none;
 	 }
 	.flex-container{
-	    width: 1180px;
-	    height: 530px;
+	    width: 1190px;
+	    height: 630px;
 	   /*  border: 4px solid lightgray; */
 	    border-radius: 12px 12px;
 	    margin: 0px 2px;
@@ -37,10 +37,10 @@
 	.flex-item{
 	    /* border: 1px solid lightgray; */
 	    display: inline-grid;
-	    width: 220px;
-	    height: 200px;
+	    width: 260px;
+	    height: 270px;
 	    float: left;
-	    margin: 20px 50px 0px 20px;
+	    margin: 0px 20px 0px 10px;
 	}
 	  
 	#poster{
@@ -48,8 +48,8 @@
 	    padding: 6px;
 	    /* border: 1px solid #d3d3d3; */
 	    border-radius: 10px 10px 10px 10px;
-	    width: 200px;
-	    height: 120px;
+	    width: 220px;
+	    height: 200px;
 	    margin-left: 20px;
 	    margin-top: 10px;
 	}  
@@ -59,11 +59,13 @@
 	}
 	
 	.title{
+	  width:270px;
 	  font-weight: 800;
-	  fint-size:16px;
+	  font-size:14pt;
 	}
 	.loc{
-	  color:lightgray;
+	  color:grey;
+	  font-size:10pt;
 	}
 	.price{
 	  color:orange;
@@ -110,20 +112,7 @@
 	   font-size:1.2em;
 	}
 	/* 내가한 css*/
-	
-	#like{
-		position:flex;
-		right:0%;
-		color:black;
-	} 
-	
-	#nothing{
-		color:grey;
-		position: absolute;
-		top:40%;
-		left:38%;
-	}
-	
+		
 	#like{
 		position:flex;
 		right:0%;
@@ -132,8 +121,8 @@
 	#nothing{
 		color:grey;
 		position: absolute;
-		top:40%;
-		left:35%;
+		top:35%;
+		left:32%;
 	}
 </style>
 </head>
@@ -155,7 +144,7 @@
 					<div id="poster"><img src=".\img\productPhoto\<%=productInfo.getProductname()%>.png" style="width:100%; height:100%; border-radius:10px 10px;"/></div>
 					<div id="title_price">
 						<div class="title"><%=productInfo.getProductname() %></div>
-						<div class="loc" style="font-size:8px;">
+						<div class="loc">
 						<%=productInfo.getFaddressval()%> <%=productInfo.getSaddressval()%> <%=productInfo.getCaddressval()%></div>
 						<div class="price"><%=productInfo.getPrice()%>원&nbsp; &nbsp; &nbsp; &nbsp;	<span id="like">♡ <%=cartCnt %></span></div>
 					</div>

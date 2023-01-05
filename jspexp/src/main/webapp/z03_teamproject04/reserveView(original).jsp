@@ -14,7 +14,7 @@
 	border:4px solid lightgrey;
 	border-radius:10px;
 	width:1200px;
-	height:600px;
+	height:700px;
 	position:fixed;
 	left:15%;
 	top:12%;
@@ -139,7 +139,7 @@
 		<hr>
 		<table id="reservelistTab">
 				<tr>
-					<%for(Olderproduct productInfo:reserveDao.buyReservePro(Login.getId())){ 
+					<%for(Olderproduct productInfo:reserveDao.salesViewPro(Login.getId(), "예약중")){ 
 						cartCnt = cartlistDao.cartProductCnt(productInfo.getProductno());
 					%>
 						<td>

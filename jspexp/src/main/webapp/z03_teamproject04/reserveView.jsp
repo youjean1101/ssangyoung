@@ -15,9 +15,9 @@
 	border:4px solid lightgrey;
 	border-radius:10px;
 	width:1200px;
-	height:600px;
+	height:700px;
 	position:fixed;
-	left:15%;
+	left:20%;
 	top:12%;
 }
 #reserveBox #name{
@@ -25,7 +25,7 @@
 	margin:15px 30px;
 }
 #reserveBox hr{
-	width:95%;
+	width:92%;
 	position:absolute;
 	top:11%;
 	left:3%;
@@ -123,13 +123,13 @@ var buyOb = document.querySelector("[name=buy]")
 var buyhrOb = document.querySelector("#buyhr")
 var saleshrOb = document.querySelector("#salesehr")
 var framePosition =document.querySelector("#reservframeposition")
-framePosition.innerHTML = "<iframe src='reserveView_buy.jsp' name='buyreserve' width='100%' height='600'></iframe>"
+framePosition.innerHTML = "<iframe src='reserveView_buy.jsp' name='buyreserve' width='100%' height='700'></iframe>"
 buyOb.onclick=function(){
 	this.style.color="black"
 	salesOb.style.color="grey"
 	buyhrOb.innerHTML="<hr>"
 	saleshrOb.innerHTML=""
-	framePosition.innerHTML = "<iframe src='reserveView_buy.jsp' name='buyreserve' width='100%' height='600'></iframe>"
+	framePosition.innerHTML = "<iframe src='reserveView_buy.jsp' name='buyreserve' width='100%' height='700'></iframe>"
 	
 }
 //-------------------------예약 판메중인 상품 목록 조회기능메서드------------------------------------
@@ -139,7 +139,7 @@ salesOb.onclick=function(){
 	this.style.color="black"
 	saleshrOb.innerHTML="<hr>"
 	buyhrOb.innerHTML=""
-	framePosition.innerHTML = "<iframe src='reserveView_sales.jsp' name='buyreserve' width='100%' height='600'></iframe>"
+	framePosition.innerHTML = "<iframe src='reserveView_sales.jsp' name='buyreserve' width='100%' height='700'></iframe>"
 }
 
 </script>
