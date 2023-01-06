@@ -26,6 +26,18 @@
 
 
 --%>
+	<h1>메인페이지</h1>
+	<h2>로그인 아이디:${sesMem.id}</h2>
+	<h2>로그인 이름:${sesMem.name}</h2>
+	<h2>로그인 권한:${sesMem.auth}</h2>
+	<input type="button" value="로그아웃" onclick="logout()"/>
+	<script>
+		function logout(){
+			if(confirm("로그아웃하시겠습니까?")){
+				location.href="a13_logout.jsp"
+			}
+		}
+	</script>
 
 
 </body>

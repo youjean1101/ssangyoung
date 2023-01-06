@@ -110,6 +110,17 @@
 	   font-size:1.2em;
 	}
 /* 내가 한 css */
+	input[name="ckAll"]{
+		width:20px;
+		height:20px;
+	}
+	#allSel{
+		position:fixed;
+		right:29%;
+		bottom:21%;
+		font-size:16pt;
+		font-weight:bold;
+	}
 	input[name="cartremoveSel"]{
 		width:20px;
 		height:20px;
@@ -140,6 +151,11 @@
 		font-size:25pt;
 		margin:15px 15px;
 	}
+	#poster img{
+		width:100%; 
+		height:100%; 
+		border-radius:10px 10px;
+	}
 </style>
 <script type="text/javascript">
 
@@ -163,23 +179,24 @@
 					<%for(Olderproduct productInfo:cartlistDao.cartProductInfo(Login.getId())){ 
 						cartCnt = cartlistDao.cartProductCnt(productInfo.getProductno());
 					%>
-					 <div class="flex-item">
+					<div class="flex-item">
 							<input type="checkbox" name="cartremoveSel" value="<%=productInfo.getProductno()%>"/>
-							<div id="poster"><img src=".\img\productPhoto\<%=productInfo.getProductname()%>.png" style="width:100%; height:100%; border-radius:10px 10px;"/></div>
-							<div id="title_price">
-								<div class="title"><%=productInfo.getProductname() %></div>
-								<div class="loc"><%=productInfo.getFaddressval()%> <%=productInfo.getSaddressval()%> <%=productInfo.getCaddressval()%></div>
-								<div class="price"><%=productInfo.getPrice()%>원&nbsp; &nbsp; &nbsp;	<span id="like">♡ <%=cartCnt %></span></div>
-							</div>
+							<label onclick="gotoProView(<%=productInfo.getProductno()%>)">
+								<div id="poster"><img src=".\img\productPhoto\<%=productInfo.getProductname()%>.png" /></div>
+								<div id="title_price">
+									<div class="title"><%=productInfo.getProductname() %></div>
+									<div class="loc"><%=productInfo.getFaddressval()%> <%=productInfo.getSaddressval()%> <%=productInfo.getCaddressval()%></div>
+									<div class="price"><%=productInfo.getPrice()%>원&nbsp; &nbsp; &nbsp;	<span id="like">♡ <%=cartCnt %></span></div>
+								</div>
+							</label>
 					</div>
 				<%} %>
 		
 			<%}else{ %>
 				<h2 id="nothing">찜 상품이 없습니다.</h2>
 			<%} %>
+			<div id="allSel">전체선택 <input type="checkbox" name="ckAll" onclick="ckAllFn(this)"/></div>
 			<input type="button" name="cartCancel" value="찜 삭제하기" onclick="cartRemove()"/>
-			<!-- <input type="button" class="nextorprev" name="previous" value="◀"/>
-			<input type="button" class="nextorprev" name="next" value="▶"/> -->
 		</div>
 			<div class="pagination">
 	           <i class="fa-solid fa-arrow-left"></i>
@@ -195,6 +212,10 @@
 </body>
 <script type="text/javascript">
 
+//--------------------------상품클릭시, 상품정보페이지로 이동------------------------------------
+function gotoProView(obj){
+	location.href="productDetailView.jsp?productno="+obj
+}
 //--------------------------미로그인으로 접속 시, 기능메서드-------------------------------------
 	var alertis = <%=loginalert%>
 	if(alertis){
@@ -202,8 +223,8 @@
 		location.href="login.jsp";
 	}
 //-------------------------------------찜삭제 미체크시, 유효성체크 기능-----------------------------------
+var cartRemoveSelArr = document.querySelectorAll("[name=cartremoveSel]")
 function cartRemove(){
-	var cartRemoveSelArr = document.querySelectorAll("[name=cartremoveSel]")
 	var is_checked = false;
 	cartRemoveSelArr.forEach(function(prock){
 		if(prock.checked==true){
@@ -218,6 +239,12 @@ function cartRemove(){
 		}
 	}
 } 
+//--------------------------전체 체크 기능메서드---------------------------------------------
+function ckAllFn(obj){
+		for(var idx=0;idx<8;idx++){
+			cartRemoveSelArr[idx].checked = obj.checked	
+	}
+}
 //----------------------------------8개데이터가 나오면 next 숫자 창출력--------------------------------------
 callPageSelector()
 function callPageSelector(){

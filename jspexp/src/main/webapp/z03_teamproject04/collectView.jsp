@@ -124,7 +124,7 @@
     margin-top: -2px;
 }
 
-#checkbox input[type="checkbox"]{
+input[type="checkbox"]{
 	width:20px;
 	height:20px;
 }
@@ -185,7 +185,8 @@ input[name="collectCancel"]{
 		<form id="collectRemoveform" action="collectRemove.jsp"><!--   -->
 			<%if(socialDao.isCutCollectExist(Login.getId(),"모아")) {%>
 			<table id="collectTab">
-				<tr><th width="15%">checkBox</th><th width="15%">No.</th><th width="20%">ID</th><th width="50%">지역</th></tr>
+				<tr><th width="15%">전체선택 <input type="checkbox" name="ckAll" onclick="ckAllFn(this)"/></th>
+					<th width="15%">No.</th><th width="20%">ID</th><th width="50%">지역</th></tr>
 			</table>
 				<%for(Olddealuser collectuserinfo:socialDao.cutoutView(new Social(Login.getId(),"모아"))){ %>
 					<div class="flex-item">
@@ -220,8 +221,8 @@ input[name="collectCancel"]{
 <script type="text/javascript">
 
 //------------------------------미체크 시, 유효성체크 기능메서드-------------------------------------------- 
+var collectRemoveUserSelArr = document.querySelectorAll("[name=removeUserSel]")
 function collectremove(){
-	var collectRemoveUserSelArr = document.querySelectorAll("[name=removeUserSel]")
 	var is_checked = false;
 	collectRemoveUserSelArr.forEach(function(userck){
 		if(userck.checked==true){
@@ -236,6 +237,15 @@ function collectremove(){
 		}
 	}
 }  
+//--------------------------전체 체크 기능메서드---------------------------------------------
+function ckAllFn(obj){
+			//해당 내용이 checked가 true이면 전체 checked
+			// false이면 전체 unchecked
+		for(var idx=0;idx<8;idx++){
+			collectRemoveUserSelArr[idx].checked = obj.checked	
+			// 각요소객체를 이벤트로 할당.
+	}
+}
 //--------------------------미로그인 시, 기능메서드-------------------------------------
 var alertis = <%=loginalert%>
 if(alertis){
@@ -244,8 +254,9 @@ if(alertis){
 }
 //------------------------페이지 기능-------------------------------------------------------
 callPageSelector()
+
 function callPageSelector(){
-      const rowsPerPage =8; // 10개 씩 끊겟다.
+	  const rowsPerPage =8; // 10개 씩 끊겟다.
       const rows = document.querySelectorAll('.flex-item');// 게시글 row를 전체 선택
       //console.log(rows);
       const rowsCount = rows.length //게시글 전체의 갯수 
@@ -352,5 +363,6 @@ function callPageSelector(){
          
       });
    }
+
 </script>
 </html>

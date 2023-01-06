@@ -61,7 +61,7 @@
 }
 #buybox hr{
 	width:70%;
-	border:0;
+	border:0;ㅛㅕ
     height:2px;
     background:grey;
 }
@@ -74,7 +74,14 @@
 #reservframeposition iframe{
 	border:none;
 }
-
+#reserveBox h4{
+	position:absolute;
+	top:-7%;
+	left:5%;
+	font-size:11pt;
+	color:rgb(74 79 90);
+	font-weight:-100;
+}
 </style>
 <script type="text/javascript">
 	
@@ -84,16 +91,13 @@
 <body>
 	<jsp:include page=".\frame\frame.jsp"></jsp:include>
 	<%
-		reservedao reserveDao = new reservedao();
-		cartlistdao cartlistDao = new cartlistdao();
-		int cartCnt=0;
 		Olddealuser Login = (Olddealuser)session.getAttribute("Login");
 		boolean hasSess = Login!=null; 
 		boolean loginalert=false;
 		if(hasSess){
 	%>
 	<box id="reserveBox">
-		<h2 id="name"><%=Login.getNickname() %>님의 예약중인 상품목록</h2>
+		<h2 id="name"><%=Login.getUsername() %>님의 예약중인 상품목록</h2>
 		<hr>
 		<div id="reservframeposition"></div>
 			<box id="buybox">
@@ -104,6 +108,7 @@
 				<div id="salesehr"></div><br>
 				<input type="button" class="button" name="sales" value="판매"/>
 			</box>
+		<h4>* 상품 클릭으로 예약시간 확인 가능</h4>
 	</box>
 	<%}else{
 		loginalert=true;
@@ -139,7 +144,7 @@ salesOb.onclick=function(){
 	this.style.color="black"
 	saleshrOb.innerHTML="<hr>"
 	buyhrOb.innerHTML=""
-	framePosition.innerHTML = "<iframe src='reserveView_sales.jsp' name='buyreserve' width='100%' height='700'></iframe>"
+	framePosition.innerHTML = "<iframe src='reserveView_sales.jsp' name='salesreserve' width='100%' height='700'></iframe>"
 }
 
 </script>

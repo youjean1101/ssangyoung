@@ -122,7 +122,7 @@ li{
     margin-top: -2px;
 }
 
-#checkbox input[type="checkbox"]{
+input[type="checkbox"]{
 	width:20px;
 	height:20px;
 }
@@ -184,7 +184,8 @@ input[name="cutoutCancel"]{
 		<form id="cutoutRemoveform" action="cutoutRemove.jsp"><!--  -->
 			<%if(socialDao.isCutCollectExist(Login.getId(),"차단")) {%>
 			<table id="cutoutTab">
-				<tr><th width="15%">checkBox</th><th width="15%">No.</th><th width="20%">ID</th><th width="50%">지역</th></tr>
+				<tr><th width="15%">전체선택 <input type="checkbox" name="ckAll" onclick="ckAllFn(this)"/></th>
+					<th width="15%">No.</th><th width="20%">ID</th><th width="50%">지역</th></tr>
 			</table>
 				<%for(Olddealuser cutoutuserinfo:socialDao.cutoutView(new Social(Login.getId(),"차단"))){ %>
 					<div class="flex-item">
@@ -216,8 +217,8 @@ input[name="cutoutCancel"]{
 </body>
 <script type="text/javascript">
 //------------------------------미체크 시, 유효성체크 기능메서드-------------------------------------------- 
+var cutoutRemoveUserSelArr = document.querySelectorAll("[name=removeUserSel]")
 function cutoutremove(){
-	var cutoutRemoveUserSelArr = document.querySelectorAll("[name=removeUserSel]")
 	var is_checked = false;
 	cutoutRemoveUserSelArr.forEach(function(userck){
 		if(userck.checked==true){
@@ -232,6 +233,12 @@ function cutoutremove(){
 		}
 	}
 } 
+//--------------------------전체 체크 기능메서드---------------------------------------------
+function ckAllFn(obj){
+		for(var idx=0;idx<8;idx++){
+			cutoutRemoveUserSelArr[idx].checked = obj.checked	
+	}
+}
 //--------------------------미로그인으로 회원수정화면접속 시, 기능메서드-------------------------------------
 var alertis = <%=loginalert%>
 if(alertis){

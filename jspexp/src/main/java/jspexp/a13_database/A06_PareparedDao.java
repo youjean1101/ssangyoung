@@ -1,6 +1,5 @@
 package jspexp.a13_database;
-//jspexp.a13_database.A06_PareparedDao
-// getDeptList(Dept sch)
+//jspexp.a13_database.A06_PareparedDao 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -139,8 +139,10 @@
 			if(hasSess){
 				if(reserveDao.isBuyViewPro(Login.getId(),"예약중")){
 					for(Olderproduct productInfo:reserveDao.buyViewPro(Login.getId(),"예약중")){ 
-					cartCnt = cartlistDao.cartProductCnt(productInfo.getProductno());
+						cartCnt = cartlistDao.cartProductCnt(productInfo.getProductno());
+						for(Reserve reserveinfo:reserveDao.reserveView(productInfo.getProductno(), Login.getId(),"구매")){
 		%>
+			<label onclick="gotoReserveInfo('<%=reserveinfo.getDate()%>')">
 			<div class="flex-item">
 				<div id="poster"><img src=".\img\productPhoto\<%=productInfo.getProductname()%>.png"  style="width:100%; height:100%; border-radius:10px 10px;"/></div>
 				<div id="title_price">
@@ -151,7 +153,9 @@
 						<div class="price"><%=productInfo.getPrice()%>원&nbsp; &nbsp; &nbsp;	<span id="like">♡ <%=cartCnt %></span></div>
 				</div>
 			</div>
-				<%	} %>
+			</label>
+				<%		}
+					} %>
 		</div>
 		<div class="pagination">
 	           <i class="fa-solid fa-arrow-left"></i>
@@ -167,6 +171,10 @@
 		
 </body>
 <script type="text/javascript">
+//--------------------------상품클릭시, 예약시간 알람 출력------------------------------------
+function gotoReserveInfo(obj){
+		alert("\n                                [예약시간: "+obj+"]")
+}
 //------------------------페이지 기능-------------------------------------------------------
 callPageSelector()
 function callPageSelector(){

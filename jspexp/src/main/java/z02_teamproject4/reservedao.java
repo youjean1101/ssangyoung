@@ -324,6 +324,51 @@ public class reservedao {
 		}
 		return prohas;
 	}
+//--------------------------------예약시간 알람출력 기능메서드----------------------------------------------
+	public List<Reserve> reserveView(int pno,String id,String sel){
+		List<Reserve> rlist = new ArrayList<Reserve>();
+		String sql = "SELECT * FROM reserve r,olderproduct p \r\n"
+					+ "WHERE r.productno=p.productno\r\n"
+					+ "AND p.productno=?";
+		switch(sel) {
+			case "판매":
+					sql += "AND p.writerid=?";
+					break;
+			case "구매": 
+					sql += "AND r.id=?";
+					break;
+			default: 
+				break;
+		}
+		
+		try {
+			con = DB.con();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1,pno);
+			pstmt.setString(2,id);
+			rs = pstmt.executeQuery();
+			/*
+			Reserve(String rno, String date, int sugprice, String reservation, String id, int productno)
+			 */
+			while(rs.next()) {
+				rlist.add(new Reserve(rs.getString("rno"),
+									rs.getString("resdate"),
+									rs.getInt("sugprice"),
+									rs.getString("reservation"),
+									rs.getString("id"),
+									rs.getInt("productno")
+						));
+			}
+			con.commit();
+		} catch (SQLException e) {
+			System.out.println("DB에러:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("일반 에러:"+e.getMessage());
+		}finally {
+			DB.close(rs, pstmt, con);
+		}
+		return rlist;
+	}
 
 //-------------------------------- main()-----------------------------------	
 	public static void main(String[] args) {

@@ -91,7 +91,7 @@
 		if(hasSess){
 	%>
 	<box id="buyViewBox">
-		<h2 id="name"><%=Login.getNickname() %>님의 구매내역</h2>
+		<h2 id="name"><%=Login.getUsername()%>님의 구매내역</h2>
 		<hr>
 		<div id="buyViewframeposition"></div>
 			<box id="reservebox">

@@ -22,10 +22,23 @@
 
 </head>
 <body>
-<%-- 
-
-
---%>
+	<%
+	// 특정한 session 삭제
+	session.removeAttribute("sesMem");
+	// 쿠키 삭제 1.
+	/* Cookie[] cookie = request.getCookie();
+	if(cookies!=null){
+		for()
+	} */
+	// 쿠키 삭제 2.
+	Cookie c1 = new Cookie("id",""); Cookie c2 = new Cookie("passwd","");
+	c1.setMaxAge(0); c2.setMaxAge(0); c1.setPath("/"); c2.setPath("/");
+	response.addCookie(c1); response.addCookie(c2); 
+	%>
+	<script>
+		alert("로그아웃")
+		location.href="a10_loginAuto.jsp"
+	</script>
 
 
 </body>

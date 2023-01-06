@@ -147,8 +147,8 @@ input[name='complete']{
 	<jsp:include page=".\frame\frame.jsp"></jsp:include>
 	<%
 		Olddealuser Login = (Olddealuser)session.getAttribute("Login");
-		String productno= request.getParameter("productno");
-		int iProductno = Integer.parseInt(productno);
+		Random Productno = new Random();
+		int iProductno = Productno.nextInt(30);
 		olderproductdao proDao = new olderproductdao();
 		cartlistdao cartlistDao = new cartlistdao();
 		reservedao reserveDao = new reservedao();

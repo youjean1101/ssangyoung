@@ -139,17 +139,22 @@
 					if(reserveDao.isReserveViewPro("판매예약",Login.getId())){
 						for(Olderproduct productInfo:reserveDao.buysalesReservePro("판매예약",Login.getId())){ 
 						cartCnt = cartlistDao.cartProductCnt(productInfo.getProductno());
+						for(Reserve reserveinfo:reserveDao.reserveView(productInfo.getProductno(), Login.getId(),"판매")){
 				%>
-				<div class="flex-item">
-					<div id="poster"><img src=".\img\productPhoto\<%=productInfo.getProductname()%>.png" style="width:100%; height:100%; border-radius:10px 10px;"/></div>
-					<div id="title_price">
-						<div class="title"><%=productInfo.getProductname() %></div>
-						<div class="loc">
-						<%=productInfo.getFaddressval()%> <%=productInfo.getSaddressval()%> <%=productInfo.getCaddressval()%></div>
-						<div class="price"><%=productInfo.getPrice()%>원&nbsp; &nbsp; &nbsp; &nbsp;	<span id="like">♡ <%=cartCnt %></span></div>
+				<label onclick="gotoReserveInfo('<%=reserveinfo.getDate()%>')"> 
+					<div class="flex-item">
+						<div id="poster"><img src=".\img\productPhoto\<%=productInfo.getProductname()%>.png" style="width:100%; height:100%; border-radius:10px 10px;"/></div>
+						<div id="title_price">
+							<div class="title"><%=productInfo.getProductname() %></div>
+							<div class="loc">
+							<%=productInfo.getFaddressval()%> <%=productInfo.getSaddressval()%> <%=productInfo.getCaddressval()%></div>
+							<div class="price"><%=productInfo.getPrice()%>원&nbsp; &nbsp; &nbsp; &nbsp;	<span id="like">♡ <%=cartCnt %></span></div>
+						</div>
 					</div>
-				</div>
-				<%} %>
+				</label>
+				<%	}
+				} 
+				%>
 			</div>
 			<div class="pagination">
 	           <i class="fa-solid fa-arrow-left"></i>
@@ -165,6 +170,10 @@
 
 </body>
 <script type="text/javascript">
+//--------------------------상품클릭시, 예약시간 알람 출력------------------------------------
+function gotoReserveInfo(obj){
+		alert("\n                                [예약시간: "+obj+"]")
+}
 //------------------------페이지 기능-------------------------------------------------------
 callPageSelector()
 function callPageSelector(){

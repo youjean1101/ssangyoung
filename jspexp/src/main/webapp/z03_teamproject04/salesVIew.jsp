@@ -103,7 +103,7 @@
 		if(hasSess){
 	%>
 	<box id="salesViewBox">
-		<h2 id="name"><%=Login.getNickname() %>님의 판매내역</h2>
+		<h2 id="name"><%=Login.getUsername() %>님의 판매내역</h2>
 		<hr>
 		<div id="salesViewframeposition"></div>
 			<box id="salesingbox">

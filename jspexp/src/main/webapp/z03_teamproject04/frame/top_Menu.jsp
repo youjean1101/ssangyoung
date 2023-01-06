@@ -98,7 +98,7 @@
 			<ul>
 				<tr>
 					<td><a href="main.jsp"><img name="logo" src=".\img\olderword Logo.png" /></a></td>
-					<td width="12.5%"><a class="textclass" href="productDetailView.jsp">구매하기</a></td>
+					<td width="12.5%"><a class="textclass" href="productDetailView2.jsp">구매하기</a></td>
 					<td width="12.5%"><a class="textclass" href="#">판매하기</a></td>
 					<td width="20%"><a class="textclass" href="#">문의하기</a></td>
 					<form method="get">

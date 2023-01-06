@@ -50,8 +50,9 @@
 	--%>
 	<form method="post" action="a11_loginProcDB.jsp">
 		아이디:<input type="text" name="id" /><br>
-		패스워드:<input type="password" name="pass" /><br>
-		<input type="checkbox" name="loginChk" />로그인 상태 유지<br>
+		패스워드:<input type="password" name="passwd" /><br>
+		<input type="checkbox" name="loginChk" value="true"/>로그인 상태 유지<br>
+		<!-- type="checkbox"인 경우 check가 되어 있을 때만 value값이 전송된다.-->
 		<input type="submit" value="로그인" /><br>
 	</form>
 </body>
@@ -59,7 +60,7 @@
 		var ckCookie = "${cookie.id.value}" // 쿠키값 확인(id라는 쿠키값이 있으면)
 		// 바로 메인화면으로 이동 처리
 		if(ckCookie!=""){
-			location.href="a12_main.jsp"
+			location.href="a11_loginProcDB.jsp"
 		}
 	
 	</script>

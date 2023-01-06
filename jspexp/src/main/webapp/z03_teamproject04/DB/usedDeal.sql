@@ -93,7 +93,7 @@ CREATE SEQUENCE productno_seq
 		MAXVALUE 100000;
 DROP SEQUENCE productno_seq;
 DELETE FROM olderproduct;
-DELETE FROM olderproduct WHERE productno=6;
+DELETE FROM olderproduct WHERE productno=10;
 
 UPDATE olderproduct SET dealstat='예약중' WHERE productno=18;
 SELECT* FROM olderproduct ORDER BY productno;
@@ -103,9 +103,12 @@ SELECT * FROM olderproduct p, reserve r
 WHERE p.productno = r.productno
 AND r.id='yujin'
 AND p.dealstat='거래완료';
-SELECT * FROM olderproduct;
-WHERE writerid='test'
+SELECT productno,productname,price,dealstat,writerid FROM olderproduct
+WHERE writerid='test3'
+AND dealstat='거래완료';
+AND productno=9 OR productno=10 OR productno=23;
 AND (dealstat='판매중' OR dealstat='예약중');
+SELECT * FROM olderproduct;
 
 INSERT INTO olderproduct values(productno_seq.nextval,'아기신발','신발','현금결제',30000,'X','X',
 '아기가 금방 자라서 얼마신지 못 했네요.. 깨끗합니다.','20221222','판매중','서울특별시','마포구','월드컵북로','21 풍성빌딩2층','miri');
@@ -246,16 +249,25 @@ DROP SEQUENCE reserve_seq;
 SELECT * FROM olderproduct;
 SELECT*FROM reserve;
 
+SELECT rno, r.id,r.productno,productname,price,dealstat,writerid FROM reserve r,olderproduct p 
+WHERE r.productno=p.productno
+AND r.id='yujin';
+AND dealstat ='예약중'; -- 구매내역검색
 SELECT*FROM reserve r,olderproduct p 
 WHERE r.productno=p.productno
-AND r.id='yujin'
-AND dealstat ='예약중'; -- 구매내역검색
+AND p.writerid='yujin'
+AND dealstat ='예약중'; -- 판매내역검색
+SELECT * FROM reserve r,olderproduct p 
+WHERE r.productno=p.productno
+AND p.productno='yujin'
+AND dealstat ='예약중'; -- 판매내역검색
 INSERT INTO reserve values('buy'||reserve_seq.nextval,sysdate,15000,'O','test',0);
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-28 16:01',15000,'O','yujin',0);
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-28 16:01',15000,'O','yujin',1);
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-31 17:00',15000,'O','yujin',2);
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-31 17:00',15000,'O','yujin',3);
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-31 17:00',15000,'O','yujin',7);
+INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-31 17:00',15000,'O','yujin',6);
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2023-01-01 13:00',15000,'O','yujin',4);
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2023-01-01 13:00',15000,'O','yujin',8);
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-01 13:00',15000,'O','test2',10);
@@ -268,8 +280,12 @@ INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-21 13:00',15000,'
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-26 13:00',15000,'O','test9',17);
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-23 13:00',15000,'O','test10',18);
 INSERT INTO reserve values('buy'||reserve_seq.nextval,'2022-12-30 13:00',15000,'O','test11',19);
-DELETE FROM reserve WHERE rno='buy0';
+DELETE FROM reserve WHERE rno='buy20';
 SELECT * FROM reserve ORDER BY productno;
+SELECT * FROM reserve WHERE id='yujin';
+SELECT * FROM reserve WHERE id='test';
+DELETE FROM reserve WHERE productno=10;
+
 SELECT * FROM olderproduct
 WHERE dealstat='예약중';
 AND writerid='yujin';
@@ -316,7 +332,7 @@ CREATE TABLE cartlist(
 	id varchar2(20) CONSTRAINT cartlist_id_fk REFERENCES olddealuser(id)--아이디
 );
 DROP TABLE cartlist;
-
+SELECT * FROM cartlist;
 SELECT * FROM cartlist WHERE id='yujin';
 SELECT * FROM cartlist WHERE productno='1' AND id='yujin'; 
 INSERT INTO cartlist values(0,'yujin');
@@ -330,12 +346,65 @@ INSERT INTO cartlist values(7,'yujin');
 INSERT INTO cartlist values(8,'yujin');
 INSERT INTO cartlist values(9,'yujin');
 INSERT INTO cartlist values(0,'test');
-INSERT INTO cartlist values(1,'test2');
 INSERT INTO cartlist values(1,'test3');
+INSERT INTO cartlist values(1,'test4');
+INSERT INTO cartlist values(1,'test5');
+INSERT INTO cartlist values(1,'test6');
+INSERT INTO cartlist values(1,'test7');
+INSERT INTO cartlist values(1,'test8');
+INSERT INTO cartlist values(2,'test1');
+INSERT INTO cartlist values(2,'test2');
+INSERT INTO cartlist values(2,'test3');
+INSERT INTO cartlist values(2,'test4');
+INSERT INTO cartlist values(2,'test5');
+INSERT INTO cartlist values(2,'test6');
+INSERT INTO cartlist values(2,'test7');
+INSERT INTO cartlist values(2,'test8');
+INSERT INTO cartlist VALUES(3,'test1');
+INSERT INTO cartlist VALUES(3,'test2');
+INSERT INTO cartlist VALUES(3,'test3');
+INSERT INTO cartlist VALUES(3,'test7');
+INSERT INTO cartlist VALUES(3,'test5');
+INSERT INTO cartlist VALUES(4,'test1');
+INSERT INTO cartlist VALUES(4,'test2');
+INSERT INTO cartlist VALUES(4,'test3');
+INSERT INTO cartlist VALUES(5,'test4');
+INSERT INTO cartlist VALUES(5,'test6');
+INSERT INTO cartlist VALUES(5,'test7');
+INSERT INTO cartlist VALUES(6,'test8');
+INSERT INTO cartlist VALUES(6,'test9');
+INSERT INTO cartlist VALUES(7,'test10');
+INSERT INTO cartlist VALUES(7,'test11');
+INSERT INTO cartlist VALUES(8,'test12');
+INSERT INTO cartlist VALUES(9,'test13');
+INSERT INTO cartlist VALUES(11,'test11');
+INSERT INTO cartlist VALUES(11,'test12');
+INSERT INTO cartlist VALUES(11,'test13');
+INSERT INTO cartlist VALUES(16,'test14');
+INSERT INTO cartlist VALUES(16,'test13');
+INSERT INTO cartlist VALUES(16,'test12');
+INSERT INTO cartlist VALUES(16,'test11');
+INSERT INTO cartlist VALUES(16,'test10');
+INSERT INTO cartlist VALUES(17,'test15');
+INSERT INTO cartlist VALUES(18,'test16');
+INSERT INTO cartlist VALUES(18,'test17');
+INSERT INTO cartlist VALUES(19,'test19');
+INSERT INTO cartlist VALUES(19,'test2');
+INSERT INTO cartlist VALUES(20,'test1');
+INSERT INTO cartlist VALUES(20,'test2');
+INSERT INTO cartlist VALUES(20,'test3');
+INSERT INTO cartlist VALUES(20,'test4');
+INSERT INTO cartlist VALUES(20,'test5');
+INSERT INTO cartlist VALUES(20,'test6');
+INSERT INTO cartlist VALUES(20,'test7');
+INSERT INTO cartlist VALUES(21,'test11');
+INSERT INTO cartlist VALUES(22,'test12');
+INSERT INTO cartlist VALUES(22,'test13');
+
 DELETE FROM cartlist WHERE productno=1; 
 DELETE FROM cartlist; 
-DELETE FROM cartlist WHERE id='yujin' and productno=1; 
-
+DELETE FROM cartlist WHERE id='yujin' and productno=3; 
+SELECT * FROM olderproduct;
 SELECT count(productno) FROM cartlist WHERE productno=1;
 SELECT * FROM olderproduct p,cartlist c
 WHERE c.productno = p.productno
@@ -387,8 +456,9 @@ INSERT INTO social values('yujin','모아','test19');
 INSERT INTO social values('yujin','모아','test20');
 INSERT INTO social values('yujin','모아','test');
 INSERT INTO social values('test','모아','test2');
-INSERT INTO social values('yujin','차단','test2');
-INSERT INTO social values('yujin','차단','test');
+INSERT INTO social values('test','모아','test3');
+INSERT INTO social values('test','모아','test4');
+INSERT INTO social values('test','모아','test5');
 INSERT INTO social values('yujin','차단','test3');
 INSERT INTO social values('yujin','차단','test4');
 INSERT INTO social values('yujin','차단','test5');
@@ -399,8 +469,11 @@ INSERT INTO social values('yujin','차단','test9');
 INSERT INTO social values('yujin','차단','test10');
 INSERT INTO social values('yujin','차단','test11');
 INSERT INTO social values('yujin','차단','test12');
+INSERT INTO social values('yujin','차단','test13');
+INSERT INTO social values('yujin','차단','test14');
+INSERT INTO social values('yujin','차단','test15');
 
-DELETE FROM social 
+DELETE FROM social;
 WHERE id='yujin' 
 AND typediv='모아'
 AND otherid='test';
