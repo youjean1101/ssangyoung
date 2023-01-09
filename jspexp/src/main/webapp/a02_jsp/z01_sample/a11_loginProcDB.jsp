@@ -30,7 +30,7 @@
       <%
          Cookie ck1 = new Cookie("id", reqMem.getId());      
          Cookie ck2 = new Cookie("passwd", reqMem.getPasswd());
-         ck1.setMaxAge(60*60*24); ck1.setPath("/");
+         ck1.setMaxAge(60*60*24); ck1.setPath("/"); //분*시*하루
          ck2.setMaxAge(60*60*24); ck2.setPath("/");
          response.addCookie(ck1);
          response.addCookie(ck2);

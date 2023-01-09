@@ -1,5 +1,7 @@
 '''
 # DB연결과 조회 처리
+0. 환경설정 path setting
+
 1. oracle 연동 lib 설정
     pip install cx_oracle
     import cx_oracle as oci
@@ -21,3 +23,5 @@
 import cx_Oracle as oci
 conn = oci.connect("scott/tiger@localhost:1521/xe")
 print("연결확인(version):", conn.version)
+# 1. pip 설치확인
+# 2. pip 설정확인

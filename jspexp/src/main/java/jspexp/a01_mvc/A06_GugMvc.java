@@ -19,6 +19,7 @@ public class A06_GugMvc extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//요청값
 		String num01S = request.getParameter("num01");
 		String num02S = request.getParameter("num02");
 		// 모델데이터

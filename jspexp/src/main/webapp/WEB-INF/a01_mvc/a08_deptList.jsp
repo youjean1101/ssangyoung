@@ -22,25 +22,17 @@
 
 </head>
 <body>
-	<%
-	// 특정한 session 삭제
-	session.removeAttribute("sesMem");
-	// session.invailidate() : 모든 세션값 삭제
-	// 쿠키 삭제 1.
-	/* Cookie[] cookie = request.getCookie();
-	if(cookies!=null){
-		for()
-	} */
-	// 쿠키 삭제 2.
-	Cookie c1 = new Cookie("id",""); Cookie c2 = new Cookie("passwd","");
-	c1.setMaxAge(0); c2.setMaxAge(0); c1.setPath("/"); c2.setPath("/");
-	response.addCookie(c1); response.addCookie(c2); 
-	%>
-	<script>
-		alert("로그아웃")
-		location.href="a10_loginAuto.jsp"
-	</script>
-
+	<form method="post">
+		부서명:<input type="text" name="dname" value="${param.dname}"/><br>
+		지역:<input type="text" name="loc" value="${param.loc}"/>
+		<input type="submit" value="검색" /><br>
+	</form>
+	<table>
+	<tr><th>부서번호</th><th>부서명</th><th>지역</th></tr>
+	<c:forEach var="dept" items="${deptList}">
+		<tr><td>${dept.deptno}</td><td>${dept.dname}</td><td>${dept.loc}</td></tr>
+	</c:forEach>
+	</table>
 
 </body>
 <script type="text/javascript">

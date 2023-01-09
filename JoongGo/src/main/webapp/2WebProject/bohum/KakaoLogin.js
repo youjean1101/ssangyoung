@@ -3,7 +3,7 @@ var connected_at="";
 var email="";
 var gender="";
 //카카오로그인
-Kakao.init('2a473c69bff1309d2f663ecd4ff2b413'); //발급받은 키 중 javascript키를 사용해준다.
+Kakao.init('3f3833946c18cf3c7278e2509e86c4ae'); //발급받은 키 중 javascript키를 사용해준다.
 function kakaoLogin(){
 	console.log(Kakao.isInitialized()); // sdk초기화여부판단
     Kakao.Auth.login({
