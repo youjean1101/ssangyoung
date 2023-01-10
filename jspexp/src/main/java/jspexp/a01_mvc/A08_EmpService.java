@@ -2,6 +2,8 @@ package jspexp.a01_mvc;
 
 import java.util.List;
 
+import com.google.gson.Gson;
+
 import jspexp.a13_database.A02_EmpDao;
 import jspexp.vo.Emp;
 // 주요 핵심 로직 처리 후, 모델로 사용할 핵심 데이터를 리턴
@@ -10,6 +12,13 @@ public class A08_EmpService {
 	private Emp sch;
 	public A08_EmpService() {
 		dao = new A02_EmpDao();
+	}
+	// array/object ==> json 문자열
+	public String empAjax(String ename,String job, String frSalS, String toSalS) {
+		sch = getEmp(ename, job, frSalS, toSalS);
+		Gson g = new Gson();
+		System.out.println(g.toJson(sch));
+		return g.toJson(empList());
 	}
 	public Emp getEmp(String ename, String job,String frSalS, String toSalS) {
 		if(ename==null) ename="";

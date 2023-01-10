@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+/*
+
+ */
+</script>
+</head>
+<body>
+	<h2>회원등록</h2>
+	아이디 : <input type="text" name="id" />
+	<input type="button" value="등록여부확인" id="chIdBtn" />
+	<input type="hidden" id="passIdck" value="false" />
+
+</body>
+<script type="text/javascript">
+var idObj = document.querySelector("[name=id]");
+var chIdBtn = document.querySelector("#chIdBtn");
+var passIdckObj = document.querySelector("#passIdck");
+idObj.onkeyup=function(){
+	// 글자 유효성 check(8~18)
+	if(event.keyCode==13){
+		validChk();
+	}
+}
+chIdBtn.onclick=validChk;
+function validChk(){
+	if(this.value=="아이디 재등록"){
+		this.value="등록여부확인"
+		passIdckObj.value = "false"
+		idObj.readOnly=""
+		idObj.focus()
+	}else{
+		var idLen = idObj.value.length;
+		if(idLen>=5 && idLen<=18){
+			idCkAjax()
+		}else{
+			alert("등록할 아이디는 8~18 가능합니다.")
+		}
+	}
+}
+function idCkAjax(){
+	var xhr = new XMLHttpRequest();
+	xhr.open("get", "/member.do?id="+idObj.value, true);
+	xhr.send()
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState==4 && xhr.status==200){
+			console.log(xhr.responseText)
+			var hasId = JSON.parse(xhr.responseText)
+			if( hasId ){
+				alert("등록된 아이디 입니다.");
+			}else{
+				alert("등록 가능한 아이디입니다.");
+				passIdckObj.value="true" // 최종적으로 회원 등록시(주의 최종등록시 id가 입력가능한 것 체크했는지 확인) 
+				idObj.readOnly="readOnly" // 일단 인증이 되었을 때는 변경 못하게 
+				chIdBtn.value="아이디 재등록"
+			}
+		}
+	}
+}
+
+</script>
+</html>

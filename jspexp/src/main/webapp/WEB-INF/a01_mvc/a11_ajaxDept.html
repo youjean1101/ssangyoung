@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/
+
+</style>
+<script>
+
+</script>
+</head>
+<body>
+	<h2>부서정보(ajax)</h2>
+	<table>
+		<tr><th>부서명:</th><td><input type="text" name="dname" /></td></tr>
+		<tr><th>지역:</th><td><input type="text" name="loc"/></td></tr>
+		<tr><td colspan="2"><input type="button" value="검색" id="schBtn"/></td></tr>
+	</table>
+	<table id="deptTab">
+		<thead>
+		<th>부서번호</th><th>부서명</th><th>지역</th>
+		</thead>
+		<tbody></tbody>
+	</table>
+
+</body>
+<script type="text/javascript">
+var dnameObj = document.querySelector("[name=dname]");
+var locObj = document.querySelector("[name=loc]");
+var schBtn = document.querySelector("#schBtn");
+var show = document.querySelector("#deptTab tbody")
+dnameObj.onkeyup=function(){
+	if(event.keyCode==13) callAjax();
+}
+locObj.onkeyup=function(){
+	if(event.keyCode==13) callAjax();
+}
+schBtn.onclick=function(){
+	callAjax();
+}
+dnameObj.focus();
+callAjax();
+
+function callAjax(){
+	var xhr = new XMLHttpRequest()
+	var dname = dnameObj.value
+	var loc = locObj.value
+	var qsr = "dname="+dname+"&loc="+loc
+	xhr.open("get","/ajaxDept.do?"+qsr,true)
+	xhr.send()
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState==4&&xhr.status==200){
+			console.log(xhr.responseText)
+			var deptList = JSON.parse(xhr.responseText)
+			var addHTML = ""
+			deptList.forEach(function(dept){
+				addHTML+="<tr>"
+				addHTML+="<td>"+dept.deptno+"</td>"
+				addHTML+="<td>"+dept.dname+"</td>"
+				addHTML+="<td>"+dept.loc+"</td>"
+				addHTML+="</tr>"
+			})
+			show.innerHTML = addHTML
+		}
+	}
+
+}
+</script>
+</html>

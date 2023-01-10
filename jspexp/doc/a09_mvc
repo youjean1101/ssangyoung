@@ -193,7 +193,106 @@ ex) 구구단 예제 :
 		4. Dao	요리를 완성
 	5. 화면단(view) 담는 그릇(이쁜 접시에 좋은 데코)
 3. View(jsp) 카르보나 스파게티를 좋은 모양에 담아서 손님에게 전달
+
+# MVC활용한 json 데이터 처리(ajax 처리)
+1. 프로세스
+	1) controller단에 의해 초기 화면 로딩 : html 
+	2) key이벤트에 의해서 ajax호출(요청값 전달)
+	3) controller단에서 요청값 전달
+	4) 전달할 json 문자열 만들기(List객체 ==> json 문자열)
+	5) client단에서 받은 json문자열 객체로 변환 : JSON.parse()
+	6) js 반복 처리로 출력 처리
+2. 핵심 코드
+	1) controller(A10_AjaxCtrl.java /empAjax.do)
+		// 요청값 처리
+		//http://localhost:7080/empAjax.do
+		String ename = request.getParameter("ename");
+		String job = request.getParameter("job");
+		String frSal = request.getParameter("frSal");
+		String toSal = request.getParameter("toSal");
+		// 서비스 호출
+		String json = service.empAjax(ename,job,frSal,toSal);
+		
+		//view (초기화면/json데이터)
+		if(ename==null){
+			request.getRequestDispatcher("WEB-INF\\\\a01_mvc\\\\a10_ajaxEmp.html").forward(request, response);
+		}else{
+			PrintWriter out = response.getWriter();
+			out.print(json); // xhr.responseText
+		}
+	2) service/dao(A08_EmpService.java, A02_EmpDao.java)
 	
+	3) view(a10_ajaxEmp.html) 
+		사원명:<input type="text" name="ename" class="schFrm"/>
+		직책명:<input type="text" name="job" class="schFrm"/>
+		급여(시작):<input type="text" name="frSal" class="schFrm"/>
+		급여(마지막):<input type="text" name="toSal" class="schFrm"/>
+		<table id="empTab">
+			<thead>
+				<th>사원번호</th><th>사원명</th>
+				<th>관리자번호</th><th>급여</th>
+				<th>보너스</th><th>부서명</th>
+			<tbody>
+		<script>
+		var enameObj = document.querySelector("[name=ename]");
+		var jobObj = document.querySelector("[name=job]");
+		var frSalObj = document.querySelector("[name=frSal]");
+		var toSalObj = document.querySelector("[name=toSal]");
+		var schFrms = document.querySelectorAll(".schFrms"); // 배열인 변수는 뒤에 s를 붙이는게 좋음.
+		schFrms.forEach(function(sch){
+			sch.onkeyup=function(){
+				if(event.keyCode==13){
+					callAjax();
+				}
+			}
+		})
+		
+		function callAjax(){
+			var xhr = new XMLHttpRequest()
+			var ename = enameObj.value // 코드가 복잡해질 경우, enameVal로 해도 좋음
+			var job = jobObj.value
+			var frSal = frSalObj.value
+			var toSal = toSalObj.value
+			var qsr = "ename="+ename+"&job="+job
+				+"&frSal="+frSal+"&toSal="+toSal
+			xhr.open("get","/empAjax.do?"+qsr,true)
+			xhr.send()
+			xhr.onreadystatechage=function(){
+				if(xhr.readyState==4&&xhr.status==200){
+					console.log(xhr.responseText)
+					// 문자열 json데이터가 js의 객체로 변환
+					var empList = JSON.parse(xhr.responseText);
+					// 반복문을 통해서 html을 만들어
+					// 출력할 body에 할당처리.
+				}
+			}
+		}
+연습예제
+1. 파일생성
+	controller
+		A11_AjaxDept.java(/ajaxDept.do)
+	view
+		a11_ajaxDept.html
+	service
+		A12_DeptService.java
+			A06_PareparedDao.java
+			getDeptList(Dept sch) 메서드 활용
+2. 뷰단 화면 구현 및 초기 화면 호출
+	a11_ajaxDept.html
+	검색 : dname, loc
+	리스트 테이블 : 부서번호, 부서명
+	이벤트 처리
+		keyup 시 console.log로 초기 데이터 출력
+
+3. service 구현
+	dao 호출
+	public String getDeptAjax(String dname, String loc){
+		return "";
+	}
+	public List<Dept> getDeptList(){
+		return dao.getDeptList(sch);
+	}
+4. 컨트롤러 처리 및 이벤트 처리 완료
 		
 	
 	

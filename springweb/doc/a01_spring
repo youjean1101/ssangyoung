@@ -1,0 +1,154 @@
+# 스프링의 지식체계 계열화
+1. 스프링의 기본 개념
+	1) 스프링 MVC
+	2) 컨테이너
+	3) 제어역전(DI)
+2. 스프링환경 설정(스프링 1단계)
+	1) 단계별 스프링 환경
+		- 1단계 : dynamic web project기반 스프링 환경 결정
+		- 2단계 : sts(spring tool suits) 툴을 이용한 스트링 부트 활용
+	2) lib : 필요한 jar 파일 복사
+		필요로 하는 웹 프로그램의 framework 활용
+	3) 컨테이너 설정
+		스프링 핵심(core) 처리로 xml 파일로 설정한다. 
+			(dispatcher-servlet.xml)
+		src\main\webapp\WEB-INF 가 default 설정 위치
+	4) web.xml 설정
+		스프링 프레임 워크 시작 front-controller 설정
+			dispatcherservlet(프레임워크 지원 클래스)
+			- 위 컨테이너 설정의 위치를 변경할 수 있다.
+		요청값(get/post)의 한글 처리를 위한 filtering 선언
+			(프레임워크 지원 클래스)
+	5) MVC처리를 위한
+		사용자 정의 controller/service/dao 선언
+		view단 선언 : WEB-INF하위에 보안폴드로 jsp/html 호출
+	6) 기타 front 프레임워크 및 lib 설정
+		- boot strap 설정
+		- jquery 설정
+	7) 초기 view단에서 위 front단 프레임워크 lib 호출 처리
+3. 스프링 MVC 처리 순서에 대한 이해 및 각각의 기능
+	1) client url을 통해 요청
+		http://아이피:port/springweb/start.do
+		http://localhost:7780/springweb/start.do
+		
+	2) server에서 처리 프로세스
+		- web.xml
+			설정된 내용 확인
+			 url 패턴 확인
+			  1. 마지막에 *.do로 끝나면 dispatcher 서블릿을 호출
+			  2. dispatcher : front-controller인 스프링의 DispatcherServlet을 호출
+			  3.  DispatcherServlet 객체는 컨테이너 설정을 포함하여 가지고 있는데,
+			 - dispatcher-servlet.xml
+			  4. 이 컨테이너 설정 위치가 default WEB-INF하위에 dispatcher-servlet.xml로
+			  5. XXX-servlet.xml에서 XXXX은 <servlet-name>dispatcher</servlet-name>에 의해 설정되어
+			  6. 컨테이너를 호출하고, 
+			  7. 컨테이너에 선언되어 있는 객체들을 메모리에 로딩한다.
+			  		<bean class="springweb.a01_start.A01_Controller"/>
+			  		ps) 메모리에 로딩된 상태에서 실행되는 것과 호출할 때, 메모리에 로딩되어 처리하는 것의 속도 차이
+			  		
+			 - Controller : @Controller(선언이 되야함)
+			  8. 컨테이너에 선언된 컨트롤러 중에../start.do 패턴으로 선언된 메서드를 찾아간다.
+			  9. @RequestMapping("/start.do") 로 선언된 메서드에서
+			  10. 요청값은 메서드 매개변수로
+			  11. 모델데이터는 Model d로 해서 처리가 되고
+			  12. 기능 메서드의 return "\\views\\a01_start\\a01_start.jsp"에 의해 
+			  		view단이 기본적으로 forward방식으로 호출되어
+			  13. 해당 뷰단은 모델데이터와 함께 출력이 된다.
+			   
+
+4. 스프링 컨테이너 이해를 위한 DI 설정 이해(*)
+
+5. 스프링 MVC 심화
+	1) controller의 요청값 옵션
+	2) 모델 설정
+	3) 뷰단 처리
+	4) session 활용
+6. 스프링의 database 처리를 위한 mybatis framework 활용
+	1) 1단계 기존 DAO활용
+	2) 2단계 MYBAITS활용
+7. 기타 실무예제
+	1) 파일업로드/다운로드
+	2) ajax 처리1
+		기초
+		jquery lib 활용 fullcalendar lib 사용
+		vue 연동 처리
+	3) 웹 소켓을 활용한 실시간 채팅
+	4) 다국어 처리
+	5) 메일 발송
+	6) aop
+	7) 페이지 처리 답변형 게시판
+	
+# 스프링 MVC 해보기
+1. controller롤 뷰단 호출
+	1) Controller만들기 @Controller 선언
+		springweb.a01_start.A01_Controller.java
+		// http://localhost:7080/springweb/start.do
+		@RequestMapping("/start.do")
+		public String start(){
+			return "/views/a01_start/a01_start.jsp";
+		}
+		// 위 주소를 호출할 때, return 할 view을 forward 처리한다.
+		
+	2) View단 선언
+		WEB-INF/views/a01_start/a01_start.jsp
+	
+	3) container에 등록(dispatcher-servlet.xml)
+		<bean class="springweb.a01_start.A01_Controller" />
+		스프링은 일단, 첫번째 컨트롤러를 호출할 때, 컨테이너에서 클래스를 
+		객체화하여 메모리에 로딩 후, 호출시에 로딩된 객체를 사용한다.
+		
+# 스프링의 MVC 처리
+1. 요청값 처리
+	/call.do?name=himan
+	public String call(@RequestParam("name") String name){
+		System.out.println("요청 이름:"+name);
+	}
+2. 모델 데이터 처리
+3. 요청 및 모델 데이터 처리
+	1) 초기 화면을 로딩
+		초기 화면 로딩 메서드 선언
+		@RequestMapping("call10.do")
+		\WEB-INF\views\a01_start\a10_callCalcu.jsp
+		<form action="${path}/call11.do">
+			물건가격:<input type="text" name="price" />
+			물건갯수:<input type="text" name="cnt" />
+			<input type="submit" value="총계" />
+			
+	2) 요청값 전달
+		@RequestParam("price") int price,
+		@RequestParam("cnt") int cnt
+		
+	3) 요청값에 따라 모델 데이터 설정
+		d.addAttribute("calcu",price*cnt);
+		
+	4) 화면 출력
+		물건 가격: ${param.price}
+		물건 갯수: ${param.cnt}
+		총계 : ${calcu}
+	
+# 요청값의 VO 객체 처리
+1. 스프링은 요청값을 VO객체로 property개념으로 처리할 수 있다.
+	- 이것을 modelAttribute라는 개념으로 사용하기도 한다.
+2. useBean
+	&ename=홍길동&empno=7800&&sal=3500.0
+	이런 요청값이 있을 때, 선언된 클래스의 기능메서드
+	setEname(String), setEmpno(int), setSal(double)
+	이 선언되어 있으면 <jsp:setProperty name="*" 을 통해서 자동 할당이 객체에서 일어난다.
+3. 스프링에서 요청값의 VO객체 할당 처리
+	public String empSch(Emp sch){
+		// 1. 이렇게 선언만 하면, 요청값이 위 객체 Emp에 property에
+		// 타입과 이름이 맞는 요청값이 들어오면 객체에 할당이 된다.
+		// 2. 모델데이터까지 객체로 선언이 자동으로 된다.
+		// 		${emp.ename} 
+		// 3. 요청값이 없으면 해당 객체로 default 처리를 한다.
+		//	주의) emp.do 요청값이 없으면 VO객체가 해당 내용을 자동으로 설정하는데 
+		//		 emp.do?empno=홍길동 : 이렇게 VO객체에 type이 다른 property를 
+		//		 호출하면 url 호출 조차 안된다.
+		//		 emp.do?empno=&ename= : 이 경우도 empno를 차라리 설정하지 않으면 
+		//		 호출되지만 empno= 은 ""공백데이터를 전달하기 setEmpno(int empno)
+		//		 와 맞지 않아, http://localhost:7080/springweb/emp.do 자체가 호출되지 않는 페이지가 된다.
+		
+ 	}
+	
+	
+	

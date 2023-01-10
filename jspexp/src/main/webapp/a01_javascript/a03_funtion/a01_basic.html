@@ -109,13 +109,12 @@ function call02(){
 		alert("선언적 함수")
 	} 
 
-call("홍길동") // 에러발생 - 익명(변수형) 함수는 선언 후에 호출해야 한다.
+//call("홍길동") // 에러발생 - 익명(변수형) 함수는 선언 후에 호출해야 한다.
 var call = function( name ){
 		alert("이름"+name)
 		return name+"을 부르다!!"
-	}
+	} 
 var body = document.body
 body.innerHTML="함수의 리턴값:"+call('홍길동')+"<br>"
-// 
 </script>
 </html>

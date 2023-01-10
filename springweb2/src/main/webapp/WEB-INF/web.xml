@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>springweb2</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+  </welcome-file-list>
+  <!--  1. front controller를 위한 선언 
+  		2. url에 마지막에 @@.do로 끝나야지 스프링 컨테이너를 호출하여 처리되게 함.-->
+  <servlet>
+  	<servlet-name>dispatcher</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  		<servlet-name>dispatcher</servlet-name>
+  		<url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  <!-- 
+  요청값에 대한 한글 encoding 위한 filtering 선언
+   -->
+   <filter>
+   	<filter-name>encodingFilter</filter-name>
+   	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+   	<init-param>
+   		<param-name>encoding</param-name>
+   		<param-value>utf-8</param-value>
+   	</init-param>
+   </filter>
+   <filter-mapping>
+   	<filter-name>encodingFilter</filter-name>
+   	<url-pattern>/*</url-pattern>
+   </filter-mapping>
+</web-app>
