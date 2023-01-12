@@ -11,7 +11,6 @@
 
 </style>
 <script>
-var div = document.quarySelector("div")
 
 function fun02(...pays){ // pays 사용자가 정의한 배열의 이름으로 매개변수 처리
 	var tot = 0;
@@ -28,12 +27,12 @@ function fun02(...pays){ // pays 사용자가 정의한 배열의 이름으로 �
 <body>
 	<div></div>
 	<table>
-	<tr>
-	<td onclick="fun02(7000)">1명 7000원</td>
-	<td onclick="fun02(7000,8000)">2명 7000,8000</td>
-	<td onclick="fun02(7000,8000,10000)">3명 7000,8000,10000</td></tr>
+		<tr>
+			<td onclick="fun02(7000)">1명 7000원</td>
+			<td onclick="fun02(7000,8000)">2명 7000,8000</td>
+			<td onclick="fun02(7000,8000,10000)">3명 7000,8000,10000</td>
+		</tr>
 	</table>
-	<div></div>
 	<p></p>
 </body>
 <script type="text/javascript">
@@ -48,7 +47,7 @@ function fun02(...pays){ // pays 사용자가 정의한 배열의 이름으로 �
 		한사람의 관람비용, 2사람의 관람비용, 3사람의 관람비용을 각각 매개변수르 다르게하여, 총 비용을 인원수와 함게 출력하세요.
 
  */
-var body = document.quarySelector("div")
+var body = document.querySelector("div")
 
 function fun01(var01, var02, ...numbers){
 	 //alert(numbers.length)

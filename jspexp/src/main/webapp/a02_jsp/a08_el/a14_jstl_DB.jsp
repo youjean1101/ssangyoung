@@ -44,7 +44,7 @@ form ==> submit ==> ?ename=&job=&frSal=&toSal=
 	<c:if test="${param.job}>${sch.setJob("")
 	<c:if test="${param.toSal}>${sch.setToSal(9999)
  --%>
-<jsp:useBean id="dao" class="jspexp.a13_database.A02_EmpDao"/>
+<jsp:useBean id="dao" class="springweb.a13_database.A02_EmpDao"/>
 <%--?ename=himan&job=사원&frSal=0&toSal=5000
 	Emp클래스 안에서 요청키와 property가 동일하면 데이터가 할당이 된다. 
 		void setEname(String s)

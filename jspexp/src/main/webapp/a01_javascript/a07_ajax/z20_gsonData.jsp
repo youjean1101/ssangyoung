@@ -14,5 +14,5 @@ z21_gsonEmpData.jsp	사원정보 json 리스트 데이터 처리..
 <c:if test="${empty param.loc}">${sch.setLoc('')}</c:if>
 <%-- ${sch.setDname("")} ${sch.setLoc("")} --%>
 <jsp:useBean id="gson" class="com.google.gson.Gson"/>
-<jsp:useBean id="dao" class="jspexp.a13_database.A06_PareparedDao"/>
+<jsp:useBean id="dao" class="springweb.a13_database.A06_PareparedDao"/>
 ${gson.toJson(dao.getDeptList(sch))}

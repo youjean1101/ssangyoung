@@ -36,4 +36,8 @@
       <bean class="springweb.a01_start.A03_ModelController"/>
       <bean class="springweb.a01_start.A04_RequestVo"/>
       <bean class="springweb.z9_homework.A01_0110"/>
+      <bean class="springweb.z9_homework.A01_0110_answer"/>
+      <bean class="springweb.a02_dao1.A01_EmpController"/>
+      <bean class="springweb.a02_dao1.A02_DeptController"/>
+      <bean class="springweb.z9_homework.a02_0111"/>
 </beans>

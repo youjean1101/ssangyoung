@@ -35,3 +35,38 @@ select * from dept where deptno=30 and dname='SALES';
 /*
  select * from dept where deptno=? and dname=?
  */
+SELECT e.empno,e.ename FROM emp100 m,emp100 e
+/*
+ <select name="mgr">
+ 	<option value="7499">ALLEN</option>
+ 	<option value="7521">WARD</option>
+ 	<option value="7566">JONES</option>
+ 	<option value="7654">MARTIN</option>
+ 	<option value="7698">BLAKE</option>
+ </select>
+ 7499	ALLEN
+7521	WARD
+7566	JONES
+7654	MARTIN
+7698	BLAKE
+7782	CLARK
+7844	TURNER
+7900	JAMES
+7934	MILLER
+ */
+WHERE e.mgr = m.empno;
+SELECT deptno, dname FROM dept100;
+/* 
+<select name="deptno">
+ 	<option value="10">인사</option>
+ 	<option value="20">RESEARCH</option>
+ 	<option value="30">SALES</option>
+ 	<option value="40">OPERATIONS</option>
+ 	<option value="88">회계</option>
+ </select>
+55	인사
+20	RESEARCH
+30	SALES
+40	OPERATIONS
+88	회계
+ * */

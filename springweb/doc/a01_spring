@@ -48,7 +48,9 @@
 			  		
 			 - Controller : @Controller(선언이 되야함)
 			  8. 컨테이너에 선언된 컨트롤러 중에../start.do 패턴으로 선언된 메서드를 찾아간다.
-			  9. @RequestMapping("/start.do") 로 선언된 메서드에서
+			  9. @RequestMapping("/start.do")(get/post 방식 둘다 처리) 로 선언된 메서드에서
+			  	 @GetMapping : get방식 일떄만 처리
+			  	 @PostMapping : post방식 일떄만 처리
 			  10. 요청값은 메서드 매개변수로
 			  11. 모델데이터는 Model d로 해서 처리가 되고
 			  12. 기능 메서드의 return "\\views\\a01_start\\a01_start.jsp"에 의해 
@@ -60,8 +62,36 @@
 
 5. 스프링 MVC 심화
 	1) controller의 요청값 옵션
+		메서드의 매개변수로 처리
+		개별적 요청값 처리 @RequestParam
+		@RequestParam(value="요청키", defaultValue="") 데이터유형 변수
+			요청키도 맞아야 되지만, 특징, 숫자형으로 요청할 떄는 숫자형이어야 한다.
+			&empno=&ename=
+			@RequestParam("empno" int empno(X)
+		
+		VO(property개념으로 요청키를 저장하는 처리)
+			: 요청데이터+모델 (모델 어트리뷰터)
+			# 모델 어트리뷰트 이름을 다르게 처리할 떄
+			public String empList(@ModelAttribute("sch") Emp sch)
+			
 	2) 모델 설정
+		메서드의 매개변수 : Model d, d.addAttribute("모델명",모델객체);
+		
 	3) 뷰단 처리
+		- return "호출할 html/jsp/json데이터" ***(forword방식)으로 호출하면서 모델데이터를 넘긴다.
+		- 선언된 controller url(요청 메서드)를 호출할 떄,
+			return "redirect:/empList.do" : redirect방식으로 호출
+			return "forward:/empList.do"  : forward방식으로 호출
+		ex) redirect방식과 forward방식의 차이
+			response.sendRedirect("페이지") : redirect
+				- 페이지를 호출하면서 request,response를 해당 페이지에 전송하지 않는다.
+				 controller에서 선언한 모델데이터, 쿠키값을 전달하지 못한다.
+				- url주소를 해당 이름으로 변경되어 처리한다.
+			request.getRequestDispatcher("페이지").forward(request,response);
+				forward 방식
+				- request, response를 전달하기에 모델데이터를 전달할 수 있다.
+				- url주소는 변경되지 않고 기존 urll mapping 방식으로 전달된다.
+				
 	4) session 활용
 6. 스프링의 database 처리를 위한 mybatis framework 활용
 	1) 1단계 기존 DAO활용
@@ -149,6 +179,28 @@
 		//		 와 맞지 않아, http://localhost:7080/springweb/emp.do 자체가 호출되지 않는 페이지가 된다.
 		
  	}
-	
+ 	
+ # 스프링 DB연결 1단계
+ 1. 흐름 순서
+ 	1) url 요청값 처리
+ 	2) controller호출
+ 	3) 모델 데이터 처리(dao호출 후, 데이터 설정)
+ 	4) view 화면 호출, 모델 데이터 출력
+ 2. 처리 순서
+ 	1) 처리할 데이터 sql, dao 처리
+ 	2) controller 작성 및 초기화면 로딩
+ 	3) dao호출 및 모델 데이터 할당
+ 	4) 모델 데이터에 맞게 화면단 구현
+ 3. 실제 핵심 코드
+ 		1) DAO 환경 구현
+ 		 	
+ # 스프링 등록 처리
+ 1. DAO : sql ==> vo ==> 기능 메서드 
+ 2. controller 초기화면구성
+ 3. 화면에서 등록할 데이터 frm 만들기
+ 	- action = "등록컨트롤러메서드"
+ 4. 등록 처리 controller 기능메서드 추가
+ 	 1) 등록요청값 vo
+ 	 2) 등록 후, 처리할 controller선언.
 	
 	

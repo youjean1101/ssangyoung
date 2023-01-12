@@ -10,5 +10,5 @@ jspexp.a13_database.A06_PareparedDao checkId
 {"hasMember":true}
 {"hasMember":false}
  --%>
-<jsp:useBean id="dao" class="jspexp.a13_database.A06_PareparedDao"></jsp:useBean>
+<jsp:useBean id="dao" class="springweb.a13_database.A06_PareparedDao"></jsp:useBean>
 {"hasMember":${dao.checkId(param.id)}}
