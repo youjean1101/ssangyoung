@@ -47,10 +47,10 @@
 <div class="container">
    <form id="frm01" class="form"  method="post">
      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-       <input name="ename" value="${emp.ename}" class="form-control mr-sm-2" placeholder="제목" />
-       <input name="job"  value="${emp.job}"  class="form-control mr-sm-2" placeholder="내용" />
-       <input name="frSal"  value="${emp.frSal}"  class="form-control mr-sm-2" placeholder="내용" />
-       <input name="toSal"  value="${emp.toSal}" class="form-control mr-sm-2" placeholder="내용" />
+       <input name="ename" value="${sch.ename}" class="form-control mr-sm-2" placeholder="사원명" />
+       <input name="job"  value="${sch.job}"  class="form-control mr-sm-2" placeholder="직책명" />
+       <input name="frSal"  value="${sch.frSal}"  class="form-control mr-sm-2" placeholder="급여(시작)" />
+       <input name="toSal"  value="${sch.toSal}" class="form-control mr-sm-2" placeholder="급여(마지막)" />
        <button class="btn btn-info" type="submit">Search</button>
        &nbsp;
        <button data-toggle="modal" data-target="#exampleModalCenter" 
@@ -59,7 +59,6 @@
    </form>
    <table class="table table-hover table-striped">
     <thead>
-    
       <tr class="table-success text-center">
         <th>사원번호</th>
         <th>사원명</th>
@@ -116,16 +115,19 @@
          <div class="row">
             <div class="col">
             <select name="mgr"  class="form-control">
-               <option value="0000">관리자선택</option>
-               <option value="7566">JONES</option>
-               <option value="7782">CLARK</option>
-               <option value="7839">KING</option>
-               <option value="7698">BLAKE</option>
-               <option value="7902">FORD</option>
+               		<option value="0000">관리자선택</option>
+               <c:forEach var="cd" items="${mgrCode}">
+			  		<option value="${cd.key}">${cd.val}</option>
+			   </c:forEach>
             </select>
          </div>   
             <div class="col">
-              <input type="number" class="form-control" placeholder="급여 입력" name="sal">
+	            <select name="sal" class="form-control">
+	               		<option value="000">급여선택</option>
+	               <c:forEach var="cd" items="${salCode}">
+				  		<option value="${cd.key}">${cd.val}</option>
+				   </c:forEach>
+	            </select>
             </div>
         </div>
         <div class="row">
@@ -135,12 +137,9 @@
            <div class="col">
               <select name="deptno" class="form-control" >
                <option value="00">부서정보선택</option>
-               <option value="10">ACCOUNTING</option>
-               <option value="20">RESEARCH</option>
-               <option value="30">SALES</option>
-               <option value="40">OPERATIONS</option>
-               <option value="50">회계</option>
-               <option value="51">인사</option>
+               <c:forEach var="cd" items="${deptnoCode}">
+               		<option value="${cd.key}">${cd.val}</option>
+               </c:forEach>
             </select>
               
               

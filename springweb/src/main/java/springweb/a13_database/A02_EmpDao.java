@@ -7,7 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import springweb.z01_vo.*;
+import springweb.z01_vo.Code;
+import springweb.z01_vo.Dept;
+import springweb.z01_vo.Emp;
 //jspexp.a13_database.A02_EmpDao
 public class A02_EmpDao {
 	// 1. 필드 선언
@@ -391,6 +393,95 @@ public class A02_EmpDao {
 					}
 					return list;
 				}
+	// 4. 사원정보 List<Emp> 검색(검색조건 처리 및 List로 리턴처리)
+				//		   1) sql ==> VO
+					
+				//		   2) 메서드 선언 리턴유형, 매개변수, 초기 리턴할 객체선언.
+	public List<Code> getMgrInf(){
+		List<Code> list = new ArrayList<Code>();
+		// 1. DB 연결
+		try {
+			con = DB.con();
+//		   2. 대화
+			String sql = "SELECT DISTINCT e.mgr code, m.ename val\r\n"
+						+ "FROM emp100 e, emp100 m\r\n"
+						+ "WHERE e.mgr = m.empno\r\n"
+						+ "ORDER BY code";
+			System.out.println(sql);
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				list.add(new Code(rs.getString(1),rs.getString(2)));
+			}
+			System.out.println("데이터 건수:"+list.size());
+			
+		} catch (SQLException e) {
+			System.out.println("DB관련예외:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("기본 예외:"+e.getMessage());
+		}finally {
+			DB.close(rs, stmt, con);
+		}
+		return list;
+	}
+	// 4. 사원정보 List<Emp> 검색(검색조건 처리 및 List로 리턴처리)
+					//		   1) sql ==> VO
+						
+					//		   2) 메서드 선언 리턴유형, 매개변수, 초기 리턴할 객체선언.
+	public List<Code> getDeptnoInf(){
+		List<Code> list = new ArrayList<Code>();
+		// 1. DB 연결
+		try {
+			con = DB.con();
+//		   2. 대화
+			String sql = "SELECT deptno code, dname val \r\n"
+							+ "FROM dept100\r\n"
+							+ "ORDER BY code";
+			
+			System.out.println(sql);
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				list.add(new Code(rs.getString(1),rs.getString(2)));
+			}
+			System.out.println("데이터 건수:"+list.size());
+			
+		} catch (SQLException e) {
+			System.out.println("DB관련예외:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("기본 예외:"+e.getMessage());
+		}finally {
+			DB.close(rs, stmt, con);
+		}
+		return list;
+	}
+	public List<Code> getSalInf(){
+		List<Code> list = new ArrayList<Code>();
+		// 1. DB 연결
+		try {
+			con = DB.con();
+//		   2. 대화
+			String sql = "SELECT grade code,(losal||'~'||hisal) val\r\n"
+						+ "FROM salgrade\r\n"
+						+ "ORDER BY code";
+			
+			System.out.println(sql);
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				list.add(new Code(rs.getString(1),rs.getString(2)));
+			}
+			System.out.println("데이터 건수:"+list.size());
+			
+		} catch (SQLException e) {
+			System.out.println("DB관련예외:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("기본 예외:"+e.getMessage());
+		}finally {
+			DB.close(rs, stmt, con);
+		}
+		return list;
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		A02_EmpDao dao = new A02_EmpDao();

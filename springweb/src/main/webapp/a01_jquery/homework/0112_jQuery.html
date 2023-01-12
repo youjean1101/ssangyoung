@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#ex2 td").css({"background":"blue","text-align":"center","color":"white"})
+		var fruits= ["사과","바나나","포도","복숭아"]
+		for(var i=0;i<fruits.length;i++){
+			$("#ex2 td:eq("+i+")").text(fruits[i])
+		}
+		$("#ex2 td").click(function(){
+			var fruit = $(this).text()
+			$("#fruitBuy").text("구매하신 과일정보:"+fruit)
+		})
+		
+		$("#ex3 td").css({"color":"white","text-align":"center"})
+		$("#ex3 td").text("숙제중")
+		for(var i=0;i<21;i++){
+			if(i%2==0){
+				$("#ex3 td:eq("+i+")").css("background","blue")
+			}else{
+				$("#ex3 td:eq("+i+")").css("background","yellow")
+			}
+		}
+		$("#ex3 td").mouseenter(function(){
+			$(this).css({"font-size":"30pt","color":"green"})
+		})
+		
+		$("#ex5 td").text(0)
+		$("#ex5 td").on({
+			mouseenter:function(){
+				$(this).css("background","yellow")
+			},
+			mouseleave:function(){
+				$(this).css("background","green")
+			},
+			click:function(){
+				var idx = Number($(this).text())
+				var i=0;
+				i++;
+				$(this).text(idx+i)
+			}
+		})
+		
+		var idVal ="";
+		$("#id").keyup(function(){
+			idVal=$(this).val()
+			$("#idcnt").text("아이디 글자 수:"+idVal.length)
+		})
+		
+		var passVal ="";
+		$("#passwd").keyup(function(){
+			passVal=$(this).val()
+		})
+		
+		var passconfirmVal ="";
+		$("#passwdconfirm").keyup(function(){
+			passconfirmVal=$(this).val()
+		})
+		$("#insertBtn").click(function(){
+			var idlen=idVal.length
+			var passlen=passVal.length
+			var passconfirmlen=passconfirmVal.length
+			
+			console.log(idlen)
+			if(idlen==0){
+				alert("아이디를 입력해주세요")
+				$("#id").focus();
+			}else if(passlen==0){
+				alert("패스워드를 입력해주세요")
+				$("#passwd").focus();
+			}else if(passconfirmlen==0){
+				alert("패스워드 확인을 입력해주세요")
+				$("#passwdconfirm").focus();
+			}else if(idlen<5 || idlen>16){
+				alert("아이디를 5~16자로 등록해주세요.")
+				$("#id").focus();
+			}else if(passVal!=passconfirmVal){
+				alert("비밀번호와 비밀번호 확인이 맞지 않습니다.")
+				$("#passwd").focus();
+			}
+		})
+		$("#view").click(function(){
+			$("#profile").show()
+			$("#ex8").text("확인했다가")
+		})
+		$("#remove").click(function(){
+			$("#profile").hide()
+			$("#ex8").text("사라졌다가")
+		})
+		
+	});
+</script>
+</head>
+<body>
+	  <h2>2. 1X4테이블에서 td의 배경색상을 파랑색, 글자정렬 중앙으로 처리하고, 판매하는 과일명을 리스트하고, 클릭시마다 하단 p에 구매한 과일정보를 출력하세요</h2>
+	  <table id="ex2" width="100%" height="200px" border>
+	  	<tr><td></td></tr>
+	  	<tr><td></td></tr>
+	  	<tr><td></td></tr>
+	  	<tr><td></td></tr>
+	  </table>
+	  <p id="fruitBuy"></p>
+	  
+	  <h2>[1단계:확인] 3. 5X4테이블 행열단위로 짝/홀단위 배경색상을 다르게 처리하고, 커서에 따라 글자크기와 글자색상으로 다르게 처리하세요</h2>
+	  <table id="ex3" width="100%" height="200px" border>
+		  <tr><td></td><td></td><td></td><td></td><td></td></tr>
+		  <tr><td></td><td></td><td></td><td></td><td></td></tr>
+		  <tr><td></td><td></td><td></td><td></td><td></td></tr>
+		  <tr><td></td><td></td><td></td><td></td><td></td></tr>
+	  </table>
+	  
+	  <h2>[1단계:확인] 5. 3X3테이블에 각 td마다 마우스 커서와 커서를 벗어났을 때, 배경색상을 변경하고, 클릭시 마다 카운트가 증가되게 처리하세요</h2>
+	  <table id="ex5" width="100%" height="200px" border>
+	  	<tr><td></td><td></td><td></td></tr>
+	  	<tr><td></td><td></td><td></td></tr>
+	  	<tr><td></td><td></td><td></td></tr>
+	  </table>
+	  
+	  <h2>[1단계:확인] 6. member테이블의 항목을 회원정보 등록 화면 form으로 만들고 유효성을 
+	  				처리하세요(모두 입력처리, 아이디(5~16), 패스워드, 패스워드 확인 )</h2>
+	  				
+	  <img src=".\img\profile.png" id="profile"><br>
+	  <div id="ex8"></div>
+	  <button type="button" id="view">이미지 보이기</button>
+	  <button type="button" id="remove">보이지않게</button>
+	  <form id="ex6">
+	  	아이디:<input type="text" id="id"/>
+	  	패스워드:<input type="password" id="passwd"/>
+	  	패스워드 확인:<input type="password" id="passwdconfirm"/>
+	  	<button type="button" id="insertBtn">회원등록</button>
+	  </form>
+	  <div id="idcnt" style="color:red;"></div>
+	  
+	  <h2>[1단계:확인] 8. 회원등록화면에서 회원이미지를 [이미지보이기/보이지않게]로 클릭하면서 
+	  					확인했다가/사라졌다를 클릭에 따라 반복하게 하세요.</h2>
+	  
+</body>
+</html>

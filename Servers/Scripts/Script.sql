@@ -70,3 +70,20 @@ SELECT deptno, dname FROM dept100;
 40	OPERATIONS
 88	회계
  * */
+
+SELECT DISTINCT e.mgr code, m.ename val
+FROM emp100 e, emp100 m
+WHERE e.mgr = m.empno
+ORDER BY code;
+
+SELECT deptno code, dname val 
+FROM dept100
+ORDER BY code;
+
+SELECT grade code,(losal||'~'||hisal) val
+FROM salgrade
+ORDER BY code;
+
+SELECT * FROM emp100;
+INSERT INTO emp100 values(1001,'마길동','부장',7839,sysdate,7000,1000,10);
+INSERT INTO emp100 values(1002,'오길동','차장',1001,sysdate,6000,1000,10);

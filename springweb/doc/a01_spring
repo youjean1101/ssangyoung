@@ -91,7 +91,6 @@
 				forward 방식
 				- request, response를 전달하기에 모델데이터를 전달할 수 있다.
 				- url주소는 변경되지 않고 기존 urll mapping 방식으로 전달된다.
-				
 	4) session 활용
 6. 스프링의 database 처리를 위한 mybatis framework 활용
 	1) 1단계 기존 DAO활용
@@ -134,6 +133,7 @@
 		System.out.println("요청 이름:"+name);
 	}
 2. 모델 데이터 처리
+	public String call(Model d)
 3. 요청 및 모델 데이터 처리
 	1) 초기 화면을 로딩
 		초기 화면 로딩 메서드 선언
@@ -156,7 +156,7 @@
 		물건 갯수: ${param.cnt}
 		총계 : ${calcu}
 	
-# 요청값의 VO 객체 처리
+# 요청값의 VO 객체 처리(요청 + 모델)
 1. 스프링은 요청값을 VO객체로 property개념으로 처리할 수 있다.
 	- 이것을 modelAttribute라는 개념으로 사용하기도 한다.
 2. useBean
@@ -168,6 +168,9 @@
 	public String empSch(Emp sch){
 		// 1. 이렇게 선언만 하면, 요청값이 위 객체 Emp에 property에
 		// 타입과 이름이 맞는 요청값이 들어오면 객체에 할당이 된다.
+		// 모델명을 객체의 소문자 시작명으로 처리된다.
+		// Emp ==> emp, Dept ==> dept
+		// 주의)
 		// 2. 모델데이터까지 객체로 선언이 자동으로 된다.
 		// 		${emp.ename} 
 		// 3. 요청값이 없으면 해당 객체로 default 처리를 한다.
@@ -202,5 +205,46 @@
  4. 등록 처리 controller 기능메서드 추가
  	 1) 등록요청값 vo
  	 2) 등록 후, 처리할 controller선언.
+ 	 
+# 모델어트리뷰트를 통한 DB와 연결된 공통 COMBOX 생성
+1. select형태의 콤보형선택은 DB연결되어서 처리되는 경우가 많다.
+2. controller단에서 공통으로 사용되는 key/value형식의 데이터는 ModelAttribute로 선언하여 사용한다.
+3. 처리순서
+	1) sql ==> dao 기능 메서드 추가
+	2) controller단 modelattribute 선언
+	3) view단에서 공통 modelattribute호출
+4. 부서정보 및 관리자번호 콤보박스만들기
+	1) Code테이블 생성 key/val
+	2) sql 작성
+		SELECT DISTINCT e.mgr code, m.ename val
+		FROM emp100 e, emp100 m
+		WHERE e.mgr = m.empno
+		ORDER BY code;
+		
+		SELECT deptno code, dname val 
+		FROM dept100
+		ORDER BY code;
+		
+	3) dao기능 메서드 선언
+		public List<Code> getMgrInf()
+		public List<Code> getDeptInf()
+	4) controller의 모델 attribute생성
+		@ModelAttribute("mgrList")
+		public List<Code> getMgrInf(){
+			return dao.getMgrInf()
+		}
+		@ModelAttribute("deptCode")
+		public List<Code> getDeptInf(){
+			return dao.getDeptInf()
+		}
+	5) view단 처리
+		<select name="mgr">
+			<option value="0000">관리자선택</option>
+			<c:forEach var="cd" items="${mgrCode}">
+				<option value="${cd.key}">${cd.value}</option>
+	
+		
+	
+
 	
 	

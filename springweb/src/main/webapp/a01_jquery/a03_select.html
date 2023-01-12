@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("h2").text("색상!!(click)")
+		$("h2").click(function(){
+			// $(객체).css("css속성","속성값")
+			$(this).text("노란색").css("background","yellow")
+			/*
+			$(this).text("노란색")
+			$(this).css("background-color","yellow")
+			*/
+		})
+	});
+	// ex) a03_select.html를 만들고
+	//		h2로 7개로 색상!! 이라고 표시하고 클릭 시,
+	//		해당 클릭한 거서만 노랑색이라고 표시하세요.
+</script>
+</head>
+<body>
+	
+	  <h2></h2>
+	  <h2></h2>
+	  <h2></h2>
+	  <h2></h2>
+</body>
+</html>

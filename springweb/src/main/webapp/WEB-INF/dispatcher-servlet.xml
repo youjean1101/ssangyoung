@@ -40,4 +40,5 @@
       <bean class="springweb.a02_dao1.A01_EmpController"/>
       <bean class="springweb.a02_dao1.A02_DeptController"/>
       <bean class="springweb.z9_homework.a02_0111"/>
+      <bean class="springweb.z9_homework.A02_0111_answer"/>
 </beans>
