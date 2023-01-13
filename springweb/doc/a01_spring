@@ -242,6 +242,11 @@
 			<option value="0000">관리자선택</option>
 			<c:forEach var="cd" items="${mgrCode}">
 				<option value="${cd.key}">${cd.value}</option>
+		<select name="deptno">
+			<option value="00">부서선택</option>
+			<c:forEach var="cd" items="${deptCode}">
+				<option value="${cd.key}">${cd.value}</option>
+	
 	
 		
 	

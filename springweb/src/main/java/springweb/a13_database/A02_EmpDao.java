@@ -482,6 +482,31 @@ public class A02_EmpDao {
 		}
 		return list;
 	}
+	public List<Code> getSalGradeInf(){
+		List<Code> list = new ArrayList<Code>();
+		// 1. DB 연결
+		try {
+			con = DB.con();
+//		   2. 대화
+			String sql = "SELECT losal code,grade val FROM salgrade";
+			
+			System.out.println(sql);
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				list.add(new Code(rs.getString(1),rs.getString(2)));
+			}
+			System.out.println("데이터 건수:"+list.size());
+			
+		} catch (SQLException e) {
+			System.out.println("DB관련예외:"+e.getMessage());
+		} catch(Exception e) {
+			System.out.println("기본 예외:"+e.getMessage());
+		}finally {
+			DB.close(rs, stmt, con);
+		}
+		return list;
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		A02_EmpDao dao = new A02_EmpDao();

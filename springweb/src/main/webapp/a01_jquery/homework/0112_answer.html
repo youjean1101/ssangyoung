@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("h2").text("0113과제")
+//[1단계:확인] 2. 1X4테이블에서 td의 배경색상을 파랑색, 글자정렬 중앙으로 처리하고, 판매하는 과일명을 리스트하고, 클릭시마다 하단 p에 구매한 과일정보를 출력하세요
+		$("#tab01 td").css({
+			background:"blue",
+			color:"yellow",
+			textAlign:"center",
+			fontSize:"30pt"
+		}).click(function(){
+			var fruit = $(this).text()
+			$("#buyList").text($("#buyList").text()+fruit+",")
+			// $("#buyList").append(fruit+",")
+		})
+//[1단계:확인] 5. 3X3테이블에 각 td마다 마우스 커서와 커서를 벗어났을 때, 배경색상을 변경하고, 클릭시 마다 카운트가 증가되게 처리하세요
+		$("#tab02 td").hover(function(){
+			$(this).css("background","yellow")
+		},function(){
+			$(this).css("background","orange")
+		})
+		var cnt = 0;
+		$("#tab02 td").click(function(){
+			$("#cnt01").text("카운트:"+(++cnt))
+		})
+//[1단계:확인] 6. member테이블의 항목을 회원정보 등록 화면 form으로 만들고 유효성을 처리하세요(모두 입력처리, 아이디(5~16), 패스워드, 패스워드 확인 )
+		
+	});
+	
+</script>
+</head>
+<body>
+	  <h2>물건구매</h2>
+	  <table id="tab01">
+		  	<tbody>
+		  	<tr><td>사과</td><td>바나나</td><td>딸기</td><td>오렌지</td></tr>
+		  	</tbody>
+	  </table>
+	  <p id="buyList"></p>
+	  
+	  <span id="cnt01">카운트:0</span>
+	  <table id="tab02" height="200px" width="200px" border>
+		  	<tr><td>1</td><td>2</td><td>3</td></tr>
+		  	<tr><td>4</td><td>5</td><td>6</td></tr>
+		  	<tr><td>7</td><td>8</td><td>9</td></tr>
+	  </table>
+</body>
+</html>

@@ -87,3 +87,6 @@ ORDER BY code;
 SELECT * FROM emp100;
 INSERT INTO emp100 values(1001,'마길동','부장',7839,sysdate,7000,1000,10);
 INSERT INTO emp100 values(1002,'오길동','차장',1001,sysdate,6000,1000,10);
+
+SELECT losal code,grade val FROM salgrade;
+SELECT * FROM salgrade;

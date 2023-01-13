@@ -18,6 +18,7 @@ public class A01_EmpController {
 	public A01_EmpController() {
 		dao = new A02_EmpDao();
 	}
+	// controller에서 공통적인 데이터 처리가 필요한 부분
 	@ModelAttribute("mgrCode")
 	public List<Code> getMgrInf() {
 		return dao.getMgrInf();
@@ -31,6 +32,11 @@ public class A01_EmpController {
 	@ModelAttribute("salCode")
 	public List<Code> getsalInf() {
 		return dao.getSalInf();
+	}
+	
+	@ModelAttribute("salGradeCode")
+	public List<Code> getSalGradeInf() {
+		return dao.getSalGradeInf();
 	}
 	
 	// http://localhost:7080/springweb/empList.do

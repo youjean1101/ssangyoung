@@ -49,8 +49,18 @@
      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
        <input name="ename" value="${sch.ename}" class="form-control mr-sm-2" placeholder="사원명" />
        <input name="job"  value="${sch.job}"  class="form-control mr-sm-2" placeholder="직책명" />
-       <input name="frSal"  value="${sch.frSal}"  class="form-control mr-sm-2" placeholder="급여(시작)" />
-       <input name="toSal"  value="${sch.toSal}" class="form-control mr-sm-2" placeholder="급여(마지막)" />
+       <%--salGradeCode --%>
+       	<select name="frSal"  value="${sch.frSal}"  class="form-control mr-sm-2">
+       		<option value="0">급여시작등급</option>
+       		<c:forEach var="cd" items="${salGradeCode}">
+       			<option value="${cd.key}">${cd.val}등급</option>
+       		</c:forEach>
+       	</select>
+       	<script>
+       		// 검색시 선택된 것을 선택
+       		$("[name=frSal]").val(${sch.frSal})
+       	</script>
+     	<input name="toSal"  value="${sch.toSal}" class="form-control mr-sm-2" placeholder="급여(마지막)" />
        <button class="btn btn-info" type="submit">Search</button>
        &nbsp;
        <button data-toggle="modal" data-target="#exampleModalCenter" 
