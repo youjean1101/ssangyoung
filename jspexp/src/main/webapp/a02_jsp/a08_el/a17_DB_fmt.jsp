@@ -25,7 +25,7 @@
 <%-- 
  # DB연동하여 출력된 데이터 확인하기
 --%>
-<jsp:useBean id="dao" class="springweb.a13_database.A02_EmpDao"/>
+<jsp:useBean id="dao" class="jspexp.a13_database.A02_EmpDao"/>
 <jsp:useBean id="sch" class="jspexp.vo.Emp"/>
 <table>
 	<tr><th>사원번호</th><th>사원명</th><th>직책명</th><th>관리자번호</th>

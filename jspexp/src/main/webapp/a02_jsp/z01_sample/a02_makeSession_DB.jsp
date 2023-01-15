@@ -22,7 +22,7 @@
 </script>
 </head>
 <%--Bean DB를 로딩하고, 요청값 받은 VO객체 처리 --%>
-<jsp:useBean id="dao" class="springweb.a13_database.A06_PareparedDao"/>
+<jsp:useBean id="dao" class="jspexp.a13_database.A06_PareparedDao"/>
 <%--id, pass 값을 받는 객체--%>
 <jsp:useBean id="reMem" class="jspexp.vo.Member"/>
 <jsp:setProperty property="*" name="reMem" />

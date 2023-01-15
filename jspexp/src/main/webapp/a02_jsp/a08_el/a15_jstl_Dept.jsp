@@ -42,7 +42,7 @@
 	<c:forEach var="dept" items="${dao.getDeptList(sch)}
 		${dept.deptno} ${dept.dname} ${dept.loc}
 --%>
-<jsp:useBean id="dao" class="springweb.a13_database.A06_PareparedDao"/>
+<jsp:useBean id="dao" class="jspexp.a13_database.A06_PareparedDao"/>
 <jsp:useBean id="sch" class="jspexp.vo.Dept"/>
 <jsp:setProperty property="*" name="sch"/>
 <c:if test="${empty param.dname}">${sch.setDname("")}</c:if>

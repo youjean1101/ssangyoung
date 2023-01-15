@@ -7,7 +7,7 @@
 public Emp(String ename, String job, double frSal, double toSal) {
 --%>
 
-<jsp:useBean id="dao" class="springweb.a13_database.A02_EmpDao"/>
+<jsp:useBean id="dao" class="jspexp.a13_database.A02_EmpDao"/>
 <jsp:useBean id="sch"  class="jspexp.vo.Emp"/>
 <jsp:setProperty name="sch" property="*" />
 <c:if test="${empty param.ename}">${sch.setEname('')}</c:if>

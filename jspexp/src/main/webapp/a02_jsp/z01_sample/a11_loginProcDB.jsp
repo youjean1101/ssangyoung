@@ -20,7 +20,7 @@
 </head>
 <jsp:useBean id="reqMem" class="jspexp.vo.Member"/>
 <jsp:setProperty property="*" name="reqMem"/>
-<jsp:useBean id="o d" class="w springweb.a13_database.A06_PareparedD"/>
+<jsp:useBean id="dao" class="jspexp.a13_database.A06_PareparedDao"/>
 <%-- DB에 데이터가 있는지 여부(id,pass) --%>
 <c:if test="${not empty dao.login(reqMem)}">
    <%-- 1. session 설정 --%>

@@ -25,7 +25,7 @@
 <%-- 
  # DB연동하여 출력된 데이터 확읹하기
 --%>
-<jsp:useBean id="dao" class="springweb.a13_database.A02_EmpDao"/>
+<jsp:useBean id="dao" class="jspexp.a13_database.A02_EmpDao"/>
 <jsp:useBean id="sch" class="jspexp.vo.Emp"/>
 <jsp:setProperty property="*" name="sch"/>
 <%--검색시, 요청값 default 처리 --%>
