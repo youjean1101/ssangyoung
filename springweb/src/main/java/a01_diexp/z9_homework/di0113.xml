@@ -32,11 +32,26 @@
        http://www.springframework.org/schema/tx/spring-tx.xsd   
       " >
 	 <bean id="obj" class="java.lang.Object" />      
-	 <bean id="player01" class="a01_diexp.z9_homework.vo.BaseBallPlayer" >
+	<!-- <bean id="player01" class="a01_diexp.z9_homework.vo.BaseBallPlayer" >
 	 	<property name="name" value="추신수"/>
 	 	<property name="teamName" value="SSG랜더스"/>
 	 	<property name="batAvg" value="0.259"/>
-	 </bean>      
+	 </bean>
+	 
+	 <bean id="teaminfo01" class="a01_diexp.z9_homework.vo.BaseBallTeam">
+	 		<constructor-arg value="SSG랜더스"/>
+	 		<constructor-arg value="승"/>
+	 </bean>  -->
+	 
+	 <bean id="teaminfo02" class="a01_diexp.z9_homework.vo.BaseBallTeam">
+	 		<constructor-arg value="SSG랜더스"/>
+	 		<constructor-arg value="승"/>
+	 </bean> 
+	 <bean id="player02" class="a01_diexp.z9_homework.vo.BaseBallPlayer" >
+	 	<property name="name" value="추신수"/>
+	 	<property name="teamName"  ref="teaminfo02"/>
+	 	<property name="batAvg" value="0.259"/>
+	 </bean>     
       
 </beans>
 	<!-- 
