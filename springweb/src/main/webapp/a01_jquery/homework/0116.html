@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#view").click(function(){
+			$("td:eq(0)").text("himan")
+			$("td:eq(1)").text("홍길동")
+			$("td:eq(2)").text("서울 홍대")
+			alert("조회완료")
+		})
+		$("#viewhidden").click(function(){
+			$("td:eq(0)").hide("fast",function(){
+				$("td:eq(1)").hide("fast")
+				$("td:eq(2)").hide("fast")
+				alert("등록회원확인 완료")
+			})
+		})
+	});
+</script>
+</head>
+<body>
+	  <table width="200" height="200" border>
+	  	<tr><th>아이디</th><th>이름</th><th>주소</th></tr>
+	  	<tr><td></td><td></td><td></td></tr>
+	  </table>
+	  <button id="view" type="button">등록회원확인하기</button>
+	  <button id="viewhidden" type="button">등록회원닫기</button>
+</body>
+</html>

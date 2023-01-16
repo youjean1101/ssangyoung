@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class A01_Controller {
 	// http://localhost:7080/springweb/start.do
 	//url 주소
-	@RequestMapping("/start.do")
+	@RequestMapping("/start.do") // 다른이름으로 DL을 설정
 	public String start() { //요청값과 model 선언하고
 		// 모델 데이터 할당
 		

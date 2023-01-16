@@ -31,57 +31,117 @@
 		http://아이피:port/springweb/start.do
 		http://localhost:7780/springweb/start.do
 		
+		http://localhost:7780/springweb
+		web.xml에서 default welcome 파일이 호출
+			webapp하위 index.html/index.jsp
+			
+		
 	2) server에서 처리 프로세스
 		- web.xml
 			설정된 내용 확인
-			 url 패턴 확인
-			  1. 마지막에 *.do로 끝나면 dispatcher 서블릿을 호출
-			  2. dispatcher : front-controller인 스프링의 DispatcherServlet을 호출
-			  3.  DispatcherServlet 객체는 컨테이너 설정을 포함하여 가지고 있는데,
-			 - dispatcher-servlet.xml
-			  4. 이 컨테이너 설정 위치가 default WEB-INF하위에 dispatcher-servlet.xml로
-			  5. XXX-servlet.xml에서 XXXX은 <servlet-name>dispatcher</servlet-name>에 의해 설정되어
-			  6. 컨테이너를 호출하고, 
-			  7. 컨테이너에 선언되어 있는 객체들을 메모리에 로딩한다.
-			  		<bean class="springweb.a01_start.A01_Controller"/>
-			  		ps) 메모리에 로딩된 상태에서 실행되는 것과 호출할 때, 메모리에 로딩되어 처리하는 것의 속도 차이
-			  		
-			 - Controller : @Controller(선언이 되야함)
-			  8. 컨테이너에 선언된 컨트롤러 중에../start.do 패턴으로 선언된 메서드를 찾아간다.
-			  9. @RequestMapping("/start.do")(get/post 방식 둘다 처리) 로 선언된 메서드에서
-			  	 @GetMapping : get방식 일떄만 처리
-			  	 @PostMapping : post방식 일떄만 처리
-			  10. 요청값은 메서드 매개변수로
-			  11. 모델데이터는 Model d로 해서 처리가 되고
-			  12. 기능 메서드의 return "\\views\\a01_start\\a01_start.jsp"에 의해 
-			  		view단이 기본적으로 forward방식으로 호출되어
-			  13. 해당 뷰단은 모델데이터와 함께 출력이 된다.
+			welcome 선언된 파일 호출 index.html
+			controller에서 return ""; 를 선언되었을 대도 위 파일이 호출된다.
+			
+		 url 패턴 확인
+		  1. 마지막에 *.do로 끝나면 dispatcher 서블릿을 호출
+		  2. dispatcher : front-controller인 스프링의 DispatcherServlet을 호출
+		  3.  DispatcherServlet 객체는 컨테이너 설정을 포함하여 가지고 있는데,
+		 - dispatcher-servlet.xml
+		  4. 이 컨테이너 설정 위치가 default WEB-INF하위에 dispatcher-servlet.xml로
+		  5. XXX-servlet.xml에서 XXXX은 <servlet-name>dispatcher</servlet-name>에 의해 설정되어
+		  	ex) <servlet-name>dis</servlet-name>
+		  		==> WEB-INF 하위에 dis-servlet.xml
+		  6. 컨테이너(dispatcher-servlet.xml)를 호출하고, 
+		  7. 컨테이너에 선언되어 있는 객체들을 메모리에 로딩한다.
+		  		<bean class="springweb.a01_start.A01_Controller"/>
+		  		ps) 메모리에 로딩된 상태에서 실행되는 것과 호출할 때, 메모리에 로딩되어 처리하는 것의 속도 차이
+		  		
+		 - Controller : @Controller(선언이 되야함)
+		  8. 컨테이너에 선언된 컨트롤러 중에../start.do 패턴으로 선언된 메서드를 찾아간다.
+		  9. @RequestMapping("/start.do")(get/post 방식 둘다 처리) 로 선언된 메서드에서
+		  	 @GetMapping : get방식 일떄만 처리
+		  	 @PostMapping : post방식 일떄만 처리
+		  	 # 주의 
+				1. 스프링은동일한 클래스로 controller명을 선언하지 못 한다.
+					보통 패키지가 다르면 클래스르 중첩적으로 사용할 수 있는데,
+					클래스에서 객체 로딩시 에러 발생 
+						springweb.a01_start.A01_MVCController.java
+						@Controller("A01_MVCController") 
+							- DL id bean를 클래스명의 소문자로 설정
+						
+						springweb.a02_mvc.A01_MVCController.java
+						@Controller("mvcController")
+							- DL명을 명시적으로 변경을 해야지 에러가 발생하지 않음.
+				2. url mapping을 동일한 이름을 설정하면 에러발생.
+					Ambiguous mapping
+					@RequestMapping("/start.do")
+					등록된 모든 클래스와 메서드와 중첩 url 불가.
+							
+		  10. 요청값은 메서드 매개변수로
+		  11. 모델데이터는 Model d로 해서 처리가 되고
+		  12. 기능 메서드의 return "\\views\\a01_start\\a01_start.jsp"에 의해 
+		  		view단이 기본적으로 forward방식으로 호출되어
+		  13. 해당 뷰단은 모델데이터와 함께 출력이 된다.
 			   
 
 4. 스프링 컨테이너 이해를 위한 DI 설정 이해(*)
+	1) 클래스 선언으로 객체 DL(id값) 호출하기
+	2) 기능 메서드 사용 property
+	3) 1:1관계 설정하여 객체 연관 관계 설정하기
+		ref = "선언된 객체의 id명"
+		
 
 5. 스프링 MVC 심화
 	1) controller의 요청값 옵션
 		메서드의 매개변수로 처리
-		개별적 요청값 처리 @RequestParam
+		개별적 요청값 처리 @RequestParam("요청키") 데이터 유형 변수
 		@RequestParam(value="요청키", defaultValue="") 데이터유형 변수
 			요청키도 맞아야 되지만, 특징, 숫자형으로 요청할 떄는 숫자형이어야 한다.
-			&empno=&ename=
-			@RequestParam("empno" int empno(X)
+			&empno=&ename=	==> <input name="empno" value="" />
+			@RequestParam("empno") int empno(X)	- 에러발생 요청 url
+				자체를 찾지 못한다.
+				처리방법 : 요청값이 문자열에서 숫자형식으로 넘어가게 하여야 한다.
+				1) &empno=0	==> <input name="empno" value="0" />
+				2) XXX 요청값 자체가 없을 때는 
+					@RequestParam("empno", defaultValue="0") int empno
+			defaultValue 는 위와 같이 empno=@@ 라는 형식으로 요청값 자체가 없을 때,
+			설정하는 부분이다.
 		
 		VO(property개념으로 요청키를 저장하는 처리)
 			: 요청데이터+모델 (모델 어트리뷰터)
+			public String empList(Emp sch)
+				모델명이 emp
 			# 모델 어트리뷰트 이름을 다르게 처리할 떄
 			public String empList(@ModelAttribute("sch") Emp sch)
 			
+			# VO와 요청값 처리 형태
+			1. 요청값이 없을 떄,
+				public String empList(Emp sch)는 정상적으로 호출이 된다.
+				소속되어 있는 문자열/객체 : null
+				소속되어 있는 숫자형(실수/정수) : 0
+				소속되어 있는 boolean : false로 설정이 된다.
+				${emp.XXX}
+			2. 요청값이 있을 떄,(&empno=1000&ename=홍길동)
+				property와 type확인해서 할당이 가능한 경우
+				1) 요청키이름과 데이터 유형이 문자열
+					public void setEmpno(String empnos)(O)		
+					public void setEname(String ename)(O)
+				2) 요청키이름과 데이터 유형이 숫자형
+					public void setEmpno(int empno)(O)
+					public void setEname(int ename)(X)
+						해당 url을 찾지 못 함.
 	2) 모델 설정
 		메서드의 매개변수 : Model d, d.addAttribute("모델명",모델객체);
 		
 	3) 뷰단 처리
 		- return "호출할 html/jsp/json데이터" ***(forword방식)으로 호출하면서 모델데이터를 넘긴다.
 		- 선언된 controller url(요청 메서드)를 호출할 떄,
+			return "WEB-INF/views/a01.start.jsp" forward
+				방식으로 요청값, 모델데이터와 함께 view단 호출
 			return "redirect:/empList.do" : redirect방식으로 호출
+				정의된 controller의 메서드
 			return "forward:/empList.do"  : forward방식으로 호출
+				정의된 controller의 메서드
 		ex) redirect방식과 forward방식의 차이
 			response.sendRedirect("페이지") : redirect
 				- 페이지를 호출하면서 request,response를 해당 페이지에 전송하지 않는다.
@@ -90,11 +150,11 @@
 			request.getRequestDispatcher("페이지").forward(request,response);
 				forward 방식
 				- request, response를 전달하기에 모델데이터를 전달할 수 있다.
-				- url주소는 변경되지 않고 기존 urll mapping 방식으로 전달된다.
+				- url주소는 변경되지 않고 기존 url mapping 방식으로 전달된다.
 	4) session 활용
 6. 스프링의 database 처리를 위한 mybatis framework 활용
 	1) 1단계 기존 DAO활용
-	2) 2단계 MYBAITS활용
+	2) 2단계 MYBAITS활용 : 컨테이너에 @@@.jar된 framework 등록하여 처리하는 패턴
 7. 기타 실무예제
 	1) 파일업로드/다운로드
 	2) ajax 처리1
@@ -105,7 +165,8 @@
 	4) 다국어 처리
 	5) 메일 발송
 	6) aop
-	7) 페이지 처리 답변형 게시판
+	7) 페이지 처리 답변형 게시판(첨부파일)
+		- 세션 로그인 처리 후(세션), 등록자 세션(수정 삭제 권한)
 	
 # 스프링 MVC 해보기
 1. controller롤 뷰단 호출
@@ -170,7 +231,7 @@
 		// 타입과 이름이 맞는 요청값이 들어오면 객체에 할당이 된다.
 		// 모델명을 객체의 소문자 시작명으로 처리된다.
 		// Emp ==> emp, Dept ==> dept
-		// 주의)
+		// 주의) 클래스명은 반드시 ~~
 		// 2. 모델데이터까지 객체로 선언이 자동으로 된다.
 		// 		${emp.ename} 
 		// 3. 요청값이 없으면 해당 객체로 default 처리를 한다.

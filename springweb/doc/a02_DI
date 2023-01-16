@@ -25,6 +25,9 @@
 			IOC는 컨테이너에서 객체의 생성을 책임지고, 의존성을 관리한다.
 			의존성관리란 객체간에 Controller==> service ==> Dao 형태로 상호의존을 하여 처리하는 것을 말하고, 이것한 것을 컨테이너에서
 			관리하는 것을 말한다.
+			# 메모리에 컨테이너에 핵심 객체들이 로딩되어 있기 때문에 new XXX()를 활용하여 갹채룰 생성할 필요없이, 바로 객체를
+			선언된 내용으로 활용이 가능하다.
+			
 			
 	3) IOC에서 파생하는 개념들
 		DL(Dependency Loopup) 컨테이너에 저장된 객체들을 찾을 때, 사용되는 키워드 또는 개념
@@ -53,3 +56,69 @@
 					DIExp10.java(컨테이너에 있는 객체를 DL로 호출해서 활용)
 				- DIExp11.java, di11.xml
 				- DIExp12.java, di12.xml
+
+# 1: 다 관계 객체 설정.
+1. 클래스와 관계 구조가운데 1:1관계에 이어 1:다 관계 처리를 해주는 구조가 있는데, 
+	이런 내용도 컨테이너에 선언하여 활용할 수 있다.
+2. 클래스 선언(포함할 객체)
+	class Mart{
+		public void setPlist(List<Product> plist){
+			this.plist = plist
+		}
+	}
+3. 컨테이너 선언
+	<bean id="prod01" class="@@@@.Product"/>
+	<bean id="prod02" class="@@@@.Product"/>
+	<bean id="prod03" class="@@@@.Product"/>
+	<bean id="mt01" class="@@@.Mart">
+		<property name="plist"
+			<list>
+				<ref bean="prod01" />
+				<ref bean="prod02" />
+				<ref bean="prod03" />
+# 여러가지 구조체를 컨테이너에 할당 및 설정 처리
+1. 자바에서 선언된 여러가지 구조체도 컨테이너에서 할당 및 처리할 수 있다.
+	1) list
+		public void setPlist(List<Product> add){}
+		
+		<property name="plist>
+			<list>
+	2) set(중복불가)
+		public void setAgent(Set<String> agent){}
+		<property name="agent">
+			<set
+				value 입력값
+	3) map(key/value)
+		public void setConfig(Map<String, Integer> config){}
+		<property name="config"
+			<entry>
+				key/value형식 처리
+	4) Properties : key/value형식 collection
+		prop key=""/value
+				
+# namespace를 활용하여, 생성자나 property의 간편한 사용
+1. 컨테이너 xml dd부분 선언
+	xmlns:p="XXXX"
+	xmlns:c="XXXX"
+	형식으로 선언이 되어 있어야 한다.
+2. property 선언 변경
+	<bean
+		<property name="프로퍼티명" value="데이터할당"
+		<property name="프로퍼티명" ref="참조명"
+	==>
+	<bean p:프로퍼티명 = "데이터 할당"
+		  p:프로퍼티명-ref = "참조명"
+	형식으로 변경하여 보다 코드를 간편화 한다.
+3. constructor 선언변경
+	<bean
+		<constructor-arg>데이터 설정
+		<constructor-arg>참조명
+	==>
+	<bean c:생성자매개변수=데이터할당
+		  c:_0="데이터할당
+		  c:_1="데이터할당
+		  C:생성자매개변수-ref="참조명"
+	p:프로퍼티명 = "데이터할당"
+		
+	
+
