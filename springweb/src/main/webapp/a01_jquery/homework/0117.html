@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#ex2Tab td").text(function(idx){
+			$(this).css("text-align","center")
+			if(idx%2==0){
+				$(this).css("background","yellow")
+			}else{
+				$(this).css("background","aliceblue")
+			}
+			return idx
+		})
+		
+		$("h2").text("클릭").click(function(idx){
+			$(this).prev().css("border","3px solid blue")
+		})
+		
+		$("#ex7").keyup(function(){
+			if(this.value.length<9 ||this.value.leng>16){
+				$(this).next().text("8~16글자 까지 입력가능합니다.")
+			}else{
+				$(this).next().text("글자수:"+this.value.length)
+			}
+		})
+		
+		var idx=0;
+		$("#ex8 td").eq(idx).css("background","yellow")
+		$(document).keydown(function(keyboard){
+			$("#ex8 td").css("background","")
+			
+			if(keyboard.keyCode==37){ // 왼쪽
+				idx--
+				if(idx<0){
+					idx=$("#ex8 td").length
+				}
+				$("#ex8 td").eq(idx).css("background","yellow")
+			}else if(keyboard.keyCode==38){ //위
+				idx-=3
+				if(idx<0){
+					idx+=9
+				}
+				$("#ex8 td").eq(idx).css("background","yellow")
+			}else if(keyboard.keyCode==39){ //오른쪽
+				idx++
+				if(idx>$("#ex8 td").length){
+					idx=0
+				}
+				$("#ex8 td").eq(idx).css("background","yellow")
+			}else if(keyboard.keyCode==40){ //아래
+				idx+=3
+				if(idx>$("#ex8 td").length){
+					idx-=9
+				}
+				$("#ex8 td").eq(idx).css("background","yellow")
+			}
+		})
+		
+	});
+</script>
+</head>
+<body>
+		
+	<!--[1단계:확인] 2. callback함수를 이용하여 5*5 테이블에 1~25번호를 붙이고, 짝/홀별로 배경색상을 다르게 처리하세요  -->
+	<table id="ex2Tab" width="300px" height="300px" border>
+		<tr><td></td><td></td><td></td><td></td><td></td></tr>
+		<tr><td></td><td></td><td></td><td></td><td></td></tr>
+		<tr><td></td><td></td><td></td><td></td><td></td></tr>
+		<tr><td></td><td></td><td></td><td></td><td></td></tr>
+	</table>
+	<!-- [1단계:확인] 4. <p><h2>,<p><h2>,<p><h2> 구조로 된 상황에서 h2를 클릭시, 상위 p태그이 border의 테두리가 파랑색으로 처리되게 하세요  -->
+
+	<p><h2></h2>
+	<p><h2></h2>
+	<p><h2></h2>
+	
+	<!--[1단계:활용] 7. 입력시, next()를 활용해서 유효성(글자수 8~16)에 대한 내용을 표시하게 하세요  -->
+	<input type="text" style="width:50%; height:50px;" id="ex7" />
+	<h3></h3>
+	
+	
+	<!--[1단계:활용] 8. eq()를 활용하여 화살표로 커서를 움직일 때 마다, 3X3테이블의 특정한 td의 배경색상이 위치가 이동이 되게 하세요  -->
+	<table id="ex8" width="300px" height="300px" border>
+		<tr><td></td><td></td><td></td></tr>
+		<tr><td></td><td></td><td></td></tr>
+		<tr><td></td><td></td><td></td></tr>
+	</table>
+	
+</body>
+</html>

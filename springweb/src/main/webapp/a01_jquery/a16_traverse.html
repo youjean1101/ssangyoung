@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	
+/*
+ # 계층관계에서 요소객체 선택하기
+ 1. jquery은 기능메서드로 특정한 요소객체에 대한 선택 역할을 처리하게 해준다.
+ 	1) 부모 및 조상 요소객체 선택
+ 		$("요소객체").parent() : 바로 상위 부모
+ 		$("요소객체").parents("선택할 조상 객체") : 요소객체를 포함하고 있는 모든 조상객체
+ 			상위 조상객체들 가운데 지정
+ 		$("요소객체").parentsUtils("지정") : 모든 조상객체에서 특정한 객체까지
+ 	2) 하위 자식 객체
+ 		$("요소객체").children()
+ 		$("요소객체").find("하위 중에 찾을 객체")
+ 	3) 형제 객체
+ 		같은 부모를 둔 형제 객체들을 선택
+ 		$("요소객체").siblings() : 요소객체와 같은 부모객체를 둔 모든 형제객체를 선택
+ 		$("요소객체").next() : 형제객체 중, 바로 다음에 나오는 객체
+ 		$("요소객체").nextAll() : 형제객체 중, 바로 다음에 나오는 모든 객체
+ 		$("요소객체").nextUntil() : 형제객체 중, 바로 다음에 지정한 객체까지 나오는 객체
+ 		$("요소객체").prev() : 형제객체 중, 바로 이전객체
+ 		$("요소객체").prevAll() : 형제객체 중, 바로 이전객체들
+ 		$("요소객체").prevUntil() : 형제객체 중, 바로 이전객체까지 객체들
+ 2. filtering 객체들
+ 	1) first() : 첫번째 객체
+ 	2) last() : 마지막 객체
+ 	3) eq(idx) : 해당 index에 위치하는 객체
+ 	4) filter("선택자") : 특정 범주의 선택자 객체
+ 	5) not("선택자") : 특정 범주의 선택자에 해당하지 않는 객체
+ 	
+ 	
+ */
+	 $(document).ready(function(){
+			$("h2").text("안녕하세요(다음객체)").click(function(){
+				$(this).next().css("background",'orange')
+				$(this).prev().css("background",'pink')
+			})
+			$("#frstBtn").click(function(){
+				$("h2").first().text("첫번째 객체 선택")
+			});
+			$("#lastBtn").click(function(){
+				$("h2").last().text("마지막 객체 선택")
+			});
+			$("#ranBtn").click(function(){
+				var rIdx = Math.floor(Math.random()*$("h2").length)
+				$("h2").eq(rIdx).text("임의의 객체").css("color","purple")
+			});
+			// ex) 4X4 테이블을 만들고, setInterval(500,function(){})을 이용해서 
+			//			임의의 td의 색상에 배경색삭ㅇ이 오렌지 색상으로 바뀌게 하세요.
+			$("#exTab td").text(function(idx){
+				$(this).css("text-align","center")
+				return idx+1
+			})
+			var cnt=0;
+			var set01 = setInterval(function(){
+				$("#exTab td").css("background","")
+				var rIdx = parseInt(Math.random()*$("td").length)
+				$("#exTab td").eq(rIdx).css("background","orange")
+				//$("#exTab td").not($("#exTab td").eq(rIdx)).css("background","white")
+				cnt++
+				if(cnt==15){
+					clearInterval(set01)
+				}
+			},500)
+	});
+</script>
+</head>
+<body>	
+		<table id="exTab" width="250px" height="250px" border>
+			<tr><td></td><td></td><td></td><td></td></tr>
+			<tr><td></td><td></td><td></td><td></td></tr>
+			<tr><td></td><td></td><td></td><td></td></tr>
+			<tr><td></td><td></td><td></td><td></td></tr>
+		</table>
+
+		<button type="button" id="frstBtn">첫번째 객체</button>
+		<button type="button" id="lastBtn">마지막 객체</button>
+		<button type="button" id="ranBtn">어느 객체를 선택할까요?</button>
+
+	  <h2></h2>
+	  <h2></h2>
+	  <h2></h2>
+	  <h2></h2>
+	  <h2></h2>
+	  <h2></h2>
+	  <h2></h2>
+</body>
+</html>

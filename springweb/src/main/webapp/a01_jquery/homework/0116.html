@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="$${path}/a00_com/bootstrap.min.css" >
+<link rel="stylesheet" href="$${path}/a00_com/jquery-ui.css" >
 <script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="$${path}/a00_com/jquery.min.js"></script>
+<script src="$${path}/a00_com/popper.min.js"></script>
+<script src="$${path}/a00_com/bootstrap.min.js"></script>
+<script src="$${path}/a00_com/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#view").click(function(){
@@ -19,15 +27,90 @@
 				alert("등록회원확인 완료")
 			})
 		})
+		
+		// 정답
+		$("#showList").hide();
+	  	$("#chBtn").click(function(){
+	  		if($(this).val()=="등록회원확인"){
+	  			$(this).val("등록회원닫기")
+	  			$("#showList").show("slow",function(){
+	  				alert("조회회원 확인")
+	  			});
+	  		}else{
+	  			$(this).val("등록회원확인")
+	  			$("#showList").hide("slow",function(){
+	  				alert("등록회원확인 완료")
+	  			});
+	  		}
+	  	});
 	});
 </script>
 </head>
 <body>
+	  <!--
+	  [1단계:확인] 6. callback메서드를 이용하여, 등록회원확인하기 누를때, 등록된 회원리스트나오고, alert(조회완료), 다시 등록회원닫기 누를때,
+      닫아지면 등록회원확인 완료 alert()이 로딩되게 하세요.
+	  1) 화면구현 
+	  	<input type="button" id="chBtn" value="등록회원확인" />
+	  	<div id="showList">
+	  		<h2>등록회원리스트</h2>
+	  	</div>
+	  2) script
+	  	$("#chBtn").click(function(){
+	  		if($(this).val()=="등록회원확인"){
+	  			$(this).val("등록회원닫기")
+	  			$("#showList").show("slow",function(){
+	  				alert("조회회원 확인")
+	  			});
+	  		}else{
+	  			$(this).val("등록회원확인")
+	  			$("#showList").hide("slow",function(){
+	  				alert("등록회원확인 완료")
+	  			});
+	  		}
+	  	});
+	   -->
 	  <table width="200" height="200" border>
 	  	<tr><th>아이디</th><th>이름</th><th>주소</th></tr>
 	  	<tr><td></td><td></td><td></td></tr>
 	  </table>
 	  <button id="view" type="button">등록회원확인하기</button>
 	  <button id="viewhidden" type="button">등록회원닫기</button>
+	  <!-- 정답 -->
+	  <h2>callback연습</h2>
+	  <input type="button" id="chBtn" value="등록회원닫기"/>
+	 <div class="container" id="showList">
+		<form id="frm01" class="form-inline"  method="post">
+	  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		    <input class="form-control mr-sm-2" placeholder="제목" />
+		    <input class="form-control mr-sm-2" placeholder="내용" />
+		    <button class="btn btn-info" type="submit">Search</button>
+	 	</nav>
+		</form>
+	   <table class="table table-hover table-striped">
+	   	<col width="10%">
+	   	<col width="50%">
+	   	<col width="15%">
+	   	<col width="15%">
+	   	<col width="10%">
+	    <thead>
+	    
+	      <tr class="table-success text-center">
+	        <th>번호</th>
+	        <th>제목</th>
+	        <th>작성자</th>
+	        <th>작성일</th>
+	        <th>조회</th>
+	      </tr>
+	    </thead>	
+	    <tbody>
+	    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+	    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+	    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+	    </tbody>
+		</table>    
+	</div>
+    
+</div>
 </body>
 </html>

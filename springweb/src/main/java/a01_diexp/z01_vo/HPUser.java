@@ -1,5 +1,5 @@
 package a01_diexp.z01_vo;
-
+// a01_diexp.z01_vo.HandPhone
 // a01_diexp.z01_vo.HPUser
 public class HPUser {
 	private String name;
@@ -34,4 +34,12 @@ public class HPUser {
 	public void setHandPhone(HandPhone handPhone) {
 		this.handPhone = handPhone;
 	}
+	
+	// autowire="byName"으로 하면 객체가 id명과 setXXX property가 동일하면
+	// 해당 메서드를 통해 객체가 할당이 된다.
+	// 1. type이 할당이 가능하여야 함.
+	// 2. set메서드가 id명과 동일해야 함.
+	public void setHp02(HandPhone handPhone){
+	      this.handPhone = handPhone;
+	  }
 }

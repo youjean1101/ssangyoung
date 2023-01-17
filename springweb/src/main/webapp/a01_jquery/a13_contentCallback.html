@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+<script>
+	/*
+	# 데이터 처리 기능 메서드의 callback함수 처리
+	1. text(), html(), val()
+	2. text(function(idx){
+		// 다중의 요소객체의 경우 index값을 매개변수로 받고
+		// 리턴값을  해당 데이터에 대한 처리를 할 수 있다.
+		return "처리할 데이터";
+	})
+	*/
+	$(document).ready(function(){
+		$("#show td").text(function(idx, txt){
+			console.log(idx+" "+txt)
+			return idx+" hello"
+		})
+		// ex1)h3를 7개 만들고, 0~6번호를 붙여 출력하세요.
+		// ex2)h3를 7개 만들고, 무지개 색상을 출력하세요
+		$("h3").text(function(idx,txt){
+			$(this).css("background-color",txt)
+			return idx+":"+txt
+		})
+		//정답
+		var colors=['red','orange','yellow','green','blue','navy','purple']
+		$("h4").text(function(idx){
+			$(this).css("color",colors[idx])
+			return colors[idx];
+		})
+		$(".in01").val(function(idx){
+			$(this).css({"text-align":"center","width":"100%"})
+			return colors[idx];
+		})
+		var aligns = ["left","center","right"]
+		$(".in01").val(function(idx){
+			$(this).css("text-align",aligns[idx%3])
+			return colors[idx];
+		})
+	});
+</script>
+</head>
+<body>
+	  <h2>콜백함수</h2>
+	  <input type="text" class="in01"/>
+	  <input type="text" class="in01"/>
+	  <input type="text" class="in01"/>
+	  <input type="text" class="in01"/>
+	  <input type="text" class="in01"/>
+	  <input type="text" class="in01"/>
+	  <h3>red</h3>
+	  <h3>orange</h3>
+	  <h3>yellow</h3>
+	  <h3>green</h3>
+	  <h3>blue</h3>
+	  <h3>navy</h3>
+	  <h3>purple</h3>
+	  <h4></h4>
+	  <h4></h4>
+	  <h4></h4>
+	  <h4></h4>
+	  <h4></h4>
+	  <h4></h4>
+	  <h4></h4>
+	  <table id="show" width="300pt" height="300pt" border>
+	  	<tr><td>기존데이터1</td><td></td><td></td></tr>
+	  	<tr><td></td><td></td><td></td></tr>
+	  	<tr><td></td><td>기존데이터2</td><td></td></tr>
+	  </table>
+</body>
+</html>

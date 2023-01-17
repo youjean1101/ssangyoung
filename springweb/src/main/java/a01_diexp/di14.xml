@@ -33,6 +33,7 @@
       " >
       <!-- set객체 관련 할당.. -->
       <bean id="sensor01" class="a01_diexp.z01_vo.Sensor">
+      	<!-- public void setAgent(Set<String> set) -->
       	<property name="agent">
       		<set>
       			<value>주식매매</value>
@@ -46,7 +47,11 @@
       			<value>보험관리</value>
       		</set>
       	</property>
-      	<!-- Properties -->
+      	<!-- Properties 
+      	
+      	public void setAddInfo(Properties addInfo)
+      	
+      	-->
       	<property name="addInfo">
       		<props>
 				<prop key="사과">3000</prop>      		
@@ -83,6 +88,7 @@
       	</property>
       </bean>
       <bean id="monitor01" class="a01_diexp.z01_vo.Monitor">
+       <!--  public void setConfig(Map<String,Integer> map) -->
       	<property name="config">
       		<map>
       			<entry key="간격" value="1000" />

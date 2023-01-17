@@ -33,4 +33,9 @@ public class CarRacer {
 	public void setCar(Car car) {
 		this.car = car;
 	}
+	// 컨테이너의 id와 메서드의 property가 동일할 때, 해당 객체 할당 하는 것 byName
+	public void setCar03(Car car) {
+		this.car = car;
+	}
+	
 }

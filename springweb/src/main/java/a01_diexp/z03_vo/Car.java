@@ -1,4 +1,4 @@
-package a01_diexp.z01_vo;
+package a01_diexp.z03_vo;
 //a01_diexp.z01_vo.Car
 //a01_diexp.z01_vo.CarRacer
 public class Car {

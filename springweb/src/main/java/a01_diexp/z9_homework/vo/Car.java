@@ -5,6 +5,11 @@ import java.util.List;
 public class Car {
 	private String carName;
 	private List<Tire> tlist;
+	
+	public Car() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public Car(String carName) {
 		super();
 		this.carName = carName;
