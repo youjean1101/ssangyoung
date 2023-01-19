@@ -1,4 +1,4 @@
-package springweb.a13_database;
+package a01_diexp.backend;
 //jspexp.a13_database.A06_PareparedDao 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import springweb.z01_vo.*;
+import org.springframework.stereotype.Repository;
 
+import springweb.z01_vo.*;
+@Repository
 public class A06_PareparedDao {
 	// 전역변수 선언
 	private Connection con;
@@ -203,8 +205,7 @@ public class A06_PareparedDao {
 	      return dlist;
 	   }
 	   // 조회 처리
-	   public List<Member> 
-	      getMemberList(Member sch){
+	   public List<Member> getMemberList(Member sch){
 	      List<Member> dlist = new ArrayList<Member>();
 	      String sql = "SELECT * FROM MEMBER";
 	      try {

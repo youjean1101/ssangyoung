@@ -4,6 +4,9 @@ SELECT * FROM dept
 WHERE dname LIKE '%'||'SALES'||'%'
 and loc LIKE '%'||'CHICAGO'||'%';
 
+SELECT * FROM MEMBER
+WHERE name LIKE '%'||''||'%'
+AND auth LIKE '%'||'회'||'%';
 SELECT * FROM emp100;
 SELECT * FROM emp01;
 INSERT INTO emp01 values(7999,'마길동','대리',7902,to_date('2023-01-01','YYYY-MM-DD'),
@@ -90,3 +93,13 @@ INSERT INTO emp100 values(1002,'오길동','차장',1001,sysdate,6000,1000,10);
 
 SELECT losal code,grade val FROM salgrade;
 SELECT * FROM salgrade;
+
+CREATE TABLE test(
+	content varchar(4000),
+	inserttime timestamp
+);
+SELECT *from test;
+
+INSERT INTO test values(null,'13:37:00');
+
+DROP table test;

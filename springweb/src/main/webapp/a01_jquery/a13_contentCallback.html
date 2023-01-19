@@ -9,7 +9,16 @@
 <script>
 	/*
 	# 데이터 처리 기능 메서드의 callback함수 처리
-	1. text(), html(), val()
+	0. 기본형식
+		$("다중선택자").css("background",function(idx){
+			// 다른 기능적 처리 프로세스 수행
+			// $(this) 배열객체 가운데 단위데이터 처리.
+			return "각 내용별로 처리할 데이터(배경색상)"
+		})
+	1. text(), html(), val(),attr(), css()
+		return 될 데이터는 실제 저장할 데이터를 말한다.
+		속성 설정에도 처리할 수 있다.
+	
 	2. text(function(idx){
 		// 다중의 요소객체의 경우 index값을 매개변수로 받고
 		// 리턴값을  해당 데이터에 대한 처리를 할 수 있다.

@@ -136,7 +136,7 @@
 		일단 type이 같고 id값이 같은 property가 있는 메서드가 있을 경우 할당하는 것을 말한다.
 	3) autowire="constructor"
 		생성자를 통해서 해당 타입이 할당될 때, 자동 주입된다.
-	4) autowire="constructor"
+	4) autowire="autodetect"
 		우선 할당할 수 있는 생성자를 살피고, 없을 때는 기능메서드 살펴서
 		byType으로 할당한다.
 	5) autowire="no"
@@ -153,6 +153,48 @@
 		<context:component-scan base-package="적용할 최상위 패키지명">
 			<context:include-filter type="regex" expression=".*"/>
 			정규식표현식에 해당하는 클래스를 메모리에 로딩하는 것을 .*란 하위에 있는 모든 클래스를 지칭한다.
-			
+# 의존성 주입을 각 클래스에서 선언하여 처리하기
+1. 지금까지 의존성 주입을 컨테이너에서 autowire 옵션을 통해 처리하였다
+2. component-scan 기능을 통해서 객체를 컨테이너에 로딩하면,
+	이에 대한 의존성 주입으르 컨테이너에서 처리한다는 건 여간 번거러운 작업이 아니다.
+3. 이에 각 코드에서 의존성 주입을 선언하여 처리함으로 효과적인
+	개발을 도모하는 방법을 spring에서는 지원하고 있다.
+4. 처리 단계
+	1) component-scan를 통해서 컨테이너에 객체 생성
+	2) 해당 패키지에 클래스 생성시, component-scan
+		에서 지정한 annotation 설정
+	3) 주입할 객체 생성시,
+		@Autowired
+		private  클래스명 참조명;
+	4) 위 annotation 옵션으로 new 생성자() 없이도, 
+		컨테이너에 있는 객체가 해당 객체엥 자동으로 주입된다.
+		
+# 스프링 backend단 컨테이너 설정 환경
+1. 스프링의 backend단은 다음과 같은 구조로 처리되고 있다.
+	Controller <==> Service <==> Dao <==> DB서버
+2. 요청값을 받은 WAS는 web.xml과 front controller단을 처리되어 
+	이와 연관관계가 있는 컨테이너를 거쳐 controller단에서 상호작용을 처리한다.
+3. 위 객체들은 컨테이너에서 메모리를 로딩한 후 실행 된다.
+4. 그리고, Autowired옵션에 의해서 객체들은 필드에 선언하여 연관관계를 
+	가지고 처리가 된다.
+5. Database의 경우는 보통 서버마다 환경설정(ip, port, sid, 계정, 비번)을 
+	Dao에서 처리할 때, 컨테이너에서 설정하는 경우가 많다.
+	- 그래서, autowired처리보다 컨테이너에서 클래스를 선언하여, 
+		위에 필요한 속성값을 처리해주는 경우가 많다.(연결객체)
+6. 그 외에서 컨테이너에 올려져 있다는 가정하에 호출하여 의존성 자동 주입 연결하여 사용하는 경우가 많다.
+7. 가상환경 설정
+	1) DIExp21.java
+		호출해서 테스트할 메인 화면,
+		Controller의 기능 메서드에 의해, Service, Dao, DB처리가 된 결과를 확인
+	
+	2) di21.xml
+		a01_diexp.backend 패키지에 있는 클래스 자동 메모리 로딩 및 DB.java의 DB연결 정보 설정
+	
+	3) a01_diexp.backend 패키지의 클래스
+		- @Controller, @Service, @Dao를 통해 객체가 컨테이너에서 
+			자동 로딩 및 의존성 자동 주입으로 연관관계 설정
+		- DB.java : 데이터 연결정볼르 컨테이너에서 설정
+
+	 
 	
 

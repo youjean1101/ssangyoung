@@ -59,7 +59,28 @@
 				$("#ex8 td").eq(idx).css("background","yellow")
 			}
 		})
-		
+		//--------------------------------8번정답-------------------------------
+		var tIdx = 4 // 정중앙 cel index
+		$("#ex8answer td").height("100pt")
+		$("#ex8answer td").eq(4).css("background","pink")
+		$("#ex8answer td").text(function(idx){
+			$(this).css({fontSize:"100px",textAlign:"center"})
+			return idx+1;
+		})
+		$(this).keyup(function(){
+			$("#ex8answer td").css("background","")
+			// 화살표 완쪽부터 시계방향으로 37, 38, 39, 40
+			// 좌 37, 우 39
+			console.log(event.keyCode)
+			if(event.keyCode==37) tIdx--
+			if(event.keyCode==39) tIdx++
+			// 상 38, 하 40
+			//	-=3	  +=3
+			if(event.keyCode==38) tIdx-=3
+			if(event.keyCode==40) tIdx+=3
+			tIdx%=9 // 범위가 0~9까지만 변경되게 처리
+			$("#ex8answer td").eq(tIdx).css("background","pink")
+		})
 	});
 </script>
 </head>
@@ -83,8 +104,32 @@
 	<h3></h3>
 	
 	
-	<!--[1단계:활용] 8. eq()를 활용하여 화살표로 커서를 움직일 때 마다, 3X3테이블의 특정한 td의 배경색상이 위치가 이동이 되게 하세요  -->
+	<!--
+	[1단계:활용] 8. eq()를 활용하여 화살표로 커서를 움직일 때 마다, 3X3테이블의 특정한 td의 배경색상이 위치가 이동이 되게 하세요 
+		1) 이벤트 커서 이벤트로 처리되는 것을 확인
+			$("대상객체").on("keyup",function(){
+				console.log(event.keyCode)
+			})
+		2) table에 key에 따른 변경 처리..
+			- 테이블 3*3 생성
+		3) 오른쪽 왼쪽을 키를 입력 시, 좌우 이동 및 배경색 변경
+			전역변수로 tIdx=0;
+			$("td").eq(인덱스번호).css("background",pink);
+			tIdx++; tIdx--;
+		4) 위아래 키 입력시, 상하 이동 및 배경색 변경
+			0 1 2
+			3 4 5
+			6 7 8
+			아래 키 입력 시, 0 ==> 3 ==> 6
+			위로 키 입력 시, 8 ==> 5 ==> 2
+	 -->
 	<table id="ex8" width="300px" height="300px" border>
+		<tr><td></td><td></td><td></td></tr>
+		<tr><td></td><td></td><td></td></tr>
+		<tr><td></td><td></td><td></td></tr>
+	</table>
+	
+	<table id="ex8answer" width="500px" height="300px" border>
 		<tr><td></td><td></td><td></td></tr>
 		<tr><td></td><td></td><td></td></tr>
 		<tr><td></td><td></td><td></td></tr>

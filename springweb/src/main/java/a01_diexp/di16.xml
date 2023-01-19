@@ -40,9 +40,9 @@
 		의존성 자동 주입개념이다.
 		1. autowire="byType" : 유형이 객체로 메모리에 있을 때..
        -->
-       <bean id="hp01" class="a01_diexp.z01_vo.HandPhone" c:_0="010-8888-9999" c:_1="삼성전자"/>
+       <!-- <bean id="hp01" class="a01_diexp.z01_vo.HandPhone" c:_0="010-8888-9999" c:_1="삼성전자"/> -->
        <bean id="hp02" class="a01_diexp.z01_vo.HandPhone" c:_0="010-7777-9999" c:_1="LG전자"/>
-       <bean id="us01" class="a01_diexp.z01_vo.HPUser" p:name="홍길동" autowire="byName"/>
+       <bean id="us01" class="a01_diexp.z01_vo.HPUser" p:name="홍길동" autowire="byType"/>
        <!-- 
        	ex) CarRacer, Car 자동 의존성 관계로 설정하여 호출되게 하세요.
          	//a01_diexp.z01_vo.Car

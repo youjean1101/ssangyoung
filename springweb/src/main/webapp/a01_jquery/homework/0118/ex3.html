@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+   td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script type="text/javascript">
+   $(document).ready(function(){
+      $("h2").text("물건 가격 조회")
+      $("input").on({keyup:function(){
+			if(event.keyCode==13){
+				var qstr = $("#frm01").serialize()
+				console.log(qstr)
+				//jquery ajax 처리
+				$.ajax({
+					url:"/springweb/callRest09.do",
+					type:"post",
+					data:qstr,
+					dataType:"json",
+					success:function(total){
+						alert(total+"원");
+					},
+					error:function(xhr,status,error){
+						console.log(xhr)
+						console.log(status)
+						console.log(error)
+					}
+				})
+			}
+      }})
+   });
+</script>
+</head>
+<body>
+
+<div class="container">
+   <div class="jumbotron text-center">
+     <h2 ></h2>
+   </div>
+   <form id="frm01" class="form-inline"  method="post">
+     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+       <input name="price" class="form-control mr-sm-2" placeholder="물건가격" />
+       <input name="cnt"  class="form-control mr-sm-2" placeholder="갯수" />
+       <button class="btn btn-info" type="button">계산</button>
+    </nav>
+   </form>
+   <table class="table table-hover table-striped">
+      <col width="10%">
+      <col width="50%">
+      <col width="15%">
+      <col width="15%">
+      <col width="10%">
+    <thead>
+      <tr class="table-success text-center">
+        <th>부서번호</th>
+        <th>부서명</th>
+        <th>지역</th>
+      </tr>
+    </thead>   
+    <tbody>
+    
+    </tbody>
+   </table>       
+</div>
+</body>
+</html>

@@ -30,43 +30,9 @@
        http://www.springframework.org/schema/security/spring-security.xsd   
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd   
-      ">
-   <!-- 자동을 특정 패키지에 컨테이너에 할당할 클래스 설정 
-   1. springweb하위 패키지에
-   2. annotation으로 Controller, Service, Repository로 선언된 것은
-      클래스를 호출하여 객체로 생성되게 처리.
-   -->
-   <context:component-scan base-package="springweb">
-      <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-      <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-      <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
-   </context:component-scan>
-   <!-- 
-   # DB연결처리
-   1. dbcp(database connection pool) 로 연결
-    -->
-   <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-      destroy-method="close">
-      <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>   
-      <property name="url" value="localhost"/>   
-      <property name="username" value="scott"/>   
-      <property name="password" value="tiger"/>   
-   </bean>    
-   <!-- 
-   # Mybatis연동
-   1. 위 선언한 dbcp와 연결
-   2. mybatis 공통 xml과 연동 처리
-      src\main\java\resource\mybatis.Spring.xml
-    -->
-   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-      <property name="dataSource" ref="dataSource"/>
-      <property name="configLocation" value="classpath:resource/mybatis.Spring.xml"/>
-   </bean>
-   <!-- 
-   # 마이바티즈에 의해 자동 생성 dao 인터페이스 선언
-    -->
-   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-      <property name="basePackage" value="springweb.a05_mvc.a03_dao"/>
-   </bean>    
-   
-</beans>      
+      " >
+    <!--a01_diexp.z04_vo 해당 패키지 하위에 있는 모든 클래스는 컨테이너 호출 시 객체로 메모리 로딩 처리  -->  
+	<context:component-scan base-package="a01_diexp.z04_vo">
+      	<context:include-filter type="regex" expression=".*"/>
+    </context:component-scan>      
+</beans>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+   td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script type="text/javascript">
+   $(document).ready(function(){
+      $("h2").text("회원정보 ajax조회")
+      $("button").click(function(){
+			$.ajax({
+				url:"/springweb/callRest08.do",
+				type:"post",
+				dataType:"json",
+				success:function(mlist){
+					var addHTML = ""
+					$(mlist).each(function(idx, member){
+						console.log(idx)
+						console.log(member)
+						addHTML+="<tr>"
+						addHTML+="<td>"+member.id+"</td>"
+						addHTML+="<td>"+member.passwd+"</td>"
+						addHTML+="<td>"+member.name+"</td>"
+						addHTML+="<td>"+member.auth+"</td>"
+						addHTML+="<td>"+member.point+"</td>"
+						addHTML+="<td>"+member.address+"</td>"
+						addHTML+="</tr>"
+					})
+					$("table tbody").html(addHTML)
+				},
+				error:function(xhr,status,error){
+					console.log(xhr)
+					console.log(status)
+					console.log(error)
+				}
+			})
+      })
+   });
+</script>
+</head>
+<body>
+
+<div class="container">
+   <div class="jumbotron text-center">
+     <h2 ></h2>
+   </div>
+   <form id="frm01" class="form-inline"  method="post">
+     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+       <button class="btn btn-info" type="button" >조회</button> 
+    </nav>
+   </form>
+   <table class="table table-hover table-striped">
+    <thead>
+      <tr class="table-success text-center">
+        <th>아이디</th>
+        <th>패스워드</th>
+        <th>이름</th>
+        <th>권한</th>
+        <th>포인트</th>
+        <th>주소</th>
+      </tr>
+    </thead>   
+    <tbody>
+    
+    </tbody>
+   </table>       
+</div>
+</body>
+</html>
