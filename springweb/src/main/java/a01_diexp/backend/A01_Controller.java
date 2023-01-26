@@ -28,14 +28,13 @@ public class A01_Controller {
 	}
 	public void getMemberList(Member sch){
 		for(Member m: service.getMemberList(sch)) {
-			System.out.println(m.getId()+"\t");
-			System.out.println(m.getName()+"\t");
-			System.out.println(m.getAuth()+"\t");
-			System.out.println(m.getPoint()+"\n");
+			System.out.print(m.getId()+"\t");
+			System.out.print(m.getName()+"\t");
+			System.out.print(m.getAuth()+"\t");
+			System.out.print(m.getPoint()+"\n");
 		}
 	}
 	public Member login(Member m) {
-		
 		return service.login(m);
-	}
+	}	
 }

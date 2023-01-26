@@ -10,4 +10,170 @@
 	4) 사용하게될 DAO 인터페이스 폴드 선언 : 이 폴드에서 선언된 인터페이스가 실제 dao 객체와 연동
 2. 처리 프로세스
 	1) service ==> dao인터페이스 ===> xml에 의해 선언된 내용을 프레임워크로 dao로 만듦
+
+3. 마이바티즈 환경 구성 후 개발 범위
+	1) 프레임워크를 통해 conrtainer 환경 설정
+	2) dao 실제 자바코드를 프레임워크에 의해서 자동으로 생성
+	3) 개발자는
+		dao 인터페이스 작성
+		xml로 dao 인터페이스와 연결되는 sql을 작성하면 완료
+4. 개발 순서
+	1) sql 작성
+		SELECT * FROM emp100
+		WHERE ename LIKE '%'||'A'||'%'
+		AND job LIKE '%'||''||'%'
+		
+	2) sql 처리를 위한 DTO(VO)를 작성
+		Emp]
+		
+	3) db처리 인터페이스 선언(dao패키지하위에)
+		public List<Emp> getEmpList(Emp sch);
+		// springweb.a05_mvc.a03_dao
+		//public List<Emp> getEmpList(Emp sch)
+	4) 공통 mybatis xml에 공통 vo 등록,
+		각 업무 단위 mapper.xml을 추가 및 선언.
+	5) mapper.xml에서
+		A01_EmpMapper.xml : 선언된 인터페이스 상속하여 
+			실제 사용할 DAO객체를 생성
+		- 인터페이스명 ==> namespace명
+		- 요소객체 안에 사용할 sql 처리..
+		- 메서드명 ==> id
+		- 메서드의 매개변수 ==> parameterType
+		- 메서드의 리턴값 ==> resultType
+	6) service에서 dao호출
+	7) controller에서 service호출
+	8) controller에 요청 및 모델데이터 선언
+	9) view(jsp) 구현 모델데이터 출력..
+# mybatis 프레임워크 연습
+1. 단일 리턴값 가져오기
+	- 단일 값
+	1) sql
+		select count(*)
+		from emp100
+	2) dao의 메서드 선언
+		public int empCount();
+	3) XXXMapper.xml
+		dao
+		<select id="empCount" resultType="int">
+			select count(*)
+			from emp100
+		</select>
+	4) main()에서 호출
+		System.out.println("사원수:"+dao.empCount());
+		
+		
+	1) sql
+		SELECT max(sal)msal
+		FROM emp100
 	
+		SELECT ename
+		FROM emp100
+		WHERE empno=7499
+	2) dao의 메서드 선언
+		public double empMaxSal();
+		public String getEname();
+	3) XXXMapper.xml
+		dao
+		<select id="empMaxSal" resultType="double">
+			SELECT max(sal)msal
+			FROM emp100
+		</select>
+		<select id="getEname" resultType="string">
+			SELECT ename
+			FROM emp100
+			WHERE empno=7499
+		</select>
+	4) main()에서 호출
+		System.out.println("최대 급여:"+dao.empMaxSal());
+		System.out.println("사원명:"+dao.getEname());
+		
+	ex1) 20번 부서의 최대 급여 처리
+		select max(sal)
+		from emp100
+		where deptno = 20
+	ex2) 가장 높은 관리자번호
+		select max(mgr)
+		from emp100
+	ex3) 사원명이 WARD인 직책명
+		select job
+		from emp100
+		where ename = 'WARD'
+		
+		public double getMaxSalByDept();
+		public int getMaxMgr();
+		public String getJobByEname();
+		
+		<select id="getMaxSalByDept" resultType="double">
+			select max(sal)
+			from emp100
+			where deptno = 20
+		</select>
+		<select id="getMaxMgr" resultType="int">
+			select max(mgr)
+			from emp100
+		</select>
+		<select id="getJobByEname" resultType="String">
+			select job
+			from emp100
+			where ename = 'WARD'
+		</select>
+		main()
+		dao.getMaxSalByDept()
+		dao.getMaxMgr()
+		dao.getJobByEname()
+		
+	- 단일 객체
+		여러 컬럼을 한 행으로 처리되는 구문
+		type을 객체로 설정해서 처리함.
+		SQL
+		SELECT * FROM emp100 WHERE empno=7499;
+		SELECT * FROM emp100 WHERE ename='ALLEN';
+		vo : 결과에 따른 vo객체 생성
+		
+		DAO단	INTERFACE 기능메서드 선언
+			public Emp getEmpByEmpno();
+			public Emp getEmpByEname();
+		mapper
+			공통 mybatis에서 선언한 alias명인 객체
+			<select id="getEmpByEmpno" resultType="emp">
+				SELECT * FROM emp100 WHERE empno=7499
+			</select>
+			<select id=getEmpByEname" resultType="emp">
+				SELECT * FROM emp100 WHERE ename='ALLEN'
+			</select>
+		main()
+			Emp emp01 = dao.getEmpByEmpno();
+			emp01.getEmpno();	emp01.getEname()
+			
+		
+		
+2. 다중의 리턴값 가져오기
+	- list형식
+3. 단일 매개변수 입력하기
+
+4. 다중 매개변수(객체) 입력하기
+
+5. 단일 리턴값, 단일 매개변수 처리
+6. 다중 리턴값, 다중 매개변수 처리
+7. 조회 처리하기
+8. 등록 처리하기
+9. 수정/삭제 처리하기
+10. mvc 화면과 함께 구현하기
+	
+	
+# eclipse 플러그인 문제 아직 해결되지 못하신 분들.
+1. eclipse 창을 닫고
+2. 기존 eclipse폴드명을 eclipse1으로 변경
+3. eclipse installer를 통해 a01_javaexp 폴드 하위에 eclipse 다시 설치
+4. 새로 설치한 eclipse 폴드 하위 eclipse.exe로 실행하고 
+	c:\a01_javaexp\workspace로 실행
+	
+# DB 접속
+	1. oracle sql developer
+
+# exerd, 파이썬 문제 있으신분.
+	c://a02_javaexp
+	eclipse 새로 설치
+	workspace
+	파이썬 pdev 플러그인 설치
+	exerd

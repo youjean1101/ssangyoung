@@ -11,9 +11,7 @@ import springweb.z01_vo.Member;
 @Service
 public class A02_Service {
 	@Autowired
-	private A03_Dao dao; 
-	
-	
+	private A03_Dao dao;
 	public List<Dept> getDeptList(Dept sch){
 		if(sch.getDname()==null) sch.setDname("");
 		if(sch.getLoc()==null) sch.setLoc("");

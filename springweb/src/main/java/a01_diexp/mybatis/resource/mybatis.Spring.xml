@@ -6,8 +6,9 @@
 	<typeAliases>
 		<typeAlias alias="emp" type="springweb.z01_vo.Emp"/>
 	</typeAliases>
-	<!-- 2. 사용 XXXMapper.xml을 추가 -->
+	<!-- 2. 사용 XXXMapper.xml을 추가  a01_diexp\mybatis\resource\A01_EmpMapper.xml -->
 	<mappers>
-		<mapper resource="resource/EmpMapper.xml"/>
+		<mapper resource="a01_diexp/mybatis/resource/A01_EmpMapper.xml"/>
 	</mappers>
+
 </configuration>

@@ -7,22 +7,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 // 연결 처리 객체
 // DB.con();
-//a01_diexp.backend.DB
-//DB(String driver,String ip, String port, String sid, String user, String pass)
+// a01_diexp.backend.DB
+// DB(String driver,String ip, String port, String sid, String user, String pass) 
 public class DB {
-	// 생성자를 통해서 지정된 DB연결정보 설정
+	// 생성자를 통해서 지정된 DB 연결정보 설정
 	private static String driver;
 	private static String ip;
 	private static String port;
 	private static String sid;
 	private static String user;
 	private static String pass;
-	
 	public DB() {
-		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 	public DB(String driver,String ip, String port, String sid, String user, String pass) {
 		super();
 		this.driver = driver;
@@ -33,6 +30,42 @@ public class DB {
 		this.pass = pass;
 	}
 
+	public static String getDriver() {
+		return driver;
+	}
+	public static void setDriver(String driver) {
+		DB.driver = driver;
+	}
+	public static String getIp() {
+		return ip;
+	}
+	public static void setIp(String ip) {
+		DB.ip = ip;
+	}
+	public static String getPort() {
+		return port;
+	}
+	public static void setPort(String port) {
+		DB.port = port;
+	}
+	public static String getSid() {
+		return sid;
+	}
+	public static void setSid(String sid) {
+		DB.sid = sid;
+	}
+	public static String getUser() {
+		return user;
+	}
+	public static void setUser(String user) {
+		DB.user = user;
+	}
+	public static String getPass() {
+		return pass;
+	}
+	public static void setPass(String pass) {
+		DB.pass = pass;
+	}
 	public static Connection con() throws SQLException {
 		Connection con=null;
 		// 1. 메모리 로딩
@@ -46,10 +79,10 @@ public class DB {
 		// 2. 연결정보 처리.
 		String info = "jdbc:oracle:thin:@"+ip+":"+port+":"+sid;
 		con = DriverManager.getConnection(info,user,pass);
-//		System.out.println("연결 성공");
+		//System.out.println("연결 성공");
 		return con;
 	}
-	// DB.close(rs,stmt,con); 
+	// DB.close(rs,smt,con); 
 	public static void close(ResultSet rs, 
 						Statement stmt, Connection con) {
 		try {

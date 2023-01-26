@@ -103,3 +103,8 @@ SELECT *from test;
 INSERT INTO test values(null,'13:37:00');
 
 DROP table test;
+
+SELECT count(ename) FROM emp100
+WHERE ename LIKE '%'||''||'%'
+AND job LIKE '%'||''||'%';
+
