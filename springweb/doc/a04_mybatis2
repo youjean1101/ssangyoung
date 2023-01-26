@@ -149,7 +149,7 @@
 	1) 컬럼명과 property 동일한 경우
 		resultType
 	2) 컬럼명과 property 다르게 설정 해야하는 경우
-		resultMap 활용 	
+		resultMap 활용 
 		select empno no, ename name ==> 
 		from emp
 		컴럼명은  no    property empno

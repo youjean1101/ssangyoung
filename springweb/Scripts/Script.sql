@@ -17,3 +17,10 @@ SELECT * FROM emp100 WHERE ename='ALLEN';
 --SELECT * FROM emp100 e
 --WHERE sal = (SELECT max(sal) FROM emp100 );
 SELECT max(sal) FROM emp100;
+
+SELECT * FROM salgrade;
+/*
+private int grade;
+private double losal;
+private double hisal;
+*/

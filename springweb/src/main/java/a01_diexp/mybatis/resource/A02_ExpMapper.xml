@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >   
+<mapper namespace="a01_diexp.mybatis.dao.A02_ExpDao">
+<!-- 
+SELECT empno NO, ename name, sal+nvl(comm,0) tot
+FROM emp100
+
+no, name, tot : column
+empno, ename, sal : Emp 안에 property 할당
+
+ -->
+   <resultMap type="emp" id="empSult">
+        <result column="no" property="empno"/>
+        <result column="name" property="ename"/>
+        <result column="tot" property="sal"/>
+   </resultMap>
+   <!-- 
+   public List<Emp> getEmpData();
+    -->
+   <select id="getEmpData" resultMap="empSult">
+      SELECT empno NO, ename name, 
+            sal+nvl(comm,0) tot
+      FROM emp100
+   </select>
+   <!-- 
+select ename name, mgr manager, sal salaray from emp
+select deptno no, dname departname, loc location from dept
+    -->
+    <resultMap type="emp" id="hw01">
+        <result column="name" property="ename"/>
+        <result column="manager" property="mgr"/>
+        <result column="salaray" property="sal"/>
+   </resultMap>
+   <!-- 
+   public List<Emp> getHw01();
+    -->
+   <select id="getHw01" resultMap="hw01">
+   select ename name, mgr manager, sal salaray from emp
+   </select>
+   
+    <resultMap type="dept" id="hw02">
+        <result column="no" property="deptno"/>
+        <result column="departname" property="dname"/>
+        <result column="location" property="loc"/>
+   </resultMap>
+   <!-- 
+   public List<Emp> getHw02();
+    -->
+   <select id="getHw02" resultMap="hw02">
+   select deptno no, dname departname, loc location from dept
+   </select>
+   
+</mapper>      
+      
