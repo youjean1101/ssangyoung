@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- CDN(content delivery network) 방식 jquery lib -->
+<script type="text/javascript" 
+	src="https://code.jquery.com/jquery-3.6.3.js"></script>
+<script type="text/javascript">
+	// DOM 로딩을 완료했을 때, 실행
+	$(document).ready(function(){
+		// h2에 text 내용을 할당 처리.
+		$("h2").text("안녕하세요 jquery 시작")
+		$("h2").click(function(){
+			// 보이지 않게 처리..
+			$("h3").hide()
+		});
+	});
+</script>	
+	
+</head>
+<body>
+	<h2></h2>
+	<h3>반갑습니다.</h3>
+</body>
+</html>

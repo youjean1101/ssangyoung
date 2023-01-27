@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("h2").text("mouseup 이벤트")
+		$("td").mouseup(function(){
+			$(this).css("background","blue")
+		})
+		$("td").mousedown(function(){
+			$(this).css("background","yellow")
+		})
+		
+	});
+	/*
+	$(객체).hover(functon(){ 함수1 }, function(){ 함수2 });
+	하나의 객체에 mouseenter, mouseleave 내용을 한꺼번에 처리할 때 사용된다.
+	
+	*/
+</script>
+</head>
+<body>
+  <h2 ></h2>
+  <table  width="400" height="400" border>
+  	<tr><td></td><td></td><td></td><td></td></tr>
+  	<tr><td></td><td></td><td></td><td></td></tr>
+  	<tr><td></td><td></td><td></td><td></td></tr>
+  	<tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+</body>
+</html>

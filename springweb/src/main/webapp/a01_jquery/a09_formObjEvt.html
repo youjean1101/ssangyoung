@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("h2").text("form객체 관련 이벤트")
+		/*
+		1. keyup/keydown : 입력시 처리되는 이벤트 : event.keyCode
+		2. focus/blur : 포커싱 되었을 때, 처리되는 이벤트
+		*/
+		$("input").on({
+			focus:function(){
+				$(this).css({"background":"pink","font-size":"15pt"})	
+			},
+			blur:function(){
+				$(this).css({"background":"","font-size":"100%"})
+			},
+			keyup:function(){
+				// jquery에서 form객체의 value 속성은 .val() 읽기, .val("himan") 쓰기 처리
+				var len=$(this).val().length
+				console.log(len)
+				if(event.keyCode==13){
+					if(len==0){
+						alert("데이터를 입력하세요.")
+					}
+				}
+			}
+		})
+		$("#etc").keyup(function(){
+			var str = $(this).val()
+			var len = str.length
+			if(len>20){
+				$(this).css("background","yellow")
+				alert("글자수 초과입니다.")
+				$(this).val(str.substring(0,20))
+				len--
+			}
+			$("#wordCnt").text(len+"/20")	
+				
+		})
+	});
+</script>
+</head>
+<body>
+  <h2 ></h2>
+  아이디:<input type="text" name="id"/><br>
+  패스워드:<input type="password" name="pass"/><br>
+  <input type="button" id="lgBtn" value="로그인"/><br>
+  기타사항입력:<br>
+  <textarea id="etc" rows="10" cols="30"></textarea><br>
+  <span id="wordCnt">0/20</span>
+  <!-- 
+  ex) 기타사항입력에 입력시 하단에 글자수가 표기되고 5/20
+  20/20이 되었을 때, 해당 textarea의 배경색상이 노랑색이 되고,
+  더 이상 입력이 안 되게 처리하세요.-alert('글자수초과')표기도 처리 
+   -->
+
+</body>
+</html>

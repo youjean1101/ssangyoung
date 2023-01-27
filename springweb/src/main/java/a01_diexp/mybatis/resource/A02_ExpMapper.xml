@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+
+<mapper 
+namespace="a01_diexp.mybatis.dao.A02_ExpDao">
+<!-- 
+SELECT empno NO, ename name, 
+		sal+nvl(comm,0) tot 
+FROM emp100;
+ no,    name,  tot : column
+ empno, ename, sal : Emp안에 property에 할당
+ -->
+	<resultMap type="emp" id="empSult">
+		<result column="no" property="empno"/>
+		<result column="name" property="ename"/>
+		<result column="tot" property="sal"/>
+	</resultMap>
+	<!-- 
+	public List<Emp> getEmpData();
+	 -->
+	<select id="getEmpData" resultMap="empSult">
+		SELECT empno NO, ename name, 
+				sal+nvl(comm,0) tot 
+		FROM emp100	
+	</select>
+	
+</mapper>		
+		

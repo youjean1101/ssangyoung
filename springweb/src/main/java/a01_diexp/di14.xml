@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:task="http://www.springframework.org/schema/task" 
+   xmlns:aop="http://www.springframework.org/schema/aop" 
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:c="http://www.springframework.org/schema/c"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:util="http://www.springframework.org/schema/util"
+   xmlns:websocket="http://www.springframework.org/schema/websocket"
+   xmlns:sec="http://www.springframework.org/schema/security"
+   xmlns:tx="http://www.springframework.org/schema/tx" 
+    
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd       
+        http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd     
+        http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/websocket
+      http://www.springframework.org/schema/websocket/spring-websocket.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd   
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd   
+      ">
+	<!-- set객체 관련 할당.. -->
+	<bean id="sensor01" class="a01_diexp.z01_vo.Sensor">
+		<!-- public void setAgent(Set<String> set) -->
+		<property name="agent">
+			<set>
+				<value>주식매매</value>
+				<value>주식매매</value>
+				<value>자산관리</value>
+				<value>자산관리</value>
+				<value>자산관리</value>
+				<value>주식매매</value>
+				<value>주식매매</value>
+				<value>주식매매</value>
+				<value>보험관리</value>
+			</set>
+		</property>
+		<!-- Properties 
+		
+		public void setAddInfo(Properties addInFo)
+		-->
+		<property name="addInfo">
+			<props>
+				<prop key="사과">3000</prop>
+				<prop key="바나나">4000</prop>
+				<prop key="바나나">4500</prop>
+				<prop key="구매자">홍길동</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="bus01" class="a01_diexp.z01_vo.Bus">
+		<property name="busInfo">
+			<props>
+				<prop key="버스번호">7000</prop>
+				<prop key="출발지">서울</prop>
+				<prop key="종점">수원</prop>
+			</props>
+		</property>
+		<property name="names">
+			<set>
+				<value>홍길동</value>
+				<value>홍길동</value>
+				<value>김길동</value>
+				<value>김길동</value>
+				<value>김길동</value>
+				<value>홍길동</value>
+				<value>홍길동</value>
+				<value>신길동</value>
+			</set>
+		</property>
+	</bean>
+  	<bean id="moniter01" class="a01_diexp.z01_vo.Monitor">
+  		<!-- 
+  		public void setConfig(Map<String, Integer> map)
+  		 -->
+  		<property name="config">
+  			<map>
+  				<entry key="간격" value="1000"/>
+  				<entry key="시간" >
+  					<value>2000</value>
+  				</entry>
+  				<entry key="범위(h)">
+  					<value>24</value>
+  				</entry>
+  			</map>		
+  		</property>
+  	</bean>
+  	<bean id="stud01" class="a01_diexp.z01_vo.Student">
+  		<property name="records">
+  			<map>
+  				<entry key="국어" value="70"/>
+  				<entry key="국어" value="75"/>
+  				<entry key="영어" value="80"/>
+  				<entry key="영어" value="85"/>
+  				<entry key="수학" value="90"/>
+  				<entry key="국어" value="85"/>  				
+  			</map>
+  		</property>
+  	</bean>
+</beans>

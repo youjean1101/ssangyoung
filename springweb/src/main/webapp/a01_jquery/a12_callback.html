@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		// callback함수 : 특정한 기능 처리를 한 후,
+		// 최종적으로 호출할 함수를 지정하여 처리하는 것을 말한다.
+		// 		$("DOM").기능메서드("속도",function(){ 기능메서드 처리후 마지막에 처리할 내용 })
+		// chainning 메서드 : $("선택자").메서드1().메서드2()
+		// 와 같이 jquery에서는 대상 객체에 메서드가
+		// 순차적으로 연결하여 수행되는 것을 말한다.
+		
+		
+		var cnt=0;
+		$("h2").text("안녕하세요(클릭)").click(function(){
+			$(this).hide("slow",function(){
+				alert("사라졌습니다. ^^")
+				$("h1").text("사라진 객체수:"+(++cnt))
+			})
+		});
+	});
+</script>
+</head>
+<body>
+	<h1></h1>
+	<h2 ></h2>
+	<h2 ></h2>
+	<h2 ></h2>
+	<h2 ></h2>
+	<h2 ></h2>
+
+</body>
+</html>

@@ -1,0 +1,458 @@
+# 마이바티즈를 통한 DB 연동처리..
+1. 기본 환경 구성
+	1) 마이바티즈라는 DB연동 처리하는 프레임워크를 활용해서 DB연동 sql 처리
+	2) 컨테이너에 DB연결 객체 선언
+		DBCP연결 객체를 통해 드라이버, 아이피, 계정, 패스워드를 통해 연결
+	3) mybatis 프레임워크 설정
+		- 위 선언된 연결객체를 통해서,
+		- mybatis 공통 xml선언
+			- 사용할게될 sql을 처리하는 xml 선언 위치 선언.
+	4) 사용하게될 DAO 인터페이스 폴드 선언 : 이 폴드에서 선언된 인터페이스가 실제 dao 객체와 연동
+2. 처리 프로세스
+	1) service ==> dao 인터페이스 ===> xml에 의해 선언된 내용을 프레임워크로 dao로 만듦
+3. 마이바티즈 환경 구성 후 개발 범위
+	1) 프레임웍을 통해 container 환경 설정
+	2) dao 실제 자바코드를 프레임웍에 의해서 자동으로 생성
+	3) 개발자는 
+		dao	인터페이스 작성
+		xml로 dao 인터페이스와 연결되는 sql을 작성하면 완료
+4. 개발 순서
+	1) sql 작성
+		select * 
+		from emp100
+		where ename like '%'||'A'||'%'
+		and job like '%'||''||'%'
+	2) sql 처리를 위한 DTO(VO)를 작성
+		Emp
+	
+	3) db처리 인터페이스 선언(dao패키지하위에)
+		public List<Emp> getEmpList(Emp sch);
+		// springweb.a05_mvc.a03_dao
+		// public List<Emp> getEmpList(Emp sch);		
+	3) 공통 mybatis xml에 공통 vo 등록, 
+		각 업무 단위 mapper.xml을 추가 및 선언.
+	4) mapper.xml에서
+		A01_EmpMapper.xml : 선언된 인터페이스 상속하여
+			실제 사용할 DAO객체를 생성
+	
+		- 인터페이스명 ==> namespace명
+			하나의 dao 인터페이스는 하나의 XXXMapper.xml로
+			연결해서 처리하기에 두 객체를 연결
+		- 요소객체 안에 사용할 sql 처리..	 	
+		- 메서드명 ==> id
+		- 메서드의 매개변수 ==> parameterType
+		- 메서드의 리턴값 ==> resultType
+	5) service에서dao호출
+	6) controller에서 service호출
+	7) controller에 요청 및 모델데이터 선언
+	8) view(jsp) 구현 모델데이터 출력..	
+# mybatis 프레임웍크 연습
+1. 단일 리턴값 가져오기
+	- 단일 값
+	1) sql
+		select count(*)
+		from emp100
+	2) dao의 메서드 선언
+		public int empCount();
+	3) XXXMapper.xml
+		dao
+		<select id="empCount" resultType="int">
+			select count(*)
+			from emp100			
+		</select>	
+	4) main()에서 호출
+		System.out.println("사원수:"+dao.empCount());
+
+	1) sql
+		SELECT max(sal) msal
+		FROM emp100
+		
+		SELECT ename
+		FROM emp100
+		WHERE empno=7369
+	2) dao의 메서드 선언
+		public double empMaxSal();
+		public String getEname();
+	3) XXXMapper.xml
+		dao
+		<select id="empMaxSal" resultType="double">
+			SELECT max(sal) msal
+			FROM emp100			
+		</select>	
+		<select id="getEname" resultType="string">
+			SELECT ename
+			FROM emp100
+			WHERE empno=7369	
+		</select>		
+	4) main()에서 호출
+		System.out.println("최대 급여:"+dao.empMaxSal());
+		System.out.println("사원명:"+dao.getEname());
+	ex1) 20번 부서의 최대 급여 처리
+	select max(sal) 
+	from emp100
+	where deptno = 20
+	ex2) 가장 높은 관리자번호
+	select max(mgr)
+	from emp100
+	ex3) 사원명이 WARD인 직책명
+	select job
+	from emp100
+	where ename = 'WARD'
+
+	public double getMaxSalByDept();
+	public int getMaxMgr();
+	public String getJobByEname();	
+	<select id="getMaxSalByDept" resultType="double">
+		select max(sal) 
+		from emp100
+		where deptno = 20	
+	</select>	
+	<select id="getMaxMgr" resultType="int">
+		select max(mgr)
+		from emp100	
+	</select>	
+	<select id="getJobByEname" resultType="string">
+		select job
+		from emp100
+		where ename = 'WARD'
+	</select>	
+	main()
+	dao.getMaxSalByDept()
+	dao.getMaxMgr()
+	dao.getJobByEname()
+	
+	- 단일 객체
+		여러 컬럼을 한 행으로 처리되는 구문
+		type을 객체로 설정해서 처리함.
+		SQL	
+			SELECT * FROM emp100 WHERE empno=7369;
+			SELECT * FROM emp100 WHERE ename='SMITH';
+		vo : 결과에 따른 vo객체 생성
+		
+		DAO단  INTERFACE 기능메서드 선언
+			public Emp getEmpByEmpno();
+			public Emp getEmpByEname();
+		mapper
+			공통 mybatis에서 선언한 alias명인 객체
+			<select id="getEmpByEmpno" resultType="emp">
+				SELECT * FROM emp100 WHERE empno=7369
+			</select>
+			<select id="getEmpByEname" resultType="emp">
+				SELECT * FROM emp100 WHERE ename='SMITH'
+			</select>
+		main()
+			Emp emp01 = dao.getEmpByEmpno();
+			emp01.getEmpno();  emp01.getEname()	
+2. 다중 리턴값 가져오기
+	- list형식
+	select 결과로 단일 행이 아닌 다중 행인 경우
+	1) 컬럼명과 property 동일한 경우
+		resultType
+	2) 컬럼명과 property 다르게 설정 해야하는 경우
+		resultMap 활용 	
+		select empno no, ename name ==> 
+		from emp
+		컴럼명은  no    property empno
+		컴럼명은  name   property ename
+		ex) 컬럼명과 property가 다른 경우
+		VO Emp, Dept 혼합 VO 
+		   EmpDept
+		   	  private Emp emp;
+		   	  private Dept dept;		   	  
+		   	  컴럼명 empno property emp.empno
+		   	  컴럼명 dname property dept.dname
+		<resultMap id="empRst"
+			<result property="empno" column="no">
+			<result property="dept.dname" column="dname">
+			
+		<select id="@@@" resultMap ="empRst"
+	3) 처리 순서
+		- 다중의 컬럼 설정 sql
+		SELECT e.*, dname, loc
+		FROM emp e, dept d
+		where e.deptno = d.deptno
+		- vo
+		EmpDept
+		- dao
+		public List<EmpDept> getEmpDeptList();
+		- 공통 mybatis alias등록
+				<typeAlias alias="empdept" 
+				type="springweb.z01_vo.EmpDept"/>
+		- mapper
+		<select id="getEmpDeptList" resultType="empdept">
+			SELECT e.*, dname, loc
+			FROM emp e, dept d
+			where e.deptno = d.deptno
+		- main()
+		EmpDept ed = dao.getEmpDeptList()
+		System.out.println("데이터건수:"+ed.size());				
+
+	ex) 1000~3000사이의 사원(emp100)을 
+		등급정보(salgrade)와 함께 출력하세요.
+		sql
+			SELECT * FROM salgrade;			
+			SELECT e.*, grade
+			FROM emp e, salgrade s
+			WHERE e.sal BETWEEN losal AND hisal
+			AND sal BETWEEN 1000 AND 3000
+		vo EmpGrade
+			emp에 grade추가
+		dao
+			public List<EmpGrade> getEmpSalGrade();
+		공통 mybatis.xml
+			<type alias="empsal"
+		mapper.xml
+			<select id="getEmpSalGrade" 
+				resultType="empsal">
+			SELECT e.*, grade
+			FROM emp e, salgrade s
+			WHERE e.sal BETWEEN losal AND hisal
+			AND sal BETWEEN 1000 AND 3000				
+			</select>		
+		main()
+			EmpGrade eglist = dao.getEmpSalGrade();
+	
+	
+	
+	
+3. 단일 매개변수 입력하기
+	1) dao
+		public Emp getEmp(int empno);
+	2) mapper
+		<select id="getEmp" parameterType="int">
+			select *
+			from emp
+			where empno=#{empno} - 입력되는 값에 대항 처리
+	3) main :   Emp emp = dao.getEmp(7499);  System.out.println("사원명:"+emp.getEname());		
+4. 다중 매개변수(객체) 입력하기
+	1) dao
+		public void insertEmp(Emp ins);
+	2) mapper
+		<insert id="insertEmp" parameterType="emp">
+			insert into emp100
+			values(emp_seq.nextval, #{ename},#{job}, 
+			#{mgr}, sysdate, #{sal},#{comm},#{deptno})
+		</insert>	
+	dao.insertEmp(new Emp(0,"정길동","과장",7780,null,5000,1000,10));		
+5. 단일 리턴값, 단일 매개변수 처리
+6. 다중 리턴값, 다중 매개변수 처리
+7. 조회 처리하기
+8. 등록 처리하기
+9. 수정/삭제 처리하기
+	sql delete from emp100
+		where empno = @@@
+	vo
+	dao 
+		public void deleteEmp(int empno);
+	mapper
+		<delete id="deleteEmp" parameterType="int">
+			delete from emp100
+			where empno = #{empno}
+		</delete>
+	main()
+		dao.deleteEmp(1001);
+10. mvc 화면과 함께 구현하기.
+
+				
+# 마이바티즈 처리 구조
+1. 주요 핵심 파일
+	1) 컨테이너(dispatcher-servlet.xml)
+	2) 마이바티즈공통설정(mybatis.Spring.xml)
+	3) 실제sql처리(XXXMapper.xml)
+	4) 데이터 로딩 인터페이스(XXXDao.java)
+2. java를 통한 데이터베이스 연결
+	1) DB서버에 연결해서 데이터를 가져와서 java 객체로 활용
+	2) 핵심 처리 프로세스
+		연결(ip, port, sid, 계정, 비번)
+		대화(요청할 데이터 호출, 등록, 수정, 삭제 - sql 구문과 함께)
+		결과(요청했을 때, 데이터가 가져오는 경우, 자바객체로 담기)
+		자원해제(연결해제)
+		예외처리(필수예외 처리)
+3. 스프링에서 데이터베이스 처리를 위한 설정 	
+	1) 위 핵심 처리프로세스 가운데, 개발자는 대화와 결과에 집중할 수 있게 하고
+		다른 부분은 설정을 통하거나 자동적으로 처리하게 한다.
+		- sql(입력), 자바객체로 담기(리턴)만 집중할 수 있게 한다.
+	2) 기본 설정 구조
+		컨테이너(dispatcher-servlet.xml)
+			- DB연결 처리(ip, port, sid, 계정, 비번)
+			- 마이바티즈공통설정 파일 위치 지정
+			- 자동으로 실제 객체를 만들어 주는 인터페이스 패키지 위치를 지정
+		마이바티즈공통설정(mybatis.Spring.xml)
+			- XXXMapper.xml에 사용할 VO/DTO 패키지명.객체명 ==> 객체참조명
+			- XXXMapper.xml의 위치지정
+		dao인터페이스의 기능메서드
+			- mapper를 통해 인터페이스 상속받은 실제 객체를 만들기 위한 틀 역할
+		실제sql처리(XXXMapper.xml) - sql --> 데이터 --> 객체(추상인터페이스 상속받은 실제객체)
+			sql와 실제객체를 만들기 위한 연결고리정보가 필요 
+			select * 
+			from emp
+			where ename like '%'||'검색데이터-입력'||'%' - 매개변수로 입력전달
+			and job like '%'||'검색데이터-입력'||'%'
+			==> sql의 결과 - 출력 (리턴값)	
+			인터페이스 - namespace 속성
+			메서드명 - id
+			매개변수 - parameterType
+			리턴값 - resultType/resultMap			
+	3) sql 처리와 자바객체로 담기
+		sql, VO, dao, 메서드핵심내용 선언(추상메서드)- 인터페이스, 메서드명(리턴값, 매개변수)
+	4) 설정이 끝나면 개발자는 주로
+		sql, XXXMapper.xml, dao만 처리한다.	
+	 
+# 객체안에 객체 1:1 형태로 resultMap 설정하기
+1. join관계로 설정한 sql 구문은 해당 하는 결과에 맞는 VO를 생성하든지
+	resultmap의 association 요소객체를 이용하여 처리하여야 한다.
+2. 일단 VO객체구조를 1:1로 설정하고, 해당 객체의 result로 column과 property를 처리하는 것을 말한다.
+3. 처리 순서
+	1) sql 작성
+		select e.*, dname, loc
+		from emp e, dept d
+		where e.deptno = d.deptno
+	2) vo 객체 객체 생성
+		EmpDeptCom
+			private Emp emp;
+			private Dept dept;
+	3) dao 선언
+		public List<EmpDeptCom> getEempDeptList();
+	4) mapper xml
+		- resultMap 선언
+	5) 호출 확인
+ex) emp와 salgrade를 join하여 복합 EmpSalGd VO를 만들어 처리하세요.			
+sql
+	select e.*, grade, hisal, losal
+	from emp e, salgrade s
+	where sal between losal and hisal
+vo
+	EmpSalGd
+		private Emp emp;
+		private Salgrade salgrade;
+mybatis공통
+	empsal
+dao
+	public List<EmpSalGd> getEmpSalgrade();	  
+mapper
+	<resultMap id="empSalRs" type="empsal">
+		<associate property="emp" javaType="emp">
+			..
+		<associate property="dept" javaType="dept">
+	<select id="getEmpSalgrade" resultMap ="empSalRs">
+		select e.*, grade, hisal, losal
+		from emp e, salgrade s
+		where sal between losal and hisal				
+		
+# 스프링MVC DB연결 웹 화면 구현 순서
+1. 초기 화면 호출
+	1) url 주소로 화면호출
+		- controller, view(jsp)
+	2) view단(jsp)
+		- 기본적인 화면 ui 구현
+2. DB 처리
+	1) sql
+	2) vo
+	3) dao(인터페이스)
+	4) 공통 mybatis 설정 : 
+	5) mapper처리
+3. service 호출
+	1) 중간에 요청값 변경 처리 등등..비지니스 로직/알고리즘 처리
+4. controller단 model데이터 설정.
+5. view단 처리
+	모델 데이터와 요청값에 대한 설정 처리
+
+# 부서정보 조회하기
+1. 초기 화면 호출
+	1) url 주소로 화면호출 
+		http://localhost:7080/springweb/myDeptList.do
+		- controller, view(jsp)
+		
+		A02_DeptController.java
+			메서드 선언
+			view단 호출
+		
+		
+	2) view단(jsp) WEB-INF\views\a05_mvc\a02_deptList.jsp
+		- 기본적인 화면 ui 구현
+======================================================		
+		
+2. DB 처리
+	1) sql
+		select *
+		from dept100
+		where dname like '%'||''||'%'
+		and loc like '%'||''||'%'
+	2) vo
+		dept
+	3) dao(인터페이스)
+		A02_DeptDao.java
+			public List<Dept> getDeptList();
+	4) 공통 mybatis 설정 :
+		vo : dept
+		mapper: DeptMapper 
+	5) mapper처리
+	// springweb.a05_mvc.a03_dao.A02_DeptDao
+	public interface A02_DeptDao {
+		public List<Dept> getDeptList();	
+	
+		namespace : @@@@.A02_DeptDao
+		<select id="getDeptList" resultType="dept">
+			select *
+			from dept100
+			where dname like '%'||#{dname}||'%'
+			and loc like '%'||#{loc}||'%'			
+	
+==========================================	
+	
+3. service 호출
+	1) 중간에 요청값 변경 처리 등등..비지니스 로직/알고리즘 처리
+	A02_DeptService
+	@Autowired
+	private A02_DeptDao dao;
+	public List<Dept> getDeptList(Dept sch){
+		return dao.getDeptList(sch);
+	}
+	
+4. controller단 model데이터 설정.
+	모델명 dlist
+
+5. view단 처리
+	모델 데이터와 요청값에 대한 설정 처리
+	모델 데이터 화면 출력
+	
+# 동적 query 처리
+		select * 
+		from emp100
+		where ename like '%'||#{ename}||'%'
+		and job like '%'||#{job}||'%'
+		<if test='mgr != 0'>
+		and mgr = #{mgr}
+		</if>
+		<if test="deptno != 0">
+		and deptno = #{deptno}	
+		</if>	
+1. mybatis에서는 조건에 따라 sql문장이 변경되는 동적 query를 지원한다.
+2. 위 같이 sch.getMgr()==0 인 경우에는 and mgr = #{mgr}  구문을
+	배제시킨다.
+ex) deptno가 10번이고,  mgr이 0인 경우(관리자를 전체선택)
+		select * 
+		from emp100
+		where ename like '%'||#{ename}||'%'
+		and job like '%'||#{job}||'%'
+		and deptno = 10	
+
+	
+					
+
+
+
+						
+
+
+
+
+ 	
+	
+	
+	
+					
+		
+	
+					
+	

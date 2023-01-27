@@ -1,0 +1,32 @@
+sql				
+SELECT p.name pname, price,  id, m.name, pass, auth, b.bcnt
+FROM product111 p, member111 m, buyinfo111 b
+WHERE p.pid = b.pid and m.mid=b.mid;
+
+vo Member(id, pass, name, auth)
+   Product(name, price, bcnt) ==> BuyInfo  Member member; Product product;
+공통mybatis 
+	member, product, buyinfo	   
+dao 
+	public List<BuyInfo> getBuyInfo();
+mapper
+	<resultMap id="buyRst" type="buyinfo">
+		<association type="member">	
+			<result column="mid" property="id"/>
+			<result column="pass" property="pass"/>			
+			<result column="name" property="name"/>
+			<result column="auth" property="auth"/>
+		<association type="product">	
+			<result column="pname" property="name"/>
+			<result column="price" property="price"/>
+			<result column="bcnt" property="bcnt"/>
+	<select id="getBuyInfo" resultMap ="buyRst">
+		SELECT p.name pname, price, m.mid, m.name, 
+				pass, auth, b.bcnt
+		FROM product111 p, member111 m, buyinfo111 b
+		WHERE p.pid = b.pid and m.mid=b.mid
+			
+main()
+	List<BuyInfo> blist = dao.getBuyInfo();
+
+

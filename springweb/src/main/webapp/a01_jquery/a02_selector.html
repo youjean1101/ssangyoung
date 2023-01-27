@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		// 하나의 선택자로 동일한 내용을 적용할 수 있다.
+		$("h2").text("안녕하세요(click)")
+		$("h3").text("반가워요")
+		$("h2").click(function(){
+			// 다중의 내용 중, 클릭한 DOM 지정 $(this)
+			$(this).text("클릭되었네요")
+			$("h3").hide()
+		});	
+		// ex) a03_select.html 를 만들고
+		///    h2 7개로 색상!! 이라고 표시하고
+		//     클릭시, 해당 클릭한 것만 노랑색이라고 표시하세요.
+		
+		
+	});
+</script>
+</head>
+<body>
+  <h2 ></h2>
+  <h3 ></h3>
+  <h3 ></h3>
+  <h3 ></h3>
+  <h3 ></h3>
+  <h2 ></h2>
+  <h2 ></h2>
+
+</body>
+</html>

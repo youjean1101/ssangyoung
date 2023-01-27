@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<!--	// springweb.a05_mvc.a03_dao.A01_EmpDao
+		// public List<Emp> getEmpList(Emp sch); 
+		인터페이스를 상속받은 실제 Dao객체를 위 규칙에 생성하는 xml파일..
+		
+		a01_diexp.mybatis.dao.A01_EmpDao.getEmpList
+		-->
+<mapper namespace="a01_diexp.mybatis.dao.A01_EmpDao">
+	<select id="getEmpList"  resultType="emp" parameterType="emp">
+		select * 
+		from emp100
+		where ename like '%'||#{ename}||'%'
+		and job like '%'||#{job}||'%'	
+	</select>
+	<select id="empCount" resultType="int">
+		select count(*)
+		from emp100			
+	</select>	
+	<select id="empMaxSal" resultType="double">
+		SELECT max(sal) msal
+		FROM emp100			
+	</select>	
+	<select id="getEname" resultType="string">
+		SELECT ename
+		FROM emp100
+		WHERE empno=7369	
+	</select>	
+	<select id="getMaxSalByDept" resultType="double">
+		select max(sal) 
+		from emp100
+		where deptno = 20	
+	</select>	
+	<select id="getMaxMgr" resultType="int">
+		select max(mgr)
+		from emp100	
+	</select>	
+	<select id="getJobByEname" resultType="string">
+		select job
+		from emp100
+		where ename = 'WARD'
+	</select>
+	<select id="getEmpByEmpno" resultType="emp">
+		SELECT * FROM emp100 WHERE empno=7369
+	</select>	
+	<select id="getEmpByEname" resultType="emp">
+		SELECT * FROM emp100 WHERE ename='SMITH'
+	</select>
+	<!-- 과제 -->
+	<select id="getDeptByDeptno" resultType="dept">
+		 SELECT * 
+		FROM dept100
+		WHERE deptno =10  		
+	</select>	
+	<select id = "getInitHire" resultType="emp">
+		SELECT * FROM emp100
+		WHERE hiredate = (
+			SELECT min(hiredate)
+			FROM emp100)
+	</select>
+	<select id = "getMaxSalByTerms" resultType="emp">
+		select *
+		from emp100
+		where sal =( select max(sal) 
+					from emp100
+					where to_char(hiredate,'Q')='2'
+					)
+	</select>
+	<select id="getEmpDeptList" resultType="empdept">
+		SELECT e.*, dname, loc
+		FROM emp e, dept d
+		where e.deptno = d.deptno
+	</select>	
+	<resultMap type="empdept2" id="empRult2">
+		<association property="emp" javaType="emp">
+			<result column="ename" property="ename"/>
+		</association>
+		<association property="dept" javaType="dept">
+			<result column="dname" property="dname"/>
+		</association>
+	</resultMap>
+	<select id="getEmpDeptList2" resultMap="empRult2">
+		SELECT e.*, dname, loc
+		FROM emp e, dept d
+		where e.deptno = d.deptno
+	</select>	
+	
+	<select id="getEmpSalGrade" resultType="empsal">
+		SELECT e.*, grade
+		FROM emp e, salgrade s
+		WHERE e.sal BETWEEN losal AND hisal
+		AND sal BETWEEN 1000 AND 3000				
+	</select>		
+</mapper>		
+		

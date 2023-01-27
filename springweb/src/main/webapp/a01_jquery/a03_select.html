@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("h2").text("색상!")
+		$("h2").click(function(){
+			// $(객체).css("css속성","속성값")
+			$(this).text("노랑색").css("background","yellow")
+			/*
+			$(this).text("노랑색")
+			$(this).css("background","yellow")
+			*/
+		})
+	});
+</script>
+</head>
+<body>
+  <h2 ></h2>
+  <h2 ></h2>
+  <h2 ></h2>
+  <h2 ></h2>
+  <h2 ></h2>
+  <h2 ></h2>
+  <h2 ></h2>
+
+</body>
+</html>

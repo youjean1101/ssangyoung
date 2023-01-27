@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+
+<mapper namespace="a01_diexp.z08_mydb.A02_ExpDao">
+	<!-- 
+	List<Salgrade> getSalgrade();
+	 -->
+	<select id="getSalgrade" resultType="salgrade">
+		select *
+		from salgrade
+	</select>	 
+ 	<resultMap id="empResult" type="emp">
+ 		<result column = "name" property="ename"/>
+ 		<result column = "manager" property="mgr"/>
+ 		<result column = "salary" property="sal"/>
+ 	</resultMap>	
+	<select id="getEmpList" resultMap ="empResult" >
+ 		select ename name, mgr manager, sal salary 
+ 		from emp
+ 	</select>
+ 	<resultMap id="deptResult" type="dept" >
+		<result column = "no" property="deptno"/>
+		<result column = "departname" property="dname"/>
+		<result column = "location" property="loc"/>
+	</resultMap>	
+	<select id="getDeptList" resultMap = "deptResult">
+		select deptno no, dname departname, loc location 
+		from dept 	
+ 	</select>	
+	<!--  ex) emp와 salgrade를 join하여 복합 EmpSalGd VO를 만들어 처리하세요. -->
+ 	 <resultMap type="empDept" id="comRst" >
+ 	 	<association property="emp" javaType="emp" >
+ 	 		<result column="empno" property="empno"/>
+ 	 		<result column="ename" property="ename"/>
+ 	 		<result column="job" property="job"/>
+ 	 		<result column="mgr" property="mgr"/>
+ 	 		<result column="hiredate" property="hiredate"/>
+ 	 		<result column="sal" property="sal"/>
+ 	 		<result column="comm" property="comm"/>
+ 	 		<result column="deptno" property="deptno"/>
+ 	 	</association>
+ 	 	<association property="dept"  javaType="dept">
+ 	 		<result column="deptno" property="deptno"/>
+ 	 		<result column="dname" property="dname"/>
+ 	 		<result column="loc" property="loc"/>
+ 	 	</association>
+ 	 </resultMap>
+ 	 
+	 	<!-- List<EmpDeptCom> getEempDeptList() -->
+	 <select id="getEempDeptList" resultMap="comRst">
+		select e.*, dname, loc
+		from emp e, dept d
+		where e.deptno = d.deptno	 
+	 </select>	 
+	<resultMap id="empSalRs" type="empsal">
+		<association property="emp" javaType="emp">
+ 	 		<result column="empno" property="empno"/>
+ 	 		<result column="ename" property="ename"/>
+ 	 		<result column="job" property="job"/>
+ 	 		<result column="mgr" property="mgr"/>
+ 	 		<result column="hiredate" property="hiredate"/>
+ 	 		<result column="sal" property="sal"/>
+ 	 		<result column="comm" property="comm"/>
+ 	 		<result column="deptno" property="deptno"/>
+		</association>
+		<association property="salgrade" javaType="salgrade">
+			<result column="grade" property="grade"/>
+			<result column="losal" property="losal"/>
+			<result column="hisal" property="hisal"/>
+		</association>
+	</resultMap>	
+	<select id="getEmpSalgrade" resultMap ="empSalRs">
+		select e.*, grade, hisal, losal
+		from emp e, salgrade s
+		where sal between losal and hisal	
+	</select>
+	<insert id="insertEmp" parameterType="emp">
+			insert into emp100
+			values(emp_seq.nextval, #{ename},#{job}, 
+			#{mgr}, sysdate, #{sal},#{comm},#{deptno})
+	</insert>
+	<select id="getEmp" resultType="emp" parameterType="int">
+		select *
+		from emp
+		where empno=#{empno} 
+	</select>
+	<delete id="deleteEmp" parameterType="int">
+		delete from emp100
+		where empno = #{empno}
+	</delete>							 			
+	<resultMap id="buyRst" type="buyinfo">
+		<association property="member" javaType="member">	
+			<result column="mid" property="id"/>
+			<result column="pass" property="pass"/>			
+			<result column="name" property="name"/>
+			<result column="auth" property="auth"/>
+		</association>	
+		<association property="product"  javaType="product">	
+			<result column="pname" property="name"/>
+			<result column="price" property="price"/>
+			<result column="bcnt" property="bcnt"/>
+		</association>	
+	</resultMap>	
+	<select id="getBuyInfo" resultMap ="buyRst">
+		SELECT p.name pname, price, m.mid, m.name, 
+				pass, auth, b.bcnt
+		FROM product111 p, member111 m, buyinfo111 b
+		WHERE p.pid = b.pid and m.mid=b.mid 	
+	</select>	
+				
+</mapper>		
+		

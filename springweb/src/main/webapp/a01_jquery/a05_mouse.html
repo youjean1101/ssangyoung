@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("h2").text("mouse이벤트 연습")
+		/*
+		mouseenter() : 커서를 위치시켰을 때,
+		mouseleave() : 커서를 벗어났을 때.
+		h3로 영문으로 무지개 색상을 선언하고, 커서를 위치시켰을 때
+		배경색상을 해당 무지개 색상으로, 벗어났을 때, 원래 배경색상으로
+		처리하세요 */
+		$("h3").mouseenter(function(){
+			console.log( $(this).text() )
+			$(this).css("background",$(this).text())
+		})
+		$("h3").mouseleave(function(){
+			$(this).css("background","")
+		})
+		var cnt=0;
+		$("td").mouseup(function(){
+		  	$(this).text(cnt)
+		    cnt++
+		})
+		/*
+		$("대상객체").hover(function(){
+			// 마우스를 오버(enter)시 처리될 내용
+		}, function(){
+			// 마우스 아웃(leave)시 처리될 내용
+		})
+		
+		*/
+		
+		
+		// ex) a06_mouseExp.html  4X4테이블을 만들고, 해당 td를 클릭시 마다 배경색상이 
+		//     변경되게 하세요.
+	});
+</script>
+</head>
+<body>
+	<table width="100" height="100" border>
+		<tr><td></td></tr>
+	</table>
+  <h2 ></h2>
+  <h3>red</h3>
+  <h3>orange</h3>
+  <h3>yellow</h3>
+  <h3>green</h3>
+  <h3>blue</h3>
+  <h3>navy</h3>
+  <h3>purple</h3>
+
+</body>
+</html>

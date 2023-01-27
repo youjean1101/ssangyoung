@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("h2").text("사라지게 하세요")
+		// $(대상객체).toggle(1/1000초시간) 특정한 이벤트에 의해 대상객체가 보였다가/보이지 않았다를
+		// 반복처리
+		// ex) h2를 클릭시, h3가 보였다가/보이지않았다를 반복 처리하세요.
+		$("h2").click(function(){
+			if($(this).text()=="사라지게 하세요"){
+				$(this).text("보이게 하세요")
+			}else{
+				$(this).text("사라지게 하세요")
+			}
+			$("h3").toggle(500)
+		})
+	});
+</script>
+</head>
+<body>
+  <h2 ></h2>
+  <h3>안녕하세요!!!</h3>
+  <h3>안녕하세요!!!</h3>
+  <h3>안녕하세요!!!</h3>
+  <h3>안녕하세요!!!</h3>
+  <h3>안녕하세요!!!</h3>
+  <h3>안녕하세요!!!</h3>
+  <h3>안녕하세요!!!</h3>
+  <h3>안녕하세요!!!</h3>
+  <h3>안녕하세요!!!</h3>
+  <h3>안녕하세요!!!</h3>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:task="http://www.springframework.org/schema/task" 
+   xmlns:aop="http://www.springframework.org/schema/aop" 
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:c="http://www.springframework.org/schema/c"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:util="http://www.springframework.org/schema/util"
+   xmlns:websocket="http://www.springframework.org/schema/websocket"
+   xmlns:sec="http://www.springframework.org/schema/security"
+   xmlns:tx="http://www.springframework.org/schema/tx" 
+    
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd       
+        http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd     
+        http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/websocket
+      http://www.springframework.org/schema/websocket/spring-websocket.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd   
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd   
+      ">
+	<bean id="t01" p:company="금호" p:price="300000" class="a01_diexp.z01_vo.Tire"/>
+	<bean id="t02" c:company="현대" c:price="250000" class="a01_diexp.z01_vo.Tire"/>
+	<bean id="t03" c:_0="대영" c:_1="350000" class="a01_diexp.z01_vo.Tire"/>
+	<bean id="car01" class="a01_diexp.z01_vo.Car02">
+		<constructor-arg value="BMW"/>
+		<property name="tlist">
+			<list>
+				<ref bean="t01"/>
+				<ref bean="t02"/>
+				<ref bean="t03"/>
+			</list>
+		</property>
+	</bean>
+	<!--  hitOrders defends -->
+	<bean id="bt01" class="a01_diexp.z01_vo.BaseBallTeam">
+		<property name="hitOrders">
+			<map>
+				<entry key="1" value="홍길동"/>
+				<entry key="2" value="김길동"/>
+				<entry key="3" value="신길동"/>
+				<entry key="4" value="오길동"/>
+				<entry key="5" value="마길동"/>
+				<entry key="6" value="하길동"/>
+				<entry key="7" value="구길동"/>
+				<entry key="8" value="천길동"/>
+				<entry key="9" value="갈길동"/>
+			</map>
+		</property>
+		<property name="defends">
+			<props>
+				<prop key="투수">김길동</prop>
+				<prop key="포수">신길동</prop>
+				<prop key="1루수">김길동</prop>
+				<prop key="2루수">김길동</prop>
+				<prop key="3루수">김길동</prop>
+				<prop key="중견수">김길동</prop>
+				<prop key="좌익수">김길동</prop>
+				<prop key="우익수">김길동</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+</beans>      

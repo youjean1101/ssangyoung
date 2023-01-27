@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<!-- springweb.a05_mvc.a03_dao.A02_DeptDao
+	public interface A02_DeptDao {
+		public List<Dept> getDeptList(Dept sch); 
+		인터페이스를 상속받은 실제 Dao객체를 위 규칙에 생성하는 xml파일..
+		
+		-->
+<mapper namespace="springweb.a05_mvc.a03_dao.A02_DeptDao">
+	<select id="getDeptList" parameterType="dept" resultType="dept">
+		select *
+		from dept100
+		where dname like '%'||#{dname}||'%'
+		and loc like '%'||#{loc}||'%'		
+	</select>
+</mapper>		
+		

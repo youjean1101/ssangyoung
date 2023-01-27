@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<!--	// springweb.a05_mvc.a03_dao.A01_EmpDao
+		// public List<Emp> getEmpList(Emp sch); 
+		인터페이스를 상속받은 실제 Dao객체를 위 규칙에 생성하는 xml파일..
+		-->
+<mapper namespace="springweb.a05_mvc.a03_dao.A01_EmpDao">
+
+
+	<select id="getEmpList"  resultType="emp" parameterType="emp">
+		select e.empno, e.ename, d.dname, m.ename mename, e.job
+		from emp100 e, emp100 m, dept d
+		where e.mgr = m.empno
+		and e.deptno = d.deptno
+		and e.ename like '%'||#{ename}||'%'
+		and e.job like '%'||#{job}||'%'
+		<if test='mgr != 0'>
+		and e.mgr = #{mgr}
+		</if>
+		<if test="deptno != 0">
+		and e.deptno = #{deptno}	
+		</if>
+	</select>
+	<select id="getDeptComb" resultType="dept">
+		select deptno, dname
+		from dept100
+	</select>	
+	<select id="getMgrComb" resultType="code">
+		SELECT DISTINCT e.mgr key, m.ename val
+		FROM emp100 e, emp100 m
+		WHERE e.mgr = m.empno				
+	</select>
+	<select id="getJobComb" resultType="string">
+		SELECT DISTINCT job
+		FROM emp100
+	</select>	
+</mapper>		
+		

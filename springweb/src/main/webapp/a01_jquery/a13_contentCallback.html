@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/springweb/a00_com/a01_common.css" rel="stylesheet">
+<style type="text/css">
+/*
+
+*/	
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+/*
+# 데이터 처리 기능 메서드의 callback함수 처리
+0. 기본형식
+	$("다중선택자").css("background",function(idx){
+		// 다른 기능적 처리 프로세스 수행
+		//$(this) 배열객체 가운데 단위데이터 처리. 
+		return "각 내용별로 처리할 데이터(배경색상)"
+	})
+1. text(), html(), val(), attr(), css()..
+	return 될 데이터는 실제 저장할 데이터를 말한다.
+	속성 설정에도 처리할 수 있다.
+
+2. text(function(idx){
+		// 다중의 요소객체의 경우 index값을 매개변수로 받고
+		// 리턴값을 해당 데이터에 대한 처리를 할 수 있다.
+		return "처리할 데이터";
+   })
+ */
+
+	$(document).ready(function(){
+		$("#show td").text(function(idx, txt){
+			console.log(idx+""+txt)
+			return idx+" hello"
+		})
+		//ex1) h3를 7개 만들고, 0~6번호를 붙여 출력하세요
+		//ex2) h3를 7개 만들고, 무지개 색상을 출력하세요
+		var colors = ['red','orange','yellow','green','blue','navy','purple']
+		$("h3").text(function(idx){
+			$(this).css("color",colors[idx])
+			return colors[idx];
+		})
+		var aligns = ["left","center","right"]
+		$(".in01").val(function(idx){
+			$(this).css("text-align",aligns[idx%3])
+			return colors[idx];
+		})
+	});
+</script>
+</head>
+<body>
+	<h2>콜백함수</h2>
+	<input type="text" class="in01"/>
+	<input type="text" class="in01"/>
+	<input type="text" class="in01"/>
+	<input type="text" class="in01"/>
+	<input type="text" class="in01"/>
+	<input type="text" class="in01"/>
+	<input type="text" class="in01"/>
+	<h3></h3>
+	<h3></h3>
+	<h3></h3>
+	<h3></h3>
+	<h3></h3>
+	<h3></h3>
+	<h3></h3>
+	<table id="show" width="300pt" height="300pt" border>
+		<tr><td>기존데이터1</td><td></td><td></td></tr>
+		<tr><td></td><td></td><td></td></tr>
+		<tr><td></td><td>기존데이터2</td><td></td></tr>
+	</table>
+</body>	
+</html>

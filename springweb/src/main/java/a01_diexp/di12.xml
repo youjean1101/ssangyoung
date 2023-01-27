@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:task="http://www.springframework.org/schema/task" 
+   xmlns:aop="http://www.springframework.org/schema/aop" 
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:c="http://www.springframework.org/schema/c"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:util="http://www.springframework.org/schema/util"
+   xmlns:websocket="http://www.springframework.org/schema/websocket"
+   xmlns:sec="http://www.springframework.org/schema/security"
+   xmlns:tx="http://www.springframework.org/schema/tx" 
+    
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd       
+        http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd     
+        http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/websocket
+      http://www.springframework.org/schema/websocket/spring-websocket.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd   
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd   
+      ">
+	<bean id="obj" class="java.lang.Object" />
+	<!-- 
+	//a01_diexp.z01_vo.HandPhone
+	//a01_diexp.z01_vo.HPUser
+	 -->
+	<bean id="ph01" class="a01_diexp.z01_vo.HandPhone">
+		<constructor-arg value="010-8888-9999"/>
+		<constructor-arg value="삼성전자"/>
+	</bean>	 
+	<bean id="hu01" class="a01_diexp.z01_vo.HPUser">
+		<property name="name" value="홍길동"/>
+	</bean>	 
+	<bean id="hu02" class="a01_diexp.z01_vo.HPUser">
+		<property name="name" value="마길동"/>
+		<!-- 객체 할당은 value를 ref(reference)로 처리
+			객체 참조로 해당 property에 할당시.
+		hu02.setHandPhone(ph01);
+		 -->
+		<property name="handPhone" ref="ph01"/>
+	</bean>	 
+	
+	<bean id="car01" class="a01_diexp.z01_vo.Car">
+		<constructor-arg value="그랜저"/>
+		<constructor-arg value="250"/>
+	</bean>	
+	<bean id="cr01" class="a01_diexp.z01_vo.CarRacer">
+		<constructor-arg value="마길동"/>	
+	</bean>	
+	<bean id="cr02" class="a01_diexp.z01_vo.CarRacer">
+		<constructor-arg value="오길동"/>
+		<property name="car" ref="car01"/>
+	</bean>	
+</beans>      

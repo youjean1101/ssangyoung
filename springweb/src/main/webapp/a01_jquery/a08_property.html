@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+/*
+# 다중의 속성 지정하기 json형식 처리
+1. 기본 속성 다중으로 처리
+	$("#tab01").attr("속성","속성값")
+	$("#tab01").attr({"속성":"속성값","속성2":"속성2값","속성3":"속성3값"})
+2. css 속성 다중 처리	
+	$("#tab01").css({"속성":"속성값","속성2":"속성2값","속성3":"속성3값",})
+*/
+
+	$(document).ready(function(){
+		$("h2").text("안녕하세요")
+		$("h2").css({
+			color:"blue",
+			background:"yellow",
+			border:"1px solid green"
+		})
+		// ex) h3를 선언하고, h2를 클릭시, h3의 배경색상, 글자크기변경, 정렬 중앙 처리를 하세요.
+		$("h2").click(function(){
+			$("h3").css({
+				background:"orange",
+				fontSize:"20pt",  // camel case형식으로 -(대시)형식은 속성으로 처리시 활용
+				textAlign:"center"
+			})
+			/*
+			$("h3").css({
+				"background":"orange",
+				"font-size":"20pt",
+				"text-align":"center"
+			})
+			*/
+			
+		})
+	});
+</script>
+</head>
+<body>
+  <h2 ></h2>
+  <h3>다중 속성 설정</h3>
+  
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#tab02 td").css("text-align","center"
+		).hover(function(){
+			$(this).css("background","yellow")
+		},function(){
+			$(this).css("background","orange")
+		})
+		var cnt=0;
+		$("#tab02 td").click(function(){
+			$("#cnt01").text("카운트:"+(++cnt))
+		}) 		
+	});
+</script>	
+</head>
+<body>
+<span id="cnt01">카운트:0</span>
+<table id="tab02" border height="300px" width="300px">
+	<tr><td>1</td><td>2</td><td>3</td></tr>
+	<tr><td>4</td><td>5</td><td>6</td></tr>
+	<tr><td>7</td><td>8</td><td>9</td></tr>
+</table>
+</body>
+</html>

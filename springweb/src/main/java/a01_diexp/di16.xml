@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:task="http://www.springframework.org/schema/task" 
+   xmlns:aop="http://www.springframework.org/schema/aop" 
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:c="http://www.springframework.org/schema/c"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:util="http://www.springframework.org/schema/util"
+   xmlns:websocket="http://www.springframework.org/schema/websocket"
+   xmlns:sec="http://www.springframework.org/schema/security"
+   xmlns:tx="http://www.springframework.org/schema/tx" 
+    
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd       
+        http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd     
+        http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/websocket
+      http://www.springframework.org/schema/websocket/spring-websocket.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd   
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd   
+      ">
+	<bean id="obj" class="java.lang.Object" />
+	<!-- 
+	//a01_diexp.z01_vo.HandPhone
+	//a01_diexp.z01_vo.HPUser
+	
+	public void setHandPhone(HandPhone handPhone)기준으로
+	자동으로 메모리 2할당하게 하는 것이 의존성 자동 주입의 개념이다.
+	1. autowire="byType" : 유형이 객체로 메모리에 있을 때..
+	 -->
+	<!--  
+	<bean id="hp01" class="a01_diexp.z01_vo.HandPhone"
+		c:_0="010-8888-9999" c:_1="삼성전자"/>
+	 -->	 
+	<bean id="hp02" class="a01_diexp.z01_vo.HandPhone"
+		c:_0="010-7777-9999" c:_1="LG전자"/>
+		 		
+	<bean id="us01" class="a01_diexp.z01_vo.HPUser"
+		p:name="홍길동" autowire="byType"/> 
+	<!-- 
+	ex) CarRacer, Car  자동 의존성 관계로 설정하여 호출되게 하세요.
+	public void setCar(Car car) 
+	 -->	
+	<bean id="car01" class="a01_diexp.z01_vo.Car" c:_0="그랜저" c:_1="230" />	
+	<bean id="car02" class="a01_diexp.z01_vo.Car" c:_0="GMW" c:_1="250" />	
+	<bean id="car03" class="a01_diexp.z01_vo.Car" c:_0="제규어" c:_1="300" />	
+	<bean id="carRacer01"  class="a01_diexp.z01_vo.CarRacer" c:_0="홍길동" autowire="byName"  />	
+	<!-- 
+	ex) car03 이 할당되게 처리하세요
+	
+	 -->	
+		
+		
+</beans>      

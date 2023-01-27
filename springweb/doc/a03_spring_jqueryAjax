@@ -1,0 +1,73 @@
+# 스프링과 jquery를 연동한 ajax 처리
+1. ajax는 단계별로 처리를 할 수 있다.
+	1) 순수 js 처리
+		- XMLHttpRequest js 객체를 활용하여
+		- 서버안에 text 호출
+		- 서버안에 jsp(화면) 호출
+		- 서버안에 jsp(json데이터) 호출
+		- 서버안에 jsp controller(json데이터) 호출
+	2) jquery를 활용 처리
+		- $.ajax({속성1:속성값,....})
+		- 속성
+			url : 요청 주소, 자원을 호출하는 것을 말한다.
+				ex) $.ajax({"url":"${path}/empAjax.do"})
+			data : 요청값 전달(query string형식)
+				1단계 : data:"id="+$("#id").val()
+							+"&pass="+$("#pass").val()
+				2단계 : data:{id:"himan",pass:"7777"}
+				3단계 : data;$("form").serialize()
+					form객체에 포함된 요소객체를 name, value에
+					의해 자동 query string으로 만들어 준다.
+			type : get/post
+			dataType : 결과로 받은 데이터 유형
+				json, xml, text
+			success: 서버에서 전달받았을 때, 에러 없을 시,
+				즉, readyState==4, status==200일 때.
+				사용하는 메서드
+				success:function(data){
+					  data: 받은 데이터/객체
+				}					
+			error : 에러 발생시 사용할 기능 메서드
+				error:function(xhr, status, error){}		
+				
+		
+		
+	3) spring 서버단 json 데이터 처리 
+		- json view단 컨테이너 설정으로 객체 ==> json문자열로
+			처리하여 처리
+			컨테이너에 ViewResolver를 설정해서, controller에 있는
+			모델데이터를 json데이터로 변환해주는 처리를 하는 설정
+			
+		- @Controller를 통한 초기 화면 호출, 화면단에 ajax,
+			@RestController를 통한 문자열 데이터 호출 및 json
+			데이터 호출 처리.
+	4) spring + jquery 연동 처리..
+		- 초기 화면 로딩
+		- 이벤트에 의해 jquery로 서버단 호출(요청값)
+		- 서버단 json데이터 클라이언트 전달		
+		- 클라이언트 json데이터를 객체화하여 화면구성 및 출력
+	5) spring + jquery plugin  프로그램연동
+		- jquery plugin : 화면 ui, js완성 프로그램
+		- 스프링의 DB 연동을 통해서 등록/수정/삭제 처리하는 프로그램 처리
+		
+ex) 부서정보 처리 ajax
+A01_RestController.java
+	1) 부서정보 처리 json처리 추가
+		callRest07.do
+A02_Controller.java
+	2) /deptForAjax.do 부서초기화면 호출
+a01_jquery\a18_ajax.html(bootstrap template 처리)
+	3) 부서 검색화면 처리..
+		
+1) 초기화면 구현
+2) 부서정보 json 데이터 RestController 처리
+
+3) key이벤트로 jquery ajax 호출..
+			
+		
+	
+	
+	
+	
+
+			 	

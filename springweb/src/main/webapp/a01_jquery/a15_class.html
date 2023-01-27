@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.cls01{
+		color:yellow;
+		background:navy
+	}
+	
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("h2").text("토글클래스").click(function(){
+			console.log("클릭")
+			// addClass(), removeClass() 클래스 적용/삭제
+			// toggleClass() 클래스 적용/삭제 반복
+			$(this).toggleClass("cls01")
+		})
+	});
+</script>
+</head>
+<body>
+  <h2 ></h2>
+  <h2 ></h2>
+  <h2 ></h2>
+  <h2 ></h2>
+  <h2 ></h2>
+  <h2 ></h2>
+
+</body>
+</html>

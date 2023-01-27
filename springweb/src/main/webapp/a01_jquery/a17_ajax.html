@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("h2").text("jquery Ajax(사원정보 검색)")
+		$("input").on({keyup:function(){
+			if(event.keyCode==13){
+				var enameVal = $("[name=ename]").val()
+				var jobVal = $("[name=job]").val()
+				var frSalVal = $("[name=frSal]").val()
+				var toSalVal = $("[name=toSal]").val()
+				var qstr = "ename="+enameVal+"&job="+
+				jobVal+"&frSal="+frSalVal+"&toSal="+
+					toSalVal
+				$.ajax({
+					url:"/springweb/callRest06.do",
+					type:"post",
+					data:qstr,
+					dataType:"json",
+					success:function(data){
+						//console.log(data)
+						var addHTML = ""
+						$(data).each(function(idx, emp){
+							console.log(idx)
+							console.log(emp)
+							addHTML+="<tr>"
+							addHTML+="<td>"+emp.empno+"</td>"
+							addHTML+="<td>"+emp.ename+"</td>"
+							addHTML+="<td>"+emp.job+"</td>"
+							addHTML+="<td>"+emp.sal+"</td>"
+							addHTML+="<td>"+emp.comm+"</td>"
+							addHTML+="<td>"+emp.deptno+"</td>"
+							addHTML+="</tr>"
+						})
+						$("table tbody").html(addHTML)
+						
+					},
+					error:function(xhr,status,error){
+						console.log(xhr)
+						console.log(status)
+						console.log(error)
+					}
+					
+				})
+			}
+			
+		}})
+	});
+</script>
+</head>
+<body>
+  <h2 ></h2>
+  <form>
+  	사원명:<input type="text" name="ename" size="5"/><br>
+  	직책명:<input type="text" name="job" size="5"/><br>
+  	급여:<input type="text" name="frSal" value="0" size="5"/> ~
+  		 <input type="text" name="toSal"  value="9999"   size="5"/><br>
+  	<input type="button" value="검색"/>	 
+  </form>
+  <table border>
+  	<thead>
+  		<tr><th>사원번호</th><th>사원명</th><th>직책명</th>
+  			<th>급여</th><th>보너스</th><th>부서번호</th>	
+  	</thead>
+  	<tbody>
+  	</tbody>
+  </table>
+  
+  
+
+</body>
+</html>

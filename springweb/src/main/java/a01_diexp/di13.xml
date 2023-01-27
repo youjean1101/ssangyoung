@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:task="http://www.springframework.org/schema/task" 
+   xmlns:aop="http://www.springframework.org/schema/aop" 
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:c="http://www.springframework.org/schema/c"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:util="http://www.springframework.org/schema/util"
+   xmlns:websocket="http://www.springframework.org/schema/websocket"
+   xmlns:sec="http://www.springframework.org/schema/security"
+   xmlns:tx="http://www.springframework.org/schema/tx" 
+    
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd       
+        http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd     
+        http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/websocket
+      http://www.springframework.org/schema/websocket/spring-websocket.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd   
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd   
+      ">
+	<bean id="prod01" class="a01_diexp.z01_vo.Product" >
+		<constructor-arg value="사과"/>
+		<constructor-arg value="3000"/>
+		<constructor-arg value="2"/>
+	</bean>
+	<bean id="prod02" class="a01_diexp.z01_vo.Product" >
+		<constructor-arg value="바나나"/>
+		<constructor-arg value="4000"/>
+		<constructor-arg value="3"/>	
+	</bean>
+	<bean id="prod03" class="a01_diexp.z01_vo.Product" >
+		<constructor-arg value="딸기"/>
+		<constructor-arg value="12000"/>
+		<constructor-arg value="4"/>	
+	</bean>
+	<bean id="mt01" class="a01_diexp.z01_vo.Mart">
+		<constructor-arg value="행복마트"/>
+		<!--
+		public void setPlist(List<Product> plist)
+		 -->
+		<property name="plist">
+			<list>
+				<ref bean="prod01"/>
+				<ref bean="prod02"/>
+				<ref bean="prod03"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="mem01" class="a01_diexp.z01_vo.Member">
+		<constructor-arg value="himan"/>
+		<constructor-arg value="7777"/>
+		<constructor-arg value="홍길동"/>
+		<constructor-arg value="관리자"/>
+		<constructor-arg value="1000"/>
+	</bean>
+	<bean id="mem02" class="a01_diexp.z01_vo.Member">
+		<constructor-arg value="higirl"/>
+		<constructor-arg value="8888"/>
+		<constructor-arg value="홍리나"/>
+		<constructor-arg value="일반사용자"/>
+		<constructor-arg value="2000"/>
+	</bean>
+	<bean id="mem03" class="a01_diexp.z01_vo.Member">
+		<constructor-arg value="goodman"/>
+		<constructor-arg value="5555"/>
+		<constructor-arg value="마길동"/>
+		<constructor-arg value="방문객"/>
+		<constructor-arg value="2000"/>
+	</bean>
+	<bean id="sm01" class="a01_diexp.z01_vo.ShoppingMall">
+		<constructor-arg value="온라인컴퓨터판매"/>
+		<property name="mlist">
+			<list>
+				<ref bean="mem01"/>
+				<ref bean="mem02"/>
+				<ref bean="mem03"/>
+			</list>
+		</property>
+	</bean>			
+</beans>    
+<!--
+Member(String id, String pass, String name,
+		 String auth, int point) 
+ex) 
+Member 아이디/패스워드/이름/권한/포인트
+ShoppingMall  쇼핑몰명  List<Member>
+	이 쇼핑몰에 등록한 회원리스트 mlist선언하고
+1:다 관계 설정 후, 호출해 주세요..
+
+ -->
+
+
+  

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:task="http://www.springframework.org/schema/task" 
+   xmlns:aop="http://www.springframework.org/schema/aop" 
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:c="http://www.springframework.org/schema/c"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:util="http://www.springframework.org/schema/util"
+   xmlns:websocket="http://www.springframework.org/schema/websocket"
+   xmlns:sec="http://www.springframework.org/schema/security"
+   xmlns:tx="http://www.springframework.org/schema/tx" 
+    
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd       
+        http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd     
+        http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/websocket
+      http://www.springframework.org/schema/websocket/spring-websocket.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd   
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd   
+      ">
+	<bean id="obj" class="java.lang.Object" />
+	<bean id="p01" class="a01_diexp.z01_vo.Person" p:name="홍길동" p:age="25" p:loc="서울 홍대입구" />
+	<bean id="p02" class="a01_diexp.z01_vo.Person" 
+		c:name="마길동" c:age="27" c:loc="부산 광한리" />
+	<bean id="p03" class="a01_diexp.z01_vo.Person" 
+		c:_0="오길동" c:_1="20" c:_2="전라 광주" />
+	<bean id="prod01" class="a01_diexp.z01_vo.Product"
+		p:name="사과" p:price="3000" p:cnt="2" />	
+	<bean id="prod02" class="a01_diexp.z01_vo.Product"
+		c:name="오렌지" c:price="2000" c:cnt="5" />		
+	<bean id="prod03" class="a01_diexp.z01_vo.Product"
+		c:_0="파인애플" c:_1="5000" c:_2="2" />	
+</beans>      

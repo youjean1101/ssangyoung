@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("h2").text("부서정보 ajax조회")
+		$(".sch").on("keyup",function(){
+			if(event.keyCode==13){
+				//form하위에 있는 모든 데이터를 key=value 형식으로 처리
+				var qstr = $("#frm01").serialize()
+				console.log(qstr)
+				// jquery ajax 처리
+				$.ajax({
+					url:"/springweb/callRest07.do",
+					type:"post",
+					data:qstr,
+					dataType:"json",
+					success:function(dlist){
+						console.log(dlist)
+						var adHTML=""
+						// $(배열객체).each(function(index,단위객체)){}
+						$(dlist).each(function(idx,dept){
+							console.log(dept)
+							adHTML+="<tr>"
+							adHTML+="<td>"+dept.deptno+"</td>"
+							adHTML+="<td>"+dept.dname+"</td>"
+							adHTML+="<td>"+dept.loc+"</td>"
+							adHTML+="</tr>"
+						})
+						$("table tbody").html(adHTML)
+					},
+					error:function(xhr, status, error){
+						console.log(xhr)
+						console.log(status)
+						console.log(error)
+					}
+					
+				})
+				
+			}
+		})
+		// 15:05~
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 ></h2>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input  name="dname" class="form-control mr-sm-2 sch" placeholder="부서명" />
+	    <input   name="loc"  class="form-control mr-sm-2 sch" placeholder="부서위치" />
+	    <button class="btn btn-info" type="button">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="33%">
+   	<col width="33%">
+   	<col width="33%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>부서번호</th>
+        <th>부서명</th>
+        <th>부서위치</th>
+      </tr>
+    </thead>	
+    <tbody>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

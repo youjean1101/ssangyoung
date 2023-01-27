@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- 1. 사용할(XXXMapper.xml) 패키지명 포함 vo클래스를 alias 선언 -->
+	<typeAliases>
+		<typeAlias alias="emp" type="springweb.z01_vo.Emp"/>
+		<typeAlias alias="dept" type="springweb.z01_vo.Dept"/>
+		<typeAlias alias="empdept" type="springweb.z01_vo.EmpDept"/>
+		<typeAlias alias="empsal" type="springweb.z01_vo.EmpGrade"/>
+		<typeAlias alias="empdept2" type="springweb.z01_vo.EmpDeptCom"/>
+	</typeAliases>
+	<!-- 2. 사용 XXXMapper.xml을 추가  a01_diexp\mybatis\resource\A01_EmpMapper.xml -->
+	<mappers>
+		<mapper resource="a01_diexp/mybatis/resource/A01_EmpMapper.xml"/>
+		<mapper resource="a01_diexp/mybatis/resource/A02_ExpMapper.xml"/>
+						
+	</mappers>
+
+</configuration>

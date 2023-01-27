@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("h2").text("안녕하세요")
+		/*
+		$("객체").on("이벤트",function(){ 처리할 내용 });
+		$("객체").on({
+			이벤트1:function(){},
+			이벤트2:function(){},
+			이벤트2:function(){}
+		});
+		다중의 이벤트를 대상객체 하나에 처리할 때, 활용된다.
+		*/
+		$("h2").on({
+			click:function(){ $(this).text("클릭!!")},
+			mouseleave:function(){ $(this).css("color","yellow")},
+			mouseenter:function(){ $(this).css("background","navy")}
+		})
+
+		
+	});
+</script>
+</head>
+<body>
+  <h2 ></h2>
+
+</body>
+</html>
