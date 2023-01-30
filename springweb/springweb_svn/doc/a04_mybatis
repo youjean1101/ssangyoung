@@ -234,7 +234,19 @@
 			values(emp_seq.nextval, #{ename},#{job}, 
 			#{mgr}, sysdate, #{sal},#{comm},#{deptno})
 		</insert>	
-	dao.insertEmp(new Emp(0,"정길동","과장",7780,null,5000,1000,10));		
+		<insert id="insertEmp" parameterType="map"> //alias 설정안해도 되나, 서비스단에서 할게 많음.
+			insert into emp100
+			values(emp_seq.nextval, #{ename},#{job}, 
+			#{mgr}, sysdate, #{sal},#{comm},#{deptno})
+		</insert>	
+	3) service
+	dao.insertEmp(new Emp(0,"정길동","과장",7780,null,5000,1000,10));
+	Map<String, String> map = new HashMap<String, String>();
+	map.put("ename","홍길동");		
+	map.put("job","사원");		
+	map.put("mgr","8888");
+	...
+	dao.insertEmp2(map);		
 5. 단일 리턴값, 단일 매개변수 처리
 6. 다중 리턴값, 다중 매개변수 처리
 7. 조회 처리하기

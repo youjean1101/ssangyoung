@@ -64,10 +64,28 @@
 	</bean>
 	<!-- 
 	# 마이바티즈에 의해 자동 생성 dao 인터페이스 선언
+											springweb.a05_mvc.a03_dao
 	 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="springweb.a05_mvc.a03_dao"/>
 	</bean>	 
-		
-	
+	<!-- 
+	1. viewResolver 1순위 선언 : bean을 선언되어 있으면 해당 뷰를 찾게 처리
+	 -->
+	<bean id="btnViewResolver"
+		class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="0"/>
+	</bean> 
+	<!-- 
+	2. 위에 선언된 viewer이외는 모두 html/jsp 뷰..
+	 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="1"/>
+	</bean>
+	<!-- 위에서 1순위 채택하는 json viewer -->
+	<bean id="pageJsonReport" class=
+"org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+		<property name="contentType" 
+			value="text/html;charset=utf-8"/>	
+	</bean>
 </beans>      

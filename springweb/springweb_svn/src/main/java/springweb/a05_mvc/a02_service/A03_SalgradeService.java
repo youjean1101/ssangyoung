@@ -10,7 +10,7 @@ import springweb.z01_vo.Salgrade;
 
 @Service
 public class A03_SalgradeService {
-	@Autowired
+	@Autowired(required=false)
 	private A03_SalgradeDao dao;
 	
 	public List<Salgrade> getSalgradeList(Salgrade sch){

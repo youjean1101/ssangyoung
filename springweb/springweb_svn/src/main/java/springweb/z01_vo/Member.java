@@ -1,6 +1,8 @@
 package springweb.z01_vo;
 //springweb.z01_vo.Member 
 public class Member {
+	
+	
 /*
 create table member(
 	id varchar2(100),
@@ -38,6 +40,7 @@ insert into member values('himan','7777','홍길동','admin',1000,'서울');
 		this.point = point;
 		this.address = address;
 	}
+	
 	public String getId() {
 		return id;
 	}

@@ -37,5 +37,8 @@
 		SELECT DISTINCT job
 		FROM emp100
 	</select>	
+	<select id="getEmpjsonView" resultType="emp">
+		SELECT * FROM emp
+	</select>	
 </mapper>		
 		

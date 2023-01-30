@@ -9,7 +9,7 @@ public class Emp {
 	private String job;
 	private int mgr;
 	private Date hiredate;
-	private	long hiredateTime;
+	//private long hiredateTime;
 	private String hiredateS;
 	private double sal;
 	private double frSal;

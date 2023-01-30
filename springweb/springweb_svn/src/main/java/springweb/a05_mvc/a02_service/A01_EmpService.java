@@ -12,7 +12,7 @@ import springweb.z01_vo.Emp;
 
 @Service
 public class A01_EmpService {
-	@Autowired
+	@Autowired(required=false)
 	private A01_EmpDao dao;
 	
 	public List<Emp> getEmpList(Emp sch){
@@ -20,7 +20,8 @@ public class A01_EmpService {
 		if(sch.getJob()==null) sch.setJob("");
 		if(sch.getToSal()==0) sch.setToSal(9999);
 		return dao.getEmpList(sch);
-	}	
+	}
+	
 	public List<Dept> getDeptComb(){
 		return dao.getDeptComb();
 	}
@@ -29,6 +30,14 @@ public class A01_EmpService {
 	}
 	public List<String> getJobComb(){
 		return dao.getJobComb();
-	}		
+	}
+	
+	public List<Emp> getEmpjsonView(Emp sch){
+		if(sch.getEname()==null) sch.setEname("");
+		if(sch.getJob()==null) sch.setJob("");
+		if(sch.getToSal()==0) sch.setToSal(9999);
+		return dao.getEmpjsonView(sch);
+	}
+	
 	
 }

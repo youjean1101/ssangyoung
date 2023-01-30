@@ -69,3 +69,51 @@ WHERE to_char(hiredate,'q')=2);
 select * from salgrade;
 
 SELECT * FROM MEMBER;
+
+select e.empno, e.ename, d.dname, nvl(m.ename,'') mename, e.job
+		from emp100 e, emp100 m, dept d
+		where e.mgr = m.empno(+)
+		and e.deptno = d.deptno
+		and e.ename like '%'||''||'%'
+		and e.job like '%'||''||'%';
+
+CREATE TABLE member200(
+	id varchar2(100) PRIMARY KEY,
+	pass varchar2(100),
+	name varchar2(100),
+	auth varchar2(100),
+	point number
+);
+INSERT INTO member200 values('himan','7777','홍길동','admin',1000);
+INSERT INTO member200 values('higirl','8888','홍현아','admin',2000);
+INSERT INTO member200 values('goodman','5555','오길동','normal',1000);
+INSERT INTO member200 values('badgirl','3333','신영희','quest',1000);
+INSERT INTO member200 values(#{id},#{pass},#{name},#{auth},#{point});
+
+select * from member200
+where id like '%'||''||'%'
+and name like '%'||''||'%'
+and auth = 'admin';
+--<if test="auth!=''">
+--and auth = #{auth}
+--</if>
+select * from member200
+where id = 'himan';
+
+update member200
+	set name='himan',
+		pass='9999',
+		point=3000,
+		auth='admin'
+	where id = 'himan';
+	
+delete member200
+where id = #{id};
+
+SELECT DISTINCT auth
+FROM member200;
+
+SELECT * FROM emp;
+
+SELECT * FROM MEMBER200;
+
