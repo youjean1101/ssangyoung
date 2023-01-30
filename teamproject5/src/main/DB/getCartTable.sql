@@ -4,7 +4,11 @@ CREATE TABLE getcard(
 	validity char(5),
 	cardkind varchar(20),
 	birthday date,
-	id varchar(30) /*ONSTRAINT getcard_id_fk REFERENCES user(id)*/
+	id varchar(30),
+	FOREIGN KEY id REFERENCES user1(id)
+	/*FOREIGN KEY (필드이름) REFERENCES 테이블이름 (필드이름)
+	 FOREIGN KEY id REFERENCES user1(id)
+	CONSTRAINT getcard_id_fk REFERENCES user(id)*/
 );
 DROP TABLE getcard;
 

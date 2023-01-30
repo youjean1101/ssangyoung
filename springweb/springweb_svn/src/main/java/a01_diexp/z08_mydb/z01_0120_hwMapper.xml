@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+
+<mapper namespace="a01_diexp.z08_mydb.vo.Z01__0120_hwDao">
+	<!-- 단일 리턴값 처리 연습  -->	
+	<select id="getMaxMgr" resultType="int">
+		SELECT max(mgr) FROM emp100
+	</select>
+
+	<select id="getDeptnoMaxHiredate" resultType="string">
+		SELECT max(hiredate) FROM emp100
+		WHERE deptno=40
+		GROUP BY deptno
+	</select>
+	
+	<select id="getJobMinSal" resultType="int">
+		SELECT min(sal) FROM emp100
+		WHERE job='SALESMAN'
+	</select>
+	
+	<select id="getSalcount" resultType="int">
+		SELECT count(*) FROM emp100
+		WHERE sal BETWEEN 2000 AND 4000
+	</select>
+	
+	<select id="getQcount" resultType="int">
+		SELECT count(*) FROM emp100
+		WHERE to_char(hiredate,'q')=1
+	</select>
+	
+	<!-- 단일 객체 처리 연습  -->
+	<select id="getJobMaxSal" resultType="emp">
+		SELECT * FROM EMP100
+		WHERE sal=(SELECT max(sal) FROM emp100
+		WHERE job='MANAGER')
+	</select>
+	
+	<select id="getDeptno" resultType="dept">
+		SELECT * FROM dept
+		WHERE deptno=10
+	</select>
+	
+	<select id="getEname" resultType="emp">
+		SELECT * FROM emp100
+		WHERE ename='TURNER'
+	</select>
+	
+	<select id="getRecentHiredate" resultType="emp">
+		SELECT * FROM emp100
+		WHERE hiredate=(
+		SELECT max(hiredate) FROM emp100)
+	</select>
+	
+	<select id="getSalQ" resultType="emp">
+		SELECT *
+		FROM emp100
+		WHERE sal=(
+		SELECT max(sal)FROM EMP100 e 
+		WHERE to_char(hiredate,'q')=2)
+	</select>
+	
+	
+</mapper>
