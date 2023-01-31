@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import springweb.a05_mvc.a02_service.A01_EmpService;
 import springweb.a05_mvc.a02_service.A02_DeptService;
@@ -30,6 +31,7 @@ public class A03_JsonViewCallCtrl {
 	public String callJson02(Model d) {
 		d.addAttribute("json02", new Person("홍길동",32,"인천광역시"));
 		return "pageJsonReport";
+		// 컨테이너에 json 데이터로 모델데이터를 출력하게 해준다.
 	}
 	
 	@Autowired(required = false)
@@ -65,6 +67,12 @@ public class A03_JsonViewCallCtrl {
 	public String callJson06(Model d) {
 		A02_EmpDao dao = new A02_EmpDao();
 		//d.addAttribute("empJsonView", service4.getEmpjsonView(dao.getEmpSch()));
+		return "pageJsonReport";
+	}
+	
+	@RequestMapping("/getEmpAll.do")
+	public String getEmpAll(Model d){
+		d.addAttribute("empList",service2.getEmpAll());
 		return "pageJsonReport";
 	}
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link rel="stylesheet" href="/a00_com/bootstrap.min.css" >
+<style>
+   td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+   $(document).ready(function(){
+       //  $("h2").text("안녕하세요")
+       //  1. model 데이터
+          var model={msg:"Vue 시작"}
+       //  3. view model: view와 model을 연결
+          var vm=new Vue({
+             el:"#simple", //vue를 적용할 요소객체 최상위 범위
+             data:model    //모델 데이터
+          })
+   });
+</script>
+</head>
+<body>
+   <!-- 2.view단 선언 -->
+   <div id="simple">
+    <h2>{{msg}}</h2>
+   </div>
+</body>
+</html>

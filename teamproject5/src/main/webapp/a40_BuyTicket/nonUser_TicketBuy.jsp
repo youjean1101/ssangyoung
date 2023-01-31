@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>비회원 이용권 구매</title>
 <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
 <link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
 <style>
@@ -28,49 +28,9 @@
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		function search(){
-		$.ajax({
-			url:"${path}/deptAjax.do",
-			type:"post",
-			data:$("#frm01").serialize(),
-			dataType:"json",
-			success:function(data){
-				var dlist = data.dlist
-				var show=""
-				$(dlist).each(function(idx,dept){
-					console.log(dept)
-					show+="<tr ondblclick='goPage("+dept.deptno+")'>"
-					show+="<td>"+dept.deptno+"</td>"
-					show+="<td>"+dept.dname+"</td>"
-					show+="<td>"+dept.loc+"</td>"
-					show+="</tr>"
-				})		
-				console.log(show)
-				$("#dataTab tbody").html(show)
-			},
-			error:function(err){
-				console.log(err)
-			}
-		})		
-	}
-	function goPage(deptno){
-		$.ajax({
-			url:"${path}/getDept.do",
-			type:"get",
-			data:"deptno="+deptno,
-			dataType:"json",
-			success:function(data){
-				var dept=data.dept
-				$("#modal01").click() // 모달 로딩
-				$("#frm02 [name=deptno]").val(dept.deptno)
-				$("#frm02 [name=dname]").val(dept.dname)
-				$("#frm02 [name=loc]").val(dept.loc)
-			},
-			error:function(err){
-				console.log(err)
-			}
-			
-		})
+		<%-- 
+		
+		--%>	
 	});
 </script>
 </head>
@@ -89,27 +49,29 @@
  	</nav>
 	</form>
    <table class="table table-hover table-striped">
-   	<col width="33%">
-   	<col width="33%">
-   	<col width="33%">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
     <thead>
+    
       <tr class="table-success text-center">
-        <th>등급</th>
-        <th>시작급여</th>
-        <th>까지</th>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
       </tr>
     </thead>	
     <tbody>
-    	<c:forEach var="salgrade" items="${salgradeList}">
-    	<tr><td>${salgrade.grade}</td>
-    		<td>${salgrade.losal}</td>
-    		<td>${salgrade.hisal}</td></tr>
-    	</c:forEach>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
     </tbody>
 	</table>    
     
 </div>
-<p id="modal01" data-toggle="modal" data-target="#exampleModalCenter" ></p>
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">

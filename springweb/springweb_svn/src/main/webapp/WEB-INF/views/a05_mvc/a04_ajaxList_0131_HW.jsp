@@ -28,7 +28,27 @@
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		function search(){
+		<%-- 
+		
+		--%>	
+		$("#schBtn").click(function(){
+			search();
+		});
+		
+		$(".sch").keyup(function(){
+			if(event.keyCode==13){
+				search()
+			}
+		})
+		$("#uptButton").click(function(){
+			uptFun()
+		})
+		$("#delButton").click(function(){
+			delFun()
+		})
+		
+	});
+	function search(){
 		$.ajax({
 			url:"${path}/deptAjax.do",
 			type:"post",
@@ -69,42 +89,66 @@
 			error:function(err){
 				console.log(err)
 			}
-			
 		})
-	});
+	}
+	function delFun(){
+		$.ajax({
+			url:"${path}/delDept.do",
+			type:"get",
+			data:"deptno="+$("#frm02 [name=deptno]").val(),
+			dataType:"json",
+			success:function(data){
+				alert("삭제 성공")
+			},
+			error:function(err){
+				console.log(err)
+			}
+		})
+	}
+	function uptFun(){
+		$.ajax({
+			url:"${path}/uptDept.do",
+			type:"get",
+			data:"deptno="+$("#frm02 [name=deptno]").val()
+							+"&dname="+$("#frm02 [name=dname]").val()
+							+"&loc="+$("#frm02 [name=loc]").val(),
+			dataType:"json",
+			success:function(data){
+				alert("수정 성공")
+			},
+			error:function(err){
+				console.log(err)
+			}
+		})
+	}
+	
 </script>
 </head>
-
 <body>
 <div class="jumbotron text-center">
-  <h2 data-toggle="modal" data-target="#exampleModalCenter">타이틀</h2>
-
+  <h2>부서정보(json view Ajax처리)</h2>
 </div>
 <div class="container">
-	<form id="frm01" class="form-inline"  method="post">
+	<form id="frm01" onSubmit="return false;" class="form"  method="post"> 
+		<input type="hidden"/>
   	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-	    <input class="form-control mr-sm-2" placeholder="제목" />
-	    <input class="form-control mr-sm-2" placeholder="내용" />
-	    <button class="btn btn-info" type="submit">Search</button>
+	    <input  name="dname" class="form-control mr-sm-2 sch" placeholder="부서명" />
+	    <input name="loc" class="form-control mr-sm-2 sch" placeholder="부서위치" />
+	    <button id="schBtn" class="btn btn-info" type="button">Search</button>
  	</nav>
 	</form>
-   <table class="table table-hover table-striped">
+   <table id="dataTab" class="table table-hover table-striped">
    	<col width="33%">
    	<col width="33%">
    	<col width="33%">
     <thead>
       <tr class="table-success text-center">
-        <th>등급</th>
-        <th>시작급여</th>
-        <th>까지</th>
+        <th>부서번호</th>
+        <th>부서명</th>
+        <th>부서위치</th>
       </tr>
     </thead>	
     <tbody>
-    	<c:forEach var="salgrade" items="${salgradeList}">
-    	<tr><td>${salgrade.grade}</td>
-    		<td>${salgrade.losal}</td>
-    		<td>${salgrade.hisal}</td></tr>
-    	</c:forEach>
     </tbody>
 	</table>    
     
@@ -114,7 +158,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">타이틀</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">부서정보</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -123,17 +167,26 @@
 		<form id="frm02" class="form"  method="post">
 	     <div class="row">
 	      <div class="col">
-	        <input type="text" class="form-control" placeholder="사원명 입력" name="ename">
-	      </div>
-	      <div class="col">
-	        <input type="text" class="form-control" placeholder="직책명 입력" name="job">
+	        <input type="text" readonly class="form-control" placeholder="부서번호 입력" name="deptno">
 	      </div>
 	     </div>
+	     <div class="row">
+	      <div class="col">
+	        <input type="text" class="form-control" placeholder="부서명 입력" name="dname">
+	      </div>
+	     </div>
+	     <div class="row">
+	      <div class="col">
+	        <input type="text" class="form-control" placeholder="부서위치 입력" name="loc">
+	      </div>
+	     </div>
+
 	    </form> 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button id="uptButton" type="button" class="btn btn-success">수정</button>
+        <button id="delButton" type="button" class="btn btn-primary">삭제</button>
       </div>
     </div>
   </div>

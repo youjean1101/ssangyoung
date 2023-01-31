@@ -34,7 +34,16 @@
 		delete member200 
 		where id = #{id}
 	</delete>
-	<insert id="insMember" parameterType="string">
+	<insert id="insMember" parameterType="member">
 		INSERT INTO member200 values(#{id},#{pass},#{name},#{auth},#{point})
 	</insert>		
+	<insert id="insertMember" parameterType="member">
+		INSERT INTO member200 values(#{id},#{pass},#{name},#{auth},#{point})
+	</insert>	
+	<select id="getEmpAll" resultType="emp">
+			select * from emp100
+	</select>
+	<select id="getIdSearchMember" resultType="member" parameterType="string">
+		SELECT * FROM member200 WHERE id=#{id}
+	</select>	
 </mapper>		

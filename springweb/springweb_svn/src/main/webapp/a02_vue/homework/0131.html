@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link rel="stylesheet" href="/a00_com/bootstrap.min.css" >
+<style>
+   td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script type="text/javascript">
+   $(document).ready(function(){
+	 //6. vue의 MVVM패턴을 이용하여 모델로 선언한 
+		//name, age, loc를 통해서 화면에 이름 나이 사는 곳에 출력되게하세요.
+         var model={name:"홍길동", age:27, loc:"서울홍대"}
+          var vm=new Vue({
+             el:"#simple",
+             data:model
+          })
+   });
+</script>
+</head>
+<body>
+   <div id="simple">
+    <h2>이름: {{name}}</h2>
+    <h2>나이: {{age}}</h2>
+    <h2>사는곳: {{loc}}</h2>
+   </div>
+</body>
+</html>

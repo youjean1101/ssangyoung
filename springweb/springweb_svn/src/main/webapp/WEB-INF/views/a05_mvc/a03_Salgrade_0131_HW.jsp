@@ -28,21 +28,25 @@
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		function search(){
+		$("#schBtn").click(function(){
+			search();
+		});
+	});
+	function search(){
 		$.ajax({
-			url:"${path}/deptAjax.do",
+			url:"${path}/salgradeAjax.do",
 			type:"post",
 			data:$("#frm01").serialize(),
 			dataType:"json",
 			success:function(data){
-				var dlist = data.dlist
+				var slist = data.slist
 				var show=""
-				$(dlist).each(function(idx,dept){
-					console.log(dept)
-					show+="<tr ondblclick='goPage("+dept.deptno+")'>"
-					show+="<td>"+dept.deptno+"</td>"
-					show+="<td>"+dept.dname+"</td>"
-					show+="<td>"+dept.loc+"</td>"
+				$(slist).each(function(idx,salgrade){
+					console.log(salgrade)
+					show+="<tr ondblclick='goPage("+salgrade.grade+")'>"
+					show+="<td>"+salgrade.grade+"</td>"
+					show+="<td>"+salgrade.losal+"</td>"
+					show+="<td>"+salgrade.hisal+"</td>"
 					show+="</tr>"
 				})		
 				console.log(show)
@@ -53,42 +57,40 @@
 			}
 		})		
 	}
-	function goPage(deptno){
+	function goPage(grade){
+		console.log(grade)
 		$.ajax({
-			url:"${path}/getDept.do",
+			url:"${path}/getSalgradeSearch.do",
 			type:"get",
-			data:"deptno="+deptno,
+			data:"grade="+grade,
 			dataType:"json",
 			success:function(data){
-				var dept=data.dept
+				var salgrade=data.salgrade
 				$("#modal01").click() // 모달 로딩
-				$("#frm02 [name=deptno]").val(dept.deptno)
-				$("#frm02 [name=dname]").val(dept.dname)
-				$("#frm02 [name=loc]").val(dept.loc)
+				$("#frm02 [name=grade]").val(salgrade.grade)
+				$("#frm02 [name=losal]").val(salgrade.losal)
+				$("#frm02 [name=hisal]").val(salgrade.hisal)
 			},
 			error:function(err){
 				console.log(err)
 			}
-			
 		})
-	});
+	}
 </script>
 </head>
 
 <body>
 <div class="jumbotron text-center">
-  <h2 data-toggle="modal" data-target="#exampleModalCenter">타이틀</h2>
+  <h2 data-toggle="modal" data-target="#exampleModalCenter">급여등급정보</h2>
 
 </div>
 <div class="container">
-	<form id="frm01" class="form-inline"  method="post">
+	<form id="frm01" onSubmit="return false;" class="form"  method="post"> 
   	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-	    <input class="form-control mr-sm-2" placeholder="제목" />
-	    <input class="form-control mr-sm-2" placeholder="내용" />
-	    <button class="btn btn-info" type="submit">Search</button>
+	     <button id="schBtn" class="btn btn-info" type="button">조회</button>
  	</nav>
 	</form>
-   <table class="table table-hover table-striped">
+   <table id="dataTab" class="table table-hover table-striped">
    	<col width="33%">
    	<col width="33%">
    	<col width="33%">
@@ -100,11 +102,7 @@
       </tr>
     </thead>	
     <tbody>
-    	<c:forEach var="salgrade" items="${salgradeList}">
-    	<tr><td>${salgrade.grade}</td>
-    		<td>${salgrade.losal}</td>
-    		<td>${salgrade.hisal}</td></tr>
-    	</c:forEach>
+    
     </tbody>
 	</table>    
     
@@ -114,7 +112,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">타이틀</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">급여정보</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -123,10 +121,17 @@
 		<form id="frm02" class="form"  method="post">
 	     <div class="row">
 	      <div class="col">
-	        <input type="text" class="form-control" placeholder="사원명 입력" name="ename">
+	        <input type="text" class="form-control" placeholder="등급" name="grade">
 	      </div>
+	     </div>
+	     <div class="row">
 	      <div class="col">
-	        <input type="text" class="form-control" placeholder="직책명 입력" name="job">
+	        <input type="text" class="form-control" placeholder="시작급여" name="losal">
+	      </div>
+	     </div>
+	     <div class="row">
+	      <div class="col">
+	        <input type="text" class="form-control" placeholder="마지막급여" name="hisal">
 	      </div>
 	     </div>
 	    </form> 

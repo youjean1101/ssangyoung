@@ -8,4 +8,8 @@
 	<select id="getSalgrade"  resultType="Salgrade">
 		select * from salgrade
 	</select>
+	
+	<select id="getSalgradeSearch" resultType="salgrade" parameterType="int">
+		SELECT * FROM salgrade WHERE grade=#{grade}
+	</select>	
 </mapper>

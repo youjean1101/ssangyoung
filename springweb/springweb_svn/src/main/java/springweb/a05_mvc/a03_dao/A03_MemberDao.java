@@ -11,4 +11,7 @@ public interface A03_MemberDao {
 	public void uptMember(Member upt);
 	public void delMember(String id);
 	public void insMember(Member ins);
+	public void insertMember(Member ins);
+	
+	public Member getIdSearchMember(String id);
 }

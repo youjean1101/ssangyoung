@@ -70,6 +70,9 @@
 		<property name="basePackage" value="springweb.a05_mvc.a03_dao"/>
 	</bean>	 
 	<!-- 
+	# 컨트롤단에서 마지막 리턴되는 값이 bean id값과 동일하면 해당 객체로 view을 처리해주고(1순위),
+	그 외에는 jsp/html로 경로를 찾아가서 화면을 로딩한다.(2순위)
+	
 	1. viewResolver 1순위 선언 : bean을 선언되어 있으면 해당 뷰를 찾게 처리
 	 -->
 	<bean id="btnViewResolver"
@@ -83,8 +86,7 @@
 		<property name="order" value="1"/>
 	</bean>
 	<!-- 위에서 1순위 채택하는 json viewer -->
-	<bean id="pageJsonReport" class=
-"org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+	<bean id="pageJsonReport" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
 		<property name="contentType" 
 			value="text/html;charset=utf-8"/>	
 	</bean>

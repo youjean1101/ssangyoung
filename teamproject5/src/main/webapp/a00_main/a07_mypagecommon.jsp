@@ -17,7 +17,7 @@
 		margin-left:2%;
 	}
 	#greyBox{
-		background: rgb(122, 127, 130);
+		background: rgb(128, 138, 146);
 		opacity: 0.8;
 		width:100%;
 		height:70px;
@@ -97,10 +97,10 @@
 			document.querySelector("#hrposition02").innerHTML = ""
 			$("#iconID02").attr("src", "${path}/b01_img/payInfoManagerIcon.png");
 		})
-		
 	});
 </script>
 </head>
+<body>
 	<div id="idposition">test님</div><!-- 로그인한 아이디 출력 -->
 	<box id="greyBox">
 		<div id="userInfoBox" class="MypageMenu">
@@ -119,7 +119,5 @@
 			<div id="hrposition03"><hr class="Mypagehr"></div>
 		</div>
 	</box>
-<body>
-
 </body>
 </html>

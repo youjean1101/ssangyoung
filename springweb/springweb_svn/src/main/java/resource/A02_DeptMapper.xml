@@ -15,5 +15,20 @@
 		where dname like '%'||#{dname}||'%'
 		and loc like '%'||#{loc}||'%'		
 	</select>
+	
+	<select id="getDept" resultType="dept" parameterType="int">
+		select * from dept100 where deptno=#{deptno}
+	</select>
+	
+	<update id="uptDept" parameterType="dept">
+		UPDATE dept100 
+		SET dname=#{dname}
+			loc=#{loc}
+		WHERE deptno=#{deptno}
+	</update>
+	
+	<delete id="delDept" parameterType="int">
+		DELETE FROM dept100 WHERE deptno=#{deptno}
+	</delete>
 </mapper>		
 		

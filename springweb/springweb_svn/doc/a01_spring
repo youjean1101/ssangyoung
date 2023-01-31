@@ -519,6 +519,60 @@
 		처리결과 : json 데이터가 웹화면에 로딩 
       	{"name":"홍길동"}
 
-	 	
+# 부서정보를 json뷰를 이용하여 리스트하고 등록 수정 삭제
+0. 파일 정보
+	controller/service/dao
+		A02_DeptController.java
+	view
+		WEB-INF\views\a05_mvc\a04_ajaxList.jsp
+
+1. 초기화면 로딩
+	1) /deptAjaxInit.do get방식으로 초기화면 호출
+	2) 화면
+		부서명/부서위치로 keyword 검색 ui만들기
+------------------------		
+	3) key입력 시, deptAjaxInit.do를 post방식 호출 처리
+
+	
+2. 조회하는 json controller 선언
+
+3. ajax를 활용한 변경화면 로딩
+	1) DB 처리
+		- 단일 데이터 로딩 
+			sql select * from dept where deptno=10
+		- vo
+		- 공통 mybatis
+		- dao
+			public Dept getDept(int deptno);
+		- mapper
+			<select id="getDept" parameterType="int">
+				select * from dept where deptno=${deptno}
+				
+		- service 호출
+		- controller 호출
+			@PostMapping("deptAjax.do")
+		--------------------------------------------------
+			
+	2) 화면처리(jsp)
+		- 특정 row 클릭 함수호출
+			<tr ondblclick="goPage(${d.deptno})"
+		- function goPage(deptno)
+			$.ajax({
+				url:"${path}/deptAjax..do",
+				type:"post",
+				data:"deptno="+deptno,
+				dateType:"json",
+				success:function(data){
+					var dept = data.dept
+					$("p").click();
+					$("#frm02 [name=deptno]").val(dept.deptno);
+					$("#frm02 [name=dname]").val(dept.dname);
+					$("#frm02 [name=loc]").val(dept.loc);
+				},
+				error:function(err){
+					console.log(err)
+				}
+			})
+
 	
 		

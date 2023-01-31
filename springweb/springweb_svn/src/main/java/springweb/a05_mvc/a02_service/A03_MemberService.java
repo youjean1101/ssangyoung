@@ -33,5 +33,10 @@ public class A03_MemberService {
 	public void insMember(Member ins) {
 		dao.insMember(ins);
 	}
-	
+	public void insertMember(Member ins) {
+		dao.insertMember(ins);
+	}
+	public Member getIdSearchMember(String id) {
+		return dao.getIdSearchMember(id);
+	}
 }

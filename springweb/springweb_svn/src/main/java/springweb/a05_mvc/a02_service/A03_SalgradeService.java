@@ -17,4 +17,9 @@ public class A03_SalgradeService {
 		if(sch.getHisal()==0) sch.setHisal(9999);
 		return dao.getSalgrade(sch);
 	}
+	
+	public Salgrade getSalgradeSearch(int grade) {
+		return dao.getSalgradeSearch(grade);
+	}
+	
 }

@@ -117,3 +117,17 @@ SELECT * FROM emp;
 
 SELECT * FROM MEMBER200;
 
+SELECT * FROM dept100 ORDER BY deptno;
+INSERT INTO dept100 values(#{deptno},#{dname},#{loc});
+
+UPDATE dept100 SET dname='마케팅'
+					loc=''
+WHERE deptno='75';
+DELETE FROM dept100 WHERE deptno='94';
+
+UPDATE dept100 SET deptno='94' 
+WHERE deptno='92' AND dname='테스트';
+
+INSERT INTO dept100 values('91','테스트','테스트');
+INSERT INTO dept100 values('92','테스트','테스트');
+INSERT INTO dept100 values('93','테스트','테스트');

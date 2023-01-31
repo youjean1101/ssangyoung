@@ -8,8 +8,57 @@
 <fmt:requestEncoding value="utf-8"/>     
 <!DOCTYPE html>
 <%--
-
-
+[2단계:확인] 2. 오늘 처리한 회원관리 화면에서 회원등록 처리를 다이얼로그 박스를 활용해 처리 해보세요.
+	1) DB 처리
+		- sql insert into member200 values('goodman','9999','정수라','normal',3000);
+		- vo 확인
+		- mybatis 공통 점검 member
+		- dao public void insertMember(Member ins);
+		- mapper
+			<insert id="insertMember" parameterType="member">
+				INSERT INTO member200 values(#{id},#{pass},#{name},#{auth},#{point})
+		- service 호출.
+	2) view 처리
+		- 등록 버튼 추가 - 모달창 로딩 (form데이터에 데이터가 없어야 함)
+		- 모달창 안에 form데이터
+			타이틀 : 회원등록, ps) 상세화면에서 회원상세정보로 처리
+			form데이터에 데이터가 없어야 함.
+			버튼 : 등록버튼/닫기 ps) 상세화면에서는 수정/삭제버튼만 있게 처리.
+			모달창안에 등록 버튼 클릭 시, 
+				입력여부 및 유효성 처리.. 권한 추가시를 위해 고려?
+				$("#frm02 [name=proc]").val("ins");
+				$("#frm02").attr("action","${path}/insertMember.do")
+	
+	3) controller 처리
+		- @PostMapping("insertMember.do")
+		public String insertMember(Member ins, Model d){
+			service.insertMember(ins);
+			d.addAttribute("mem", service.getMember(ins.getId());
+			return "";
+		}
+	4) view단
+		if(proc=="ins"){
+			alert("등록완료");
+			//if(confirm("등록완료\n조회화면으로 이동하시겠습니까?"))
+			//	location.href="${path}/memberList.do"		
+		}
+	
+[1단계:확인] 6. select * from emp으로 데이터 처리(dao,mapper에 추가)하여 json view로 출력하세요.
+	vo Emp
+	dao public List<Emp> getEmpAll();
+	mapper
+		<select id="getEmpAll" resultType="emp">
+			select * from emp100
+		</select>
+		
+	service 호출
+	
+	controller
+		@RequestMapping("/getEmpAll.do")
+		public String getEmpAll(Model d){
+			d.addAttribute("empList", service,getEmpAll()");
+			return "pageJsonReport";
+		}
  --%>
 <html>
 <head>
@@ -49,28 +98,25 @@
  	</nav>
 	</form>
    <table class="table table-hover table-striped">
-   	<col width="20%">
-   	<col width="20%">
-   	<col width="20%">
-   	<col width="20%">
-   	<col width="20%">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
     <thead>
+    
       <tr class="table-success text-center">
-        <th>아이디</th>
-        <th>이름</th>
-        <th>권한</th>
-        <th>포인트</th>
-        <th>주소</th>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
       </tr>
     </thead>	
     <tbody>
-    	<c:forEach var="member" items="${memberList}">
-    		<tr><td>${member.id }</td>
-    			<td>${member.name }</td>
-    			<td>${member.auth }</td>
-    			<td>${member.point }</td>
-    			<td>${member.address }</td></tr>
-   		</c:forEach>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
     </tbody>
 	</table>    
     
