@@ -85,6 +85,14 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#goBuyTicketButt").click(function(){
+			$("#rentalnumberSeaImg").attr("src", "${path}/b01_img/rentalNumberSearchButton.png");
+			$("#rentalnumberSeaButt").css({"background":"","color":""})
+			document.querySelector("#buttonHrPosition2").innerHTML=""
+			
+			$("#unpaidPayImg").attr("src", "${path}/b01_img/unpaidChargePayButton.png");
+			$("#unpaidPayButt").css({"background":"","color":""})
+			document.querySelector("#buttonHrPosition").innerHTML=""
+			
 			$("#nonUserMenuframe").attr("src", "${path}/a40_BuyTicket/nonUser_TicketBuyNotice.jsp");
 		})
 		$("#unpaidPayButt").click(function(){
@@ -112,7 +120,6 @@
 		$("#signUpButt").click(function(){
 			location.href="${path}/a00_main/a01_main.jsp";
 		})
-		
 	});
 </script>
 </head>
@@ -122,7 +129,9 @@
 	<hr>
 	<div id="guestText">Guest</div>
 	<div id="non-MemberText">비회원</div>
-	<button id="goBuyTicketButt" type="button"><img id="goBuyTicketImg" src="${path }\b01_img\goBuyTicketButton.png"></button>
+	<button id="goBuyTicketButt" type="button">
+	<img id="goBuyTicketImg" src="${path }\b01_img\goBuyTicketButton.png">
+	</button>
 	<box id="centerGreyBox">
 		<button class="greyButton" id="unpaidPayButt" type="button">
 			<img id="unpaidPayImg" class="inGreyBoxButton" src="${path }\b01_img\unpaidChargePayButton.png"><br>미납요금 결제<div id="buttonHrPosition"></div></button>
@@ -131,5 +140,6 @@
 		<button class="greyButton" id="signUpButt" type="button"><img class="inGreyBoxButton" src="${path }\b01_img\signupButton.png"><br>회원가입</button>
 	</box>
 	<iframe id="nonUserMenuframe" src=""></iframe>
+	<%-- <jsp:include page="${path}/a00_main/a08_footer.jsp"></jsp:include> --%>
 </body>
 </html>

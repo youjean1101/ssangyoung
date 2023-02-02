@@ -90,15 +90,26 @@
 		})
 		
 		$("#regBtn").hide() // 초기화면에서는 보이지 않게 처리
-		$("#frm02 [name=id]").attr("readonly",true)
+		// default로는 등록이 불가능하게 - 상세화면/수정/삭제..
+		$("#frm02 [name=id]").attr("readonly",true) 
 		$("#regLdBtn").click(function(){
 			//타이틀 : 회원등록, ps) 상세화면에서 회원상세정보로 처리
 			$("#modalTitle").text("회원등록")
 			//form데이터에 데이터가 없어야 함
+			// 등록할 때만, id값이 입력가능하게 처리..
 			$("#frm02 [name=id]").attr("readonly",false)
+			// 속성이 name이 있으면 모두다 default로 설정.
+			// select name input name textarea name
+			// js에서 다중의 선택자로 반복문을 통해서 처리하여야 하지만, 
+			// jquery 다중의 선택자라도 반복문없이 동일 속성값을 지정할 수 있다.
 			$("#frm02 [name]").val("")
 			//버튼 : 등록버튼/닫기  ps) 상세화면에서는 수정/삭제버튼만 있게 처리.
 			// <button id="regBtn">등록</button>
+			// 모달창 기능버튼
+			// 1. 공통 : 닫기(close)
+			// 2. 기능에 따라 
+			//		등록시 : 등록버튼만 보이기
+			//		수정/삭제하는 단일데이터 확인 : 수정/삭제 버튼만
 			$("#uptBtn, #delBtn, #insBtn").hide()
 			$("#regBtn").show()
 		})
@@ -113,6 +124,10 @@
 				
 	});
 	function goPage(id){
+		// 화면전환으로 컨트롤 호출하여 출력하기에 
+		// default로 선언된 버튼이나 타이틀은 변경하지 않아도 된다.
+		// 주의) ajax는 동일화면에서 json데이터를 가져오는 것이기때문에 
+		//	변경 화면UI를 처리하여야 한다.(타이틀, 버튼 등...)
 		location.href="${path}/memberMy.do?id="+id+"&proc=schOne"
 	}	
 	function checkValid(){
@@ -169,6 +184,24 @@
     </thead>	
     <tbody>
     	<c:forEach var="mem" items="${mlist}">
+    	<!-- 
+    	1. 상세화면으로 로딩될 때, 데이터 유형에 따라서 '' 포함되는 경우와 , 
+    		그대로 처리되는 로딩하는 구분하여야 한다.
+    			문자열을 입력할 경우에는 반드시 '',""를 포함해서 넘겨야 한다.
+    	2. goPage(himam) (X)
+    		==> goPage('himan') (O)
+    		
+    		function goPage(empno){
+    			location.href="호출할 controller.do?id="+id
+    		}
+    	3. goPage(7000) (O)
+    		==> goPage('7000') (O)
+    		
+    		function goPage(empno){
+    			location.href="호출할 controller.do?empno="+empno
+    		}
+    	# 
+    	 -->
     	<tr onDblclick="goPage('${mem.id }')"><td>${mem.id}</td><td>${mem.name}</td>
     		<td>${mem.auth}</td><td>${mem.point}</td></tr>
     	</c:forEach>

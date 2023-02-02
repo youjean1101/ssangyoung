@@ -28,7 +28,7 @@ public class A02_DeptController {
 	public String deptAjaxInit() {
 		return "WEB-INF\\views\\a05_mvc\\a04_ajaxList.jsp";
 	}
-	
+	// Get/Post ==> RequestMapping(둘다 가능)
 	@PostMapping("/deptAjax.do")
 	public String deptAjaxInitData(Dept sch, Model d) {
 		d.addAttribute("dlist",service.getDeptList(sch));
@@ -53,9 +53,22 @@ public class A02_DeptController {
 		d.addAttribute("dlist",service.getDeptList(new Dept()));
 		return "pageJsonReport";
 	}
-	
 	@GetMapping("/delDept.do")
 	public String delDept(@RequestParam("deptno") int deptno) {
+		service.delDept(deptno);
+		return "pageJsonReport";
+	}
+	//정답
+	@GetMapping("/updateDept.do")
+	public String updateDept(Dept upt, Model d) {
+		service.uptDept(upt);
+		d.addAttribute("dept",service.getDept(upt.getDeptno()));
+		d.addAttribute("dlist",service.getDeptList(new Dept()));
+		return "pageJsonReport";
+	}
+	
+	@GetMapping("/deleteDept.do")
+	public String deleteDept(@RequestParam("deptno") int deptno) {
 		service.delDept(deptno);
 		return "pageJsonReport";
 	}

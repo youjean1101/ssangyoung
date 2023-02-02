@@ -53,70 +53,58 @@
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/jquery-ui.js"></script>
 <script type="text/javascript">
+	
 	$(document).ready(function(){
-		$("#useInfoBox").css({"background":"white","color":"green"})
+		var hrPosition01 = document.querySelector("#hrposition01")
+		var hrPosition02 = document.querySelector("#hrposition02")
+		var hrPosition03 = document.querySelector("#hrposition03")
 		
-		$("#userInfoBox").click(function(){
-			$(this).css({"background":"white","color":"green"})
-			document.querySelector("#hrposition01").innerHTML = "<hr class='Mypagehr'>"
-			$("#iconID01").attr("src", "${path}/b01_img/userInfoManagerIcon(click).png");
-			
-			$("#payManagerBox").css({"background":"","color":""})
-			document.querySelector("#hrposition02").innerHTML = ""
-			$("#iconID02").attr("src", "${path}/b01_img/payInfoManagerIcon.png");
-			
-			$("#useInfoBox").css({"background":"","color":""})
-			document.querySelector("#hrposition03").innerHTML = ""
-			$("#iconID03").attr("src", "${path}/b01_img/useInfoManagerIcon.png");
-		})
-		
-		$("#payManagerBox").click(function(){
-			$(this).css({"background":"white","color":"green"})
-			document.querySelector("#hrposition02").innerHTML = "<hr class='Mypagehr'>"
-			$("#iconID02").attr("src", "${path}/b01_img/payInfoManagerIcon(click).png");
-			
-			$("#userInfoBox").css({"background":"","color":""})
-			document.querySelector("#hrposition01").innerHTML = ""
+		$(".MypageMenu").click(function(){
+			hrPosition01.innerHTML =""
+			hrPosition02.innerHTML =""
+			hrPosition03.innerHTML =""
+			$(".MypageMenu").css({"background":"","color":""})
 			$("#iconID01").attr("src", "${path}/b01_img/userInfoManagerIcon.png");
-			
-			$("#useInfoBox").css({"background":"","color":""})
-			document.querySelector("#hrposition03").innerHTML = ""
-			$("#iconID03").attr("src", "${path}/b01_img/useInfoManagerIcon.png");
-		})
-		
-		$("#useInfoBox").click(function(){
-			$(this).css({"background":"white","color":"green"})
-			document.querySelector("#hrposition03").innerHTML = "<hr class='Mypagehr'>"
-			$("#iconID03").attr("src", "${path}/b01_img/useInfoManagerIcon(click).png");
-			
-			$("#userInfoBox").css({"background":"","color":""})
-			document.querySelector("#hrposition01").innerHTML = ""
-			$("#iconID01").attr("src", "${path}/b01_img/userInfoManagerIcon.png");
-			
-			$("#payManagerBox").css({"background":"","color":""})
-			document.querySelector("#hrposition02").innerHTML = ""
 			$("#iconID02").attr("src", "${path}/b01_img/payInfoManagerIcon.png");
-		})
+			$("#iconID03").attr("src", "${path}/b01_img/useInfoManagerIcon.png");
+			var clickMenu = ""
+			
+			$(this).css({"background":"white","color":"green"})
+			if($(this).attr("value")=="회원정보"){
+				$("#iconID01").attr("src", "${path}/b01_img/userInfoManagerIcon(click).png");
+				hrPosition01.innerHTML = "<hr class='Mypagehr'>"
+				location.href=""
+				
+			}else if($(this).attr("value")=="결제관리"){
+				$("#iconID02").attr("src", "${path}/b01_img/payInfoManagerIcon(click).png");
+				hrPosition02.innerHTML = "<hr class='Mypagehr'>"
+				location.href="${path}/a41_PayManager/getPayMethod.jsp"
+			}else{
+				$("#iconID03").attr("src", "${path}/b01_img/useInfoManagerIcon(click).png");
+				hrPosition03.innerHTML = "<hr class='Mypagehr'>"
+				location.href=""
+			}
+		}) 
 	});
 </script>
 </head>
 <body>
 	<div id="idposition">test님</div><!-- 로그인한 아이디 출력 -->
 	<box id="greyBox">
-		<div id="userInfoBox" class="MypageMenu">
+		<div id="userInfoBox" class="MypageMenu" value="회원정보">
 			<img id="iconID01" src="${path}\b01_img\userInfoManagerIcon.png"><br>
 			회원정보 관리
-			<div id="hrposition01"></div>
+			<div id="hrposition01" class="hrPosition"></div>
 		</div>
-		<div id="payManagerBox" class="MypageMenu">
+		<div id="payManagerBox" class="MypageMenu" value="결제관리">
 			<img id="iconID02" src="${path}\b01_img\payInfoManagerIcon.png"><br>
 			결제 관리
-			<div id="hrposition02"></div>
+			<div id="hrposition02" class="hrPosition"></div>
 		</div>
-		<div id="useInfoBox" class="MypageMenu">
-			<img id="iconID03" src="${path}\b01_img\useInfoManagerIcon(click).png"><br>
+		<div id="useInfoBox" class="MypageMenu" value="이용정보관리">
+			<img id="iconID03" src="${path}\b01_img\useInfoManagerIcon.png"><br>
 			이용정보 관리
-			<div id="hrposition03"><hr class="Mypagehr"></div>
+			<div id="hrposition03" class="hrPosition"></div>
 		</div>
 	</box>
 </body>

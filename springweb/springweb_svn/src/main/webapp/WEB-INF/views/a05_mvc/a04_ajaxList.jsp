@@ -31,6 +31,8 @@
 		<%-- 
 		
 		--%>	
+		// 초기에 전체 데이터가 로딩된 상황에서 처리
+		search();
 		$("#schBtn").click(function(){
 			search();
 		});
@@ -45,11 +47,17 @@
 		$.ajax({
 			url:"${path}/deptAjax.do",
 			type:"post",
-			data:$("#frm01").serialize(),
-			dataType:"json",
+			data:$("#frm01").serialize(), // name="k" value="v" ==> &k==v
+			dataType:"json", // html, text default text
 			success:function(data){
+				// data : dataType이 설정되어 있지 않으면 text
+				// 객체
+				// d.addAttribute("dlist", @@@@)
+				console.log(typeof(data)) // 문자열 string, object
 				var dlist = data.dlist
 				var show=""
+				// object일 때 가능..
+				// dlist.forEach(function(dept,idx){})
 				$(dlist).each(function(idx,dept){
 					console.log(dept)
 					show+="<tr ondblclick='goPage("+dept.deptno+")'>"
@@ -73,6 +81,9 @@
 			data:"deptno="+deptno,
 			dataType:"json",
 			success:function(data){
+				// d.addAttribute("dept",
+				// data.모델명
+				// {dept:{deptno:10,...}}
 				var dept=data.dept
 				$("#modal01").click() // 모달 로딩
 				$("#frm02 [name=deptno]").val(dept.deptno)

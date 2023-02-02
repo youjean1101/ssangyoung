@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	/*  
+	[1단계:확인] 2. 양방향 디렉티브를 활용하여 타석과 안타를 입력하여 타율이 출력되게 하세요
+
+	[2단계:확인] 3. 양방향 디렉티브를 활용하여 임의의 구구단 문제의 정답을 입력했을 때, 정답인지 여부를 출력되게 하세요
+	 5 X 7 = [정답입력]  정답/오답
+	
+	[1단계:확인] 4. v-if 조건문을 활용하여 입력한 아이디와 패스워드가 맞으면 로그인성공/로그인실패/아이디와패스워드를 입력하세요로
+	               구분하여 출력하세요.
+	
+	[1단계:확인] 6. v-for의 객체단위 사용을 이용하여 모델명으로 컴퓨터(com01), 모델객체로 제조사, 가격, CPU사양으로 속성으로 설정하여
+	               테이블에 속성 : 속성값 형식으로 출력하세요.
+	
+	[1단계:확인] 7. v-for와 단일형태 배열 데이터(2호선 지역철역명)을 선언하고, ol의 리스트로 출력하세요.
+	
+	[1단계:확인] 8. v-for와 객체형 배열데이터(프리미어리그팀-팀명,승,무,패,승점)을 선언하고, 테이블로 출력하세요.
+	*/
+	$(document).ready(function(){
+		var random1 = Math.floor(Math.random()*10);
+		var random2 = Math.floor(Math.random()*10);
+		var vm = new Vue({
+			el:".container",
+			data:{safety:0,bat:0,
+					num01:random1,num02:random2,answer:0,
+					id:"himan",pass:"1234", inputID:"",inputPASS:"",
+					com01:{vendor:"lenovo",price:2000000,CPU:"3.30 GHz"},
+					subways:["홍대입구역","신림","영등포","성수","잠실"],
+					epls:[{team:"아스널",win:16,tie:2,lose:1,points:50},
+							{team:"맨시티",win:14,tie:3,lose:3,points:45},
+							{team:"뉴캐슬",win:10,tie:9,lose:1,points:39}]
+			}
+		});	
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<!--2. 양방향 디렉티브를 활용하여 타석과 안타를 입력하여 타율이 출력되게 하세요  -->
+	<div class="jumbotron text-center">
+	  <h2 >타율:{{safety/bat}}</h2>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="safety" class="form-control mr-sm-2" placeholder="안타" />
+	    <input v-model="bat" class="form-control mr-sm-2" placeholder="타석" />
+	    <button class="btn btn-info" type="submit">Search</button>
+ 	</nav>
+	</form>
+	<!--3. 양방향 디렉티브를 활용하여 임의의 구구단 문제의 정답을 입력했을 때, 정답인지 여부를 출력되게 하세요
+	 5 X 7 = [정답입력]  정답/오답  -->
+	<div class="jumbotron text-center">
+		<h2 v-if="answer==num01*num02">정답</h2>
+		<h2 v-else>오답</h2>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="num01" readonly class="form-control mr-sm-2" placeholder="임의수1" />
+	    <input v-model="num02" readonly class="form-control mr-sm-2" placeholder="임의수2" />
+	    <input v-model="answer" class="form-control mr-sm-2" placeholder="정답" />
+ 	</nav>
+	</form>
+	<!--4. v-if 조건문을 활용하여 입력한 아이디와 패스워드가 맞으면 로그인성공/로그인실패/아이디와패스워드를 입력하세요로
+	               구분하여 출력하세요.  -->
+	<div class="jumbotron text-center">
+		<h2 v-if="inputID==id && inputPASS==pass">로그인성공</h2>
+		<h2 v-else-if="inputID!=id || inputPASS!=pass">로그인실패</h2>
+		<h2 v-else>아이디와 패스워드를 입력하세요.</h2>
+	</div>
+	<form id="frm01" class="form-inline"  method="post" >
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark" >
+	    <input v-model="inputID" class="form-control mr-sm-2" placeholder="아이디" />
+	    <input v-model="inputPASS" class="form-control mr-sm-2" placeholder="패스워드" />
+ 	</nav>
+	</form>
+	<!--6. v-for의 객체단위 사용을 이용하여 모델명으로 컴퓨터(com01), 모델객체로 제조사, 가격, CPU사양으로 속성으로 설정하여
+	               테이블에 속성 : 속성값 형식으로 출력하세요.  -->
+   <table class="table table-hover table-striped">
+    <thead>
+      <tr class="table-success text-center">
+        <th>속성</th>
+        <th>속성값</th>
+      </tr>
+    </thead>	
+    <tbody >
+    	<tr v-for="(val,prop) in com01">
+    		<td v-text="prop"></td>
+    		<td>{{val}}</td></tr>
+    </tbody>
+	</table>    
+	<!--v-for와 단일형태 배열 데이터(2호선 지역철역명)을 선언하고, ol의 리스트로 출력하세요.  -->   
+	<h2>2호선 지하철역명</h2>
+	<ol>
+		<li v-for="(subway,idx) in subways">{{subway}}</li>
+	</ol>
+	<!--8. v-for와 객체형 배열데이터(프리미어리그팀-팀명,승,무,패,승점)을 선언하고, 테이블로 출력하세요.  -->
+	<table class="table table-hover table-striped">
+    <thead>
+      <tr class="table-success text-center">
+        <th>팀명</th>
+        <th>승</th>
+        <th>무</th>
+        <th>패</th>
+        <th>승점</th>
+      </tr>
+    </thead>	
+    <tbody >
+    	<tr v-for="(epl,idx) in epls">
+    		<td>{{epl.team}}</td>
+    		<td>{{epl.win}}</td>
+    		<td>{{epl.tie}}</td>
+    		<td>{{epl.lose}}</td>
+    		<td>{{epl.points}}</td></tr>
+    </tbody>
+	</table>    
+</div>
+</body>
+</html>

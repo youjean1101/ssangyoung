@@ -30,5 +30,17 @@
 	<delete id="delDept" parameterType="int">
 		DELETE FROM dept100 WHERE deptno=#{deptno}
 	</delete>
+	<!-- 정답  -->
+	<update id="updateDept" parameterType="dept">
+		update dept100
+			set dname=#{ename},
+				loc=#{loc}
+		where deptno=#{deptno}
+	</update>
+	
+	<delete id="deleteDept" parameterType="int">
+		delete from dept100
+		where deptno=#{deptno}
+	</delete>
 </mapper>		
 		

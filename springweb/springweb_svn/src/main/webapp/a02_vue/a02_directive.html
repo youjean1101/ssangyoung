@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+   td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="/springweb/a00_com/vue.js"></script>
+<script type="text/javascript">
+/*
+ # 기본 디렉티브
+ 1. 단방향 디렉티브
+ 	1) {{모델명}} : 모델데이터를 처리하는 기본 형식
+ 		출력형식 태그에 바로 사용한다. ex) <h2>{{모델명}}</h2>
+ 	2) v-text : 모델데이터를 태그의 속성으로 선언하여 출력할 데이터를 
+ 		처리하는 방식. html랜더링(해석)하지 않는다.
+ 		ex) <h2 v-text="모델명"></h2>
+ 		ex) 물건명, 가격을 모델데이터로 선언하고 h3, h3에 v-text속성으로 출력되게 하세요.
+ 	3) v-html : 태그가 포함된 모델데이터를 html로 랜더링(해석)해서 출력할 때, 속성으로 선언한다.
+ 	4) v-bind : 모델데이터를 요소객체의 속성값으로 할당하여 처리할 때, 활용하는 변수형식
+ 			<요소객체 v-bind:속성="모델명"
+ 			<요소객체 :속성="모델명"
+ 			
+ 		ex) <h2 v-bind:align="모델명">데이터</h2>
+ 	
+ */
+   $(document).ready(function(){
+      var vm = new Vue({
+         el:".container",
+         data: {msg:"뷰 디렉티브 연습", name:"홍길동",
+        	 	pname:"사과", price:3000,
+        	 	msg2:"<h2>반가워요</h2>",
+        	 	align01:"right",
+        	 	align02:"left",
+        	 	img01:"apple.jpg"}
+      }) // ex) 이미지 파일을 가져와서 해당파일명을 img01모델명으로 
+      //		설정해서 화면에 이미지가 보이게 처리하세요.
+   });
+</script>
+</head>
+<body>
+
+<div class="container">
+   <div class="jumbotron text-center">
+   		<h2 v-bind:align="align01">안녕하세요.</h2>
+   		<h2 :align="align02">안녕하세요.</h2>
+     <h2 >{{msg}}</h2>
+     <h2 v-text="name"></h2>
+     <h3 v-text="pname"></h3>
+     <h3 v-text="price"></h3>
+     <p v-text="msg2"></p>
+     <p v-html="msg2"></p>
+     <img v-bind:src="img01" />
+   </div>
+   <form id="frm01" class="form-inline"  method="post">
+     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+       <input class="form-control mr-sm-2" placeholder="제목" />
+       <input class="form-control mr-sm-2" placeholder="내용" />
+       <button class="btn btn-info" type="submit">Search</button>
+    </nav>
+   </form>
+   <table class="table table-hover table-striped">
+      <col width="10%">
+      <col width="50%">
+      <col width="15%">
+      <col width="15%">
+      <col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>   
+    <tbody>
+       <tr><td></td><td></td><td></td><td></td><td></td></tr>
+       <tr><td></td><td></td><td></td><td></td><td></td></tr>
+       <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+   </table>       
+</div>
+</body>
+</html>

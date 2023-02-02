@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		/*
+		# v-if 조건문 처리
+		1. 요소객체 안에 모델데이터의 값에 의해 v-if 조건 내용에 따라,
+			true일 때만 보이게 하고 그렇지 않을 떄는 보이지 않게 처리하는 것을 말한다.
+		2. 화면에 랜더링하여 보일 조건을 선언하게 할 수 있다. 조건에 따라서 화면에 로딩하여 랜더링한다.
+			==> 실시간으로 로딩 후, 보이기/보이지 않기를 처리할 떄는 v-show를 활용한다.
+				자주 변경되어 처리되는 부분은 v-show를 활용한다.
+				
+		3. 형식
+			v-if="모델명조건1"
+			v-else-if="모델명조건2"
+			v-else="위조건 이외"
+		*/
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"조건문 처리",point:0,price:0,cnt:0,img01:"apple.jpg"}
+		});	
+	});
+	// ex) 물건가격과 갯수도 구매 총액을 기준으로 고객등급 출력
+	//		1000000 이상 골드, 500000 ~1000000미만 실버,200000 ~500000미만 브런즈
+	//		200000미만 일반	기타 물건가격과 갯수는 0이상 숫자로 입력
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 v-if="price*cnt>=0">구매총비용:{{price*cnt}}</h2>
+	  <h2>고객등급</h2>
+	  <h3 v-if="price*cnt>=1000000">골드</h3>
+	  <img :src="img01" v-show="price*cnt>=1000000"/>
+	  
+	  <h3 v-else-if="price*cnt>=500000 && price*cnt<1000000">실버</h3>
+	  <h3 v-else-if="price*cnt>=200000 && price*cnt<500000">브런즈</h3>
+	  <h3 v-else-if="price*cnt<200000">일반</h3>
+	  <h3 v-else>물건가격과 갯수는 0이상 숫자로 입력</h3>
+	</div>
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="price" class="form-control mr-sm-2" placeholder="물건가격입력" />
+	    <input v-model="cnt" class="form-control mr-sm-2" placeholder="물건갯수입력" />
+ 	</nav>
+ 	<div class="jumbotron text-center">
+	  <h2>{{msg}}</h2>
+	  <h3 v-if="point>=80">합격</h3>
+	  <h3 v-else-if="point>=0">불합격</h3>
+	  <h3 v-else>점수는 0이상 숫자로 입력</h3>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input  v-model="point" class="form-control mr-sm-2" placeholder="점수입력" />
+	    <button class="btn btn-info" type="submit">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

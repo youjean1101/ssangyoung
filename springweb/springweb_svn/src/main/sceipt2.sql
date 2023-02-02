@@ -7,3 +7,4 @@ SELECT * FROM member200
 WHERE id='himan';
 
 SELECT * FROM salgrade WHERE grade=1;
+

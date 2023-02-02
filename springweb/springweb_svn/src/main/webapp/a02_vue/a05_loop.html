@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" > -->
+<style>
+	td{text-align:center;}
+	.orange{background-color:orange;}
+	.pink{background-color:pink;}
+	.yellow{background-color:yellow;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	/*
+	# v-for를 활용한 vue의 반복문 수행..
+	1. 모델데이터에 따라서 반복문의 데이터를 처리할 수 있다.
+		1) 객체형
+			{속성:속성값, ....}
+			<요소객체 v-for="(속성값,속성) in 객체"
+				{{속성}}{{속성값}}
+		2) 배열형
+			- 단일데이터:[데이터1,데이터2....]
+			<요소객체 v-for="(단위데이터, index번호) in 배열형데이터">
+				{{index번호}} {{단위데이터}}
+			- 객체형데이터:[{},{},{}]
+			<요소객체 v-for="(단위객체, index번호) in 객체형배열모델">
+				{{index번호}} {{단위객체.속성1}} {{단위객체.속성2}}
+	*/
+
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"반복문 처리",p01:{name:"홍길동",age:25,loc:"서울"},
+					player01:{name:"손흥민",team:"토트넘",score:3},
+					fruits:["사과","바나나","딸기"],
+					stus:[{kor:50,name:"홍길동"},{kor:60,name:"마길동"},{kor:70,name:"이길동"},
+							{kor:100,name:"김길동"},{kor:90,name:"남궁길동"}],
+					names:["홍길동","김길동","마길동","오길동","김길동"],
+					kors:[70,80,90,85,100],
+					empList:[
+						{empno:7000,ename:"홍길동",job:"사원",sal:3500},
+						{empno:7001,ename:"마길동",job:"대리",sal:4500},
+						{empno:7002,ename:"오길동",job:"과장",sal:5500}
+					],
+					deptList:[
+						{deptno:10,dname:"개발",loc:"서울",color:"yellow"},
+						{deptno:20,dname:"기획",loc:"인천",color:"orange"},
+						{deptno:30,dname:"인사",loc:"경기도",color:"pink"}
+					]
+			}
+		});	
+	});
+	/*
+	<tr v-for="(emp, idx) in empList">
+		<td>{{emp.empno}}</td>
+		<td>{{emp.ename}}</td>
+		<td>{{emp.job}}</td>
+		<td>{{emp.sal}}</td></tr>
+	
+	ex) 부서정보를 deptList로 선언하고, 테이블에 출력하세요.
+	
+	*/
+	
+	// ex) 5명의 국어점수, 이름을 배열을 모델데이터로 선언하고,
+	//		반복문을 통해 테이블에 출력하세요.	
+	//		번호	이름	성적
+	//		1	@@@	@@@
+	
+	// ex) 선수객체로 선수명, 소속팀, 성적으로 속성으로 선언하고, 해당 객체의 속성과 속성값을 출력하세요.
+	/*
+	css
+	orange{background-color:orange;}
+	pink{background-color:pink;}
+	yellow{background-color:yellow;}
+	모델데이터
+	deptList:[
+		{deptno:10,dname:"개발",loc:"서울",color:"yellow"},
+		{deptno:20,dname:"기획",loc:"인천",color:"orange"},
+		{deptno:30,dname:"인사",loc:"경기도",color:"pink"}
+	]
+	*/		
+</script>
+</head>
+<body>
+<div class="container">
+	<table class="table table-hover table-striped">
+    <thead>
+      <tr class="table-success text-center">
+        <th>사원번호</th>
+        <th>사원명</th>
+        <th>직책명</th>
+        <th>급여</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr v-for="(emp, idx) in empList">
+		<td>{{emp.empno}}</td>
+		<td>{{emp.ename}}</td>
+		<td>{{emp.job}}</td>
+		<td>{{emp.sal}}</td></tr>
+    </tbody>
+	</table> 
+	<table class="table table-hover table-striped">
+    <thead>
+      <tr class="table-success text-center">
+        <th>부서번호</th>
+        <th>부서명</th>
+        <th>지역</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr v-for="(dept, idx) in deptList" v-bind:class="dept.color">
+		<td>{{dept.deptno}}</td>
+		<td>{{dept.dname}}</td>
+		<td>{{dept.loc}}</td></tr>
+    </tbody>
+	</table> 
+	
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	  <h3 v-for="(fruit, idx) in fruits">{{idx+1}} ) {{fruit}}</h3>
+	  <h3 v-for="(val,prop) in p01">{{prop}}:{{val}}</h3>
+	  <h3 v-for="(val,prop) in player01">{{prop}}:{{val}}</h3>
+	</div>
+	<table class="table table-hover table-striped">
+		<thead>
+			<tr v-for="(val,prop) in player01" class="table-success text-center">
+				<th v-text="prop"></th><td>{{val}}</td>
+			</tr>
+		</thead>
+	</table>
+	<table class="table table-hover table-striped">
+		<thead>
+			<tr v-for="(stu, idx) in stus" class="table-success text-center">
+				<th>{{idx+1}}</th><td >{{stu.kor}}</td>
+					<td>{{stu.name}}</td>
+			</tr>
+		</thead>
+	</table>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input class="form-control mr-sm-2" placeholder="제목" />
+	    <input class="form-control mr-sm-2" placeholder="내용" />
+	    <button class="btn btn-info" type="submit">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>이름</th>
+        <th>국어</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr v-for="(name, idx) in names">
+    		<td>{{idx+1}}</td>
+    		<td v-text="name"></td>
+    		<td v-text="kors[idx]"></td>
+    	</tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

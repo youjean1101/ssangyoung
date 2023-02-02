@@ -1,0 +1,44 @@
+# 웹 개발 환경 설정
+1. network환경
+	서버에 고정 ip//도메인(https://223.26.137.39/svn/prj01)
+	
+	클라이언트 ====>	서버 
+					고정 ip/git
+					svn서버(443)
+					tomcat웹서버(8080/7080)
+						http://223.26.137.39:7080/springweb/memberMy.do
+					DB서버(1521)
+	네트웍으로 ip	===> port	==> 서버의 식별자로 들어가서 서버를 사용
+	
+	
+2. 처리한 내용
+	1) 소스공유 : svn/git
+	2) 웹서버 : tomcat
+	3) 배포 : source ==> tomcat
+		서버용 eclipse에서 svn/git 연동해서 처리
+	4) DB서버 :
+		- 서버 설치 : 계정생성, table생성, 데이터입력, sql 작성
+		- 1521 포트를 방화벽에서 로딩
+	5) 클라이언트 테스트
+		svn
+		브라우저(웹서버)
+		http://고정아이피주소:5080/project01/index.html
+		고정아이피주소 ==> 도메인 기관 kb.co.kr mapping
+			http://kb.co.kr/project01/index.html
+			
+		DB서버
+3. 서버 처리(서버 PC)
+	1) svn 서버 만들기
+		visual svn server
+		다운로드 
+		실행..
+	2) web 서버 만들기(서버PC에)
+		c:\a02_javaexp
+			eclipse
+			workspace
+		svn이 설치된 eclipse에서 DBeaver
+		기존에 있는 eclipse의 DBeaverfh 프로젝트 공통 DB사용..
+		프로젝트 DB연결은 기존 eclipse에서 처리하든지, sql develop를 활용
+		
+	
+		

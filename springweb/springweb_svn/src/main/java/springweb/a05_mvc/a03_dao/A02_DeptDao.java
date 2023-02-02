@@ -11,4 +11,7 @@ public interface A02_DeptDao {
 	
 	public void uptDept(Dept upt);
 	public void delDept(int deptno);
+	//정답
+	public void updateDept(Dept upt);
+	public void deleteDept(int deptno);
 }

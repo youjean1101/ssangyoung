@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+   td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="/springweb/a00_com/vue.js"></script>
+<script type="text/javascript">
+/*
+ # 양방향 directive
+ 1. 입력요소객체에(input, select, textarea..)에 속성으로 v-model로
+ 	속성값을 모델명과 연결해놓으면 이 모델을 호출하는 요소객체들을 입력값이 변경됨과 
+ 	동시에 해당 데이터들이 변경되어 처리된다.
+ 2. 구조
+ 	입력요소객체 v-model="모델명1"
+ 	ex) <input v-model="name" />
+ 	{{모델명1}}
+ 	<h2 v-text="모델명1"></h2>
+ 	<h2 v-html="모델명2"></h2>
+ 	ex) 
+ 	<h2>{{name}}</h2>
+ 	<h2 v-text="name"></h2>
+ 	<h2 v-html="name"></h2>
+ 	<h2 v-text="name"></h2>
+ 
+ */
+ 
+	$(document).ready(function(){
+		//$("h2").text("양방향 디렉티브")
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"양방향 directive", data01:"", num01:0,num02:0,
+					pname:"",price:0,cnt:0,align01:"center"}			
+		});
+		
+		// ex) 물건명과 가격 갯수를 입력하여 해당 물건의 구매 정보(물건,총비용)을 출력되게 하세요.
+		
+		
+	});
+</script>
+</head>
+<body>
+	 <div class="container">
+	<div class="jumbotron text-center">
+	  <h2>{{msg}}</h2>
+	  <h3>{{data01}}</h3>
+	  <h3 v-text="data01"></h3>
+	  <h3>{{num01}}+{{num02}}={{Number(num01)+Number(num02)}}</h3>
+	  <h2>구매정보</h2>
+	  <h3>구매물건:{{pname}}, 총비용:{{Number(price)*Number(cnt)}}</h3>
+      <h4 v-bind:align="align01">hello</h4>
+	  <select v-model="align01">
+	     <option value="left">왼쪽</option>
+	     <option value="right">오른쪽</option>
+	     <option value="center">중앙<option>
+	  </select>
+	</div>
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="pname" class="form-control mr-sm-2" placeholder="물건명" />
+	    <input v-model="price" class="form-control mr-sm-2" placeholder="가격" />
+	    <input v-model="cnt" class="form-control mr-sm-2" placeholder="갯수" />
+	    <button class="btn btn-info" type="submit">Search</button>
+ 	</nav>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="data01" class="form-control mr-sm-2" placeholder="양방향 데이터 처리" />
+	    <input v-model="num01" class="form-control mr-sm-2" placeholder="첫번쨰 숫자" />
+	    <input v-model="num02" class="form-control mr-sm-2" placeholder="두번째 숫자" />
+	    <button class="btn btn-info" type="submit">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

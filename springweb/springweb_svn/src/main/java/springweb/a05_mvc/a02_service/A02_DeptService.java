@@ -33,4 +33,11 @@ public class A02_DeptService {
 	public void delDept(int deptno) {
 		dao.delDept(deptno);
 	}
+	//정답
+	public void updateDept(Dept upt) {
+		dao.updateDept(upt);
+	}
+	public void deleteDept(int deptno) {
+		dao.deleteDept(deptno);
+	}
 }

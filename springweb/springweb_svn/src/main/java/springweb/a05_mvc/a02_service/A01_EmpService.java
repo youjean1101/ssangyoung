@@ -22,7 +22,6 @@ public class A01_EmpService {
 		if(sch.getToSal()==0) sch.setToSal(9999);
 		return dao.getEmpList(sch);
 	}
-	
 	public List<Dept> getDeptComb(){
 		return dao.getDeptComb();
 	}
