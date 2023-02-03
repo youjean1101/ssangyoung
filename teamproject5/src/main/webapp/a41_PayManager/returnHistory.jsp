@@ -28,10 +28,6 @@
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	// 마이페이지 공통 클릭상태 유지
-	$("#iconID02").attr("src", "${path}/b01_img/payInfoManagerIcon(click).png");
-	document.querySelector("#hrposition02").innerHTML = "<hr class='Mypagehr'>"
-	$("#payManagerBox").css({"background":"white","color":"green"})
 	
 	// 마이페이지 결제관리 공통 클릭상태 유지
 	$("#returnhistory").css({"background":"navy","color":"white"})

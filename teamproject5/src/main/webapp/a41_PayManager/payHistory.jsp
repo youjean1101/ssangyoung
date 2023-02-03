@@ -18,7 +18,58 @@
 <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
 <link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
 <style>
-	td{text-align:center;}
+	#payDateindexTab{
+		width:70%;
+		margin-left:15%;
+		margin-top:3%;
+		height:120px;
+		background:lightgrey;
+		text-align:center;
+	}
+	#payDateindexTab th{
+		width:60%;
+	}
+	#payDateindexTab td{
+		width:10%;
+		padding-right:5px;
+	}
+	#payDateindexTab input[type="button"]{
+		width:100px;
+		height:35px;
+		border:1px solid navy;
+		background:white;
+		color:navy;
+	}
+	#payDateindexTab input[value="검색"]{
+		width:200px;
+		height:40px;
+		border:none;
+		background:navy;
+		color:white;
+	}
+	#payHistoryDataFra{
+		width:70%;
+		margin-left:15%;
+		margin-top:2%;
+	}
+	#usePayDateDetailTab{
+		border:1px solid black;
+		width:70%;
+		margin-left:15%;
+		margin-top:2%;
+		text-align:center;
+	}
+	#usePayDateDetailTab th{
+		border:1px solid black;
+		background:rgb(219, 217, 217);
+		width:10%;
+		height:35px;
+	}
+	#usePayDateDetailTab td{
+		border:1px solid black;
+		height:50px;
+		
+	}
 </style>
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
@@ -28,11 +79,6 @@
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	// 마이페이지 공통 클릭상태 유지
-	$("#iconID02").attr("src", "${path}/b01_img/payInfoManagerIcon(click).png");
-	document.querySelector("#hrposition02").innerHTML = "<hr class='Mypagehr'>"
-	$("#payManagerBox").css({"background":"white","color":"green"})
-	
 	// 마이페이지 결제관리 공통 클릭상태 유지
 	$("#payhistory").css({"background":"navy","color":"white"})
 	
@@ -44,6 +90,36 @@ $(document).ready(function(){
 	<jsp:include page="${path}/a00_main/a00_header.jsp"></jsp:include>
 	<jsp:include page="${path}/a00_main/a07_mypagecommon.jsp"></jsp:include>
 	<jsp:include page="${path}/a00_main/a09_myPagePayManager.jsp"></jsp:include>
-	
+	<table id="payDateindexTab">
+		<tr><th>
+			<input type="radio"/>전체
+			<input type="radio"/>신용/체크카드
+			<input type="radio"/>휴대폰 결제
+			</th>
+			<td><input value="1주일" type="button" /></td>
+			<td><input value="1개월" type="button" /></td>
+			<td><input value="3개월" type="button" /></td>
+			<td><input value="6개월" type="button" /></td>
+		</tr>
+		<tr><th>
+			<input type="date"> ~ <input type="date">
+			</th>
+			<td></td>
+			<td></td>
+			<td colspan="2"><input value="검색" type="button" /></td>
+		</tr>
+	</table>
+	<iframe id="payHistoryDataFra" src=""></iframe>
+	<table id="usePayDateDetailTab">
+		<tr><th rowspan="2" colspan="2">구분</th><th colspan="2">사용시</th><th rowspan="2">미사용시</th></tr>
+		<tr><th>이용개시일로부터 7일이내</th><th>이용개시일로부터 7일초과</th></tr>
+		<tr><td rowspan="4">정기권</td><td>365일권</td><td rowspan="3">7일권 이용요금 공제</td><td rowspan="2">환불 요청일까지의 월별 이용요금 공제(사용월수 x 30일권 이용요금)</td><td rowspan="5">전액환불</td></tr>
+		<tr><td>180일권</td></tr>
+		<tr><td>30일권</td><td rowspan="2">환불 불가</td></tr>
+		<tr><td>7일권</td><td>이용개시일로부터 <br>2일이내 일일권 이용요금 공제</td></tr>
+		<tr><td colspan="2">일일권</td><td colspan="2">환불 불가</td></tr>
+		<tr><td colspan="5" style="color:red;">※ 이용권 사용한 경우(이용권 개시일 기준)<br>
+			1일권 : 환불불가 , 7일권 : 2일이내, 30일권 : 7일이내, 180일권 : 60일이내, 365일권은 150일이내 신청해야만 환불이 가능합니다.</td></tr>
+	</table>
 </body>
 </html>

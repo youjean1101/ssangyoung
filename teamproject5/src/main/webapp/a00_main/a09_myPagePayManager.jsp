@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
 <link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
 <style>
+	
 	#payManagerCommonTab{
 		backgroung:white;
 		border:2px solid navy;
@@ -46,11 +47,16 @@
 			$("#payManagerCommonTab td").css({"background":"","color":""})
 			$(this).css({"background":"navy","color":"white"})
 		})
+		// 마이페이지 공통 클릭상태 유지
+		$("#iconID02").attr("src", "${path}/b01_img/payInfoManagerIcon(click).png");
+		document.querySelector("#hrposition02").innerHTML = "<hr class='Mypagehr'>"
+		$("#payManagerBox").css({"background":"white","color":"green"})
 	});
 </script>
 </head>
 
 <body>
+	
 	<table id="payManagerCommonTab">
 		<tr>
 			<td id="payhistory" onclick="location.href='${path}/a41_PayManager/payHistory.jsp'">결제내역</td>

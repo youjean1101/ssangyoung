@@ -342,8 +342,8 @@ function TIMER(){
         }     
     },1000); //1초마다 
 }
-/* setTimeout(function(){
+setTimeout(function(){
     clearInterval(PlAYTIME);
-},300000);//3분이 되면 타이머를 삭제한다. */
+},300000);//3분이 되면 타이머를 삭제한다.
 </script>
 </html>

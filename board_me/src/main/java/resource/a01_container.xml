@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:task="http://www.springframework.org/schema/task" 
+   xmlns:aop="http://www.springframework.org/schema/aop" 
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xmlns:c="http://www.springframework.org/schema/c"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:util="http://www.springframework.org/schema/util"
+   xmlns:websocket="http://www.springframework.org/schema/websocket"
+   xmlns:sec="http://www.springframework.org/schema/security"
+   xmlns:tx="http://www.springframework.org/schema/tx" 
+    
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd       
+        http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd     
+        http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/websocket
+      http://www.springframework.org/schema/websocket/spring-websocket.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd   
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd   
+      ">
+   <!-- 자동으로 특정 패키지에 컨테이너에 할당할 클래스 설정 
+   1. springweb하위 패키지에
+   2. annotation으로 Controller, Service, Repository로 선언된 것은
+      클래스를 호출하여 객체로 생성되게 처리.
+   -->
+   <context:component-scan base-package="board">
+      <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+      <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+      <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+   </context:component-scan>
+   <context:property-placeholder location="classpath:resource/a00_config"/>
+   <!-- 
+   # DB연결처리
+   1. dbcp(database connection pool) 로 연결
+   org.apache.commons.dbcp.BasicDataSource객체를 통해서 db연결
+    -->
+   <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+      destroy-method="close">
+       <!-- 
+       jdbc.driver=oracle.jdbc.driver.OracleDriver
+      jdbc.url=jdbc:oracle:thin:@localhost:1521:xe
+      jdbc.user=scott
+      jdbc.pass=tiger
+        -->
+      <property name="driverClassName" value="${jdbc.driver}"/>   
+      <property name="url" value="${jdbc.url}"/>   
+      <property name="username" value="${jdbc.user}"/>   
+      <property name="password" value="${jdbc.pass}"/>   
+   </bean>    
+
+   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+      <property name="dataSource" ref="dataSource"/>
+      <property name="configLocation" value="classpath:resource/a02_mybatis.xml"/>
+   </bean>
+
+   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+      <property name="basePackage" value="board"/>
+   </bean>    
+      
+   <!--    
+   # 컨트롤단에서 마지막 리턴되는 값이 bean id값과 동일하면 해당 객체로 view를 처리해주고(1순위),
+     그 외에는 jsp/html로 경로를 찾아가서 화면을 로딩한다.
+   
+   1. viewResolver 1순위 선언 : bean으로 선언되어 있으면 해당 view를 찾게 처리
+    -->   
+   <bean id="btnViewResolver" 
+   class="org.springframework.web.servlet.view.BeanNameViewResolver">
+      <property name="order" value="0"/>      
+   </bean>
+   <!-- 
+   2. 위에 선언되 viewer이외는 모두 html/jsp 뷰..  
+    -->
+   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+     <property name="order" value="1"/>
+     <property name="prefix" value="/WEB-INF/view/"/> <!-- 접두어 -->
+     <property name="suffix" value=".jsp"/> <!-- 접미어 -->
+   </bean>
+   <!-- 
+   return "/WEB-INF/view/a01_boardList.jsp"
+   ==> 간단하게 설정
+   return "a01_boardList"
+    -->
+   <!-- 
+   위에서 1순위 채택하는 json viewer
+    -->
+    <bean id="pageJsonReport" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+      <property name="contentType" value="text/html;charset=utf-8"/>
+    </bean>
+</beans>

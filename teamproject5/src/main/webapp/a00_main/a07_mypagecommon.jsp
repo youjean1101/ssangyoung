@@ -12,8 +12,11 @@
 <meta charset="UTF-8">
 <title>마이페이지 공통부분</title>
 <style>
-	#idposition{
+	#mypageCommonHr{
 		margin-top:1%;
+	}
+	#idposition{
+		margin-top:2%;
 		margin-left:2%;
 	}
 	#greyBox{
@@ -22,7 +25,7 @@
 		width:100%;
 		height:70px;
 		margin-top:1%;
-		position:fixed;
+		position:absolute;
 		left:0%;
 	}
 	#greyBox .MypageMenu{
@@ -48,6 +51,7 @@
 	}
 	.Mypagehr{
 		border:solid 3px green;
+		width:90%;
 	}
 </style>
 <script src="${path}/a00_com/jquery.min.js"></script>
@@ -89,6 +93,7 @@
 </script>
 </head>
 <body>
+	<hr id="mypageCommonHr">
 	<div id="idposition">test님</div><!-- 로그인한 아이디 출력 -->
 	<box id="greyBox">
 		<div id="userInfoBox" class="MypageMenu" value="회원정보">
