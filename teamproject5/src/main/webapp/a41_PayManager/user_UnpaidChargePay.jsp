@@ -78,6 +78,10 @@
 		margin-left:15%;
 		margin-top:2%;
 	}
+	#payMethodSelTab input[type='radio']{
+		width:20px;
+		height:20px;
+	}
 </style>
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
@@ -106,10 +110,11 @@ $(document).ready(function(){
 	</div>
 	<table id="payMethodSelTab">
 		<tr><th>결제수단</th>
-			<td><input type="radio"/>신용/체크카드 &nbsp &nbsp &nbsp      
-				<input type="radio"/>휴대폰결제</td></tr>
+			<td><input type="radio" name="payMethod" value="card" checked/> 신용/체크카드 &nbsp &nbsp &nbsp      
+				<input type="radio" name="payMethod" value="phone"/> 휴대폰결제 &nbsp &nbsp &nbsp   
+				<input type="radio" name="payMethod" value="getCard"/> 등록된카드</td></tr>
 		<tr><th>미납금액</th><td>원</td></tr>
-		<tr><th>미납내역</th><td>초과이용0건</td></tr>
+		<tr><th>미납내역</th><td>초과이용  0 건</td></tr>
 	</table>
 	<table id="payMoneyTab">
 		<tr><th>결제금액 &nbsp &nbsp &nbsp 원</th></tr>

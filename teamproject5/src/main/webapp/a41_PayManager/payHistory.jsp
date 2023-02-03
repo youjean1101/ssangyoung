@@ -40,6 +40,10 @@
 		background:white;
 		color:navy;
 	}
+	#payDateindexTab input[type="button"]:hover{
+		background:navy;
+		color:white;
+	}
 	#payDateindexTab input[value="검색"]{
 		width:200px;
 		height:40px;
@@ -68,7 +72,14 @@
 	#usePayDateDetailTab td{
 		border:1px solid black;
 		height:50px;
-		
+	}
+	#payDateindexTab input[type='radio']{
+		width:20px;
+		height:20px;
+	}
+	#payDateindexTab input[type='date']{
+		width:230px;
+		height:40px;
 	}
 </style>
 <script src="${path}/a00_com/jquery.min.js"></script>
@@ -82,6 +93,12 @@ $(document).ready(function(){
 	// 마이페이지 결제관리 공통 클릭상태 유지
 	$("#payhistory").css({"background":"navy","color":"white"})
 	
+	// 개월수 클릭에 따른 배경 변경
+	$(".payHistoryMonthSel").click(function(){
+		$(".payHistoryMonthSel").css({"background":"","color":""})
+		$(this).css({"background":"navy","color":"white"})
+	})
+	
 });
 </script>
 </head>
@@ -92,17 +109,17 @@ $(document).ready(function(){
 	<jsp:include page="${path}/a00_main/a09_myPagePayManager.jsp"></jsp:include>
 	<table id="payDateindexTab">
 		<tr><th>
-			<input type="radio"/>전체
-			<input type="radio"/>신용/체크카드
-			<input type="radio"/>휴대폰 결제
+			<input type="radio" name="payMethod" checked/> 전체 &nbsp
+			<input type="radio" name="payMethod"/> 신용/체크카드 &nbsp
+			<input type="radio" name="payMethod"/> 휴대폰 결제 &nbsp
 			</th>
-			<td><input value="1주일" type="button" /></td>
-			<td><input value="1개월" type="button" /></td>
-			<td><input value="3개월" type="button" /></td>
-			<td><input value="6개월" type="button" /></td>
+			<td><input value="1주일" type="button" class="payHistoryMonthSel"/></td>
+			<td><input value="1개월" type="button" class="payHistoryMonthSel"/></td>
+			<td><input value="3개월" type="button" class="payHistoryMonthSel"/></td>
+			<td><input value="6개월" type="button" class="payHistoryMonthSel"/></td>
 		</tr>
 		<tr><th>
-			<input type="date"> ~ <input type="date">
+			<input type="date" name="startdate"> ~ <input type="date" name="enddate">
 			</th>
 			<td></td>
 			<td></td>
