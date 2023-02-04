@@ -48,13 +48,14 @@
 		width:200px;
 		height:40px;
 		border:none;
-		background:navy;
+		background:green;
 		color:white;
 	}
 	#payHistoryDataFra{
 		width:70%;
 		margin-left:15%;
 		margin-top:2%;
+		border:none;
 	}
 	#usePayDateDetailTab{
 		border:1px solid black;
@@ -98,7 +99,10 @@ $(document).ready(function(){
 		$(".payHistoryMonthSel").css({"background":"","color":""})
 		$(this).css({"background":"navy","color":"white"})
 	})
-	
+	// 검색 버튼 클릭 시, 프레임 출력
+	$("input[value='검색']").click(function(){
+			$("#payHistoryDataFra").attr("src","${path}/a41_PayManager/payHistoryData.jsp")
+	})
 });
 </script>
 </head>
@@ -126,8 +130,13 @@ $(document).ready(function(){
 			<td colspan="2"><input value="검색" type="button" /></td>
 		</tr>
 	</table>
-	<iframe id="payHistoryDataFra" src=""></iframe>
+	<iframe id="payHistoryDataFra" src="${path}/a41_PayManager/payHistoryData.jsp"></iframe>
 	<table id="usePayDateDetailTab">
+		<col width="10%">
+	   	<col width="10%">
+	   	<col width="30%">
+	   	<col width="30%">
+	   	<col width="20%">
 		<tr><th rowspan="2" colspan="2">구분</th><th colspan="2">사용시</th><th rowspan="2">미사용시</th></tr>
 		<tr><th>이용개시일로부터 7일이내</th><th>이용개시일로부터 7일초과</th></tr>
 		<tr><td rowspan="4">정기권</td><td>365일권</td><td rowspan="3">7일권 이용요금 공제</td><td rowspan="2">환불 요청일까지의 월별 이용요금 공제(사용월수 x 30일권 이용요금)</td><td rowspan="5">전액환불</td></tr>

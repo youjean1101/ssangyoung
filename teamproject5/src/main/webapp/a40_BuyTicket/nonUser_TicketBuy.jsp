@@ -142,7 +142,6 @@
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		var show="" 
 		$("input[name=payMethod]").change(function(){
 			if($(this).val()=="phone"){
 				$(".cardSel").css("display","none")

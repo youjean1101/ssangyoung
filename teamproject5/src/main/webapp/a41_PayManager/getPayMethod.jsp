@@ -54,6 +54,9 @@
 		font-size:9pt;
 		font-weight:10px;
 	}
+	.input box{
+		width:80px;
+	}
 </style>
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
@@ -65,6 +68,11 @@
 $(document).ready(function(){
 	// 마이페이지 결제관리 공통 클릭상태 유지
 	$("#getPayMethod").css({"background":"navy","color":"white"})
+	// 결제수단에 따른 모달창변경 기능
+	$("#regBtn").hide() // 초기화면에서는 보이지 않게 처리
+	$("modalcard").click(function(){
+		
+	})
 });
 </script>
 </head>
@@ -75,10 +83,98 @@ $(document).ready(function(){
 	<jsp:include page="${path}/a00_main/a09_myPagePayManager.jsp"></jsp:include>
 	<div id="guide01">추가과금이 발생할 경우 등록한 결제 수단으로 자동 결제됩니다.</div>
 	<table id="getPayMethodSelTab">
-		<tr><td><button type="button">휴대전화등록<br> <span>휴대전화를 추가결제수단으로 등록합니다.</span></button></td>
-			<td><button type="button">신용카드 등록<br> <span>신용카드를 추가 결제 수단으로 등록 합니다.</span></button></td></tr>
+		<tr><td><button id="modalphone" type="button" data-toggle="modal" data-target="#exampleModalCenter">휴대전화등록<br> <span>휴대전화를 결제수단으로 등록합니다.</span></button></td>
+			<td><button id="modalcard" type="button" data-toggle="modal" data-target="#exampleModalCenter">신용카드 등록<br> <span>신용카드를 결제수단으로 등록 합니다.</span></button></td></tr>
 	</table>
 	<div id="guide02">결제수단 변경시 <span>500원이 결제</span>됩니다. 그리고 해당 결제금액은 일정시간이 지난 후 <span>자동으로 결제취소</span>가 진행됩니다. 
 		<span>(최대 5분 정도 소요)</span> 회원님의 양해를 부탁드립니다.</div>
+<!-- 모달창 발생 -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">결제수단등록(휴대전화)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<form id="frm02" class="form"  method="post">
+		<input type="hidden" name="proc"/>
+	     <div class="row" style="margin-left:2%;margin-top:3%;">
+	        전화번호 : &nbsp 
+	         <div class="col" style="padding:0px 0px;">
+		        <select class="form-control" style="width:90px" name="telecom">
+						<option>SKT</option>
+						<option>KT</option>
+						<option>LG U+</option>
+				</select>
+			</div>
+			<div class="col" style="padding:2px 0px;"> 
+		        <input type="text" class="form-control" name="phonenum01" style="width:90px;">
+		    </div>
+		    - 
+		    <div class="col" style="padding:0px 0px;">
+		        <input type="text" class="form-control" name="phonenum02"  style="width:90px;"> 
+		    </div>
+		    - 
+		    <div class="col" style="padding:0px 0px;">
+		        <input type="text" class="form-control" name="phonenum03" style="width:90px" >
+	     	</div>	
+	     </div>
+	     <div class="row" style="margin-left:2%;margin-top:3%;">
+	        인증번호 : &nbsp 
+	         <input type="text" class="form-control" placeholder="인증번호" name="certNum" style="width:120px;">
+	         <input id='Timer' type='text'  class="form-control" value='' readonly style="width:90px; border:none; background:white; color:red;"/>
+	         <input type="button" class="btn btn-warning" value="인증번호 전송" name="certNum" onclick='TIMER()' style="width:130px;">
+	      </div>
+	      <div class="row" style="margin-left:2%; margin-top:3%";>
+	         주민번호 7앞자리 :&nbsp 
+        	<input type="text" class="form-control" name="rrn7front" style="width:150px;">
+	        &nbsp - &nbsp 
+        	<input type="text" class="form-control" name="rrn7behind" style="width:50px;">
+	        ●●●●●●
+	      </div>
+	    </form> 
+   	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-success" id="phoneIns">등록</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
+<script>
+//-------------------------------타이머 기능-------------------------------
+const Timer=document.getElementById('Timer'); //스코어 기록창-분
+let time= 180000;
+let min=3;
+let sec=60;
+
+Timer.value=min+":"+'00'; 
+
+function TIMER(){
+    PlAYTIME=setInterval(function(){
+        time=time-1000; //1초씩 줄어듦
+        min=time/(60*1000); //초를 분으로 나눠준다.
+
+       if(sec>0){ //sec=60 에서 1씩 빼서 출력해준다.
+            sec=sec-1;
+            Timer.value=Math.floor(min)+':'+sec; 
+            //실수로 계산되기 때문에 소숫점 아래를 버리고 출력해준다.
+        }
+        if(sec===0){
+         	// 0에서 -1을 하면 -59가 출력된다.
+            // 그래서 0이 되면 바로 sec을 60으로 돌려주고 value에는 0을 출력하도록 해준다.
+            sec=60;
+            Timer.value=Math.floor(min)+':'+'00'
+        }     
+    },1000); //1초마다 
+}
+setTimeout(function(){
+    clearInterval(PlAYTIME);
+},180000);//3분이 되면 타이머를 삭제한다.
+</script>
 </html>

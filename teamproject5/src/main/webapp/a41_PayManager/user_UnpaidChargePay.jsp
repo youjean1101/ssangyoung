@@ -47,6 +47,10 @@
 		width:70%;
 		height:50px;
 	}
+	#payMethodSelTab td .inputBox{
+		width:100px;
+		height:30px;
+	}
 	#payMoneyTab{
 		width:35%;
 		margin-left:32%;
@@ -77,10 +81,30 @@
 		width:70%;
 		margin-left:15%;
 		margin-top:2%;
+		border:none;
 	}
 	#payMethodSelTab input[type='radio']{
 		width:20px;
 		height:20px;
+	}
+	#payMethodSelTab select{
+		border:none;
+		height:35px;
+		font-size:11pt;
+	}
+	#sendbutton{
+		background:rgb(67, 84, 100);
+		color:white;
+		border:none;
+		width:150px;
+		height:25px;
+		font-size:8pt;
+		outline:none;
+	}
+	#Timer{
+		color:red;
+		border:none;
+		text-align:center;
 	}
 </style>
 <script src="${path}/a00_com/jquery.min.js"></script>
@@ -93,7 +117,27 @@
 $(document).ready(function(){
 	// 마이페이지 결제관리 공통 클릭상태 유지
 	$("#addPay").css({"background":"navy","color":"white"})
-	
+	// 결제방법에 따른 테이블 출력
+	$("input[name=payMethod]").change(function(){
+		if($(this).val()=="phone"){
+			$(".cardSel").css("display","none")
+			$(".phoneSel").css("display","")
+		}else{
+			$(".phoneSel").css("display","none")
+			$(".cardSel").css("display","")
+		} // 등록된 수단시, 조건 추가
+	})
+	$('#selectEmail').change(function(){
+		   $("#selectEmail option:selected").each(function () {
+				if($(this).val()== '1'){ //직접입력일 경우
+					 $("[name=email2]").val('');                        //값 초기화
+					 $("[name=email2]").attr("disabled",false); //활성화
+				}else{ //직접입력이 아닐경우
+					 $("[name=email2]").val($(this).text());      //선택값 입력
+					 $("[name=email2]").attr("disabled",true); //비활성화
+				}
+	   });
+	});
 });
 </script>
 </head>
@@ -112,7 +156,71 @@ $(document).ready(function(){
 		<tr><th>결제수단</th>
 			<td><input type="radio" name="payMethod" value="card" checked/> 신용/체크카드 &nbsp &nbsp &nbsp      
 				<input type="radio" name="payMethod" value="phone"/> 휴대폰결제 &nbsp &nbsp &nbsp   
-				<input type="radio" name="payMethod" value="getCard"/> 등록된카드</td></tr>
+				<input type="radio" name="payMethod" value="getCard"/> 등록된수단</td></tr>
+		<tr class="cardSel">
+			<th>카드번호</th>
+			<td><input type="text" class="inputBox" name="cardNumber1" size="3"> -
+				<input type="text" class="inputBox" name="cardNumber2" size="3"> -
+				<input type="text" class="inputBox" name="cardNumber3" size="3"> -
+				<input type="text" class="inputBox" name="cardNumber4" size="3">
+			</td>
+		</tr>
+		<tr class="cardSel">
+			<th>유효기간</th>
+			<td><input type="text" class="inputBox" name="validityMonth" size="2" placeholder="년"> / 
+				<input type="text" class="inputBox" name="validityYear" size="2" placeholder="월"></td>
+		</tr>
+		<tr class="cardSel">
+			<th>카드종류</th>
+			<td><select>
+					<option selected>카드를 선택해주세요.</option>
+					<option>쌍용카드</option>
+					<option>신한카드</option>
+					<option>하나카드</option>
+					<option>국민카드</option>
+					<option>삼성카드</option>
+					<option>비씨카드</option>
+				</select></td>
+		</tr>
+		<tr class="cardSel">
+			<th>이메일주소</th>
+			<td><input type="text" name="email1" style="height:30px;"/> @ <input type="text" style="height:30px; name="email2"/>
+				<select class="inputBox" id="selectEmail">
+					<option value="1">직접입력</option>
+					 <option>naver.com</option>
+					 <option>hanmail.net</option>
+					 <option>hotmail.com</option>
+					 <option>nate.com</option>
+					 <option>yahoo.co.kr</option>
+					 <option>empas.com</option>
+					 <option>dreamwiz.com</option>
+					 <option>freechal.com</option>
+					 <option>lycos.co.kr</option>
+					 <option>korea.com</option>
+					 <option>gmail.com</option>
+					 <option>hanmir.com</option>
+					 <option>paran.com</option>
+				</select>
+			</td>
+		</tr>
+		<tr class="inputBox phoneSel" style="display:none;"><th>휴대전화번호</th>
+			<td><select class="inputBox phoneSel" style="display:none">
+					<option>SKT</option>
+					<option>KT</option>
+					<option>LG U+</option>
+				</select>
+			<input type="text" class="inputBox"> - <input type="text" class="inputBox"> - <input type="text" class="inputBox"></td></tr>
+		<tr class="phoneSel" style="display:none";>
+			<th>인증번호발송</th>
+			<td><input type='text' id='certnum' style="height:30px;"/>
+			<input id='Timer' size="2" type='text' value='' readonly/>
+			<input type='button' id='sendbutton' value='인증번호 발송' onclick='TIMER()'/>
+			</td>
+		</tr>
+		<tr class="phoneSel" style="display:none">
+			<th>주민번호 앞7자리</th>
+			<td><input style="height:30px;" type="text" name="rrn1"/> - <input type="text" name="rrn2" size="1"/>●●●●●●</td>
+		</tr>
 		<tr><th>미납금액</th><td>원</td></tr>
 		<tr><th>미납내역</th><td>초과이용  0 건</td></tr>
 	</table>
@@ -123,6 +231,37 @@ $(document).ready(function(){
 										<a href="https://www.bikeseoul.com/app/use/moveUseMenuClauseInfo.do">이용약관</a>에 동의하며 결제를 진행합니다.</td></tr>
 		<tr><th id="heightCont"><input type="button" value="결제"></th></tr>
 	</table>
-	<iframe id="addPayHistoryDataFra" src=" "></iframe>
+	<iframe id="addPayHistoryDataFra" src="${path}/a41_PayManager/user_UpaidChageData.jsp"></iframe>
 </body>
+<script>
+//-------------------------------타이머 기능-------------------------------
+const Timer=document.getElementById('Timer'); //스코어 기록창-분
+let time= 300000;
+let min=5;
+let sec=60;
+
+Timer.value=min+":"+'00'; 
+
+function TIMER(){
+    PlAYTIME=setInterval(function(){
+        time=time-1000; //1초씩 줄어듦
+        min=time/(60*1000); //초를 분으로 나눠준다.
+
+       if(sec>0){ //sec=60 에서 1씩 빼서 출력해준다.
+            sec=sec-1;
+            Timer.value=Math.floor(min)+':'+sec; 
+            //실수로 계산되기 때문에 소숫점 아래를 버리고 출력해준다.
+        }
+        if(sec===0){
+         	// 0에서 -1을 하면 -59가 출력된다.
+            // 그래서 0이 되면 바로 sec을 60으로 돌려주고 value에는 0을 출력하도록 해준다.
+            sec=60;
+            Timer.value=Math.floor(min)+':'+'00'
+        }     
+    },1000); //1초마다 
+}
+setTimeout(function(){
+    clearInterval(PlAYTIME);
+},300000);//3분이 되면 타이머를 삭제한다.
+</script>
 </html>

@@ -65,6 +65,7 @@
 		margin-top:2%;
 		margin-left:10%;
 		width:80%;
+		border:none;
 	}
 	
 </style>
@@ -97,10 +98,10 @@ $(document).ready(function(){
 			<th><input value="1개월" type="button" class="returnHistoryMonthSel"/></th>
 			<th><input value="3개월" type="button" class="returnHistoryMonthSel"/></th>
 			<th><input value="6개월" type="button" class="returnHistoryMonthSel"/></th>
-			<td><input type="date" name="startdate"> ~</td><td> <input type="date" name="enddate"></td>
+			<td><input type="date" name="startdate">&nbsp &nbsp ~</td><td><input type="date" name="enddate"></td>
 			<td><input type="button" value="검색"/></td>
 		</tr>
 	</table>
-	<iframe id="returnHistoryDataFra" src=""></iframe>
+	<iframe id="returnHistoryDataFra" src="${path}/a41_PayManager/returnHistoryData.jsp"></iframe>
 </body>
 </html>
