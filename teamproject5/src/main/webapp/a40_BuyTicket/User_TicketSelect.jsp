@@ -14,11 +14,40 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 이용권구매 이용권종류 선택</title>
 <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
 <link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
 <style>
-	td{text-align:center;}
+	#userTicketSelTitle{
+		margin-left:6%;
+		margin-top:5%;
+		font-weight:bold;
+	}
+	#userTicketSelTab{
+		width:90%;
+		margin-left:6%;
+		margin-top:3%;
+		height:500px;
+	}
+	#userTicketSelTab td{
+		width:50%;
+		border:20px solid white;
+	}
+	#userTicketSelTab td button{
+		width:100%;
+		height:100%;
+		background:rgb(76, 171, 106);
+		color:white;
+		border:none;
+		text-align:left;
+		font-size:18pt;
+	}
+	#userTicketSelTab td img{
+		margin-left:70%;
+	}
+	#userTicketSelTab td button span{
+		font-size:10pt;
+	}
 </style>
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
@@ -28,77 +57,28 @@
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		<%-- 
-		
-		--%>	
+		$("#userTicketSelTab button").click(function(){
+			$("#TicketSelValue").html("<input style='visibility: hidden' name='Sel' value='"+$(this).val()+"'>")
+			$("#getTicketkind").submit()
+		})
 	});
 </script>
 </head>
-
 <body>
-<div class="jumbotron text-center">
-  <h2 data-toggle="modal" data-target="#exampleModalCenter">타이틀</h2>
-
-</div>
-<div class="container">
-	<form id="frm01" class="form-inline"  method="post">
-  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-	    <input class="form-control mr-sm-2" placeholder="제목" />
-	    <input class="form-control mr-sm-2" placeholder="내용" />
-	    <button class="btn btn-info" type="submit">Search</button>
- 	</nav>
+	<jsp:include page="${path}/a00_main/a00_header.jsp"></jsp:include>
+	<h3 id="userTicketSelTitle">이용권 구매</h3>
+	<form id="getTicketkind" action="${path}/a40_BuyTicket/User_TicketBuy.jsp" method="get">
+		<div id="TicketSelValue"></div>
+		
+		<table id="userTicketSelTab" >
+			<tr><td><button value="daySel" type="button">정기권<img src="${path }/b01_img/userTicketSel.png">
+					<br><span>1시간권, 2시간권을 선택하실 수 있습니다.</span></button></td>
+				<td><button value="seasonSel" type="button">일일권<img src="${path }/b01_img/userTicketSel.png">
+					<br><span>1시간권, 2시간권을 선택하실 수 있습니다.</span></button></td></tr>
+			<tr><td><button value="groupSel" type="button">단체권<img src="${path }/b01_img/userTicketSel.png">
+					<br><span>1시간권을 선택하실 수 있습니다.</span></button></td>
+				<td></td></tr>
+		</table>
 	</form>
-   <table class="table table-hover table-striped">
-   	<col width="10%">
-   	<col width="50%">
-   	<col width="15%">
-   	<col width="15%">
-   	<col width="10%">
-    <thead>
-    
-      <tr class="table-success text-center">
-        <th>번호</th>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>작성일</th>
-        <th>조회</th>
-      </tr>
-    </thead>	
-    <tbody>
-    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
-    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
-    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
-    </tbody>
-	</table>    
-    
-</div>
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">타이틀</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-		<form id="frm02" class="form"  method="post">
-	     <div class="row">
-	      <div class="col">
-	        <input type="text" class="form-control" placeholder="사원명 입력" name="ename">
-	      </div>
-	      <div class="col">
-	        <input type="text" class="form-control" placeholder="직책명 입력" name="job">
-	      </div>
-	     </div>
-	    </form> 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
 </body>
 </html>

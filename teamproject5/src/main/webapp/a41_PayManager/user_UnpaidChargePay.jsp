@@ -127,6 +127,8 @@ $(document).ready(function(){
 			$(".cardSel").css("display","")
 		} // 등록된 수단시, 조건 추가
 	})
+	
+	// 이메일 직접입력/선택값 기능
 	$('#selectEmail').change(function(){
 		   $("#selectEmail option:selected").each(function () {
 				if($(this).val()== '1'){ //직접입력일 경우
@@ -172,7 +174,7 @@ $(document).ready(function(){
 		</tr>
 		<tr class="cardSel">
 			<th>카드종류</th>
-			<td><select>
+			<td><select name="cardKind">
 					<option selected>카드를 선택해주세요.</option>
 					<option>쌍용카드</option>
 					<option>신한카드</option>
@@ -184,7 +186,7 @@ $(document).ready(function(){
 		</tr>
 		<tr class="cardSel">
 			<th>이메일주소</th>
-			<td><input type="text" name="email1" style="height:30px;"/> @ <input type="text" style="height:30px; name="email2"/>
+			<td><input type="text" name="email1" style="height:30px;"/> @ <input type="text" style="height:30px;" name="email2"/>
 				<select class="inputBox" id="selectEmail">
 					<option value="1">직접입력</option>
 					 <option>naver.com</option>

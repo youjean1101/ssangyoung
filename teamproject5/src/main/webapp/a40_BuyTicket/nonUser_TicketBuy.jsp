@@ -220,7 +220,7 @@
 					<option>LG U+</option>
 				</select>
 			<input type="text" class="inputBox"> - <input type="text" class="inputBox"> - <input type="text" class="inputBox"></td></tr>
-		<tr class="phoneSel" style="display:none";>
+		<tr class="phoneSel" style="display:none;">
 			<th>인증번호발송</th>
 			<td><input type='text' id='certnum'/>
 			<input id='Timer' type='text' value='' readonly/>

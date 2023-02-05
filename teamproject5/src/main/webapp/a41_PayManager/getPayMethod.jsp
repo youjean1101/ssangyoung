@@ -54,9 +54,11 @@
 		font-size:9pt;
 		font-weight:10px;
 	}
-	.input box{
-		width:80px;
+	
+	.phoneSel{
+		 aria-hidden:true;
 	}
+	
 </style>
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
@@ -66,13 +68,36 @@
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	$(".phoneSel").css("display","none")
 	// 마이페이지 결제관리 공통 클릭상태 유지
 	$("#getPayMethod").css({"background":"navy","color":"white"})
 	// 결제수단에 따른 모달창변경 기능
-	$("#regBtn").hide() // 초기화면에서는 보이지 않게 처리
-	$("modalcard").click(function(){
-		
+	$("#modalcard").click(function(){
+		$("#phoneIns").hide() // 초기화면에서는 보이지 않게 처리
+		$("#cardIns").show()
+		$("#exampleModalLongTitle").text("결제수단등록(카드등록)");
+		$(".phoneSel").css("display","none");
+		$(".cardSel").css("display","");
 	})
+	$("#modalphone").click(function(){
+		$("#exampleModalLongTitle").text("결제수단등록(휴대폰등록)");
+		$("#phoneIns").show()
+		$("#cardIns").hide()
+		$(".phoneSel").css("display","");
+		$(".cardSel").css("display","none");
+	})
+	// 이메일 직접입력/선택값 기능
+	$('#selectEmail').change(function(){
+		   $("#selectEmail option:selected").each(function () {
+				if($(this).val()== '1'){ //직접입력일 경우
+					 $("[name=email2]").val('');                        //값 초기화
+					 $("[name=email2]").attr("disabled",false); //활성화
+				}else{ //직접입력이 아닐경우
+					 $("[name=email2]").val($(this).text());      //선택값 입력
+					 $("[name=email2]").attr("disabled",true); //비활성화
+				}
+	   });
+	});
 });
 </script>
 </head>
@@ -88,7 +113,7 @@ $(document).ready(function(){
 	</table>
 	<div id="guide02">결제수단 변경시 <span>500원이 결제</span>됩니다. 그리고 해당 결제금액은 일정시간이 지난 후 <span>자동으로 결제취소</span>가 진행됩니다. 
 		<span>(최대 5분 정도 소요)</span> 회원님의 양해를 부탁드립니다.</div>
-<!-- 모달창 발생 -->
+<!-- 모달창1 발생 -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -100,8 +125,7 @@ $(document).ready(function(){
       </div>
       <div class="modal-body">
 		<form id="frm02" class="form"  method="post">
-		<input type="hidden" name="proc"/>
-	     <div class="row" style="margin-left:2%;margin-top:3%;">
+	     <div class="row phoneSel" style="margin-left:2%;margin-top:3%;">
 	        전화번호 : &nbsp 
 	         <div class="col" style="padding:0px 0px;">
 		        <select class="form-control" style="width:90px" name="telecom">
@@ -122,24 +146,75 @@ $(document).ready(function(){
 		        <input type="text" class="form-control" name="phonenum03" style="width:90px" >
 	     	</div>	
 	     </div>
-	     <div class="row" style="margin-left:2%;margin-top:3%;">
+	     <div class="row phoneSel" style="margin-left:2%;margin-top:3%;">
 	        인증번호 : &nbsp 
 	         <input type="text" class="form-control" placeholder="인증번호" name="certNum" style="width:120px;">
 	         <input id='Timer' type='text'  class="form-control" value='' readonly style="width:90px; border:none; background:white; color:red;"/>
 	         <input type="button" class="btn btn-warning" value="인증번호 전송" name="certNum" onclick='TIMER()' style="width:130px;">
 	      </div>
-	      <div class="row" style="margin-left:2%; margin-top:3%";>
+	     <div class="row phoneSel" style="margin-left:2%; margin-top:3%;">
 	         주민번호 7앞자리 :&nbsp 
         	<input type="text" class="form-control" name="rrn7front" style="width:150px;">
 	        &nbsp - &nbsp 
         	<input type="text" class="form-control" name="rrn7behind" style="width:50px;">
 	        ●●●●●●
 	      </div>
+	      <div class="row cardSel" style="margin-left:2%; margin-top:3%; display:none;">
+	         카드번호 :&nbsp 
+        	<input type="text" class="form-control" name="cardno1" style="width:70px;">
+	        &nbsp - &nbsp 
+        	<input type="text" class="form-control" name="cardno2" style="width:70px;">
+	        &nbsp - &nbsp 
+        	<input type="text" class="form-control" name="cardno3" style="width:70px;">
+	        &nbsp - &nbsp
+        	<input type="text" class="form-control" name="cardno4" style="width:70px;">
+	      </div>
+	      <div class="row cardSel" style="margin-left:2%; margin-top:3%; display:none;">
+	         유효기간 :&nbsp 
+        	<input type="text" class="form-control" name="validityMonth" placeholder="월" style="width:60px;">
+        	&nbsp / &nbsp 
+        	<input type="text" class="form-control" name="validityYear" placeholder="년" style="width:60px;">
+	      </div>
+	      <div class="row cardSel" style="margin-left:2%; margin-top:3%; display:none;" class="cardSel">
+	         카드종류 :&nbsp 
+        	<select name="cardKind" class="form-control" style="width:250px;">
+					<option selected>카드를 선택해주세요.</option>
+					<option>쌍용카드</option>
+					<option>신한카드</option>
+					<option>하나카드</option>
+					<option>국민카드</option>
+					<option>삼성카드</option>
+					<option>비씨카드</option>
+				</select>
+	      </div>
+	      <div class="row cardSel" style="margin-left:2%; margin-top:3%; display:none;">
+	         이메일 :&nbsp 
+        	<input type="text" class="form-control" name="email1" style="width:130px;">
+        	&nbsp @ &nbsp 
+        	<input type="text" class="form-control" name="email2" style="width:130px;">
+	     	 <select class="form-control" style="width:100px; font-size:8pt;" id="selectEmail">
+					<option value="1">직접입력</option>
+					 <option>naver.com</option>
+					 <option>hanmail.net</option>
+					 <option>hotmail.com</option>
+					 <option>nate.com</option>
+					 <option>yahoo.co.kr</option>
+					 <option>empas.com</option>
+					 <option>dreamwiz.com</option>
+					 <option>freechal.com</option>
+					 <option>lycos.co.kr</option>
+					 <option>korea.com</option>
+					 <option>gmail.com</option>
+					 <option>hanmir.com</option>
+					 <option>paran.com</option>
+				</select>
+	      </div>
 	    </form> 
    	  </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-success" id="phoneIns">등록</button>
+        <button type="button" class="btn btn-success" id="phoneIns">휴대폰등록</button>
+        <button type="button" class="btn btn-success" id="cardIns">카드등록</button>
       </div>
     </div>
   </div>
