@@ -1,8 +1,8 @@
 package com.bikeWeb.vo;
-
+// com.bikeWeb.vo.BikeInfoVo
 import java.util.Date;
 
-public class bikeInfoVo {
+public class BikeInfoVo {
 	private int bikeNo;
 	private Date startDate;
 	private int breakDownCnt;
@@ -12,7 +12,7 @@ public class bikeInfoVo {
 	/**
 	 * 
 	 */
-	public bikeInfoVo() {
+	public BikeInfoVo() {
 		super();
 	}
 	public int getBikeNo() {

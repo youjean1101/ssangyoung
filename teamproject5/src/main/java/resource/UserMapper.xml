@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+ 
+
+  <mapper namespace="bikeweb.dao.UserDao">
+  <insert id="signup" parameterType="member">
+  	INSERT INTO user1 values(#{id},#{pass},null,#{auth},#{name},#{phoneNumber},#{email},#{weight},null,null)
+  </insert>
+  
+  <select id="invalidId" resultType="int" parameterType="string">
+  	select count(*) from user1 where id=#{id}
+  </select>	
+  
+  <select id="login" resultType="int" parameterType="member">
+  	SELECT COUNT(*) FROM user1 WHERE id=#{id} AND pass=#{pass}
+  </select>
+
+   <select id="getId" resultType="member" parameterType="string">
+   	 select * from user1 where id=#{id}
+   </select>
+   <update id="uptInfo" parameterType="member">
+   	update user1 set pass=#{pass}, phoneNumber=#{phoneNumber}, email=#{email}, weight=#{weight} where id=#{id}
+   </update>
+   <delete id="delInfo" parameterType="string">
+    delete from user1 where id=#{id}
+   </delete>
+   <select id="getAuth" resultType="string" parameterType="string">
+   	select auth from user1 where id=#{id}
+   </select>
+  </mapper> 

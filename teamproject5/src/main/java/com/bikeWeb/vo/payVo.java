@@ -1,6 +1,6 @@
 package com.bikeWeb.vo;
-
-public class payVo {
+// com.bikeWeb.vo.PayVo
+public class PayVo {
 	private int payNo;
 	private String ticketKind;
 	private int useTime;
@@ -17,7 +17,7 @@ public class payVo {
 	/**
 	 * 
 	 */
-	public payVo() {
+	public PayVo() {
 		super();
 	}
 	public int getPayNo() {

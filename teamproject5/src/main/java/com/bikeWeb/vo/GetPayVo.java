@@ -1,5 +1,5 @@
 package com.bikeWeb.vo;
-
+// com.bikeWeb.vo.GetPayVo
 public class GetPayVo {
 	private String getPayNo;
 	private String cardNo;

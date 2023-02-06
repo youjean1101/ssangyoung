@@ -37,8 +37,10 @@
 	</insert>
 	
 	<select id="BaseballTeamDetail" resultType="BaseBallTeam" parameterType="int">
-		SELECT * FROM baseballteam
-		WHERE teamno=#{teamno}
+		SELECT * FROM rentalInfo
+		WHERE rentaltime = returntime
+		AND returntime between '20230130' AND '20230208'
+		AND id='himan'
 	</select>
 </mapper>		
 		

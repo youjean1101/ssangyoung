@@ -85,8 +85,9 @@
 	}
 	#payButton{
 		width:250px;
-		height:40px;
+		height:50px;
 		font-size:14pt;
+		font-weight:bold;
 		margin-top:1.5%;
 		margin-left:40%;
 		border:none;
@@ -143,7 +144,7 @@
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		// 결제방법에 따른 입력값 변경 기능
+		var show="" 
 		$("input[name=payMethod]").change(function(){
 			if($(this).val()=="phone"){
 				$(".cardSel").css("display","none")
@@ -153,7 +154,6 @@
 				$(".cardSel").css("display","")
 			}
 		})
-		//이메일 변경 기능
 		$('#selectEmail').change(function(){
 			   $("#selectEmail option:selected").each(function () {
 					if($(this).val()== '1'){ //직접입력일 경우
@@ -163,18 +163,64 @@
 						 $("[name=email2]").val($(this).text());      //선택값 입력
 						 $("[name=email2]").attr("disabled",true); //비활성화
 					}
-		   })
-		})
+		   });
+		});
+		//insert ajax
+		function insFun(){
+			var randomNum = Math.floor(Math.random()*2)
+			var timeSel
+			if($("#timeSel").val()==="1000"){
+				timeSel = 1
+			}else{
+				timeSel = 2
+			}
+			$.ajax({
+				url:"${path}/nonUserInsRental.do",
+				type:"post",
+				data:"nonMemberName="+$("#nonMemberName").val()
+						+"&nonMemberPhoneNum="+$("#nonMemberPhoneNum").val()
+						+"&bikeNo="+$("#bikeNo").val()
+						+"&startPlaceName="+$("#startPlaceName").val()
+						+"&PayNo="+0
+						+"&ticketKind="+$("#timeSel").val()
+						+"&useTime="+timeSel
+						+"&payMoney="+$("#timeSel").val()
+						+"&payMethod="+$("input[name='payMethod']").val()
+						+"&teleCom="+$("#telecom").val()
+						+"&PhoneNum="+$("#phoneNum1").val()+"-"+$("#phoneNum2").val()+"-"+$("#phoneNum3").val()
+						+"&rrnfront="+$("input[name='rrn1']").val()+"-"+$("input[name='rrn2']").val()
+						+"&CardNo="+$("input[name='cardNumber1']").val()+$("input[name='cardNumber2']").val()+$("input[name='cardNumber3']").val()+$("input[name='cardNumber4']").val()
+						+"&validity="+$("input[name='validityMonth']").val()+" / "+$("input[name='validityYear']").val()
+						+"&cardKind="+$("#cardKind").val()
+						+"&email="+$("input[name='email1']").val()+"@"+$("input[name='email2']").val(),
+				dataType:"json",
+				success:function(data){
+					alert("등록 성공")
+				},
+				error:function(err){
+					console.log(err)
+				}
+			})
+		}
 		//시간에 따른 가격출력값변경 기능
 		$("#timeSel").change(function(){
 			$(".price").text($(this).val()+" 원")
 		})
+		// 결제하기 버튼 클릭시 기능
 		
-		$("payButton").click(function(){
-			
+		$("#payButton").click(function(){
+			insFun()
+			if(!$(".agreeSelAll").is(":checked")){
+				alert("[안내메시지] 약관에 동의하셔야 이용권 구매가 가능합니다.")
+			}
 		})
+		var msg = "${msg}"
+		if(msg!=""){
+			if(confirm(msg+"\n 조회화면으로 이동하시겠습니까?")){
+				location.href="${path}/noneUserMenu.do"
+			}
+		}
 	});
-	
 </script>
 </head>
 
@@ -186,16 +232,27 @@
 					횟수에 상관없이 자전거 대여가 가능합니다.</h4>
 	
 	<hr class="payhr">
-	<form>
+	
 	<table id="payInputTab">
 	<tbody>
 		<tr><th>이용권 구분</th>
-			<td><select id="timeSel" name="ticketKind">
+			<td><select id="timeSel">
 					<option value="1000">일일권(1시간)</option>
 					<option value="2000">프리미엄 일일권(2시간)</option>
 				</select></td></tr>
+		<tr><th>자전거번호</th>
+			<td><select id="bikeNo">
+					<option>1</option>
+					<option>2</option>
+				</select></td></tr>
+		<tr><th>대여장소</th>
+			<td><select id="startPlaceName">
+					<option>홍대입구역 8번출구 앞 (신)</option>
+					<option>홍대입구역 2번출구 앞 (신)</option>
+					<option>홍대입구역 3번출구 (신)</option>
+				</select></td></tr>
 		<tr><th>매수</th><td>1매 (1회 1매씩 구매가 가능합니다.)</td></tr>
-		<tr><th>가격</th><td><span class="price">1000 원</span> 기본대여시간(60분) 초과시 5분마다 추가요금 200원 과금
+		<tr><th>가격</th><td><span class="price">1000 원</span>기본대여시간(60분) 초과시 5분마다 추가요금 200원 과금
 							<br>(※ 추가요금은 이용권 결제수단으로 자동결제 됩니다.)</td></tr>
 		<tr><th>결제수단</th>
 			<td><input type="radio" value="card" name="payMethod"  checked>신용/체크카드
@@ -203,7 +260,7 @@
 				고객 한명당 하나의 카드로만 가능합니다.(중복결제금지)
 				</td></tr>
 		<tr><th>생년월일</th>
-			<td><select class="inputBox" >
+			<td><select class="inputBox">
 					<option>연도</option>
 					<c:forEach var="i" begin="1923" end="2011">
 						<option>${i} 년</option>
@@ -224,14 +281,17 @@
 				<br>(만 13세 새싹따릉이 대상자들은 회원 가입 후 이용가능합니다.)
 			</td></tr>
 		<tr><th>결제금액</th><td class="price">1000 원</td></tr>
+		<tr><th>이름</th>
+			<td><input type="text" id="nonMemberName" name="nonMemberName"></td><tr>
 		<tr><th>휴대전화번호</th>
-			<td><select name="teleCom" class="inputBox phoneSel" style="display:none">
+			<td><select id="telecom" class="inputBox phoneSel" style="display:none">
 					<option>SKT</option>
 					<option>KT</option>
 					<option>LG U+</option>
 				</select>
-			<input type="text" name="PhoneNum" class="inputBox" placeholder="'-' 없이 입력해주세요." style="width:200px;"></td></tr>
-		<tr class="phoneSel" style="display:none;">
+			<input type="text" id="phoneNum1" class="inputBox"> - <input type="text" id="phoneNum2" class="inputBox"> - <input type="text" id="phoneNum3" class="inputBox"></td></tr>
+		
+		<tr class="phoneSel" style="display:none";>
 			<th>인증번호발송</th>
 			<td><input type='text' id='certnum'/>
 			<input id='Timer' type='text' value='' readonly/>
@@ -240,20 +300,25 @@
 		</tr>
 		<tr class="phoneSel" style="display:none">
 			<th>주민번호 앞7자리</th>
-			<td><input placeholder="주민번호 앞7자리를 입력해주세요." style="width:200px;" type="text" name="rrnfront"/>●●●●●●</td>
+			<td><input type="text" name="rrn1"/> - <input type="text" name="rrn2" size="1"/>●●●●●●</td>
 		</tr>
 		<tr class="cardSel">
 			<th>카드번호</th>
-			<td><input type="text" name="CardNo" placeholder="'-'없이 카드번호 16자리를 입력해주세요." style="width:300px;"></td>
+			<td><input type="text" name="cardNumber1" size="2"> -
+				<input type="text" name="cardNumber2" size="2"> -
+				<input type="text" name="cardNumber3" size="2"> -
+				<input type="text" name="cardNumber4" size="2">
+			</td>
 		</tr>
 		<tr class="cardSel">
 			<th>유효기간</th>
-			<td><input type="text" name="validity" style="width:300px;" placeholder="월/년을 4자리 형식(예>0101)으로 입력해주세요."></td>
+			<td><input type="text" name="validityMonth" size="2" placeholder="년"> / 
+				<input type="text" name="validityYear" size="2" placeholder="월"></td>
 		</tr>
 		<tr class="cardSel">
 			<th>카드종류</th>
-			<td><select name="cardKind">
-					<option selected>카드를 선택해주세요.</option>
+			<td><select id="cardKind">
+					<option value=" " selected>카드를 선택해주세요.</option>
 					<option>쌍용카드</option>
 					<option>신한카드</option>
 					<option>하나카드</option>
@@ -264,7 +329,7 @@
 		</tr>
 		<tr class="cardSel">
 			<th>이메일주소</th>
-			<td><input type="text" name="email"/> @ <input type="text" name="email2"/>
+			<td><input type="text" name="email1"/> @ <input type="text" name="email2"/>
 				<select class="inputBox" id="selectEmail">
 					<option value="1">직접입력</option>
 					 <option>naver.com</option>
@@ -285,7 +350,7 @@
 		</tr>
 	</tbody>
 	</table>
-	</form>
+	
 	<hr class="payhr">
 	
 	<table id="agreeTab">
@@ -300,7 +365,6 @@
 	<hr class="payhr">
 	
 	<button id="payButton" type="button">결제하기</button>
-	
 	<h4 id="useNoticeTitle">이용권 사용안내</h4>
 	<hr id="noticeHr">
 	<table id="useNoticeTab">

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+   
+<mapper namespace="bikeweb.dao.PayDao">
+	<insert id="nonUserRentalInfoIns" parameterType="rental">
+  		INSERT INTO rentalInfo values(rental_seq.nextval,
+			'비회원',#{nonMemberName},#{nonMemberPhoneNum},#{bikeNo},NULL,#{startPlaceName},
+			sysdate,NULL,NULL,NULL,0,#{PayNo})
+	</insert>
+	
+	<insert id="nonUserPayIns" parameterType="pay">
+  		INSERT INTO pay values(pay_seq.nextval,
+  			#{ticketKind},#{useTime},#{payMoney},#{payMethod},#{teleCom},#{PhoneNum},
+  			#{rrnfront},#{CardNo},#{validity},#{cardKind},#{email})
+	</insert>
+	
+	<select id="payHistorySel" resultType="PayRentalTotVo" parameterType="paydayseach">
+		SELECT * FROM pay p,rentalInfo r
+		WHERE r.payno = p.payno
+		AND r.id = #{id}
+		AND rentalTime between #{startdate} AND #{enddate}
+		AND paymethod LIKE '%'||#{paymethod}||'%'
+	</select>
+	
+	<select id="returnHistorySel" resultType="PayRentalTotVo" parameterType="paydayseach">
+		SELECT * FROM pay p,rentalInfo r
+		WHERE r.payno = p.payno
+		AND rentaltime = returntime
+		AND returntime between #{startdate} AND #{enddate}
+		AND id= #{id}
+	</select>
+	
+	<select id="unpaidChargeSel" resultType="PayRentalTotVo" parameterType="String">
+		SELECT * FROM pay p,rentalInfo r
+		WHERE r.payno = p.payno
+		AND r.unpaidCharge BETWEEN 1 AND 100001
+		AND id=#{id}
+	</select>
+	
+	
+</mapper>

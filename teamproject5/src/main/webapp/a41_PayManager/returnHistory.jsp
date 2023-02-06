@@ -46,6 +46,7 @@
 	#returnIndexTab td input[type='date']{
 		width:80%;
 		height:40px;
+		text-align:center;
 	}
 	
 	.returnHistoryMonthSel{
@@ -79,7 +80,7 @@
 $(document).ready(function(){
 	// 마이페이지 결제관리 공통 클릭상태 유지
 	$("#returnhistory").css({"background":"navy","color":"white"})
-	
+
 	// 기간 지정 dafault값
 	$("input[value='1주일']").css({"background":"navy","color":"white"})
 	var defaultday = new Date();
@@ -88,37 +89,51 @@ $(document).ready(function(){
 	defaultday.setDate(dayOfMonth - 7);
 	$("#startDate").val(defaultday.toISOString().substring(0, 10))
 	$("#endDate").val(new Date().toISOString().substring(0, 10))
-      
-	var startDate = $('#startDate').val();
-    var endDate = $('#endDate').val();
-    //-을 구분자로 연,월,일로 잘라내어 배열로 반환
-    var startArray = startDate.split('-');
-    var endArray = endDate.split('-'); 
-	// 개월수 클릭에 따른 배경/기간변경
-	$(".returnHistoryMonthSel").click(function(){
-		$(".returnHistoryMonthSel").css({"background":"","color":""})
-		$(this).css({"background":"navy","color":"white"})
-		
-		if($(this).val()=="1주일"){
-			var enddatePre = new Date(endArray[0], endArray[1], endArray[2]);
+	
+	
+    var endDate;
+    var endArray; 
+    dateclick() // 변경안하고 클릭시,
+	$("#endDate").change(function(){
+		dateclick()//날짜 변경 후 클릭 시,
+	})
+	
+	function dateclick(){
+		$(".returnHistoryMonthSel").click(function(){
+			// 개월수 클릭에 따른 배경/기간변경
+			$(".returnHistoryMonthSel").css({"background":"","color":""})
+			$(this).css({"background":"navy","color":"white"})
+			endDate = $('#endDate').val();
+			endArray = endDate.split('-')
+			var enddatePre = new Date(endArray[0], endArray[1]-1, endArray[2]); // new Date 월은 0부터 시작(0~11)
 			var endDate_dayOfMonth = enddatePre.getDate();
 			var endDate_monthOfYear = enddatePre.getMonth();
-			enddatePre.setDate(endDate_dayOfMonth-7);
-			alert(enddatePre)
-			//$("#startDate").val(end_date)
 			
-		}else if($(this).val()=="1개월"){
-			
-		}else if($(this).val()=="3개월"){
-			
-		}else{
-			
-		}
-	})
+			if($(this).val()==="1주일"){
+				enddatePre.setDate(endDate_dayOfMonth-6);
+				$("#startDate").val(enddatePre.toISOString().substring(0, 10))
+			}else if($(this).val()==="1개월"){
+				enddatePre.setDate(endDate_dayOfMonth+1);
+				enddatePre.setMonth(endDate_monthOfYear-1);
+				$("#startDate").val(enddatePre.toISOString().substring(0, 10))
+			}else if($(this).val()==="3개월"){
+				enddatePre.setDate(endDate_dayOfMonth+1);
+				enddatePre.setMonth(endDate_monthOfYear-3);
+				$("#startDate").val(enddatePre.toISOString().substring(0, 10))
+			}else{
+				enddatePre.setDate(endDate_dayOfMonth+1);
+				enddatePre.setMonth(endDate_monthOfYear-6);
+				$("#startDate").val(enddatePre.toISOString().substring(0, 10))
+			}
+		})
+	}
+	
 	// 기간 유효성 체크 (시작날짜와 끝나는날짜)
 	$("#index").click(function(){
 		//기간 유효성체크
-		  
+		 var startDate = $('#startDate').val();
+		 //-을 구분자로 연,월,일로 잘라내어 배열로 반환
+		 var startArray = startDate.split('-');
 	    //배열에 담겨있는 연,월,일을 사용해서 Date 객체 생성
 	    var start_date = new Date(startArray[0], startArray[1], startArray[2]);
 	    var end_date = new Date(endArray[0], endArray[1], endArray[2]);
@@ -128,6 +143,7 @@ $(document).ready(function(){
             return false;
         }
 	});
+	
 });
 </script>
 </head>

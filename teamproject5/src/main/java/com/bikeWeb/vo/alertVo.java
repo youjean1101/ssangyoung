@@ -2,7 +2,7 @@ package com.bikeWeb.vo;
 
 import java.util.Date;
 
-public class alertVo {
+public class AlertVo {
 	private int alertNo;
 	private String id;
 	private Date alertDate;
@@ -12,7 +12,7 @@ public class alertVo {
 	/**
 	 * 
 	 */
-	public alertVo() {
+	public AlertVo() {
 		super();
 	}
 	public int getAlertNo() {

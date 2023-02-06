@@ -1,8 +1,6 @@
 package com.bikeWeb.vo;
 
-import java.util.Date;
-
-public class memberVo {
+public class MemberVo {
 	private String id;
 	private String pass;
 	private String rentPass;
@@ -10,15 +8,13 @@ public class memberVo {
 	private String name;
 	private String phoneNumber;
 	private String email;
-	private Date birthday;
-	private char gender;
 	private int weight;
 	private int totalDistance;
 	private String getCardNo;
 	/**
 	 * 
 	 */
-	public memberVo() {
+	public MemberVo() {
 		super();
 	}
 	public String getId() {
@@ -41,12 +37,6 @@ public class memberVo {
 	}
 	public String getEmail() {
 		return email;
-	}
-	public Date getBirthday() {
-		return birthday;
-	}
-	public char getGender() {
-		return gender;
 	}
 	public int getWeight() {
 		return weight;
@@ -77,12 +67,6 @@ public class memberVo {
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-	public void setGender(char gender) {
-		this.gender = gender;
 	}
 	public void setWeight(int weight) {
 		this.weight = weight;

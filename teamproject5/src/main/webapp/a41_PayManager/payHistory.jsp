@@ -81,6 +81,7 @@
 	#payDateindexTab input[type='date']{
 		width:230px;
 		height:40px;
+		text-align:center;
 	}
 </style>
 <script src="${path}/a00_com/jquery.min.js"></script>
@@ -94,17 +95,73 @@ $(document).ready(function(){
 	// 마이페이지 결제관리 공통 클릭상태 유지
 	$("#payhistory").css({"background":"navy","color":"white"})
 	
-	// 개월수 클릭에 따른 배경 변경
-	$(".payHistoryMonthSel").click(function(){
-		$(".payHistoryMonthSel").css({"background":"","color":""})
-		$(this).css({"background":"navy","color":"white"})
+	// 기간 지정 dafault값
+	$("input[value='1주일']").css({"background":"navy","color":"white"})
+	var defaultday = new Date();
+	var dayOfMonth = defaultday.getDate(); //일전
+	var monthOfYear = defaultday.getMonth(); //개월전
+	defaultday.setDate(dayOfMonth - 7);
+	$("#startDate").val(defaultday.toISOString().substring(0, 10))
+	$("#endDate").val(new Date().toISOString().substring(0, 10))
+	
+    var endDate;
+    var endArray; 
+    dateclick() // 변경안하고 클릭시,
+	$("#endDate").change(function(){
+		dateclick()//날짜 변경 후 클릭 시,
 	})
+	
+	// 개월수 클릭에 따른 배경/기간변경
+	function dateclick(){
+		$(".payHistoryMonthSel").click(function(){
+			$(".payHistoryMonthSel").css({"background":"","color":""})
+			$(this).css({"background":"navy","color":"white"})
+			endDate = $('#endDate').val();
+			endArray = endDate.split('-')
+			var enddatePre = new Date(endArray[0], endArray[1]-1, endArray[2]); // new Date 월은 0부터 시작(0~11)
+			var endDate_dayOfMonth = enddatePre.getDate();
+			var endDate_monthOfYear = enddatePre.getMonth();
+			
+			if($(this).val()==="1주일"){
+				enddatePre.setDate(endDate_dayOfMonth-6);
+				$("#startDate").val(enddatePre.toISOString().substring(0, 10))
+			}else if($(this).val()==="1개월"){
+				enddatePre.setDate(endDate_dayOfMonth+1);
+				enddatePre.setMonth(endDate_monthOfYear-1);
+				$("#startDate").val(enddatePre.toISOString().substring(0, 10))
+			}else if($(this).val()==="3개월"){
+				enddatePre.setDate(endDate_dayOfMonth+1);
+				enddatePre.setMonth(endDate_monthOfYear-3);
+				$("#startDate").val(enddatePre.toISOString().substring(0, 10))
+			}else{
+				enddatePre.setDate(endDate_dayOfMonth+1);
+				enddatePre.setMonth(endDate_monthOfYear-6);
+				$("#startDate").val(enddatePre.toISOString().substring(0, 10))
+			}
+		})
+	}
+ 	// 기간 유효성 체크 (시작날짜와 끝나는날짜)
+	$("#index").click(function(){
+		//기간 유효성체크
+		 var startDate = $('#startDate').val();
+		 //-을 구분자로 연,월,일로 잘라내어 배열로 반환
+		 var startArray = startDate.split('-');
+	    //배열에 담겨있는 연,월,일을 사용해서 Date 객체 생성
+	    var start_date = new Date(startArray[0], startArray[1], startArray[2]);
+	    var end_date = new Date(endArray[0], endArray[1], endArray[2]);
+        //날짜를 숫자형태의 날짜 정보로 변환하여 비교한다.
+        if(start_date.getTime() > end_date.getTime()) {
+            alert("[안내메시지] 종료날짜보다 시작날짜가 작아야합니다.");
+            return false;
+        }
+	})
+	
 	// 검색 버튼 클릭 시, 프레임 출력
 	$("input[value='검색']").click(function(){
 			$("#payHistoryDataFra").attr("src","${path}/a41_PayManager/payHistoryData.jsp")
 	})
-	// 기간 지정 dafault값
-	$("input[name='enddate']").val(new Date().toISOString().substring(0, 10))
+	
+
 });
 </script>
 </head>
@@ -125,7 +182,7 @@ $(document).ready(function(){
 			<td><input value="6개월" type="button" class="payHistoryMonthSel"/></td>
 		</tr>
 		<tr><th>
-			<input type="date" name="startdate"> ~ <input type="date" name="enddate">
+			<input type="date" id="startDate" name="startdate"> ~ <input type="date" id="endDate" name="enddate">
 			</th>
 			<td></td>
 			<td></td>
