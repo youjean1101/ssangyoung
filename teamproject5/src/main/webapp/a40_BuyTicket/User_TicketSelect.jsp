@@ -71,9 +71,9 @@
 		<div id="TicketSelValue"></div>
 		
 		<table id="userTicketSelTab" >
-			<tr><td><button value="daySel" type="button">정기권<img src="${path }/b01_img/userTicketSel.png">
+			<tr><td><button value="seasonSel" type="button">정기권<img src="${path }/b01_img/userTicketSel.png">
 					<br><span>1시간권, 2시간권을 선택하실 수 있습니다.</span></button></td>
-				<td><button value="seasonSel" type="button">일일권<img src="${path }/b01_img/userTicketSel.png">
+				<td><button value="daySel" type="button">일일권<img src="${path }/b01_img/userTicketSel.png">
 					<br><span>1시간권, 2시간권을 선택하실 수 있습니다.</span></button></td></tr>
 			<tr><td><button value="groupSel" type="button">단체권<img src="${path }/b01_img/userTicketSel.png">
 					<br><span>1시간권을 선택하실 수 있습니다.</span></button></td>

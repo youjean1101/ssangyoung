@@ -27,3 +27,20 @@ WHERE 1=1
 AND subject LIKE '%'||''||'%'
 AND writer LIKE '%'||''||'%'
 order by regdte desc;
+
+SELECT * FROM board;
+insert into board values(
+board_seq.nextval,0,'두번째글','내용','마길동',0, sysdate, sysdate); 
+/*insert into board values(
+board_seq.nextval,#{refno},#{subject},#{content},#{writer},0, sysdate, sysdate); */
+
+SELECT * FROM board WHERE NO=1;
+UPDATE board 
+	SET readcnt = readcnt+1
+WHERE NO =1;
+/*
+ SELECT * FROM board WHERE NO=${no};
+UPDATE board 
+	SET readcnt = readcnt+1
+WHERE NO =${no} 
+ */

@@ -58,6 +58,7 @@
 	2. mybatis 공통 xml과 연동 처리
 		src\main\java\resource\mybatis.Spring.xml
 	 -->
+	<context:property-placeholder location="classpath:resource/a00_config"/>
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="configLocation" value="classpath:resource/mybatis.Spring.xml"/>
@@ -90,4 +91,8 @@
 		<property name="contentType" 
 			value="text/html;charset=utf-8"/>	
 	</bean>
+	 <bean id="multipartResolver"
+   		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+   		
+   	
 </beans>      

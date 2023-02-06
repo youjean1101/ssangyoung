@@ -103,6 +103,8 @@ $(document).ready(function(){
 	$("input[value='검색']").click(function(){
 			$("#payHistoryDataFra").attr("src","${path}/a41_PayManager/payHistoryData.jsp")
 	})
+	// 기간 지정 dafault값
+	$("input[name='enddate']").val(new Date().toISOString().substring(0, 10))
 });
 </script>
 </head>

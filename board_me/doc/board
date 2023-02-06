@@ -46,6 +46,61 @@
 			- 조회화면에서 상세화면 로딩
 
 # 기본 스프링 환경 설정
+0. 설정에 필요한 파일과 처리 구조
+	- web.xml(board_me\src\main\webapp\WEB-INF\web.xml)
+		ex) http://localhost:7080/board_me/list.do
+		url로 요청했을 때, 처음 호출하는 파일 : do로 url이 끝날 때 스프링 호출
+			<url-pattern>*.do2</url-pattern>
+		스프링이 처리되는 front 컨트롤러와 컨테이너 설정 위치를 지정
+			<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+			<param-value>classpath:resource/a01_container.xml</param-value>
+		요청값에 대한 한글 encoding 처리
+			<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+	- a01_container.xml(board_me\src\main\java\resource\a01_container.xml)
+		선언된 클래스를 객체로 로딩
+		공통 설정 파일 위치를 선언해서 해당 파일에서 key=value형식으로 설정 데이터 처리
+		<context:property-placeholder location="classpath:resource/a00_config"/>
+			공통 key 를 통해 효과적으로 설정 정보 활용
+		공통 mybatis 설정 정보
+			<property name="configLocation" value="classpath:resource/a02_mybatis.xml"/>
+		mybatis에 의해 실제 객체가 만들어 저는 dao 인터페이스 위치
+			<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+      			<property name="basePackage" value="board"/>
+      	view단에 대한 설정 정보
+      		- jsp/json view 등
+      		- 파일업로드/다운로드  view
+      		
+	- a00_config(board_me\src\main\java\resource\a00_config)
+		공통 key를 통해 효과적으로 설정 정보 활용
+		
+	- a02_mybatis.xml(board_me\src\main\java\resource\a02_mybatis.xml)
+		mapper.xml에서 간략하게 사용할 vo 선언
+		<typeAlias alias="boardsch" type="board.vo.BoardSch"/>
+		사용할 mapper.xml 설정 위치 지정
+		<mapper resource="resource/a03_Mapper.xml"/>
+		
+	- a03_Mapper.xml(board_me\src\main\java\resource\a03_Mapper.xml)
+		dao 인터페이스를 상속받는 실제 DB연결하여 결과값을 가져오는 객체를 만든다
+		인터페이스, 	id,		 매개변수와 	리턴값이 dao와 연동 규칙을 지켜야한다.
+		namespace 	메서드명	parameterType resultType/resultMap
+		<mapper namespace="board.A03_Dao">
+			<select id="boardList" resultType="board" parameterType="boardsch">
+				select * 
+				from board 
+				WHERE 1=1
+	
+	- A01_Controller.java(controller)
+		컨테이너에서 객체 로딩
+		@Autowired에 의해 소스상 자동 객체 할당.
+	- A02_Service.java(service)
+		컨테이너에서 객체 로딩
+		@Autowired에 의해 소스상 자동 객체 할당.
+	- A03_Dao.java(dao)
+		dao 인터페이스(껍데기) 
+		==> 컨테이너()에서 패키지(a01_container.xml)를 지정하고,
+		XXXMapper.xml에서 컨테이너에 연동 규칙에 의해 실제 객체가 만들어 진다.
+	- Board.java, BoardSch.java(vo)
+	
 1. 컨테이너 분리
 	<init-param>
       <param-name>contextConfigLocation</param-name>
@@ -114,4 +169,127 @@
 			AND writer LIKE '%'||#{writer}||'%'
 			order by regdte desc
 		</select>
-w.
+		
+# 데이터 등록 처리
+1. 주요 프로세스
+	1) 리스트 화면에서 등록 버튼 클릭 등록 화면 이동
+	2) 등록 화면
+		1) 등록할 form 데이터
+			제목(subject), 작성자(writer), 내용(content)
+			답글(refno-hedden)
+			첨부파일
+		2) 기능 버튼 : 등록, 리스트 화면
+	3) 등록 컨트롤러
+		- 등록 서비스, Dao를 통해 등록 처리
+		- 등록 완료 메시지 모델 처리
+	4) 등록 화면
+		- 등록 완료 메시지 및 조회화면 이동/계속 등록 처리
+2. 개발 순서
+	1) DB
+		- 등록 sql 작성
+			insert into board values(board_seq.nextval,
+				#{refno},#{subject},#{content},#{writer},0, sysdate, sysdate);
+		- 등록을 위한 vo
+		- 공통 mybatis
+		- dao interface
+			public void insertBoard(Board ins);
+		- mapper
+			<insert id="insertBoard" parameterType="board">
+				insert into board values(board_seq.nextval,
+				#{refno},#{subject},#{content},#{writer},0, sysdate, sysdate)
+			</insert>
+		
+	2) service
+		public void insertBoard(Board ins){
+			dao.insertBoard(ins);
+		}
+	3) controller
+		- 등록을 위한 form controller 메서드구현
+			@GetMapping("/insertFrm.do")
+			public String insertFrm(){
+				return "a02_insertBoard";
+			}
+		- 등록 처리 controller 메서드 구현
+			@PostMapping("/insert.do")
+			public String insert(Board ins, Model d){
+				service.insertBoard(ins);
+				d.addAttribute("msg","등록성공");
+				return "a02_insertBoard";
+			}
+		
+	4) 뷰
+		- 화면리스트 뷰에서 등록 버튼 클릭 시, 등록 처리 화면이동
+			<button type="button" onclick="insertFrm()">
+			function insertFrm(){
+				location.href="${path}/insertFrm.do"
+			}
+			<button>조회화면</button>
+		- 등록 form을 위한 화면 구현..
+			#{refno}, #{subject},#{content},#{writer},
+			<input name="refno" value="0" />
+			<input name="subject" value=""/>..
+# 수정/삭제를 위한 상세화면
+1. 처리 프로세스 
+	1) 리스트 화면에서 특정 데이터 더블 클릭 시,
+	2) 해당 데이터에 있는 key인 no으로 요청값으로 하여
+	3) 컨트롤러를 처리되어 
+		- 이 글에 대한 조회수를 update한 후,
+		- 이 글의 상세 데이터를 DB에 데이터를 가져온 후,
+			이 모델데이터 기반으로
+	4) 상세화면이 로딩된다.
+		- 게시물 번호, 답글 번호, 작성자, 조회수, 등록일, 수정일, 내용
+	5) 다음 단계를 위한 수정/삭제/답글/메인화면 기능 버튼과 함께 리스트 된다.
+
+2. 개발 순서 및 핵심 코드
+	1) DB처리
+		- sql, 상세 조회/조회수
+		 	SELECT * FROM board WHERE 
+		 	NO=${no};
+			UPDATE board 
+				SET readcnt = readcnt+1
+			WHERE NO =${no} 
+		- vo
+		- 공통
+		- dao
+			public Board getBoard(int no);
+		- mapper
+			<select id="getBoard" resultType="board" parameterType="int">
+				SELECT * FROM board WHERE 
+		 		NO=${no};
+			</select>
+			<update id="uptReadCnt" parameterType="int">
+				UPDATE board 
+				SET readcnt = readcnt+1
+			WHERE NO =${no} 
+			</update>
+		- service
+		
+	2) controller 및 화면 구현
+		- no 키를 받은 상세 요청 controller 구현
+			@GetMapping("board.do")
+			public String getBoard(@RequestParam("no") String no, Model d){
+				service.uptReadCnt(no);
+				d.addAttribute("board", service.getBoard(no))
+				return "a03_board"
+			}
+		- 모델데이터 처리
+		- 모델데이터 기반 상세화면 로딩
+			게시물 번호, 답글 번호, 제목, 작성자, 조회수, 등록일, 수정일, 내용
+	
+	3) 화면단 구현
+		- 리스트 화면
+			<tr ondblclick="goDetail(${no})">
+			function goDetail(no){
+				location.href="${path}/board.do?no="+no
+			}
+		- 상세 화면(a03_board.jsp)
+			<input name="no" value="${board.no}"/>
+			<input name="refno" value="${board.refno}"/>
+			<input name="subject" value="${board.subject}"/>
+			<input name="writer" value="${board.writer}"/>
+			<input name="readcnt" value="${board.readcnt}"/>
+			<input value="${board.regdte}"/>
+			<input value="${board.uptdte}"/>
+			<textarea name="content">${board.content}</textarea>
+	
+	

@@ -11,5 +11,34 @@
 		AND writer LIKE '%'|| #{writer} ||'%'
 		order by regdte desc
 	</select>
+	
+	<insert id="insertBoard" parameterType="board">
+		insert into board values(board_seq.nextval,
+		#{refno},#{subject},#{content},#{writer},0, sysdate, sysdate)
+	</insert>
+	
+	<select id="getBoard" resultType="board" parameterType="int">
+		SELECT * FROM board WHERE 
+ 		NO=#{no}
+	</select>
+	<update id="uptReadCnt" parameterType="int">
+		UPDATE board 
+		SET readcnt = readcnt+1
+		WHERE NO =#{no} 
+	</update>
+	
+	<select id="baseballList" resultType="BaseBallTeam">
+		SELECT * FROM baseballteam
+	</select>
+	
+	<insert id="insertBaseballTeam" parameterType="BaseBallTeam">
+		INSERT INTO baseballteam VALUES(baseballteam_seq.nextval,
+		#{teamname},#{ranking},#{hometown},#{player})
+	</insert>
+	
+	<select id="BaseballTeamDetail" resultType="BaseBallTeam" parameterType="int">
+		SELECT * FROM baseballteam
+		WHERE teamno=#{teamno}
+	</select>
 </mapper>		
 		

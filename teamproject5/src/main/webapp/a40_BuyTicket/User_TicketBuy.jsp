@@ -169,19 +169,15 @@
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		var Selob = opener.document.getElementByName("Sel");
-		alert(Selob)
-		//var Selob = parameterName('Sel');
-		//var Selob = $("[name=Sel]").val()
-		//alert(Selob)
 		// 티켓 선택에 따른 버튼 클릭
-		/* if(Sel=="daySel"){
-			alert("일일권")
+		var Sel = '${param.Sel}'
+		if(Sel=="groupSel"){
+			groupclick();
 		}else if(Sel=="seasonSel"){
-			alert("정기권")
+			seasonclick();
 		}else{
-			alert("단체권")
-		} */
+			dayclick();
+		}
 		// 결제방식에 따른 출력 테이블
 		$("input[name=payMethod]").change(function(){
 			if($(this).val()=="phone"){
@@ -206,45 +202,59 @@
 		});
 		
 		// 티켓 종류 버튼 클릭에 따른 종류부분 select,text 변경
+		function dayclick(){
+			$("#TicketKindSelTab button").css("background","")
+			$("#day").css({"background":"rgb(76, 171, 106)"})
+			$("#price").text("0 원")
+			$("#price2").text("0 원")
+			$("#totprice").text("0")
+			$("#ticketKindText").text("일일권")
+			ticketKindOptionshow+="<option style='display:none;'>선택</option>"
+			ticketKindOptionshow+="<option value='1000'>일일회원(1시간권)</option>"
+			ticketKindOptionshow+="<option value='2000'>일일회원(2시간권)</option>"
+			$("#ticketSel").html(ticketKindOptionshow)
+			ticketKindOptionshow=""
+		}
+		function seasonclick(){
+			$("#TicketKindSelTab button").css("background","")
+			$("#season").css({"background":"rgb(76, 171, 106)"})
+			$("#price").text("0 원")
+			$("#price2").text("0 원")
+			$("#totprice").text("0")
+			$("#ticketKindText").text("정기권")
+			ticketKindOptionshow+="<option style='display:none;'>선택</option>"
+			ticketKindOptionshow+="<option value='3000'>7일(1시간권)</option>"
+			ticketKindOptionshow+="<option value='5000'>30일(1시간권)</option>"
+			ticketKindOptionshow+="<option value='15000'>180일(1시간권)</option>"
+			ticketKindOptionshow+="<option value='30000'>365일(1시간권)</option>"
+			ticketKindOptionshow+="<option value='4000'>7일(2시간권)</option>"
+			ticketKindOptionshow+="<option value='7000'>30일(2시간권)</option>"
+			ticketKindOptionshow+="<option value='20000'>180일(2시간권)</option>"
+			ticketKindOptionshow+="<option value='40000'>365일(2시간권)</option>"
+			$("#ticketSel").html(ticketKindOptionshow)
+			ticketKindOptionshow=""
+		}
+		function groupclick(){
+			$("#TicketKindSelTab button").css("background","")
+			$("#group").css({"background":"rgb(76, 171, 106)"})
+			$("#price").text("0 원")
+			$("#price2").text("0 원")
+			$("#totprice").text("0")
+			$("#ticketKindText").text("단체권")
+			ticketKindOptionshow+="<option style='display:none;'>선택</option>"
+			ticketKindOptionshow+="<option value='1000'>단체(1시간권)</option>"
+			$("#ticketSel").html(ticketKindOptionshow)
+			ticketKindOptionshow=""
+		}
+		
 		var ticketKindOptionshow=""
 		$("#TicketKindSelTab button").click(function(){
-			$("#TicketKindSelTab button").css("background","")
-			$(this).css({"background":"rgb(76, 171, 106)"})
-			if($(this).val()=="day"){ //일일권 버튼 클릭 시,
-				$("#price").text("0 원")
-				$("#price2").text("0 원")
-				$("#totprice").text("0")
-				$("#ticketKindText").text("일일권")
-				ticketKindOptionshow+="<option style='display:none;'>선택</option>"
-				ticketKindOptionshow+="<option value='1000'>일일회원(1시간권)</option>"
-				ticketKindOptionshow+="<option value='2000'>일일회원(2시간권)</option>"
-				$("#ticketSel").html(ticketKindOptionshow)
-				ticketKindOptionshow=""
+			if($(this).val()=="group"){ //일일권 버튼 클릭 시,
+				groupclick()
 			}else if($(this).val()=="season"){ //정기권 버튼 클릭 시,
-				$("#price").text("0 원")
-				$("#price2").text("0 원")
-				$("#totprice").text("0")
-				$("#ticketKindText").text("정기권")
-				ticketKindOptionshow+="<option style='display:none;'>선택</option>"
-				ticketKindOptionshow+="<option value='3000'>7일(1시간권)</option>"
-				ticketKindOptionshow+="<option value='5000'>30일(1시간권)</option>"
-				ticketKindOptionshow+="<option value='15000'>180일(1시간권)</option>"
-				ticketKindOptionshow+="<option value='30000'>365일(1시간권)</option>"
-				ticketKindOptionshow+="<option value='4000'>7일(2시간권)</option>"
-				ticketKindOptionshow+="<option value='7000'>30일(2시간권)</option>"
-				ticketKindOptionshow+="<option value='20000'>180일(2시간권)</option>"
-				ticketKindOptionshow+="<option value='40000'>365일(2시간권)</option>"
-				$("#ticketSel").html(ticketKindOptionshow)
-				ticketKindOptionshow=""
+				seasonclick()
 			}else{
-				$("#price").text("0 원")
-				$("#price2").text("0 원")
-				$("#totprice").text("0")
-				$("#ticketKindText").text("단체권")
-				ticketKindOptionshow+="<option style='display:none;'>선택</option>"
-				ticketKindOptionshow+="<option value='1000'>단체(1시간권)</option>"
-				$("#ticketSel").html(ticketKindOptionshow)
-				ticketKindOptionshow=""
+				dayclick()
 			}
 		})
 		
@@ -264,9 +274,9 @@
 	<h3 id="userTicketSelTitle">이용권 구매</h3>
 	<table id="TicketKindSelTab">
 		<tr>
-			<td><button type="button" value="day">일일권</button></td>
-			<td><button type="button" value="season">정기권</button></td>
-			<td><button type="button" value="group">단체권</button></td>
+			<td><button type="button" value="day" id="day">일일권</button></td>
+			<td><button type="button" value="season" id="season">정기권</button></td>
+			<td><button type="button" value="group" id="group">단체권</button></td>
 		</tr>
 	</table>
 	<h4 id="TicketguideTitle">ⓘ 이용권 사용 안내</h4>

@@ -29,63 +29,46 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		<%-- 
-		no, subject, writer, regdte, readcnt
-		번호, 제목, 작성자, 등록일, 조회수
-		--%>
+		
+		--%>	
 		$("#regBtn").click(function(){
-			location.href="${path}/insertFrm.do"
+			location.href="${path}/insertTeam.do"
 		})
 	});
-	
-	function insertFrm(){
-		location.href="${path}/insertFrm.do"
-	}
-	
-	function goDetail(no){
-		location.href="${path}/board.do?no="+no
-	}
+	function goDetail(teamno){
+		location.href="${path}/baseBallTeam.do?teamno="+teamno
+	}	
 </script>
 </head>
 
 <body>
 <div class="jumbotron text-center">
-  <h2 >게시판</h2>
-
+  <h2>야구선수단</h2>
 </div>
 <div class="container">
 	<form id="frm01" class="form"  method="post">
   	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-	    <input name="subject" value="${sch.subject}" class="form-control mr-sm-2" placeholder="제목" />
-	    <input name="writer" value="${sch.writer}" class="form-control mr-sm-2" placeholder="내용" />
 	    <button class="btn btn-info" type="submit">Search</button>
-	    <button class="btn btn-info" type="button" data-toggle="modal" data-target="#exampleModalCenter">등록</button>
- 		<button class="btn btn-success" id="regBtn" type="button">등록</button>
+	    <button class="btn btn-success" id="regBtn" type="button">등록</button>
  	</nav>
 	</form>
    <table class="table table-hover table-striped">
-   	<col width="10%">
-   	<col width="45%">
-   	<col width="15%">
-   	<col width="15%">
-   	<col width="15%">
+   	<col width="33%">
+   	<col width="33%">
+   	<col width="33%">
     <thead>
     
       <tr class="table-success text-center">
         <th>번호</th>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>등록일</th>
-        <th>조회수</th>
+        <th>팀명</th>
+        <th>순위</th>
       </tr>
     </thead>	
     <tbody>
-    	<c:forEach var="board" items="${list}">
-    	<tr ondblclick="goDetail(${board.no})">
-    		<td>${board.no}</td>
-    		<td>${board.subject}</td>
-    		<td>${board.writer}</td>
-    		<td><fmt:formatDate value="${board.regdte}"/></td>
-    		<td>${board.readcnt}</td></tr>
+    	<c:forEach var="baseballTeam" items="${teamlist}">
+    	<tr  ondblclick="goDetail(${baseballTeam.teamno})"><td>${baseballTeam.teamno}</td>
+    		<td>${baseballTeam.teamname}</td>
+    		<td>${baseballTeam.ranking}</td></tr>
     	</c:forEach>
     </tbody>
 	</table>    
@@ -102,23 +85,19 @@
       </div>
       <div class="modal-body">
 		<form id="frm02" class="form"  method="post">
-	     <div class="row"><%-- #{refno}, #{subject},#{content},#{writer}, --%>
-	        답글번호 : <input type="text" class="form-control" placeholder="답글번호 입력" name="refno">
+	     <div class="row">
+	      <div class="col">
+	        <input type="text" class="form-control" placeholder="사원명 입력" name="ename">
 	      </div>
-	      <div class="row">
-	        제목 : <input type="text" class="form-control" placeholder="제목 입력" name="subject">
+	      <div class="col">
+	        <input type="text" class="form-control" placeholder="직책명 입력" name="job">
 	      </div>
-	      <div class="row">
-	        내용 : <textarea class="form-control" placeholder="내용입력" name="content" style="height:300px;"></textarea>
-	      </div>
-	       <div class="row">
-	        작성자 : <input type="text" class="form-control" placeholder="작성자 입력" name="writer">
-	      </div>
+	     </div>
 	    </form> 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="insertFrm()">Save changes</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

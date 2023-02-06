@@ -1,0 +1,36 @@
+# 파일업로드와 다운로드
+1. 기능
+	1) 특정 파일을 등록하고, 서버의 특정 경로에 파일을 업로드 처리한다.
+	2) 파일의 이름을 클릭하면, 서버에서 client로 파일을 다운로드 처리한다.
+2. 환경 설정
+	1) 스프링에서 지원하는 파일업로드 모듈 컨테이너에 설정
+		 <bean id="multipartResolver"
+   			class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	2) 사용자 정의 다운로드 뷰 선언
+	3) 공통 설정 파일 conf
+		파일 서버의 경로 위치를 지정 filupload=c:\....
+3. 개발 순서
+	1) 업로드 화면 (jsp)
+		- 업로드 파일 객체
+			<input type="file" name="report" />
+		- form에서 파일을 stream으로 전달할 수 있는 속성값을 설정
+			<form enctype="multipart/form-data"
+	2) 컨트롤단 처리
+		- 업로드 하는 파일을 받을 수 있는 요청객체 선언
+			단일 데이터
+				public String upload(@RequestParam("report") MultipartFile file)
+			
+			VO 객체형
+				class Board{
+					private MultipartFile report;
+					public void setReport(MultipartFile m)..
+				}
+				public String upload(Board board)
+	3) 서비스단 처리
+		- 네트웍을 통해 객체로 전달된 MultipartFile을 특정한 물리적 위치로 저장할 수 있는 
+			File 객체로 변환하여야 한다.
+		- File객체는 특정한 물리적 위치기반 파일 생성.
+			공통 파일로 지정한 ${filupload}로 파일 위치를 접근하여 업로드 처리할 수 있다.
+		- MultipartFile ==> File 변환
+	ex) 게시판의 경우는 업로드 파일 정보를 특정한 게시물과 연관관계를 설정하여야지 첨부파일로 처리할 수 있다.
+	

@@ -79,11 +79,55 @@
 $(document).ready(function(){
 	// 마이페이지 결제관리 공통 클릭상태 유지
 	$("#returnhistory").css({"background":"navy","color":"white"})
-	// 개월수 클릭에 따른 배경 변경
+	
+	// 기간 지정 dafault값
+	$("input[value='1주일']").css({"background":"navy","color":"white"})
+	var defaultday = new Date();
+	var dayOfMonth = defaultday.getDate(); //일전
+	var monthOfYear = defaultday.getMonth(); //개월전
+	defaultday.setDate(dayOfMonth - 7);
+	$("#startDate").val(defaultday.toISOString().substring(0, 10))
+	$("#endDate").val(new Date().toISOString().substring(0, 10))
+      
+	var startDate = $('#startDate').val();
+    var endDate = $('#endDate').val();
+    //-을 구분자로 연,월,일로 잘라내어 배열로 반환
+    var startArray = startDate.split('-');
+    var endArray = endDate.split('-'); 
+	// 개월수 클릭에 따른 배경/기간변경
 	$(".returnHistoryMonthSel").click(function(){
 		$(".returnHistoryMonthSel").css({"background":"","color":""})
 		$(this).css({"background":"navy","color":"white"})
+		
+		if($(this).val()=="1주일"){
+			var enddatePre = new Date(endArray[0], endArray[1], endArray[2]);
+			var endDate_dayOfMonth = enddatePre.getDate();
+			var endDate_monthOfYear = enddatePre.getMonth();
+			enddatePre.setDate(endDate_dayOfMonth-7);
+			alert(enddatePre)
+			//$("#startDate").val(end_date)
+			
+		}else if($(this).val()=="1개월"){
+			
+		}else if($(this).val()=="3개월"){
+			
+		}else{
+			
+		}
 	})
+	// 기간 유효성 체크 (시작날짜와 끝나는날짜)
+	$("#index").click(function(){
+		//기간 유효성체크
+		  
+	    //배열에 담겨있는 연,월,일을 사용해서 Date 객체 생성
+	    var start_date = new Date(startArray[0], startArray[1], startArray[2]);
+	    var end_date = new Date(endArray[0], endArray[1], endArray[2]);
+        //날짜를 숫자형태의 날짜 정보로 변환하여 비교한다.
+        if(start_date.getTime() > end_date.getTime()) {
+            alert("[안내메시지] 종료날짜보다 시작날짜가 작아야합니다.");
+            return false;
+        }
+	});
 });
 </script>
 </head>
@@ -98,8 +142,8 @@ $(document).ready(function(){
 			<th><input value="1개월" type="button" class="returnHistoryMonthSel"/></th>
 			<th><input value="3개월" type="button" class="returnHistoryMonthSel"/></th>
 			<th><input value="6개월" type="button" class="returnHistoryMonthSel"/></th>
-			<td><input type="date" name="startdate">&nbsp &nbsp ~</td><td><input type="date" name="enddate"></td>
-			<td><input type="button" value="검색"/></td>
+			<td><input type="date" id="startDate" name="startdate">&nbsp &nbsp ~</td><td><input type="date" id="endDate" name="enddate"></td>
+			<td><input type="button" value="검색" id="index"/></td>
 		</tr>
 	</table>
 	<iframe id="returnHistoryDataFra" src="${path}/a41_PayManager/returnHistoryData.jsp"></iframe>
