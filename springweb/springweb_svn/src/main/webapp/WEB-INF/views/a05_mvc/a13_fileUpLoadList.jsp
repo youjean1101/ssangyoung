@@ -29,52 +29,54 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		<%-- 
-		a10_fileUpload.jsp
-		controller(A05_FileUploadController.java)
-		if(report.getOriginalFilename()!=null) {
-			d.addAttribute("msg", "업로드 성공!");
-		}
+		
 		--%>
 		var msg = "${msg}"
 		if(msg!=""){
 			alert(msg)
 		}
 	});
+	function download(fname){
+		if(confirm(fname+"다운로드 하시겠습니까?")){
+			location.href="${path}/download.do?fname="+fname;
+		}
+	}
 </script>
 </head>
 
 <body>
 <div class="jumbotron text-center">
-  <h2>파일업로드</h2>
+  <h2>등록 파일 리스트</h2>
 
 </div>
 <div class="container">
-	<form id="frm01" enctype="multipart/form-data" action="${path}/upload.do" class="form"  method="post">
+	<form id="frm01" class="form"  method="post">
   	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-	    <input type="file" name="report" class="form-control mr-sm-2" placeholder="제목" />
-	    <button class="btn btn-info" type="submit">파일 업로드</button>
+	    <input name="title" class="form-control mr-sm-2" placeholder="검색할 내용" />
+	    <button data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-secondary" type="button">등록</button>
+	    <button class="btn btn-info" type="submit">Search</button>
  	</nav>
 	</form>
    <table class="table table-hover table-striped">
-   	<col width="10%">
-   	<col width="50%">
-   	<col width="15%">
-   	<col width="15%">
-   	<col width="10%">
+   	<col width="25%">
+   	<col width="25%">
+   	<col width="25%">
+   	<col width="25%">
     <thead>
     
       <tr class="table-success text-center">
         <th>번호</th>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>작성일</th>
-        <th>조회</th>
+        <th>파일내용</th>
+        <th>파일명</th>
+        <th>등록일</th>
       </tr>
     </thead>	
     <tbody>
-    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
-    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
-    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<c:forEach var="fObj" items="${flist}">
+    		<tr ondblclick="download('${fObj.fname}')"><td>${fObj.no}</td><td>${fObj.title}</td>
+    			<td>${fObj.fname}</td>
+    			<td><fmt:formatDate value="${fObj.regdte}"/></td></tr>
+    	</c:forEach>
     </tbody>
 	</table>    
     
@@ -83,27 +85,46 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">타이틀</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">파일등록</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-		<form id="frm02" class="form"  method="post">
+		<form id="frm02" action="${path}/fileUpLoad.do" 
+				enctype="multipart/form-data"
+		class="form"  method="post">
 	     <div class="row">
 	      <div class="col">
-	        <input type="text" class="form-control" placeholder="사원명 입력" name="ename">
-	      </div>
-	      <div class="col">
-	        <input type="text" class="form-control" placeholder="직책명 입력" name="job">
+	        <input type="text" class="form-control" placeholder="내용" name="title">
 	      </div>
 	     </div>
+	     <div class="row">
+	      <div class="col">
+	        <input type="text" class="form-control" placeholder="기타정보" name="etc">
+	      </div>
+	     </div>
+	     <div class="col">
+	      <div class="custom-file">
+	        <input type="file" name="report" class="custom-file-input" id="file01">
+	        <label class="custom-file-label" for="file01">파일을 선택하세요!</label>
+	      </div>
+	     </div>
+	     
 	    </form> 
       </div>
       <div class="modal-footer">
+     	<button id="regBtn" type="button" class="btn btn-success">파일 첨부</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
+      <script type="text/javascript">
+      	$("#regBtn").click(function(){
+      		$("#frm02").submit()
+      	})
+      	$(".custom-file-input").on("change",function(){
+      		$(this).next(".custom-file-label").text($(this).val())
+      	})
+      </script>
     </div>
   </div>
 </div>

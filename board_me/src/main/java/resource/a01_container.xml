@@ -85,7 +85,7 @@
     -->
    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
      <property name="order" value="1"/>
-     <property name="prefix" value="/WEB-INF/"/> <!-- 접두어 -->
+     <property name="prefix" value="/WEB-INF/view/"/> <!-- 접두어 -->
      <property name="suffix" value=".jsp"/> <!-- 접미어 -->
    </bean>
    <!-- 

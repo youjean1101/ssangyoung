@@ -29,52 +29,45 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		<%-- 
-		a10_fileUpload.jsp
-		controller(A05_FileUploadController.java)
-		if(report.getOriginalFilename()!=null) {
-			d.addAttribute("msg", "업로드 성공!");
-		}
-		--%>
+		
+		--%>	
 		var msg = "${msg}"
-		if(msg!=""){
-			alert(msg)
-		}
+			if(msg!=""){
+				alert(msg)
+			}
 	});
 </script>
 </head>
 
 <body>
 <div class="jumbotron text-center">
-  <h2>파일업로드</h2>
+  <h2 data-toggle="modal" data-target="#exampleModalCenter">타이틀</h2>
 
 </div>
 <div class="container">
-	<form id="frm01" enctype="multipart/form-data" action="${path}/upload.do" class="form"  method="post">
+	<form enctype="multipart/form-data" action="${path}/upload4.do" id="frm01" class="form-inline" method="post" style="color:white;">
   	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-	    <input type="file" name="report" class="form-control mr-sm-2" placeholder="제목" />
-	    <button class="btn btn-info" type="submit">파일 업로드</button>
+	    파일내용 : <input name="content" class="form-control mr-sm-2" placeholder="파일내용" />
+	    파일 : <input type="file" name="report" class="form-control mr-sm-2" placeholder="파일" />
+	    <button class="btn btn-info" type="submit">업로드</button>
  	</nav>
 	</form>
    <table class="table table-hover table-striped">
-   	<col width="10%">
-   	<col width="50%">
-   	<col width="15%">
-   	<col width="15%">
-   	<col width="10%">
+   	<col width="33%">
+   	<col width="33%">
+   	<col width="33%">
     <thead>
     
       <tr class="table-success text-center">
         <th>번호</th>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>작성일</th>
-        <th>조회</th>
+        <th>내용</th>
+        <th>파일명</th>
       </tr>
     </thead>	
     <tbody>
-    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
-    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
-    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+	    <c:forEach var="ex" items="${exflist}">
+	    	<tr><td>${ex.no}</td><td>${ex.etc}</td><td>${ex.fname}</td></tr>
+	    </c:forEach>
     </tbody>
 	</table>    
     

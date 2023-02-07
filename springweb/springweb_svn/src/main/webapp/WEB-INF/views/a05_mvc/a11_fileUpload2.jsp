@@ -29,30 +29,26 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		<%-- 
-		a10_fileUpload.jsp
-		controller(A05_FileUploadController.java)
-		if(report.getOriginalFilename()!=null) {
-			d.addAttribute("msg", "업로드 성공!");
-		}
+		
 		--%>
 		var msg = "${msg}"
 		if(msg!=""){
 			alert(msg)
 		}
-	});
+});
 </script>
 </head>
 
 <body>
 <div class="jumbotron text-center">
-  <h2>파일업로드</h2>
+  <h2 data-toggle="modal" data-target="#exampleModalCenter">타이틀</h2>
 
 </div>
 <div class="container">
-	<form id="frm01" enctype="multipart/form-data" action="${path}/upload.do" class="form"  method="post">
+	<form id="frm01" class="form-inline" method="post" enctype="multipart/form-data" action="${path}/upload2.do">
   	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 	    <input type="file" name="report" class="form-control mr-sm-2" placeholder="제목" />
-	    <button class="btn btn-info" type="submit">파일 업로드</button>
+	    <button class="btn btn-info" type="submit">파일업로드</button>
  	</nav>
 	</form>
    <table class="table table-hover table-striped">

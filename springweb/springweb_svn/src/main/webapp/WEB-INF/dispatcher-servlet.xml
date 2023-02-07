@@ -94,5 +94,5 @@
 	 <bean id="multipartResolver"
    		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
    		
-   	
+   	<bean id="downloadViewer" class="springweb.a06_util.Z01_DownloadView"/>
 </beans>      

@@ -26,11 +26,182 @@
 					public void setReport(MultipartFile m)..
 				}
 				public String upload(Board board)
-	3) 서비스단 처리
+	3) 서비스단 처리(springweb.a05_mvc.a02_service.A05_FileService.java)
 		- 네트웍을 통해 객체로 전달된 MultipartFile을 특정한 물리적 위치로 저장할 수 있는 
 			File 객체로 변환하여야 한다.
+			@Value("$(upload)") : conf파일에서 설정한 물리적 업로드 경로를 가져온다.
+			private String upload;
+			public String uploadFile(MultipartFile report){
+				report.transferTo(파일객체)
+			}
+			 
 		- File객체는 특정한 물리적 위치기반 파일 생성.
 			공통 파일로 지정한 ${filupload}로 파일 위치를 접근하여 업로드 처리할 수 있다.
 		- MultipartFile ==> File 변환
 	ex) 게시판의 경우는 업로드 파일 정보를 특정한 게시물과 연관관계를 설정하여야지 첨부파일로 처리할 수 있다.
+# 업로드된 파일 재활용
+1. 업로드된 파일을 기준으로 이미지 화면을 보거나 다시 첨부파일을 등록하여 사용할 때
+2. DB에 등록하여 다른 정보와 함께 처리하여야 한다.
+3. DB 등록 처리를 위한 처리
+	1) DB 만들기
+		table fileRep (no, title, path, tmpFile, fname, etc, regdte, uptdte)
+			번호, 파일내용, 경로, 임시파일명, 실제파일, 기타, 등록일, 수정일
+		create table filerep(
+			no number,
+			title varchar2(100),
+			path varchar2(500),
+			tempfile varchar2(100),
+			fname varchar2(100),
+			etc varchar2(200),
+			regdte date,
+			uptdate date
+		);
+		create sequence file_seq
+			start with 1000
+			minvalue 1000;
+		insert into filerep values(file_seq.nextval,'첨부파일', '경로..',
+									'file'||file_seq.currval
+									,'a01.txt','',sysdate,sysdate);
+									select * from filerep
+		select * from filerep
+		where title like '%'||''||'%'
+									
+			
+			
+		sequence file_seq
+		insert into filerep values(file_seq.nextval, '경로..',
+									'file'||file_seq.currval
+									,'a01.txt','',sysdate,sysdate)
+		select * from filerep
+		where title like '%'||''||'%'
+	2) vo만들기
+		FileRep.java
+		no, title, path, tmpFile, fname, etc, regdte, uptdte
+	3) mybatis 공통
+		filerep
+		fileMapper.xml
+	4) dao
+		public void insertFile(FileRep ins);
+		public List<FileRep> getFileList(String fname)
+-------------------------------------------------------------
+	5) mapper
+		springweb.a05_mvc.a03_dao.A05_FileDao
+		<insert id="insertFile" parameterType="filerep">
+			insert into filerep values(file_seq.nextval,#{title}, #{path},
+			'file'||file_seq.currval
+			,#{fname},#{etc},sysdate,sysdate)
+		</insert>
+		<select id="getFileList" resultType="filerep" parameterType="String">
+			select * from filerep
+			where title like '%'||''||'%'
+		</select>
+--------------------------------------------------------------
+# 파일 업로드 및 업로드된 리스트 정보 확인..
+1. 초기화면 호출
+	0) VO객체 파일 업로드 가능하게 report속성으로 MultiPartFile로 추가
+	A05_FileUploadController.java
+	/fileList.do (get/post방식) - 리스트 확인
+	/fileUpLoad.do (get/post방식) - 업로드 
 	
+	WEB-INF\views\a05_mvc\a13_fileUpLoadList.jsp
+		- 조회할 form
+			title
+		
+		- 등록할 form
+			title, etc, report(파일객체) form으로 추가하여 처리할 수 있게 화면 구성
+
+2. 서비스단 처리(springweb\a05_mvc\a02_service\A05_FileService.java)
+	
+	1) 업로드 메서드
+		public void insertFile(FileRep ins);
+		파일을 업로드 하는 기능메서드 구현
+		업로드 위치 지정
+		요청값으로 온 FileRep 내용(타이틀)을 가지고,
+			경로정보, 파일명 설정
+			#{path},#[fname}
+		dao단에 insertFile
+	2) 리스트 메스트메서드
+		public List<FileRep> getFileList(String schTitle, FileRep ins){
+			// 정의된 등록 메서드 처리
+			insertFile(ins)
+			return dao.getFileList(schTitle); # 검색하는 title로 처리
+		}
+		
+# 파일 업로드 및 리스트 처리
+1. 핵심 파일
+	1) 데이터 베이스 처리
+		공통 mybatis(mybatis.Spring.xml)
+			filerep : vo alias 명
+			mapper 파일 설정
+		mapper(A05_FileMapper.xml)
+			등록
+			리스트 처리
+		vo(FileRep.java)
+			기본 등록 정보 : no, title, path, tmpFile, fname, etc, regdte, uptdte
+			파일 등록 처리 : private MultipartFile report;
+		dao interface(A05_FileDao.java)
+		public void insertFile(FileRep f);
+		public List<FileRep> getFileList(String fname)
+	
+	2) 컨트롤(A05_FileUploadController.java)
+		/fileList.do 요청값 title : 파일리스트 검색
+			flist로 조회처리
+		/fileUpLoad.do 요청값 FileRep(title,etc,report-파일업로드)
+			service단  insertFile로 파일업로드, msg 업로드 성공
+			flist로 조회 처리
+	3) 서비스(A05_FileService.java)
+		파일 업로드 메서드 : String uploadFile(MultipartFile report)
+		업로드할 경로 지정(공통) : private String upload;
+		업로드 후, 업로드 정보 저장 메서드 :  String insertFile(FileRep f) 
+			요청정보를 받은 FileRep 객체에 파일정보(fname)와, 경로 정보(path)설정 후, DB에 등록
+		등록된 파일 리스트 정보 : List<FileRep> getFileList(String title)
+	4) 화면 view(a13_fileUpLoadList.jsp)
+		조회 form(frm01) name="title" 조회할 제목
+		업로드 form(frm02)
+		action="${path}/fileUpLoad.do"  name="title" name="etc" name="report"
+	
+2. 프로세스
+
+3. 개발 순서 및 핵심 코드.	
+
+# 파일 처리 구조
+
+브라우저								웹서버
+첨부파일선택	====stream형식전달===>		MultiPartFile
+									지정한 경로로 파일 File객체로 생성하여 
+									저장 처리
+									서버의 특정한 파일로 저장
+									
+									파일을 다시, 다른 클라이언트가 보고 처리를 할려면
+									DB에 저장하여, 처리하게 한다.
+									
+# 파일 다운로드(1단계 - 파일 다운로드 받기)
+1. 처리 프로세스
+	1) 웹 화면에 리스트된 파일을 클릭하면, 해당 파일 이름 요청값으로 다운로드 컨트롤러 호출
+	2) url과 파일을 받아서 특정 controller 메서드를 호출하고,
+	3) 다운로드 view를 통해 요청 파일명을 통해 다운로드 처리 한다.
+2. 처리할 파일
+	1) 다운로드 viewer 구현(springweb.a06_util.Z01_DownloadView.java)
+	2) 다운로드 viewer 컨테이너에 등록(dispatcher-servlet.xml)
+		<bean id="downloadViewer" class="springweb.a06_util.Z01_DownloadView"/>
+	3) 공통 다운로드 controller를 선언하여, 파일명으로 해당 파일을 다운로드 처리
+		springweb.a06_util.A01_DownLoadCtrl.java
+			/download.do
+			요청값 fname
+			모델 데이터 fname 
+			return "download";
+
+3. 개발 순서
+	1) 다운로드 viewer
+	2) 컨테이너 등록
+	3) 다운로드 controller 구현
+	4) 기존 파일 다운리스트에서 클릭 시, 파일명을 전달 다운로드 컨트롤러 구현.
+	
+# 파일 다운로드(2단계 - 등록 파일과 매핑되어 있는 파일 다운로드 받기)
+
+							
+									
+	
+	
+	
+

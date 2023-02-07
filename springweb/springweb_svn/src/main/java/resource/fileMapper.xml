@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+	
+<mapper namespace="springweb.a05_mvc.a03_dao.A05_FileDao">
+	<insert id="insertFile" parameterType="filerep">
+		insert into filerep values(file_seq.nextval,#{title}, #{path},
+		'file'||file_seq.currval
+		,#{fname},#{etc},sysdate,sysdate)
+	</insert>
+	<select id="getFileList" resultType="filerep" parameterType="String">
+		select * from filerep
+		where title like '%'||#{fname}||'%'
+	</select>
+	<insert id="insertExFile" parameterType="fileexvo">
+		insert into filerep values(file_seq.nextval,#{title}, #{path},
+		'file'||file_seq.currval
+		,#{fname},#{content},sysdate,sysdate)
+	</insert>
+	<select id="getFileExList" resultType="filerep">
+		select * from filerep
+	</select>
+</mapper>

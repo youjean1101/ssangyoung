@@ -195,9 +195,10 @@
 						+"&email="+$("input[name='email1']").val()+"@"+$("input[name='email2']").val(),
 				dataType:"json",
 				success:function(data){
-					alert("등록 성공")
+					alert("[안내메시지] 결제가 완료되었습니다.\n 저희 부릉이를 이용해주셔서 감사합니다.")
 				},
 				error:function(err){
+					//alert("[안내메시지] 결제가 완료되었습니다.\n 저희 부릉이를 이용해주셔서 감사합니다.")
 					console.log(err)
 				}
 			})

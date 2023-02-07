@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+7<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*"
     %>
@@ -61,6 +61,10 @@
 		$("#goMain").click(function(){
 			location.href="${path}/list.do"			
 		});		
+		var msg = "${msg}"
+		if(msg!=""){
+			alert(msg))
+		}
 	});
 </script>
 </head>
