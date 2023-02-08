@@ -56,6 +56,14 @@
 		
 		--%>	
 	});
+	var msg = "${msg}"
+	if(msg!=""){
+		goPayHistory()
+	}
+	function goPayHistory(){
+		window.close();
+		window.open("payHistory.jsp");	
+	}
 </script>
 </head>
 
@@ -73,7 +81,12 @@
 				<th>이용권개시일</th><th>환불예정액</th><th>환불/취소</th></tr>
 		</thead>
 		<tbody>
-			<td colspan="6" style="color:grey;">no data</td>
+			<c:forEach var="plist" items="${paylist}">
+			<tr><td>${plist.ticketKind}</td><td>${plist.payMoney}</td><td>${plist.payMethod}</td>
+				<td>${plist.rentalTime}</td>
+				<td>${plist.payMoney}</td><td>X</td></tr>
+			</c:forEach>
+			<!-- <tr><td colspan="6" style="color:grey;">no data</td></tr> -->
 		</tbody>
 	</table>
 </body>

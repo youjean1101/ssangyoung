@@ -43,7 +43,7 @@ AND paymethod LIKE '%'||''||'%';
 SELECT * FROM pay p,rentalInfo r
 WHERE r.payno = p.payno
 AND rentaltime = returntime
-AND returntime between '20230130' AND '20230208'
+AND returntime between '2022-11-07' AND '20230208'
 AND id='himan';
 
 SELECT * FROM pay p,rentalInfo r

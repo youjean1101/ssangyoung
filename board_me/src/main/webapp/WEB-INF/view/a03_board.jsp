@@ -1,4 +1,4 @@
-7<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.util.*"
     %>
@@ -60,10 +60,19 @@
 		--%>	
 		$("#goMain").click(function(){
 			location.href="${path}/list.do"			
-		});		
+		});	
+		$("#uptBtn").click(function(){
+			
+		})
+		$("#delBtn").click(function(){
+			
+		})
+		$("#repBtn").click(function(){
+			
+		})
 		var msg = "${msg}"
 		if(msg!=""){
-			alert(msg))
+			alert(msg)
 		}
 	});
 </script>
@@ -130,8 +139,8 @@
             <div class="col-md-6 mb-3">
               <label >수정일</label>
              
-              <input type="text" class="form-control"  
-              		value='<fmt:formatDate pattern='yyyy-MM-dd' value="${board.updte}"/>' >
+              <input type="text"  class="form-control"  
+              		value='<fmt:formatDate pattern='yyyy-MM-dd' value="${board.uptdte}"/>'  >
               <div class="invalid-feedback">
                 입력해주세요.
               </div>
@@ -145,10 +154,26 @@
               내용를 입력해주세요.
             </div>
           </div> 
+          <div class="mb-3">
+            <label >첨부파일</label>
+            <input id="downFile" value="${board.fname}" type="text" class="form-control" placeholder="첨부 입력" required>
+            <div class="invalid-feedback">
+              첨부파일 입력해주세요.
+	         </div>
+		  </div>
+		  <script type="text/javascript">
+		  $("#downFile").click(function(){
+		  		if(confirm($(this).val()+"을 다운로드하시겠습니까?")){
+		  			location.href="${path}/download.do?fname="+$(this).val()
+		  		}
+		  	})
+		  </script>  
+          
           <div class="mb-4"></div>
-	          <button id="regBtn" class="btn btn-warning btn-lg btn-block" type="button">게시물 수정</button>
-	          <button id="delBtn" class="btn btn-danger btn-lg btn-block" type="button">게시물 삭제</button>
-	          <button id="goMain" class="btn btn-info   btn-lg btn-block" type="button">조회 화면</button>
+          <button id="uptBtn" class="btn btn-warning btn-lg btn-block" type="button">게시물 수정</button>
+          <button id="delBtn" class="btn btn-danger btn-lg btn-block" type="button">게시물 삭제</button>
+          <button id="repBtn" class="btn btn-success btn-lg btn-block" type="button">답글</button>
+          <button id="goMain" class="btn btn-info   btn-lg btn-block" type="button">조회 화면</button>
         </form>
       </div>
     </div>

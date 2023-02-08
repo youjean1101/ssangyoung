@@ -23,6 +23,7 @@ public class A05_FileService {
 	//		요청정보를 받은 FileRep 객체에 파일정보(fname)와, 경로 정보(path)설정 후, DB에 등록
 	// 등록된 파일 리스트 정보 : List<FileRep> getFileList(String title)
 	public String uploadFile(MultipartFile report) {
+		
 		String fname = report.getOriginalFilename();
 		if(fname!=null && !fname.equals("")) {
 			File fObj = new File(upload+fname);

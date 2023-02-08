@@ -21,6 +21,7 @@
   <style>
     body {
       min-height: 100vh;
+
       background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
       background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
       background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
@@ -60,9 +61,10 @@
 				location.href="${path}/list.do"
 			}
 		}
+		
 		$("#goMain").click(function(){
-			location.href="${path}/list.do"
-		})
+			location.href="${path}/list.do"			
+		});
 		$("#regBtn").click(function(){
 			var isInValid = false
 			for(var idx=0;idx<$(".ckValid").length;idx++){
@@ -78,7 +80,9 @@
 			}
 			$("form").submit()
 		})
-	
+        $(".custom-file-input").on("change",function(){
+        	$(this).next(".custom-file-label").text($(this).val())
+        })		
 	});
 </script>
 </head>
@@ -87,11 +91,11 @@
     <div class="input-form-backgroud row">
       <div class="input-form col-md-12 mx-auto">
         <h4 class="mb-3">게시판 등록</h4>
-        <form method="post" action="${path}/insert.do" class="validation-form" novalidate>
+        <form method="post" enctype="multipart/form-data" action="${path}/insert.do" class="validation-form" novalidate>
         	<input type="hidden" name="refno" value="0"/>
           <div class="mb-3">
             <label for="subject">제목</label>
-            <input name="subject" type="text" class="form-control ckValid" id="subject" placeholder="제목 입력" required>
+            <input name="subject" type="text" class="form-control  ckValid" id="subject" placeholder="제목 입력" required>
             <div class="invalid-feedback">
               제목을 입력해주세요.
             </div>
@@ -105,14 +109,21 @@
           </div>   
           <div class="mb-3">
             <label for="content">내용</label>
-            <textarea name="content"  class="form-control ckValid" id="content" placeholder="내용 입력" required rows="5" ></textarea>
+            <textarea name="content"  class="form-control  ckValid" id="content" placeholder="내용 입력" required rows="5" ></textarea>
             <div class="invalid-feedback">
               내용를 입력해주세요.
             </div>
           </div> 
+          <div class="mb-3">
+         	<div class="custom-file">
+		        <input type="file" name="report" class="custom-file-input" id="file01">
+		        <label class="custom-file-label" for="file01">파일을 선택하세요!</label>
+			</div>
+		  </div>	
+ 
                     
           <div class="mb-4"></div>
-          <button id="regBtn" class="btn btn-primary btn-lg btn-block" type="button">등록 완료</button>
+          <button id="regBtn" class="btn btn-primary btn-lg btn-block" type="button">게시물 등록</button>
           <button id="goMain" class="btn btn-info btn-lg btn-block" type="button">조회 화면</button>
         </form>
       </div>

@@ -44,3 +44,24 @@ UPDATE board
 	SET readcnt = readcnt+1
 WHERE NO =${no} 
  */
+
+
+create table boardfile(
+							no number,
+							fname varchar2(500),
+							etc varchar2(500),
+							regdte date,
+							uptdate date
+						);
+
+insert into boardfile values(1,'a01.txt', '파일등록', sysdate, sysdate);
+/*
+insert into boardfile(board_seq.currval, #{fname}, #{etc}, sysdate, sysdate);
+select fname 
+from boardfile
+where no = #{no}
+*/
+SELECT * FROM boardfile;
+select fname 
+from boardfile
+where no = 1;

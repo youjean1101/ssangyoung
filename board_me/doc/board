@@ -292,4 +292,147 @@
 			<input value="${board.uptdte}"/>
 			<textarea name="content">${board.content}</textarea>
 	
+# 게시판 첨부파일 처리 파일업로드
+1. 진행 프로세스
+	1) 등록화면에서 첨부파일을 등록하여 등록 처리를 하면
+	2) DB에 첨부파일정보가 등록되고,
+	3) 특정 폴드에 첨부파일이 업로드 된다.
+	4) 해당 게시물의 상세정보를 확인하면 등록된 파일 정보도 함꼐 볼 수 있다.
+	5) 파일명을 클릭 시, 다운로드되어 해당 첨부파일 내용을 볼 수 있다.
+	
+2. 개발 순서
+	1) 핵심 소스
+		공통환경 설정(업로드경로) : resource\a00_config
+			file.upload=webapp하위에 z01_upload폴드 지정
+		컨테이너(업로드뷰):resource\a01_container.xml
+			 <bean id="multipartResolver"
+   				class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+		컨트롤러 호출(업로드 기능메서드 추가) : A01_Controller.java
+			// insert.do : 추가 코드 없음..
+		서비스(업로드 처리 메서드 추가) : A02_Service.java
+			private String uploadFile(MultiPartFile f) // 특정위치에 업로드
+			public void insertBoard(Board ins){
+					
+					BoardFile f = new BoardFile()
+					dao.insertUploadFile(f);
+					uploadFile(ins.getReport());
+					
+		DB처리(업로드 정보 저장)
+			A03_Dao.java
+				public void insertUploadFile(BoardFile f);
+			a02_mybatis.xml
+				BoardFile ==> boardFile
+			a03_Mapper.xml
+				<select id="insertUploadFile" parameterType="boardFile"/>
+		VO(업로드 처리 요청 객체 추가) : 
+			Board.java (MultipartFile report, String fname)
+			BoardFile.java(no, fname, regdte, uptdte, etc)
+			
+		화면단(파일 첨부 처리) : a02_insertBoard.jsp
+			<input type="file" name="report" />
+		화면단(첨부된 리스트 처리) : a03_board.jsp
+			<input value="${board.fname}"
+	2) 환경 설정
+		파일업로드 컨테이너 선언
+			 <bean id="multipartResolver"
+   				class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+   				
+		파일업로드할 파일서버 경로 위치 공통 설정파일 선언
+			user.upload = C:/a01_javaexp/workspace/board_me/src/main/webapp/z01_upload/
+	3) DB 처리
+		테이블 생성
+			create table boardfile(
+				no number,
+				fname varchar2(500),
+				etc varchar2(500),
+				regdte date,
+				uptdate date
+			)
+			
+		sql 작성
+			insert into boardfile(board_seq.currval,
+				'a01.txt', '파일등록', sysdate, sysdate);
+			select fname 
+			from boardfile
+			where no = 1000
+			
+		vo 
+			no, fname , etc, regdte, uptdte
+			board fname
+			
+		mybatis 공통
+			boardfile
+			
+		dao
+			public void insertUploadFile(BoardFile f);
+			public String getBoardFile(int no);
+			
+		mapper
+			<insert id="insertUploadFile" parameterType="boardfile" />
+					insert into boardfile(board_seq.currval, #{fname}, #{etc}, sysdate, sysdate);
+
+			<select id="getBoardFile" parameterType="int" />
+					select fname 
+					from boardfile
+					where no = #{no}
+		
+	4) controller/service단 구현
+			@Value("${user.upload")
+			private String upload;
+				
+			private void uploadFile(MultipartFile f) {
+				String fname = f.getOriginalFilename();
+				File fObj = new File(upload+fname);
+					try{
+						f.transferTo(fObj);
+					}catch(Exception e){
+						System.out.println("업로드예외"+e.getMessage());
+					}
+			}
+			public void insertBoard(Board ins){
+				String fname = ins.getReport().getOriginalFilename();
+				if( !fname.equals("")){
+					uploadFile(ins.getReport());
+					BoardFile f = new BoardFile();
+					f.setFname(fname);
+					f.setEtc(ins.getSubject());
+					dao.insertUploadFile(f);
+				}
+				dao.insertBoard(ins);
+			}
+			public Board getBoard(int no) {
+				Board b = dao.getBoard(no);
+				b.setFname(dao.getBoardFile(no));
+				return b;
+			}
+	5) 화면단 구현(등록)
+		<form enctype="multipart/form-data">
+	      <div class="custom-file">
+	        <input type="file" name="report" class="custom-file-input" id="file01">
+	        <label class="custom-file-label" for="file01">파일을 선택하세요!</label>
+	       </div>
+      	$(".custom-file-input").on("change",function(){
+      		$(this).next(".custom-file-label").text($(this).val())
+      	})
+		
+	6) 화면단 구현(상세화면)
+	 	<input type="text" value="${board.fname}">
+---------------------------------------------------------------------
+
+# 게시판 상세화면에서 파일 다운로드
+1. 프로세스
+	1) 상세화면에서 파일을 클릭 시,
+	2) 다운로드 컨트롤러를 파일명과 함께 전달
+	3) 다운로드 컨트롤러에서 모델데이터 파일명 설정
+	4) 다운로드 viewer 호출
+2. 개발 순서
+	1) 다운로드 viewer 구현
+		- 모델명(파일명)
+	2) 다운로드 view 컨테이너에 등록
+	3) 다운로드 컨트롤러 메서드 추가..
+		요청값 : name
+		모델명 name 설정
+		다운로드 뷰어 호출..
+	4) 화면단
+		파일클릭 시, 컨트롤러 호출 location.href 선언
 	

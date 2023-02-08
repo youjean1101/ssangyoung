@@ -5,6 +5,7 @@
    <typeAliases>
       <typeAlias alias="board" type="board.vo.Board"/>
       <typeAlias alias="boardsch" type="board.vo.BoardSch"/>
+      <typeAlias alias="boardfile" type="board.vo.BoardFile"/>
       <typeAlias alias="baseballteam" type="board.vo.BaseBallTeam"/>
    </typeAliases>
    <mappers>

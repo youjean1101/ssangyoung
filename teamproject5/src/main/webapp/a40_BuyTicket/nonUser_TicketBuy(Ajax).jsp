@@ -208,7 +208,6 @@
 			$(".price").text($(this).val()+" 원")
 		})
 		// 결제하기 버튼 클릭시 기능
-		
 		$("#payButton").click(function(){
 			insFun()
 			if(!$(".agreeSelAll").is(":checked")){

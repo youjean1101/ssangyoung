@@ -59,7 +59,11 @@
 			<tr><th>환불상품</th><th>금액</th><th>환불일</th></tr>
 		</thead>
 		<tbody>
-			<td colspan="3" style="color:red;">내역없음</td>
+			<c:forEach var="rlist" items="${returnlist}">
+				<tr><td>${rlist.ticketKind}</td><td>${rlist.payMoney}</td>
+					<td><fmt:formatDate value="${rlist.returnDate}"/></td></tr>
+			</c:forEach>
+			<tr><td colspan="3" style="color:red;">내역없음</td></tr>
 		</tbody>
 	</table>
 </body>

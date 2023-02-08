@@ -3,7 +3,7 @@ package com.bikeWeb.vo;
 public class PayDaySeachVo {
 	private String startdate;
 	private String enddate;
-	private String paymethod;
+	private String payMethod;
 	private String id;
 	public String getStartdate() {
 		return startdate;
@@ -17,11 +17,11 @@ public class PayDaySeachVo {
 	public void setEnddate(String enddate) {
 		this.enddate = enddate;
 	}
-	public String getPaymethod() {
-		return paymethod;
+	public String getPayMethod() {
+		return payMethod;
 	}
-	public void setPaymethod(String paymethod) {
-		this.paymethod = paymethod;
+	public void setPayMethod(String payMethod) {
+		this.payMethod = payMethod;
 	}
 	public String getId() {
 		return id;

@@ -37,7 +37,7 @@ public class Z01_DownloadView extends AbstractView{
 		//	2) 전달할 파일을 크기 설정
 		response.setContentLengthLong((int)file.length());
 		//	3) 헤더정보에 파일명을 입력하는데, 한글일 경우 encoding을 처리해야 한다.
-		fname = URLEncoder.encode(fname,"utf-8").replaceAll("\\+","");
+		fname = URLEncoder.encode(fname,"utf-8").replaceAll("\\+"," ");
 		// attachment;filename="파일명"
 		response.setHeader("Content-Disposition","attachment;filename=\""+fname+"\"");
 		//	4)헤더정보를 통해서 binary 데이터 전송

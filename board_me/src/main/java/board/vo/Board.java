@@ -2,6 +2,8 @@ package board.vo;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 /*no 글번호
 refno 답글번호
 subject 제목
@@ -18,7 +20,10 @@ public class Board {
 	private String writer;
 	private String readcnt;
 	private Date regdte;
-	private Date updte;
+	private Date uptdte;
+	private String fname;
+	private MultipartFile report;
+	
 	public int getNo() {
 		return no;
 	}
@@ -61,10 +66,22 @@ public class Board {
 	public void setRegdte(Date regdte) {
 		this.regdte = regdte;
 	}
-	public Date getUpdte() {
-		return updte;
+	public Date getUptdte() {
+		return uptdte;
 	}
-	public void setUpdte(Date updte) {
-		this.updte = updte;
+	public void setUptdte(Date uptdte) {
+		this.uptdte = uptdte;
+	}
+	public String getFname() {
+		return fname;
+	}
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+	public MultipartFile getReport() {
+		return report;
+	}
+	public void setReport(MultipartFile report) {
+		this.report = report;
 	}
 }

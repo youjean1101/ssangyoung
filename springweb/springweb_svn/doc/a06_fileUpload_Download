@@ -76,7 +76,7 @@
 		where title like '%'||''||'%'
 	2) vo만들기
 		FileRep.java
-		no, title, path, tmpFile, fname, etc, regdte, uptdte
+		no, title, path, tmpFile, fname, etc, regdte, uptdte, MultupartFile
 	3) mybatis 공통
 		filerep
 		fileMapper.xml
@@ -115,10 +115,32 @@
 	1) 업로드 메서드
 		public void insertFile(FileRep ins);
 		파일을 업로드 하는 기능메서드 구현
+			public String uploadFile(MultipartFile report) {
+				File fObj = new File(upload+fname);
+				report.transferTo(fObj); 
+				// 객체 ==> 해당 위치에 물리적 파일 생성
+				
 		업로드 위치 지정
-		요청값으로 온 FileRep 내용(타이틀)을 가지고,
+		요청값으로 온 FileRep 내용(타이틀, etc, MultiPartFile)을 가지고,
 			경로정보, 파일명 설정
+			
+			
 			#{path},#[fname}
+			insert into filerep values(file_seq.nextval,
+			#{title}, #{path},
+			'file'||file_seq.currval
+			,#{fname},#{etc},sysdate,sysdate)
+			#{title} : 화면 form name="title"
+			#{etc} : 화면 form name="etc"
+			#{fname} : 화면에 type="file" name="report"
+						==> MultipartFile => .getOriginalFileName()
+			#{path} : 공통 설정 conf 파일에서 가져와서 변수로 설정 할당
+					a00_conf
+						file.upload=C:/a01_javaexp/workspace...
+					@Value("${file.upload}")
+					private String upload;
+					파일 vo객체에
+					f.setPath(upload);
 		dao단에 insertFile
 	2) 리스트 메스트메서드
 		public List<FileRep> getFileList(String schTitle, FileRep ins){
@@ -167,13 +189,21 @@
 # 파일 처리 구조
 
 브라우저								웹서버
-첨부파일선택	====stream형식전달===>		MultiPartFile
+첨부파일선택	====stream형식전달===>		MultiPartFile로 받아
 									지정한 경로로 파일 File객체로 생성하여 
 									저장 처리
 									서버의 특정한 파일로 저장
 									
 									파일을 다시, 다른 클라이언트가 보고 처리를 할려면
 									DB에 저장하여, 처리하게 한다.
+파일이름을 클릭 요청 ==url/요청값(파일명) ==> controller 
+										url, 요청
+										컨테이너에 설정 다운로드 뷰 호출
+										다운로드 뷰(모델명으로 파일명)
+											-- 파일명으로 File객체
+											response 탑재시켜 client 전송
+파일 다운로드 확인 <=== response객체에 파일을 전송		파일명/파일크기/encoding
+										
 									
 # 파일 다운로드(1단계 - 파일 다운로드 받기)
 1. 처리 프로세스
@@ -182,14 +212,18 @@
 	3) 다운로드 view를 통해 요청 파일명을 통해 다운로드 처리 한다.
 2. 처리할 파일
 	1) 다운로드 viewer 구현(springweb.a06_util.Z01_DownloadView.java)
+		String fname = (String)model.get("downloadFile");
+		File file = new File(upload+fname);
+		
 	2) 다운로드 viewer 컨테이너에 등록(dispatcher-servlet.xml)
 		<bean id="downloadViewer" class="springweb.a06_util.Z01_DownloadView"/>
 	3) 공통 다운로드 controller를 선언하여, 파일명으로 해당 파일을 다운로드 처리
 		springweb.a06_util.A01_DownLoadCtrl.java
 			/download.do
 			요청값 fname
-			모델 데이터 fname 
-			return "download";
+			모델 데이터 fname
+			d.addAttribute("downloadFile",fname); // 다운로드 view에 있는 get(변수) 변수와 같아야함.
+			return "downloadViewer";
 
 3. 개발 순서
 	1) 다운로드 viewer

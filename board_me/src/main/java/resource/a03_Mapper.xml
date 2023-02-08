@@ -3,28 +3,38 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
 <mapper namespace="board.A03_Dao">
-	<select id="boardList" resultType="board" parameterType="boardsch">
-		select * 
-		from board 
-		WHERE 1=1
-		AND subject LIKE '%'|| #{subject} ||'%'
-		AND writer LIKE '%'|| #{writer} ||'%'
-		order by regdte desc
+	<select id="boardList" resultType="board"
+		parameterType="boardsch">
+		select *
+		from board
+		where 1=1
+		and subject like '%'||#{subject}||'%'
+		and writer like '%'||#{writer}||'%'	
 	</select>
-	
 	<insert id="insertBoard" parameterType="board">
-		insert into board values(board_seq.nextval,
-		#{refno},#{subject},#{content},#{writer},0, sysdate, sysdate)
+		INSERT INTO board values(board_seq.nextval,
+			#{refno}, #{subject},#{content},#{writer},
+			0, sysdate, sysdate)			
 	</insert>
+	<!-- 조회수 처리 -->	
 	<update id="uptReadCnt" parameterType="int">
-		UPDATE board 
-		SET readcnt = readcnt+1
-		WHERE NO =#{no} 
-	</update>
+		UPDATE BOARD 
+			SET READCNT = readcnt+1
+	  	WHERE NO = #{no}				
+	</update>	
 	<select id="getBoard" resultType="board" parameterType="int">
-		SELECT * FROM board WHERE 
- 		NO=#{no}
+		SELECT * FROM board
+		WHERE NO = #{no}			
 	</select>
+	<insert id="insertUploadFile" parameterType="boardfile">
+		insert into boardfile values(board_seq.currval, #{fname},#{etc},sysdate,sysdate)
+	</insert>
+	<select id="getBoardFile" resultType="string" parameterType="int">
+		select fname
+		from boardfile
+		where no = #{no}
+	</select>		
+	
 	<select id="baseballList" resultType="BaseBallTeam">
 		SELECT * FROM baseballteam
 	</select>
@@ -39,5 +49,5 @@
 		AND returntime between '20230130' AND '20230208'
 		AND id='himan'
 	</select>
-</mapper>		
+</mapper>
 		

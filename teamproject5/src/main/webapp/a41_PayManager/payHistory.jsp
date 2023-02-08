@@ -51,12 +51,12 @@
 		background:green;
 		color:white;
 	}
-	#payHistoryDataFra{
+	/* #payHistoryDataFra{
 		width:70%;
 		margin-left:15%;
 		margin-top:2%;
 		border:none;
-	}
+	} */
 	#usePayDateDetailTab{
 		border:1px solid black;
 		width:70%;
@@ -83,6 +83,34 @@
 		height:40px;
 		text-align:center;
 	}
+	#payHistoryDataTab{
+		/* border:1px solid black; */
+		text-align:center;
+		width:70%;
+		margin-left:15%;
+		margin-top:2%;
+		font-size:9pt;
+	}
+	#payHistoryDataTab th{
+		border-top:1px solid black;
+		border-bottom:1px solid black;
+		height:40px;
+		background:rgb(219, 217, 217);
+	}
+	#payHistoryDataTab td{
+		border-top:1px solid black;
+		border-bottom:1px solid black;
+		height:35px;
+	}
+	#payHistoryCnt{
+		font-size:8pt;
+		color:darkgrey;
+		margin-top:3%;
+		margin-left:80%;
+	}
+	#payHistoryCnt span{
+		color:red;
+	}
 </style>
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
@@ -104,8 +132,6 @@ $(document).ready(function(){
 	$("#startDate").val(defaultday.toISOString().substring(0, 10))
 	$("#endDate").val(new Date().toISOString().substring(0, 10))
 	
-    var endDate;
-    var endArray; 
     dateclick() // 변경안하고 클릭시,
 	$("#endDate").change(function(){
 		dateclick()//날짜 변경 후 클릭 시,
@@ -116,8 +142,8 @@ $(document).ready(function(){
 		$(".payHistoryMonthSel").click(function(){
 			$(".payHistoryMonthSel").css({"background":"","color":""})
 			$(this).css({"background":"navy","color":"white"})
-			endDate = $('#endDate').val();
-			endArray = endDate.split('-')
+			var endDate = $('#endDate').val();
+			var endArray = endDate.split('-')
 			var enddatePre = new Date(endArray[0], endArray[1]-1, endArray[2]); // new Date 월은 0부터 시작(0~11)
 			var endDate_dayOfMonth = enddatePre.getDate();
 			var endDate_monthOfYear = enddatePre.getMonth();
@@ -143,26 +169,24 @@ $(document).ready(function(){
  	// 기간 유효성 체크 (시작날짜와 끝나는날짜)
 	$("#index").click(function(){
 		//기간 유효성체크
-		 var startDate = $('#startDate').val();
+		var startDateOb = $('#startDate').val();
+		var endDateOb = $('#endDate').val();
 		 //-을 구분자로 연,월,일로 잘라내어 배열로 반환
-		 var startArray = startDate.split('-');
+		var startObArray = startDateOb.split('-');
+		var endObArray  = endDateOb.split('-')
 	    //배열에 담겨있는 연,월,일을 사용해서 Date 객체 생성
-	    var start_date = new Date(startArray[0], startArray[1], startArray[2]);
-	    var end_date = new Date(endArray[0], endArray[1], endArray[2]);
+	   	var start_date = new Date(startObArray[0], startObArray[1], startObArray[2]);
+	    var end_date = new Date(endObArray[0], endObArray[1], endObArray[2]);
         //날짜를 숫자형태의 날짜 정보로 변환하여 비교한다.
         if(start_date.getTime() > end_date.getTime()) {
             alert("[안내메시지] 종료날짜보다 시작날짜가 작아야합니다.");
             return false;
+        }else{
+        	$("#seachForm").submit();
         }
 	})
-	
-	// 검색 버튼 클릭 시, 프레임 출력
-	$("input[value='검색']").click(function(){
-			$("#payHistoryDataFra").attr("src","${path}/a41_PayManager/payHistoryData.jsp")
-	})
-	
-
 });
+	
 </script>
 </head>
 
@@ -170,26 +194,51 @@ $(document).ready(function(){
 	<jsp:include page="${path}/a00_main/a00_header.jsp"></jsp:include>
 	<jsp:include page="${path}/a00_main/a07_mypagecommon.jsp"></jsp:include>
 	<jsp:include page="${path}/a00_main/a09_myPagePayManager.jsp"></jsp:include>
-	<table id="payDateindexTab">
-		<tr><th>
-			<input type="radio" name="payMethod" checked/> 전체 &nbsp
-			<input type="radio" name="payMethod"/> 신용/체크카드 &nbsp
-			<input type="radio" name="payMethod"/> 휴대폰 결제 &nbsp
-			</th>
-			<td><input value="1주일" type="button" class="payHistoryMonthSel"/></td>
-			<td><input value="1개월" type="button" class="payHistoryMonthSel"/></td>
-			<td><input value="3개월" type="button" class="payHistoryMonthSel"/></td>
-			<td><input value="6개월" type="button" class="payHistoryMonthSel"/></td>
-		</tr>
-		<tr><th>
-			<input type="date" id="startDate" name="startdate"> ~ <input type="date" id="endDate" name="enddate">
-			</th>
-			<td></td>
-			<td></td>
-			<td colspan="2"><input value="검색" type="button" /></td>
-		</tr>
+	<form id="seachForm" action="${path}/payHistorySeach.do" method="get">
+		<input name="id" value="himan" hidden="true">
+		<table id="payDateindexTab">
+			<tr><th>
+				<input type="radio" value="" name="payMethod" checked/> 전체 &nbsp
+				<input type="radio" value="card" name="payMethod"/> 신용/체크카드 &nbsp
+				<input type="radio" value="phone" name="payMethod"/> 휴대폰 결제 &nbsp
+				</th>
+				<td><input value="1주일" type="button" class="payHistoryMonthSel"/></td>
+				<td><input value="1개월" type="button" class="payHistoryMonthSel"/></td>
+				<td><input value="3개월" type="button" class="payHistoryMonthSel"/></td>
+				<td><input value="6개월" type="button" class="payHistoryMonthSel"/></td>
+			</tr>
+			<tr><th>
+				<input type="date" id="startDate" name="startdate"> ~ <input type="date" id="endDate" name="enddate">
+				</th>
+				<td></td>
+				<td></td>
+				<td colspan="2"><input value="검색" type="button" id="index"/></td>
+			</tr>
+		</table>
+		</form>
+	<%-- <iframe id="payHistoryDataFra" src="${path}/a41_PayManager/payHistoryData.jsp"></iframe> --%>
+	<div id="payHistoryCnt">Total : <span>0</span> 건 /<span> 0</span> 원</div>
+	<table id="payHistoryDataTab">
+		<col width="10%">
+	   	<col width="10%">
+	   	<col width="10%">
+	   	<col width="30%">
+	   	<col width="20%">
+	   	<col width="20%">
+		<thead>
+			<tr><th>결제상품</th><th>금액</th><th>결제방법</th>
+				<th>이용권개시일</th><th>환불예정액</th><th>환불/취소</th></tr>
+		</thead>
+		<tbody>
+			<c:forEach var="plist" items="${paylist}">
+			<tr><td>${plist.ticketKind}</td><td>${plist.payMoney}</td><td>${plist.payMethod}</td>
+				<td>${plist.rentalTime}</td>
+				<td>${plist.payMoney}</td><td>X</td></tr>
+			</c:forEach>
+			<!-- <tr><td colspan="6" style="color:grey;">no data</td></tr> -->
+		</tbody>
 	</table>
-	<iframe id="payHistoryDataFra" src="${path}/a41_PayManager/payHistoryData.jsp"></iframe>
+	
 	<table id="usePayDateDetailTab">
 		<col width="10%">
 	   	<col width="10%">

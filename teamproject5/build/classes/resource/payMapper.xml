@@ -16,28 +16,28 @@
   			#{rrnfront},#{CardNo},#{validity},#{cardKind},#{email})
 	</insert>
 	
-	<!-- <select id="payHistorySel" resultType="PayRentalTotVo" parameterType="paydayseach">
+	<select id="payHistorySel" resultType="payrentaltot" parameterType="paydayseach">
 		SELECT * FROM pay p,rentalInfo r
 		WHERE r.payno = p.payno
 		AND r.id = #{id}
 		AND rentalTime between #{startdate} AND #{enddate}
-		AND paymethod LIKE '%'||#{paymethod}||'%'
+		AND paymethod LIKE '%'||#{payMethod}||'%'
 	</select>
 	
-	<select id="returnHistorySel" resultType="PayRentalTotVo" parameterType="paydayseach">
+	<select id="returnHistorySel" resultType="payrentaltot" parameterType="paydayseach">
 		SELECT * FROM pay p,rentalInfo r
 		WHERE r.payno = p.payno
 		AND rentaltime = returntime
 		AND returntime between #{startdate} AND #{enddate}
 		AND id= #{id}
 	</select>
-	
-	<select id="unpaidChargeSel" resultType="PayRentalTotVo" parameterType="String">
+
+	<select id="unpaidChargeSel" resultType="payrentaltot" parameterType="String">
 		SELECT * FROM pay p,rentalInfo r
 		WHERE r.payno = p.payno
 		AND r.unpaidCharge BETWEEN 1 AND 100001
 		AND id=#{id}
-	</select> -->
+	</select>
 	
 	
 </mapper>
