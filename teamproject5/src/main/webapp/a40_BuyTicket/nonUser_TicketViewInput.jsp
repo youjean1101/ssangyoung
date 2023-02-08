@@ -82,18 +82,22 @@
 		$("#sendbutton").click(function(){
 			TIMER()
 		})	
+		$("#viewButton").click(function(){
+			location.href="/noneUserInputView.do?phonenumber="+$("#phonenum01").val()+"-"+$("#phonenum02").val()+"-"+$("#phonenum03").val()
+		})
 	});
 </script>
 </head>
 
 <body>
 	<table id="rentalInfoInputTab">
-		<tr><th>휴대전화번호</th><td><input type="text"/> - <input type="text"/> - <input type="text"/></td></tr>
+		<tr><th>휴대전화번호</th><td><input type="text" id="phonenum01"/> - <input type="text" id="phonenum02"/> - <input type="text" id="phonenum03"/></td></tr>
 		<tr><th>인증번호</th><td><input type="text" id="certnum"/>
 							<input id="Timer" type="text" value="" readonly/>
 							<input type="button" id="sendbutton" value="인증번호 발송"/></td></tr>
 	</table>
-		<button id="viewButton" type="button">조회</button>
+	<button id="viewButton" type="button">조회</button>
+		
 </body>
 <script>
 //-------------------------------타이머 기능-------------------------------

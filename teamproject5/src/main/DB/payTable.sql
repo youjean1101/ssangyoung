@@ -1,6 +1,6 @@
 CREATE TABLE pay(
 	payno varchar(20) PRIMARY KEY,
-	ticketkind varchar(20),
+	ticketkind varchar(50),
 	usetime NUMBER,
 	paymoney NUMBER,
 	paymethod varchar(20) CONSTRAINT pay_paymethod_ck check(paymethod IN('card','phone')),
@@ -8,7 +8,7 @@ CREATE TABLE pay(
 	phonenumber varchar(13),
 	rrnfront7 varchar(8),
 	cardno char(19),
-	validity char(5),
+	validity varchar(10),
 	cardkind varchar(50),
 	email varchar(50)
 );
@@ -22,6 +22,8 @@ CREATE SEQUENCE pay_seq
 DROP SEQUENCE pay_seq;
 
 SELECT * FROM pay;
+
+DELETE FROM pay;
 
 INSERT INTO pay values(0,'정기권(1시간)',1,1000,'phone','SKT','010--','-',NULL,NULL,NULL,NULL);
 INSERT INTO pay values(pay_seq.nextval,'정기권(1시간)',1,1000,'phone','SKT','010-0000-0000','951101-2',NULL,NULL,NULL,NULL);

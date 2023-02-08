@@ -96,8 +96,25 @@ $(document).ready(function(){
 					 $("[name=email2]").val($(this).text());      //선택값 입력
 					 $("[name=email2]").attr("disabled",true); //비활성화
 				}
-	   });
-	});
+	   })
+	})
+	$("#cardIns").click(function(){
+		location.href="/getpayInsert.do?cardno="+$("#cardno1").val()+"-"+$("#cardno2").val()+"-"+$("#cardno3").val()+"-"+$("#cardno4").val()
+												+"&validity="+$("#validityMonth").val()+"/"+$("#validityYear").val()
+												+"&cardkind="+$("#cardKind").val()
+												+"&email="+$("#email1").val()+"@"+$("#email2").val()
+												+"&phoneNumber="
+												+"&rrn="
+	})
+	$("#phoneIns").click(function(){
+		location.href="/getpayInsert.do?phoneNumber="+$("#phonenum01").val()+"-"+$("#phonenum02").val()+"-"+$("#phonenum03").val()
+													+"&rrn="+$("#rrn7front").val()+"-"+$("#rrn7behind").val()
+													+"&cardno="
+													+"&validity="
+													+"&cardkind="
+													+"&email="				
+	})
+	
 });
 </script>
 </head>
@@ -124,7 +141,8 @@ $(document).ready(function(){
         </button>
       </div>
       <div class="modal-body">
-		<form id="frm02" class="form"  method="post">
+		<!-- <form id="frm02" class="form"  method="post"> -->
+		<!--  <input type="hidden" value="himan"/> -->
 	     <div class="row phoneSel" style="margin-left:2%;margin-top:3%;">
 	        전화번호 : &nbsp 
 	         <div class="col" style="padding:0px 0px;">
@@ -135,15 +153,15 @@ $(document).ready(function(){
 				</select>
 			</div>
 			<div class="col" style="padding:2px 0px;"> 
-		        <input type="text" class="form-control" name="phonenum01" style="width:90px;">
+		        <input type="text" class="form-control" name="phonenum01" id="phonenum01" style="width:90px;">
 		    </div>
 		    - 
 		    <div class="col" style="padding:0px 0px;">
-		        <input type="text" class="form-control" name="phonenum02"  style="width:90px;"> 
+		        <input type="text" class="form-control" name="phonenum02" id="phonenum02" style="width:90px;"> 
 		    </div>
 		    - 
 		    <div class="col" style="padding:0px 0px;">
-		        <input type="text" class="form-control" name="phonenum03" style="width:90px" >
+		        <input type="text" class="form-control" name="phonenum03" id="phonenum03" style="width:90px" >
 	     	</div>	
 	     </div>
 	     <div class="row phoneSel" style="margin-left:2%;margin-top:3%;">
@@ -154,30 +172,30 @@ $(document).ready(function(){
 	      </div>
 	     <div class="row phoneSel" style="margin-left:2%; margin-top:3%;">
 	         주민번호 7앞자리 :&nbsp 
-        	<input type="text" class="form-control" name="rrn7front" style="width:150px;">
+        	<input type="text" class="form-control" name="rrn7front" id="rrn7front" style="width:150px;">
 	        &nbsp - &nbsp 
-        	<input type="text" class="form-control" name="rrn7behind" style="width:50px;">
+        	<input type="text" class="form-control" name="rrn7behind" id="rrn7behind" style="width:50px;">
 	        ●●●●●●
 	      </div>
 	      <div class="row cardSel" style="margin-left:2%; margin-top:3%; display:none;">
 	         카드번호 :&nbsp 
-        	<input type="text" class="form-control" name="cardno1" style="width:70px;">
+        	<input type="text" class="form-control" name="cardno1" id="cardno1" style="width:70px;">
 	        &nbsp - &nbsp 
-        	<input type="text" class="form-control" name="cardno2" style="width:70px;">
+        	<input type="text" class="form-control" name="cardno2" id="cardno2" style="width:70px;">
 	        &nbsp - &nbsp 
-        	<input type="text" class="form-control" name="cardno3" style="width:70px;">
+        	<input type="text" class="form-control" name="cardno3" id="cardno3" style="width:70px;">
 	        &nbsp - &nbsp
-        	<input type="text" class="form-control" name="cardno4" style="width:70px;">
+        	<input type="text" class="form-control" name="cardno4" id="cardno4" style="width:70px;">
 	      </div>
 	      <div class="row cardSel" style="margin-left:2%; margin-top:3%; display:none;">
 	         유효기간 :&nbsp 
-        	<input type="text" class="form-control" name="validityMonth" placeholder="월" style="width:60px;">
+        	<input type="text" class="form-control" id="validityMonth" name="validityMonth" placeholder="월" style="width:60px;">
         	&nbsp / &nbsp 
-        	<input type="text" class="form-control" name="validityYear" placeholder="년" style="width:60px;">
+        	<input type="text" class="form-control" id="validityYear" name="validityYear" placeholder="년" style="width:60px;">
 	      </div>
 	      <div class="row cardSel" style="margin-left:2%; margin-top:3%; display:none;" class="cardSel">
 	         카드종류 :&nbsp 
-        	<select name="cardKind" class="form-control" style="width:250px;">
+        	<select name="cardKind" id="cardKind" class="form-control" style="width:250px;">
 					<option selected>카드를 선택해주세요.</option>
 					<option>쌍용카드</option>
 					<option>신한카드</option>
@@ -189,9 +207,9 @@ $(document).ready(function(){
 	      </div>
 	      <div class="row cardSel" style="margin-left:2%; margin-top:3%; display:none;">
 	         이메일 :&nbsp 
-        	<input type="text" class="form-control" name="email1" style="width:130px;">
+        	<input type="text" class="form-control" id="email1" name="email1" style="width:130px;">
         	&nbsp @ &nbsp 
-        	<input type="text" class="form-control" name="email2" style="width:130px;">
+        	<input type="text" class="form-control" id="email2" name="email2" style="width:130px;">
 	     	 <select class="form-control" style="width:100px; font-size:8pt;" id="selectEmail">
 					<option value="1">직접입력</option>
 					 <option>naver.com</option>
@@ -209,7 +227,7 @@ $(document).ready(function(){
 					 <option>paran.com</option>
 				</select>
 	      </div>
-	    </form> 
+	    <!-- </form>  -->
    	  </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>

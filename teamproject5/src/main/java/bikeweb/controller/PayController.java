@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bikeWeb.vo.GetPayVo;
 import com.bikeWeb.vo.PayDaySeachVo;
 import com.bikeWeb.vo.PayRentalTotVo;
 import com.bikeWeb.vo.PayVo;
@@ -25,12 +26,12 @@ public class PayController {
 		return "a40_BuyTicket\\nonUser_Main.jsp";
 	}
 	
-	@PostMapping("/nonUserInsRental.do")
+	@RequestMapping("/nonUserInsRental.do")
 	public String nonUserInsRental(RentalVo rentalins,PayVo payins, Model d){
 		service.nonUserPayIns(payins);
 		service.nonUserRentalInfoIns(rentalins);
 		d.addAttribute("msg","등록성공");
-		return "a40_BuyTicket\\nonUser_TicketBuy(Ajax).jsp";
+		return "a40_BuyTicket\\nonUser_TicketBuy.jsp";
 	}
 	//결제내역
 	@RequestMapping("/payhistoryList.do")
@@ -41,7 +42,6 @@ public class PayController {
 	@RequestMapping("/payHistorySeach.do")
 	public String payHistorySeach(@ModelAttribute("sch") PayDaySeachVo sch,Model d) {
 		//System.out.println(service.payHistorySel(sch));
-		d.addAttribute("msg","등록성공");
 		d.addAttribute("paylist", service.payHistorySel(sch));
 		return "/payhistoryList.do";
 	}
@@ -55,7 +55,7 @@ public class PayController {
 	@RequestMapping("/returnHistorySeach.do")
 	public String returnHistorySeach(@ModelAttribute("sch") PayDaySeachVo sch,Model d) {
 		for(PayRentalTotVo p:service.returnHistorySel(sch)) {
-			System.out.print(p.getTicketKind()+"\t");
+			System.out.print(p.getReturnTime()+"\t");
 		}
 		System.out.println(service.returnHistorySel(sch));
 		d.addAttribute("returnlist", service.returnHistorySel(sch));
@@ -64,14 +64,20 @@ public class PayController {
 	
 	//추과과금내역
 	@RequestMapping("/unpaidHistoryList.do")
-	public String unpaidhistoryList() {
+	public String unpaidhistoryList(@RequestParam("id") String id,Model d) {
+		d.addAttribute("unpaidlist", service.unpaidChargeSel(id));
 		return "a41_PayManager\\user_UnpaidChargePay.jsp";
 	}
-	
-	@RequestMapping("/unpaidHistorySeach.do")
-	public String unpaidHistorySeach(@RequestParam("id") String id,Model d) {
-		System.out.println(service.unpaidChargeSel(id));
-		d.addAttribute("unpaidlist", service.unpaidChargeSel(id));
-		return "/unpaidHistoryList.do";
+	// 등록수단 추가
+	@RequestMapping("/getpayInsert.do")
+	public String getpayInsert(GetPayVo ins,Model d) {
+		service.getCardInsert(ins);
+		return "a41_PayManager\\getPayMethod.jsp";
+	}
+	// 비회원 입력값 넘기기
+	@RequestMapping("/noneUserInputView.do")
+	public String noneUserRentalView(@RequestParam("phonenumber") String phonenumber,Model d) {
+		d.addAttribute("nonUserRentalList", service.nonuserView(phonenumber));
+		return "a40_BuyTicket\\noneUser_TicketView.jsp";
 	}
 }

@@ -51,12 +51,6 @@
 		background:green;
 		color:white;
 	}
-	/* #payHistoryDataFra{
-		width:70%;
-		margin-left:15%;
-		margin-top:2%;
-		border:none;
-	} */
 	#usePayDateDetailTab{
 		border:1px solid black;
 		width:70%;
@@ -216,8 +210,7 @@ $(document).ready(function(){
 			</tr>
 		</table>
 		</form>
-	<%-- <iframe id="payHistoryDataFra" src="${path}/a41_PayManager/payHistoryData.jsp"></iframe> --%>
-	<div id="payHistoryCnt">Total : <span>0</span> 건 /<span> 0</span> 원</div>
+	<!-- <div id="payHistoryCnt">Total : <span>0</span> 건 /<span> 0</span> 원</div> -->
 	<table id="payHistoryDataTab">
 		<col width="10%">
 	   	<col width="10%">
@@ -232,10 +225,9 @@ $(document).ready(function(){
 		<tbody>
 			<c:forEach var="plist" items="${paylist}">
 			<tr><td>${plist.ticketKind}</td><td>${plist.payMoney}</td><td>${plist.payMethod}</td>
-				<td>${plist.rentalTime}</td>
+				<td><fmt:formatDate value="${plist.rentalTime}"/></td>
 				<td>${plist.payMoney}</td><td>X</td></tr>
 			</c:forEach>
-			<!-- <tr><td colspan="6" style="color:grey;">no data</td></tr> -->
 		</tbody>
 	</table>
 	

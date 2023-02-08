@@ -7,7 +7,7 @@
 	<insert id="nonUserRentalInfoIns" parameterType="rental">
   		INSERT INTO rentalInfo values(rental_seq.nextval,
 			'비회원',#{nonMemberName},#{nonMemberPhoneNum},#{bikeNo},NULL,#{startPlaceName},
-			sysdate,NULL,NULL,NULL,0,#{PayNo})
+			sysdate,NULL,NULL,NULL,0,rental_seq.currval)
 	</insert>
 	
 	<insert id="nonUserPayIns" parameterType="pay">
@@ -39,5 +39,16 @@
 		AND id=#{id}
 	</select>
 	
+	<insert id="getCardInsert" parameterType="getpay">
+		INSERT INTO getPay values(getPay_seq.nextval,
+			#{cardno},#{validity},#{cardkind},#{email},null,#{phonenumber},#{rrn})
+	</insert>
+	
+	<select id="nonuserView" resultType="payrentaltot" parameterType="String">
+		SELECT * FROM pay p,rentalInfo r
+		WHERE r.payno = p.payno
+		AND memberdiv='비회원'
+		AND nonMemberPhoneNum = #{phonenumber}
+	</select>
 	
 </mapper>

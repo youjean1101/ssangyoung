@@ -4,7 +4,10 @@ create sequence rental_seq
     minvalue 0
     maxvalue 99999
     nocycle;
-SELECT *FROM rental_seq;
+SELECT rental_seq.nextval
+FROM dual;
+SELECT rental_seq.currval
+FROM dual;
 DROP SEQUENCE rental_seq;
 
 create table rentalInfo(
@@ -26,27 +29,35 @@ SELECT * FROM rentalInfo
 ORDER BY rentalno;
 
 DROP TABLE rentalInfo;
+DELETE FROM rentalInfo;
 
 INSERT INTO rentalInfo values(rental_seq.nextval,
-'비회원','홍길동','010-1234-1234','0',NULL,'홍대입구역 8번출구 앞 (신)',sysdate,NULL,NULL,NULL,0,'1');
+'비회원','홍길동','010-1234-1234','0',NULL,'홍대입구역 8번출구 앞 (신)',sysdate,NULL,NULL,NULL,0,rental_seq.currval);
 INSERT INTO rentalInfo values(rental_seq.nextval,
-'회원',null,null,'0','himan','홍대입구역 8번출구 앞 (신)',sysdate,NULL,NULL,NULL,0,'20');
+'회원',null,null,'0','himan','홍대입구역 8번출구 앞 (신)',sysdate,NULL,NULL,NULL,0,'0');
 INSERT INTO rentalInfo values(rental_seq.nextval,
-'회원',null,null,'0','himan','홍대입구역 8번출구 앞 (신)',sysdate,'홍대입구역 8번출구 앞 (신)',sysdate,NULL,0,'20');
+'회원',null,null,'0','himan','홍대입구역 8번출구 앞 (신)',sysdate,'홍대입구역 8번출구 앞 (신)',sysdate,NULL,0,'2');
+INSERT INTO rentalInfo values(rental_seq.nextval,
+'회원',null,null,'0','himan','홍대입구역 8번출구 앞 (신)',sysdate,'홍대입구역 8번출구 앞 (신)',sysdate,NULL,5000,'3');
 
 SELECT * FROM pay p,rentalInfo r
 WHERE r.payno = p.payno
 AND r.id = 'himan'
-AND rentalTime between '20230130' AND '20230208'
+AND rentalTime between '20230130' AND '20230210'
 AND paymethod LIKE '%'||''||'%';
 
 SELECT * FROM pay p,rentalInfo r
 WHERE r.payno = p.payno
 AND rentaltime = returntime
-AND returntime between '2022-11-07' AND '20230208'
+AND returntime between '2022-11-07' AND '20230210'
 AND id='himan';
 
 SELECT * FROM pay p,rentalInfo r
 WHERE r.payno = p.payno
 AND r.unpaidCharge BETWEEN 1 AND 100000
 AND id='himan';
+
+SELECT * FROM pay p,rentalInfo r
+WHERE r.payno = p.payno
+AND memberdiv='비회원'
+AND nonMemberPhoneNum = '010-5555-5555';

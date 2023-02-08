@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bikeWeb.vo.GetPayVo;
 import com.bikeWeb.vo.PayDaySeachVo;
 import com.bikeWeb.vo.PayRentalTotVo;
 import com.bikeWeb.vo.PayVo;
@@ -43,5 +44,18 @@ public class PayService {
 	// 추가과금 내역 출력
 	public List<PayRentalTotVo> unpaidChargeSel(String id){
 		return dao.unpaidChargeSel(id);
+	}
+	
+	public void getCardInsert(GetPayVo ins) {
+		if(ins.getCardno()==null) ins.setCardno("");
+		if(ins.getValidity()==null) ins.setValidity("");
+		if(ins.getCardkind()==null) ins.setCardkind("");
+		if(ins.getEmail()==null) ins.setEmail("");
+		if(ins.getPhonenumber()==null) ins.setPhonenumber("");
+		if(ins.getRrn()==null) ins.setRrn("");
+		dao.getCardInsert(ins);
+	}
+	public List<PayRentalTotVo> nonuserView(String phonenumber){
+		return dao.nonuserView(phonenumber);
 	}
 }

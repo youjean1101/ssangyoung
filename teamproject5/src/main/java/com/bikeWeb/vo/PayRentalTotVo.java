@@ -26,7 +26,7 @@ public class PayRentalTotVo {
 	private Date rentalTime;
 	// 반납 지역 
 	private String EndPlaceName;
-	private Date returnDate;
+	private Date returnTime;
 	private int useDistance;
 	private int unpaidCharge;
 	public int getPayNo() {
@@ -155,11 +155,12 @@ public class PayRentalTotVo {
 	public void setEndPlaceName(String endPlaceName) {
 		EndPlaceName = endPlaceName;
 	}
-	public Date getReturnDate() {
-		return returnDate;
+	
+	public Date getReturnTime() {
+		return returnTime;
 	}
-	public void setReturnDate(Date returnDate) {
-		this.returnDate = returnDate;
+	public void setReturnTime(Date returnTime) {
+		this.returnTime = returnTime;
 	}
 	public int getUseDistance() {
 		return useDistance;

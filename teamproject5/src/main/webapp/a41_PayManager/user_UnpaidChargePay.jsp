@@ -77,12 +77,6 @@
 		height:30px;
 		font-size:8pt;
 	}
-	#addPayHistoryDataFra{
-		width:70%;
-		margin-left:15%;
-		margin-top:2%;
-		border:none;
-	}
 	#payMethodSelTab input[type='radio']{
 		width:20px;
 		height:20px;
@@ -105,6 +99,30 @@
 		color:red;
 		border:none;
 		text-align:center;
+	}
+	#unpaidChargeDataTab{
+		/* border:1px solid black; */
+		text-align:center;
+		width:70%;
+		margin-left:15%;
+		font-size:9pt;
+	}
+	#unpaidChargeDataTab th{
+		border-top:1px solid black;
+		border-bottom:1px solid black;
+		height:40px;
+		background:rgb(219, 217, 217);
+	}
+	#unpaidChargeDataTab td{
+		border-top:1px solid black;
+		border-bottom:1px solid black;
+		height:35px;
+	}
+	#unpaidChargeMoney{
+		font-size:8pt;
+		color:darkgrey;
+		margin-top:0%;
+		margin-left:80%;
 	}
 </style>
 <script src="${path}/a00_com/jquery.min.js"></script>
@@ -233,7 +251,21 @@ $(document).ready(function(){
 										<a href="https://www.bikeseoul.com/app/use/moveUseMenuClauseInfo.do">이용약관</a>에 동의하며 결제를 진행합니다.</td></tr>
 		<tr><th id="heightCont"><input type="button" value="결제"></th></tr>
 	</table>
-	<iframe id="addPayHistoryDataFra" src="${path}/a41_PayManager/user_UpaidChageData.jsp"></iframe>
+	<div id="unpaidChargeMoney">미납요금</div>
+	<table id="unpaidChargeDataTab">
+		<col width="33%">
+	   	<col width="33%">
+	   	<col width="33%">
+		<thead>
+			<tr><th>대여일시</th><th>내역</th><th>금액</th></tr>
+		</thead>
+		<tbody>
+			<c:forEach var="ulist" items="${unpaidlist}">
+				<tr><td><fmt:formatDate value="${ulist.rentalTime}"/></td>
+					<td>${ulist.ticketKind}</td><td>${ulist.payMoney}</td></tr>
+			</c:forEach>
+		</tbody>
+	</table>
 </body>
 <script>
 //-------------------------------타이머 기능-------------------------------

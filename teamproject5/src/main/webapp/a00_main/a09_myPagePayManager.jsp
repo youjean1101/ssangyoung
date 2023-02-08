@@ -60,7 +60,7 @@
 	<table id="payManagerCommonTab">
 		<tr>
 			<td id="payhistory" onclick="location.href='${path}/a41_PayManager/payHistory.jsp'">결제내역</td>
-			<td id="addPay" onclick="location.href='${path}/a41_PayManager/user_UnpaidChargePay.jsp'">추가과금결제</td>
+			<td id="addPay" onclick="location.href='${path}/unpaidHistoryList.do?id=himan'">추가과금결제</td>
 			<td id="getPayMethod" onclick="location.href='${path}/a41_PayManager/getPayMethod.jsp'">결제수단 등록</td>
 			<td id="returnhistory" onclick="location.href='${path}/a41_PayManager/returnHistory.jsp'">환불신청내역</td>
 		</tr>

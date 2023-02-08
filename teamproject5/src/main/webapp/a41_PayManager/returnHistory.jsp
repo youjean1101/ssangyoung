@@ -62,13 +62,30 @@
 		color:white;
 	}
 	
-	#returnHistoryDataFra{
+	/* #returnHistoryDataFra{
 		margin-top:2%;
 		margin-left:10%;
 		width:80%;
 		border:none;
+	} */
+	#returnHistoryDataTab{
+		text-align:center;
+		width:80%;
+		margin-top:2%;
+		margin-left:10%;
+		font-size:9pt;
 	}
-	
+	#returnHistoryDataTab th{
+		border-top:1px solid black;
+		border-bottom:1px solid black;
+		height:40px;
+		background:rgb(219, 217, 217);
+	}
+	#returnHistoryDataTab td{
+		border-top:1px solid black;
+		border-bottom:1px solid black;
+		height:35px;
+	}
 </style>
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
@@ -165,6 +182,21 @@ $(document).ready(function(){
 			</tr>
 		</table>
 	</form>
-	<iframe id="returnHistoryDataFra" src="${path}/a41_PayManager/returnHistoryData.jsp"></iframe>
+	<table id="returnHistoryDataTab">
+		<col width="33%">
+	   	<col width="33%">
+	   	<col width="33%">
+		<thead>
+			<tr><th>환불상품</th><th>금액</th><th>환불일</th></tr>
+		</thead>
+		<tbody>
+			<c:forEach var="rlist" items="${returnlist}">
+				<tr><td>${rlist.ticketKind}</td><td>${rlist.payMoney}</td>
+					<td><fmt:formatDate value="${rlist.returnTime}"/></td></tr>
+			</c:forEach>
+			<!-- <tr><td colspan="3" style="color:red;">내역없음</td></tr> -->
+		</tbody>
+	</table>
+	<%-- <iframe id="returnHistoryDataFra" src="${path}/a41_PayManager/returnHistoryData.jsp"></iframe> --%>
 </body>
 </html>
