@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	/*
+	# 이벤트 처리
+	1. 기본 구조
+		1) view 단 
+		v-on:이벤트명 = "inline 모델데이터 처리 or 기능메서드"
+		==> @ : 이벤트명 = "inline 모델데이터 처리 or 기능메서드"
+			ex) v-on : click = "tot = grade*cnt"
+				v-on : click = "totAll"
+				<input v-model="grade"/>
+				<input v-model="cnt"/>
+				{{grade}} X {{cnt}} == {{tot}}
+			new Vue({
+				data:{grade:0,cnt:0,tot:0},
+				methods:{
+					function totAll(){
+						// this: 전역변수로 모델데이터나 포함된 기능 메서드 접근이 가능..
+						this.tot = this.grade*this.cnt
+					}
+				}
+			})
+		2) Vue 인스턴스 객체 선언
+			기능 메서드 함수 정의
+			methods:{
+				함수명1:function(){
+					처리할 내용
+				},
+				함수명2:function(){
+					처리할 내용
+				}
+			}
+	*/
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"이벤트 처리", amount:0, balance:0, price:0, cnt:0, tot:0},
+		});	
+	});// 물건가격 [	] 물건갯수[	] [합산] ==> 클릭 시,
+		// 총계 @@@	
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	  <h3>누적 합산 액 : {{balance}}</h3>
+	</div>
+	<form id="frm01" class="form"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="amount" class="form-control mr-sm-2" placeholder="금액을 입력하세요." />
+	    <button v-on:click="balance+=parseInt(amount)" class="btn btn-info" type="button">누적 합산 확인</button>
+ 	</nav>
+ 	
+ 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="price" class="form-control mr-sm-2" placeholder="물건가격을 입력하세요." />
+	    <input v-model="cnt" class="form-control mr-sm-2" placeholder="물건갯수를 입력하세요." />
+	    <button v-on:click="tot+=price*cnt" class="btn btn-info" type="button">합산</button>
+ 	</nav>
+ 	<div class="jumbotron text-center">
+	  <h3>총계 : {{tot}}</h3>
+	</div>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

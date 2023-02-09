@@ -62,10 +62,15 @@
 			location.href="${path}/list.do"			
 		});	
 		$("#uptBtn").click(function(){
-			
+			if(confirm("수정하시겠습니까?")){
+				$("form").attr("action","${path}/boardUpt.do");
+				$("form").submit();
+			}
 		})
 		$("#delBtn").click(function(){
-			
+			if(confirm("삭제하시겠습니까?")){
+				location.href = "delBoard.do?no="+$("#no").val()
+			}
 		})
 		$("#repBtn").click(function(){
 			
@@ -73,6 +78,18 @@
 		var msg = "${msg}"
 		if(msg!=""){
 			alert(msg)
+		}
+		
+		var msg2 = "${msg2}"
+		if(msg2=="수정완료"){
+			if(confirm(msg2+"전체 조회화면 이동하시겠습니까?")){
+				location.href = "${path}/list.do";
+			}
+		}
+		var msg3 = "${msg3}"
+		if(msg3=="삭제완료"){
+			alert(msg3+" 전체조회화면으로 이동합니다.")
+			location.href = "${path}/list.do";
 		}
 	});
 </script>

@@ -192,21 +192,22 @@
 				alert("[안내메시지] 만 13세 새싹따릉이 대상자들은 회원 가입 후 이용가능합니다.")
 				return false;
 			}
-		location.href="/nonUserInsRental.do?nonMemberName="+$("#nonMemberName").val()
-														+"&nonMemberPhoneNum="+$("#phoneNum1").val()+"-"+$("#phoneNum2").val()+"-"+$("#phoneNum3").val()
-														+"&bikeNo="+$("#bikeNo").val()
-														+"&startPlaceName="+$("#startPlaceName").val()
-														+"&ticketKind="+$("#timeSel").val()
-														+"&useTime="+timeSel
-														+"&payMoney="+price
-														+"&payMethod="+$("input[name='payMethod']").val()
-														+"&teleCom="+$("#telecom").val()
-														+"&PhoneNum="+$("#phoneNum1").val()+"-"+$("#phoneNum2").val()+"-"+$("#phoneNum3").val()
-														+"&rrnfront="+$("input[name='rrn1']").val()+"-"+$("input[name='rrn2']").val()
-														+"&CardNo="+$("input[name='cardNumber1']").val()+"-"+$("input[name='cardNumber2']").val()+"-"+$("input[name='cardNumber3']").val()+"-"+$("input[name='cardNumber4']").val()
-														+"&validity="+$("input[name='validityMonth']").val()+" / "+$("input[name='validityYear']").val()
-														+"&cardKind="+$("#cardKind").val()
-														+"&email="+$("input[name='email1']").val()+"@"+$("input[name='email2']").val()
+		location.href="/nonUserInsRental.do?nonMemberName="
+						+$("#nonMemberName").val()
+						+"&nonMemberPhoneNum="+$("#phoneNum1").val()+"-"+$("#phoneNum2").val()+"-"+$("#phoneNum3").val()
+						+"&bikeNo="+$("#bikeNo").val()
+						+"&startPlaceName="+$("#startPlaceName").val()
+						+"&ticketKind="+$("#timeSel").val()
+						+"&useTime="+timeSel
+						+"&payMoney="+price
+						+"&payMethod="+$("input[name='payMethod']").val()
+						+"&teleCom="+$("#telecom").val()
+						+"&PhoneNum="+$("#phoneNum1").val()+"-"+$("#phoneNum2").val()+"-"+$("#phoneNum3").val()
+						+"&rrnfront="+$("input[name='rrn1']").val()+"-"+$("input[name='rrn2']").val()
+						+"&CardNo="+$("input[name='cardNumber1']").val()+"-"+$("input[name='cardNumber2']").val()+"-"+$("input[name='cardNumber3']").val()+"-"+$("input[name='cardNumber4']").val()
+						+"&validity="+$("input[name='validityMonth']").val()+" / "+$("input[name='validityYear']").val()
+						+"&cardKind="+$("#cardKind").val()
+						+"&email="+$("input[name='email1']").val()+"@"+$("input[name='email2']").val()
 			
 		})
 		var msg = "${msg}"
@@ -236,14 +237,15 @@
 				</select></td></tr>
 		<tr><th>자전거번호</th>
 			<td><select id="bikeNo">
-					<option>1</option>
-					<option>2</option>
+				<c:forEach var="blist" items="${bikeList}">
+					<option>${blist.bikeNo}</option>
+				</c:forEach>
 				</select></td></tr>
 		<tr><th>대여장소</th>
 			<td><select id="startPlaceName">
-					<option>홍대입구역 8번출구 앞 (신)</option>
-					<option>홍대입구역 2번출구 앞 (신)</option>
-					<option>홍대입구역 3번출구 (신)</option>
+				<c:forEach var="olist" items="${officList}">
+					<option>${olist.placename}</option>
+				</c:forEach>
 				</select></td></tr>
 		<tr><th>매수</th><td>1매 (1회 1매씩 구매가 가능합니다.)</td></tr>
 		<tr><th>가격</th><td><span class="price">1000</span>원 기본대여시간(60분) 초과시 5분마다 추가요금 200원 과금
@@ -284,7 +286,7 @@
 		
 		<tr class="phoneSel" style="display:none;">
 			<th>인증번호발송</th>
-			<td><input type='text' id='certnum'/>
+			<td><input type='password' id='certnum'/>
 			<input id='Timer' type='text' value='' readonly/>
 			<input type='button' id='sendbutton' value='인증번호 발송' onclick='TIMER()'/>
 			</td>

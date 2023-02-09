@@ -29,6 +29,8 @@ FOREIGN KEY (getcardno)
 REFERENCES getcard(getcardno) on delete cascade;
 SELECT * FROM ALL_CONSTRAINTS WHERE TABLE_NAME ='user1';
 
+UPDATE user1 SET GETCARDNO = 32
+WHERE id='himan';
 
 
 
@@ -45,5 +47,6 @@ INSERT INTO rentaloffice values('홍대입구역 8번출구 앞 (신)','서울 �
 SELECT id, sum(usedistance) AS sui from rentalInfo where to_char(returnTime,'ww')=to_char(sysdate,'ww') group by id ORDER BY sui DESC;
 SELECT id, sum(usedistance) AS sui from rentalInfo where to_char(returnTime,'mm')=to_char(sysdate,'mm') group by id ORDER BY sui DESC;
 SELECT sum(usedistance) from rentalInfo where to_char(returnTime,'ww')=to_char(sysdate,'ww') AND id='dnjswn123';
-SELECT TO_char(returntime,'ww')  FROM rentalInfo
-;
+SELECT TO_char(returntime,'ww')  FROM rentalInfo;
+
+SELECT id, getcardno FROM USER1 WHERE id='himan';

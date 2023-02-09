@@ -65,7 +65,7 @@
 		width:80%;
 		margin-left:10%;
 		margin-top:3%;
-		height:600px;
+		height:700px;
 	}
 	#ticketPayTab th{
 		width:75%;
@@ -210,8 +210,8 @@
 			$("#totprice").text("0")
 			$("#ticketKindText").text("일일권")
 			ticketKindOptionshow+="<option style='display:none;'>선택</option>"
-			ticketKindOptionshow+="<option value='1000'>일일회원(1시간권)</option>"
-			ticketKindOptionshow+="<option value='2000'>일일회원(2시간권)</option>"
+			ticketKindOptionshow+="<option>일일회원(1시간권)</option>"
+			ticketKindOptionshow+="<option>일일회원(2시간권)</option>"
 			$("#ticketSel").html(ticketKindOptionshow)
 			ticketKindOptionshow=""
 		}
@@ -223,14 +223,14 @@
 			$("#totprice").text("0")
 			$("#ticketKindText").text("정기권")
 			ticketKindOptionshow+="<option style='display:none;'>선택</option>"
-			ticketKindOptionshow+="<option value='3000'>7일(1시간권)</option>"
-			ticketKindOptionshow+="<option value='5000'>30일(1시간권)</option>"
-			ticketKindOptionshow+="<option value='15000'>180일(1시간권)</option>"
-			ticketKindOptionshow+="<option value='30000'>365일(1시간권)</option>"
-			ticketKindOptionshow+="<option value='4000'>7일(2시간권)</option>"
-			ticketKindOptionshow+="<option value='7000'>30일(2시간권)</option>"
-			ticketKindOptionshow+="<option value='20000'>180일(2시간권)</option>"
-			ticketKindOptionshow+="<option value='40000'>365일(2시간권)</option>"
+			ticketKindOptionshow+="<option>7일(1시간권)</option>"
+			ticketKindOptionshow+="<option>30일(1시간권)</option>"
+			ticketKindOptionshow+="<option>180일(1시간권)</option>"
+			ticketKindOptionshow+="<option>365일(1시간권)</option>"
+			ticketKindOptionshow+="<option>7일(2시간권)</option>"
+			ticketKindOptionshow+="<option>30일(2시간권)</option>"
+			ticketKindOptionshow+="<option>180일(2시간권)</option>"
+			ticketKindOptionshow+="<option>365일(2시간권)</option>"
 			$("#ticketSel").html(ticketKindOptionshow)
 			ticketKindOptionshow=""
 		}
@@ -242,7 +242,7 @@
 			$("#totprice").text("0")
 			$("#ticketKindText").text("단체권")
 			ticketKindOptionshow+="<option style='display:none;'>선택</option>"
-			ticketKindOptionshow+="<option value='1000'>단체(1시간권)</option>"
+			ticketKindOptionshow+="<option>단체(1시간권)</option>"
 			$("#ticketSel").html(ticketKindOptionshow)
 			ticketKindOptionshow=""
 		}
@@ -259,12 +259,73 @@
 		})
 		
 		// 티켓 종류에 따른 가격변경 기능
+		var price=""
+		var usetime=""
 		$("#ticketSel").change(function(){
-			$("#price").text($(this).val()+" 원")
-			$("#price2").text($(this).val()+" 원")
-			$("#totprice").text($(this).val())
+			if($(this).val()==="일일회원(1시간권)" || $(this).val()==="단체(1시간권)"){
+				price=1000
+				usetime=1
+			}else if($(this).val()==="일일회원(2시간권)"){
+				price=2000
+				usetime=2
+			}else if($(this).val()==="7일(1시간권)"){
+				price=3000
+				usetime=1
+			}else if($(this).val()==="30일(1시간권)"){
+				price=5000
+				usetime=1
+			}else if($(this).val()==="180일(1시간권)"){
+				price=15000
+				usetime=1
+			}else if($(this).val()==="365일(1시간권)"){
+				price=30000
+				usetime=1
+			}else if($(this).val()==="7일(2시간권)"){
+				price=4000
+				usetime=2
+			}else if($(this).val()==="30일(2시간권)"){
+				price=7000
+				usetime=2
+			}else if($(this).val()==="180일(2시간권)"){
+				price=20000
+				usetime=2
+			}else if($(this).val()==="365일(2시간권)"){
+				price=40000
+				usetime=2
+			}
+			$(".price").text(price+" 원")
 		})
 		
+		
+		
+		$("#userPayGo").click(function(){
+			if(!$("input[type=checkbox]").is(":checked")){
+				alert("[안내메시지] 약관에 동의하셔야 이용권 구매가 가능합니다.")
+				return false;
+			}
+			location.href="/userRentalInsert.do?bikeNo="+$("#bikeNo").val()
+				+"&id="+$("#id").val()
+				+"&startPlaceName="+$("#startPlaceName").val()
+				+"&ticketKind="+$("#ticketSel").val()
+				+"&useTime="+usetime
+				+"&payMoney="+price
+				+"&payMethod="+$("input[name='payMethod']").val()
+				+"&teleCom="+$("#telecom").val()
+				+"&PhoneNum="+$("#phoneNum1").val()+"-"+$("#phoneNum2").val()+"-"+$("#phoneNum3").val()
+				+"&rrnfront="+$("input[name='rrn1']").val()+"-"+$("input[name='rrn2']").val()
+				+"&CardNo="+$("input[name='cardNumber1']").val()+"-"+$("input[name='cardNumber2']").val()+"-"+$("input[name='cardNumber3']").val()+"-"+$("input[name='cardNumber4']").val()
+				+"&validity="+$("input[name='validityMonth']").val()+" / "+$("input[name='validityYear']").val()
+				+"&cardKind="+$("#cardKind").val()
+				+"&email="+$("input[name='email1']").val()+"@"+$("input[name='email2']").val()
+		})
+		var msg = "${msg}"
+		if(msg!=""){
+			if(confirm("[안내메시지] 이용권 구매가 완료되었습니다. \n 이용권 구매내역을 조회하러 가시겠습니까?.")){
+				location.href="/payhistoryList.do"
+			}else{
+				location.href="${path}/a40_BuyTicket/User_TicketSelect.jsp"
+			}
+		}
 	});
 </script>
 </head>
@@ -289,6 +350,7 @@
 			<li>추가요금은 이용권 결제수단으로 자동결제됩니다.
 		</ul>
 	</div>
+	<input id="id" type="hidden" value="himan"/>
 	<table id="ticketPayTab">
 		<tr><th>
 			<div id="ticketKind">&nbsp &nbsp<span style="font-size:14pt; font-weight:bold;" id="ticketKindText">일일권</span> 종류 선택<br>
@@ -296,16 +358,16 @@
 				<select id="ticketSel">
 					<option>선택</option>
 				</select>
-				<span id="price" style="margin-left:50%;font-weight:bold;">0 원</span>
+				<span id="price" class="price" style="margin-left:50%;font-weight:bold;">0원</span>
 			</div>
 			</th>
-			<td rowspan="3">
+			<td rowspan="4">
 				<table id="payMoneyTab">
 					<tr><td style="font-weight:bold; font-size:20pt; text-align:left;">결제금액</td><td></td></tr>
 					<tr><td colspan="2"><hr style="border:3px solid navy; background:navy;"></td></tr>
-					<tr><td>이용권</td><td id="price2">0원</td></tr>
+					<tr><td>이용권</td><td id="price2" class="price">0원</td></tr>
 					<tr><td colspan="2"><hr style="border:3px solid navy; background:navy;"></td></tr>
-					<tr><td></td><td><span id="totprice" style="font-size:25pt; color:green; font-weight:bold;">0</span>원</td></tr>
+					<tr><td></td><td><span id="totprice" class="price" style="font-size:25pt; color:green; font-weight:bold;">0원</span></td></tr>
 					<tr><td colspan="2">
 						<input type="checkbox">
 						추가요금자동결제,환불규정, 이용약관에 동의하며 결제를 진행합니다.(이용권 사용안내)
@@ -317,11 +379,27 @@
 						</td>
 					</tr>
 					<tr><td colspan="2">
-						<button type="button">결제하기</button>
+						<button id="userPayGo" type="button">결제하기</button>
 						</td></tr>
 				</table>
 			</td></tr>
 			
+		<tr><th>
+			<div id="bikeSel">&nbsp &nbsp대여 자전거 선택<br>
+				<span style="font-size:12pt;font-weight:normal;margin-left:15%;">자전거 번호:</span>
+				<select id="bikeNo" style="width:150px;height:35px;font-size:10pt;">
+					<c:forEach var="blist" items="${bikeList}">
+						<option>${blist.bikeNo}</option>
+					</c:forEach>
+				</select>
+				<span style="font-size:12pt;font-weight:normal;margin-left:5%;">대여 장소 : </span>
+				<select id="startPlaceName" style="width:250px;height:35px;font-size:10pt;">
+					<c:forEach var="olist" items="${officList}">
+						<option>${olist.placename}</option>
+					</c:forEach>
+				</select>
+			</div>
+			</th></tr>
 		<tr><th>
 			<div id="ticketbuyMethod">&nbsp &nbsp결제<br>
 				&nbsp &nbsp &nbsp
@@ -333,15 +411,15 @@
 		<tr><th style="height:300px;">
 			<table id="payMethodinput">
 				<tr class="phoneSel" style="display:none;"><th>휴대전화번호</th>
-					<td><select class="inputBox">
+					<td><select class="inputBox" id="telecom">
 							<option>SKT</option>
 							<option>KT</option>
 							<option>LG U+</option>
 						</select>
-					<input type="text" class="inputBox"> - <input type="text" class="inputBox"> - <input type="text" class="inputBox"></td></tr>
+					<input type="text" id="phoneNum1" class="inputBox"> - <input type="text" id="phoneNum2" class="inputBox"> - <input type="text" id="phoneNum3" class="inputBox"></td></tr>
 				<tr class="phoneSel" style="display:none;">
 					<th>인증번호발송</th>
-					<td><input type='text' id='certnum'/>
+					<td><input type='password' id='certnum'/>
 					<input id='Timer' type='text' value='' readonly/>
 					<input type='button' id='sendbutton' value='인증번호 발송' onclick='TIMER()'/>
 					</td>
@@ -360,13 +438,13 @@
 				</tr>
 				<tr class="cardSel" style="display:none;">
 					<th>유효기간</th>
-					<td><input type="text" name="validityMonth" size="2" placeholder="년"> / 
-						<input type="text" name="validityYear" size="2" placeholder="월"></td>
+					<td><input type="text" name="validityMonth" size="2" placeholder="월"> / 
+						<input type="text" name="validityYear" size="2" placeholder="년"></td>
 				</tr>
 				<tr class="cardSel" style="display:none;">
 					<th>카드종류</th>
-					<td><select>
-							<option selected>카드를 선택해주세요.</option>
+					<td><select id="cardKind">
+							<option selected style="display:none;">카드를 선택해주세요.</option>
 							<option>쌍용카드</option>
 							<option>신한카드</option>
 							<option>하나카드</option>

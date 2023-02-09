@@ -1,24 +1,53 @@
 package com.bikeWeb.vo;
-// com.bikeWeb.vo.RentalOfficeVo
-public class RentalOfficeVo {
+
+import java.util.Date;
+
+public class OfficeBikeTotVo {
+	private int bikeNo;
+	private Date startDate;
+	private int breakDownCnt;
+	private String rentalState;
+	//보관소 
+	private String placeName;
 	private String startPlaceName;
 	private String endPlaceName;
-	private String placename;
-	
 	private String loc;
 	private String locDetail;
-	private String phonenumber;
+	private String phoneNum;
 	//최대보관수 
 	private int maxStoreCnt;
 	// 즐겨찾기  여부 1, 0 
 	private int bookMarkWhether;
-	/**
-	placename varchar(500) PRIMARY key,
-	loc varchar(1000),
-	locdetail varchar(2000),
-	phonenumber varchar(13),
-	maxstorcnt NUMBER
-	 */
+	public int getBikeNo() {
+		return bikeNo;
+	}
+	public void setBikeNo(int bikeNo) {
+		this.bikeNo = bikeNo;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public int getBreakDownCnt() {
+		return breakDownCnt;
+	}
+	public void setBreakDownCnt(int breakDownCnt) {
+		this.breakDownCnt = breakDownCnt;
+	}
+	public String getRentalState() {
+		return rentalState;
+	}
+	public void setRentalState(String rentalState) {
+		this.rentalState = rentalState;
+	}
+	public String getPlaceName() {
+		return placeName;
+	}
+	public void setPlaceName(String placeName) {
+		this.placeName = placeName;
+	}
 	public String getStartPlaceName() {
 		return startPlaceName;
 	}
@@ -30,12 +59,6 @@ public class RentalOfficeVo {
 	}
 	public void setEndPlaceName(String endPlaceName) {
 		this.endPlaceName = endPlaceName;
-	}
-	public String getPlacename() {
-		return placename;
-	}
-	public void setPlacename(String placename) {
-		this.placename = placename;
 	}
 	public String getLoc() {
 		return loc;
@@ -49,11 +72,11 @@ public class RentalOfficeVo {
 	public void setLocDetail(String locDetail) {
 		this.locDetail = locDetail;
 	}
-	public String getPhonenumber() {
-		return phonenumber;
+	public String getPhoneNum() {
+		return phoneNum;
 	}
-	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
 	}
 	public int getMaxStoreCnt() {
 		return maxStoreCnt;

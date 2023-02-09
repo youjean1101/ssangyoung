@@ -192,11 +192,10 @@ $(document).ready(function(){
 		<tbody>
 			<c:forEach var="rlist" items="${returnlist}">
 				<tr><td>${rlist.ticketKind}</td><td>${rlist.payMoney}</td>
-					<td><fmt:formatDate value="${rlist.returnTime}"/></td></tr>
+					<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${rlist.returnTime}"/></td></tr>
 			</c:forEach>
 			<!-- <tr><td colspan="3" style="color:red;">내역없음</td></tr> -->
 		</tbody>
 	</table>
-	<%-- <iframe id="returnHistoryDataFra" src="${path}/a41_PayManager/returnHistoryData.jsp"></iframe> --%>
 </body>
 </html>

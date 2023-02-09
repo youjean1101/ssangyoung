@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bikeWeb.vo.BikeInfoVo;
 import com.bikeWeb.vo.GetPayVo;
 import com.bikeWeb.vo.PayDaySeachVo;
 import com.bikeWeb.vo.PayRentalTotVo;
 import com.bikeWeb.vo.PayVo;
+import com.bikeWeb.vo.RentalOfficeVo;
 import com.bikeWeb.vo.RentalVo;
 
 import bikeweb.dao.PayDao;
@@ -57,5 +59,25 @@ public class PayService {
 	}
 	public List<PayRentalTotVo> nonuserView(String phonenumber){
 		return dao.nonuserView(phonenumber);
+	}
+	public List<PayRentalTotVo> nonuserUnpaidView(String phonenumber){
+		return dao.nonuserUnpaidView(phonenumber);
+	}
+	
+	public List<RentalOfficeVo> comboRentalOffice(){
+		return dao.comboRentalOffice();
+	}
+	public List<BikeInfoVo> comboBike(){
+		return dao.comboBike();
+	}
+	public void bikeRentalChange(int no) {
+		dao.bikeRentalChange(no);
+	}
+	//회원 카드 등록
+	public void userGetCardAdd(String id) {
+		dao.userGetCardAdd(id);
+	}
+	public void userRentalInfoIns(RentalVo ins) {
+		dao.userRentalInfoIns(ins);
 	}
 }

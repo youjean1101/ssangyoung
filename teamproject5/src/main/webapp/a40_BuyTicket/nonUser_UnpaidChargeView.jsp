@@ -14,51 +14,53 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>결제수단등록</title>
+<title>Insert title here</title>
 <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
 <link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
 <style>
-	#guide01{
-		font-weight:bold;
-		font-size:9pt;
-		margin-top:3%;
-		margin-left:10%;
-	}
-	#guide02{
-		font-size:9pt;
-		margin-top:3%;
-		margin-left:10%;
-	}
-	#guide02 span{
-		color:red;
-	}
-	#getPayMethodSelTab{
+	#noneUserUnpaidViewTab{
+		/* border:1px solid black; */
+		text-align:center;
 		width:80%;
-		height:100px;
-		margin-top:3%;
 		margin-left:10%;
+		/* margin-top:15%; */
+		font-size:9pt;
 	}
-	#getPayMethodSelTab td{
-		border:5px solid white;
+	#noneUserUnpaidViewTab th{
+		border-top:1px solid black;
+		border-bottom:1px solid black;
+		height:40px;
+		background:rgb(219, 217, 217);
 	}
-	#getPayMethodSelTab td button{
-		background:lightgrey;
-		border:none;
+	#noneUserUnpaidViewTab td{
+		border-top:1px solid black;
+		border-bottom:1px solid black;
+		height:35px;
+	}
+	#nonUserUnpaidPayTab{
+		width:35%;
+		margin-left:32%;
+		margin-top:2%;
+		text-align:center;
+	}
+	#nonUserUnpaidPayTab th{
+		height:70px;
+		background:rgb(219, 217, 217);
+		font-size:14pt;
+		border:15px solid white;
+	}
+	#nonUserUnpaidPayTab #heightCont{
+		height:50px;
+		background:rgb(51, 160, 117);
+	}
+	#nonUserUnpaidPayTab th [type=button]{
 		width:100%;
 		height:100%;
-		font-size:14pt;
-		font-weight:bold;
+		background:rgb(51, 160, 117);
+		color:white;
+		border:none;
+		outline:none;
 	}
-	#getPayMethodSelTab td button span{
-		color:grey;
-		font-size:9pt;
-		font-weight:10px;
-	}
-	
-	.phoneSel{
-		 aria-hidden:true;
-	}
-	
 </style>
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
@@ -67,77 +69,81 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-	$(".phoneSel").css("display","none")
-	// 마이페이지 결제관리 공통 클릭상태 유지
-	$("#getPayMethod").css({"background":"navy","color":"white"})
-	// 결제수단에 따른 모달창변경 기능
-	$("#modalcard").click(function(){
-		$("#phoneIns").hide() // 초기화면에서는 보이지 않게 처리
-		$("#cardIns").show()
-		$("#exampleModalLongTitle").text("결제수단등록(카드등록)");
-		$(".phoneSel").css("display","none");
-		$(".cardSel").css("display","");
-	})
-	$("#modalphone").click(function(){
-		$("#exampleModalLongTitle").text("결제수단등록(휴대폰등록)");
-		$("#phoneIns").show()
-		$("#cardIns").hide()
-		$(".phoneSel").css("display","");
-		$(".cardSel").css("display","none");
-	})
-	// 이메일 직접입력/선택값 기능
-	$('#selectEmail').change(function(){
-		   $("#selectEmail option:selected").each(function () {
-				if($(this).val()== '1'){ //직접입력일 경우
-					 $("[name=email2]").val('');                        //값 초기화
-					 $("[name=email2]").attr("disabled",false); //활성화
-				}else{ //직접입력이 아닐경우
-					 $("[name=email2]").val($(this).text());      //선택값 입력
-					 $("[name=email2]").attr("disabled",true); //비활성화
-				}
-	   })
-	})
-	$("#cardIns").click(function(){
-		location.href="/getpayInsert.do?cardno="
-				+$("#cardno1").val()+"-"+$("#cardno2").val()+"-"+$("#cardno3").val()+"-"+$("#cardno4").val()
-				+"&validity="+$("#validityMonth").val()+"/"+$("#validityYear").val()
-				+"&cardkind="+$("#cardKind").val()
-				+"&email="+$("#email1").val()+"@"+$("#email2").val()
-				+"&phonenumber="
-				+"&rrn="
-				+"&id="+$("id").val()
-	})
-	$("#phoneIns").click(function(){
-		location.href="/getpayInsert.do?phonenumber="+$("#phonenum01").val()+"-"+$("#phonenum02").val()+"-"+$("#phonenum03").val()
-													+"&rrn="+$("#rrn7front").val()+"-"+$("#rrn7behind").val()
-													+"&cardno="
-													+"&validity="
-													+"&cardkind="
-													+"&email="
-													+"&id="+$("id").val()
-	})
-	var msg = "${msg}"
-	if(msg!=""){
-		alert("[안내메시지]결제수단이 등록완료 되었습니다.")
-	}
-	
-});
+	$(document).ready(function(){
+		$("#modalcard").click(function(){
+			$("#phoneIns").hide() // 초기화면에서는 보이지 않게 처리
+			$("#cardIns").show()
+			$("#exampleModalLongTitle").text("결제수단등록(카드등록)");
+			$(".phoneSel").css("display","none");
+			$(".cardSel").css("display","");
+		})
+		$("#modalphone").click(function(){
+			$("#exampleModalLongTitle").text("결제수단등록(휴대폰등록)");
+			$("#phoneIns").show()
+			$("#cardIns").hide()
+			$(".phoneSel").css("display","");
+			$(".cardSel").css("display","none");
+		})
+		// 이메일 직접입력/선택값 기능
+		$('#selectEmail').change(function(){
+			   $("#selectEmail option:selected").each(function () {
+					if($(this).val()== '1'){ //직접입력일 경우
+						 $("[name=email2]").val('');                        //값 초기화
+						 $("[name=email2]").attr("disabled",false); //활성화
+					}else{ //직접입력이 아닐경우
+						 $("[name=email2]").val($(this).text());      //선택값 입력
+						 $("[name=email2]").attr("disabled",true); //비활성화
+					}
+		   })
+		})
+		/* $("#cardIns").click(function(){
+			location.href="/getpayInsert.do?cardno="+$("#cardno1").val()+"-"+$("#cardno2").val()+"-"+$("#cardno3").val()+"-"+$("#cardno4").val()
+													+"&validity="+$("#validityMonth").val()+"/"+$("#validityYear").val()
+													+"&cardkind="+$("#cardKind").val()
+													+"&email="+$("#email1").val()+"@"+$("#email2").val()
+													+"&phoneNumber="
+													+"&rrn="
+		})
+		$("#phoneIns").click(function(){
+			location.href="/getpayInsert.do?phoneNumber="+$("#phonenum01").val()+"-"+$("#phonenum02").val()+"-"+$("#phonenum03").val()
+														+"&rrn="+$("#rrn7front").val()+"-"+$("#rrn7behind").val()
+														+"&cardno="
+														+"&validity="
+														+"&cardkind="
+														+"&email="				
+		}) */
+	});
 </script>
 </head>
 
 <body>
-	<jsp:include page="${path}/a00_main/a00_header.jsp"></jsp:include>
-	<jsp:include page="${path}/a00_main/a07_mypagecommon.jsp"></jsp:include>
-	<jsp:include page="${path}/a00_main/a09_myPagePayManager.jsp"></jsp:include>
-	<div id="guide01">추가과금이 발생할 경우 등록한 결제 수단으로 자동 결제됩니다.</div>
-	<table id="getPayMethodSelTab">
-		<tr><td><button id="modalphone" type="button" data-toggle="modal" data-target="#exampleModalCenter">휴대전화등록<br> <span>휴대전화를 결제수단으로 등록합니다.</span></button></td>
-			<td><button id="modalcard" type="button" data-toggle="modal" data-target="#exampleModalCenter">신용카드 등록<br> <span>신용카드를 결제수단으로 등록 합니다.</span></button></td></tr>
+	<table id="noneUserUnpaidViewTab">
+		<col width="20%">
+	   	<col width="10%">
+	   	<col width="10%">
+	   	<col width="15%">
+	   	<col width="15%">
+	   	<col width="10%">
+	   	<col width="20%">
+		<thead>
+			<tr><th>결제상품</th><th>금액</th><th>결제방법</th>
+				<th>대여시간</th><th>반납시간</th><th>사용시간</th><th>미납금액</th></tr>
+		</thead>
+		<tbody>
+			<c:forEach var="nUlist" items="${nonUserUnpaidList}">
+			<tr><td>${nUlist.ticketKind}</td><td>${nUlist.payMoney}원</td><td>${nUlist.payMethod}</td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${nUlist.rentalTime}"/></td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${nUlist.returnTime}"/></td>
+				<td>${nUlist.useTime}</td><td>${nUlist.unpaidCharge}원</td></tr>
+			<tr style="display:none"><td colspan="7"><input type="hidden" id="totCharge" value="${nUlist.unpaidCharge}"/></td></tr>
+			</c:forEach><!--총금액 출력(value값을 누적기능)  -->
+		</tbody>
 	</table>
-	<div id="guide02">결제수단 변경시 <span>500원이 결제</span>됩니다. 그리고 해당 결제금액은 일정시간이 지난 후 <span>자동으로 결제취소</span>가 진행됩니다. 
-		<span>(최대 5분 정도 소요)</span> 회원님의 양해를 부탁드립니다.</div>
-<!-- 모달창1 발생 -->
+	<table id="nonUserUnpaidPayTab">
+		<tr style="display:none"><th colspan="2">결제금액 &nbsp &nbsp &nbsp <span>0</span>원</th></tr>
+		<tr><th id="heightCont"><button id="modalphone" type="button" data-toggle="modal" data-target="#exampleModalCenter">휴대폰 결제하기</button></th>
+			<th id="heightCont"><button id="modalcard" type="button" data-toggle="modal" data-target="#exampleModalCenter">카드 결제하기</button></th></tr>
+	</table> <!-- 모달창으로 결제하기   -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -149,7 +155,7 @@ $(document).ready(function(){
       </div>
       <div class="modal-body">
 		<!-- <form id="frm02" class="form"  method="post"> -->
-		<input id="id" type="hidden" value="himan"/>
+		<!--  <input type="hidden" value="himan"/> -->
 	     <div class="row phoneSel" style="margin-left:2%;margin-top:3%;">
 	        전화번호 : &nbsp 
 	         <div class="col" style="padding:0px 0px;">
@@ -173,7 +179,7 @@ $(document).ready(function(){
 	     </div>
 	     <div class="row phoneSel" style="margin-left:2%;margin-top:3%;">
 	        인증번호 : &nbsp 
-	         <input type="password" class="form-control" placeholder="인증번호" name="certNum" style="width:120px;">
+	         <input type="text" class="form-control" placeholder="인증번호" name="certNum" style="width:120px;">
 	         <input id='Timer' type='text'  class="form-control" value='' readonly style="width:90px; border:none; background:white; color:red;"/>
 	         <input type="button" class="btn btn-warning" value="인증번호 전송" name="certNum" onclick='TIMER()' style="width:130px;">
 	      </div>
@@ -238,43 +244,11 @@ $(document).ready(function(){
    	  </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-success" id="phoneIns">휴대폰등록</button>
-        <button type="button" class="btn btn-success" id="cardIns">카드등록</button>
+        <button type="button" class="btn btn-success" id="phoneIns">결제하기</button>
+        <button type="button" class="btn btn-success" id="cardIns">결제하기</button>
       </div>
     </div>
   </div>
 </div>
-
 </body>
-<script>
-//-------------------------------타이머 기능-------------------------------
-const Timer=document.getElementById('Timer'); //스코어 기록창-분
-let time= 180000;
-let min=3;
-let sec=60;
-
-Timer.value=min+":"+'00'; 
-
-function TIMER(){
-    PlAYTIME=setInterval(function(){
-        time=time-1000; //1초씩 줄어듦
-        min=time/(60*1000); //초를 분으로 나눠준다.
-
-       if(sec>0){ //sec=60 에서 1씩 빼서 출력해준다.
-            sec=sec-1;
-            Timer.value=Math.floor(min)+':'+sec; 
-            //실수로 계산되기 때문에 소숫점 아래를 버리고 출력해준다.
-        }
-        if(sec===0){
-         	// 0에서 -1을 하면 -59가 출력된다.
-            // 그래서 0이 되면 바로 sec을 60으로 돌려주고 value에는 0을 출력하도록 해준다.
-            sec=60;
-            Timer.value=Math.floor(min)+':'+'00'
-        }     
-    },1000); //1초마다 
-}
-setTimeout(function(){
-    clearInterval(PlAYTIME);
-},180000);//3분이 되면 타이머를 삭제한다.
-</script>
 </html>

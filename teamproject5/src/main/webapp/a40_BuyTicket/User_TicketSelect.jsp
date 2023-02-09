@@ -58,8 +58,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#userTicketSelTab button").click(function(){
-			$("#TicketSelValue").html("<input style='visibility: hidden' name='Sel' value='"+$(this).val()+"'>")
-			$("#getTicketkind").submit()
+			location.href="/userRentalGo.do?Sel="+$(this).val()
 		})
 	});
 </script>

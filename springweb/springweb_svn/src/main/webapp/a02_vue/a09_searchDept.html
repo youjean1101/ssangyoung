@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	// deptAjax.do를 활용하여 vue에서 ajax로 검색화면을 구현하세요.
+	
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"부서정보 Vue 처리", dname:"", loc:"", dlist:[]},
+			methods:{
+	            schKeyUp:function(){
+	               if(event.keyCode==13) this.deptList()
+	            },
+	            deptList:function(){
+	               this.dlist = [] 
+	               var vm = this
+	               var url = "/springweb/deptAjax.do?dname="+this.dname+"&loc="+this.loc
+	               fetch(url).then(function(response){
+	            	   return response.json()
+	               }).then(function(json){
+	            	   console.log("서버에서 온 json")
+	            	   vm.dlist = json.dlist
+	            	   console.log(json)
+	               }).catch(function(err){
+	            	   console.log(err)
+	               })
+	            }
+	         }
+		});	
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  									<!-- vue에서 지원하는 keycode값이 13일 떄, 함수 호출  -->
+	    <input v-model="dname" @keyup.13="deptList" class="form-control mr-sm-2" placeholder="부서명" />
+	    <input v-model="loc" @keyup="schKeyUp" class="form-control mr-sm-2" placeholder="부서위치" />
+	    <button @click="deptList" class="btn btn-info" type="button">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+    <thead>
+      <tr class="table-success text-center">
+        <th>부서번호</th>
+        <th>부서명</th>
+        <th>부서위치</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr v-for="dept in dlist">
+    		<td>{{dept.deptno}}</td><td>{{dept.dname}}</td><td>{{dept.loc}}</td>
+    	</tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"0209과제",price:0,cnt:0,tot:0,kor:0,eng:0,math:0,result:"선택",resultval:0},
+			methods:{
+				calcu:function(){
+					var tot=parseInt(this.kor)+parseInt(this.eng)+parseInt(this.math)
+					if(this.result=="총점"){
+						this.resultval = tot
+					}else if(this.result=="평균"){
+						this.resultval = tot/3
+					}else if(this.result=="최고점수"){
+						
+					}else if(this.result=="최저점수"){
+						
+					}else{
+						alert("값을 선택해주세요.")
+					}
+				}
+			}
+		});	
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	  <h2 >총가격 : {{tot}}</h2>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+	  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="color:white;">
+		    단가 : <input v-model="price" class="form-control mr-sm-2" placeholder="단가" />
+		    <button v-on:click="cnt+=1, tot=cnt*price" class="btn btn-info" type="button">1개</button>
+	 	</nav>
+ 	<h3>계 : {{cnt}}</h3>
+	</form>
+	<div class="jumbotron text-center">
+	  <h2 >값 : {{resultval}}</h2>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+	  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="color:white;">
+		    국어 : <input v-model="kor" class="form-control mr-sm-2" placeholder="국어" />
+		    영어 : <input v-model="math" class="form-control mr-sm-2" placeholder="영어" />
+		    수학 : <input v-model="eng" class="form-control mr-sm-2" placeholder="수학" />
+		    <select v-model="result" @change="calcu">
+		    	<option>총점</option>
+		    	<option>평균</option>
+		    	<option>최고점수</option>
+		    	<option>최저점수</option>
+		    </select>
+	 	</nav>
+ 	<h3></h3>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

@@ -19,4 +19,8 @@ public interface A03_Dao {
 	
 	public void insertUploadFile(BoardFile f);
 	public String getBoardFile(int no);
+	
+	public void updateBoard(Board upt);
+	
+	public void deleteBoard(int no);
 }

@@ -92,7 +92,7 @@
 <body>
 	<table id="rentalInfoInputTab">
 		<tr><th>휴대전화번호</th><td><input type="text" id="phonenum01"/> - <input type="text" id="phonenum02"/> - <input type="text" id="phonenum03"/></td></tr>
-		<tr><th>인증번호</th><td><input type="text" id="certnum"/>
+		<tr><th>인증번호</th><td><input type="password" id="certnum"/>
 							<input id="Timer" type="text" value="" readonly/>
 							<input type="button" id="sendbutton" value="인증번호 발송"/></td></tr>
 	</table>

@@ -6,8 +6,14 @@
 <mapper namespace="bikeweb.dao.PayDao">
 	<insert id="nonUserRentalInfoIns" parameterType="rental">
   		INSERT INTO rentalInfo values(rental_seq.nextval,
-			'비회원',#{nonMemberName},#{nonMemberPhoneNum},#{bikeNo},NULL,#{startPlaceName},
-			sysdate,NULL,NULL,NULL,0,rental_seq.currval)
+			'비회원',#{nonMemberName},#{nonMemberPhoneNum},#{bikeNo},
+			NULL,#{startPlaceName},sysdate,NULL,NULL,NULL,0,rental_seq.currval)
+	</insert>
+	
+	<insert id="userRentalInfoIns" parameterType="rental">
+  		INSERT INTO rentalInfo values(rental_seq.nextval,
+			'회원',null,null,#{bikeNo},
+			#{id},#{startPlaceName},sysdate,NULL,NULL,NULL,0,rental_seq.currval)
 	</insert>
 	
 	<insert id="nonUserPayIns" parameterType="pay">
@@ -50,5 +56,28 @@
 		AND memberdiv='비회원'
 		AND nonMemberPhoneNum = #{phonenumber}
 	</select>
+	<select id="nonuserUnpaidView" resultType="payrentaltot" parameterType="String">
+		SELECT * FROM pay p,rentalInfo r
+		WHERE r.payno = p.payno
+		AND memberdiv='비회원'
+		AND nonMemberPhoneNum = #{phonenumber}
+		AND unpaidcharge>0
+	</select>
+	
+	<select id="comboRentalOffice" resultType="rentaloffice" >
+		SELECT * FROM rentaloffice
+	</select>
+	<select id="comboBike" resultType="bikeinfo" >
+		SELECT * FROM bike WHERE RETALSTATE ='배치중'
+	</select>
+	
+	<update id="bikeRentalChange" parameterType="int">
+		UPDATE bike SET RETALSTATE='대여중' WHERE bikeno=#{no}
+	</update>
+	
+	<update id="userGetCardAdd" parameterType="String">
+		UPDATE user1 SET GETCARDNO = getPay_seq.currval WHERE id=#{id}
+	</update>
+	
 	
 </mapper>

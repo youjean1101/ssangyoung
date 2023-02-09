@@ -2,11 +2,7 @@ package bikeweb.dao;
 
 import java.util.List;
 
-import com.bikeWeb.vo.GetPayVo;
-import com.bikeWeb.vo.PayDaySeachVo;
-import com.bikeWeb.vo.PayRentalTotVo;
-import com.bikeWeb.vo.PayVo;
-import com.bikeWeb.vo.RentalVo;
+import com.bikeWeb.vo.*;
 
 public interface PayDao {
 	public void nonUserRentalInfoIns(RentalVo ins);
@@ -19,4 +15,13 @@ public interface PayDao {
 	public void getCardInsert(GetPayVo ins);
 	
 	public List<PayRentalTotVo> nonuserView(String phonenumber);
+	public List<PayRentalTotVo> nonuserUnpaidView(String phonenumber);
+	
+	public List<RentalOfficeVo> comboRentalOffice();
+	public List<BikeInfoVo> comboBike();
+	
+	public void bikeRentalChange(int no);
+	public void userGetCardAdd(String id);
+	
+	public void userRentalInfoIns(RentalVo ins);
 }

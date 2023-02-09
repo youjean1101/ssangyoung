@@ -46,6 +46,21 @@ public class A01_Controller {
 		d.addAttribute("downloadFile", fname);
 		return "downloadView";
 	}
+	
+	@RequestMapping("/boardUpt.do")
+	public String boardUpt(Board upt, Model d) {
+		service.updateBoard(upt);
+		d.addAttribute("msg2","수정완료");
+		d.addAttribute("board", service.getBoard(upt.getNo()));
+		return "a03_board";
+	}
+	@RequestMapping("/delBoard.do")
+	public String delBoard(@RequestParam("no")int no, Model d) {
+		service.deleteBoard(no);
+		d.addAttribute("msg3","삭제완료");
+		return "a03_board";
+	}
+	
 	//과제
 	@RequestMapping("/baseballList.do")
 	public String baseballList(Model d) {

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import springweb.a05_mvc.a02_service.A02_DeptService;
 import springweb.z01_vo.Dept;
+import springweb.z01_vo.Emp;
 
 @Controller("mydeptCtrl")
 public class A02_DeptController {
@@ -29,12 +30,11 @@ public class A02_DeptController {
 		return "WEB-INF\\views\\a05_mvc\\a04_ajaxList.jsp";
 	}
 	// Get/Post ==> RequestMapping(둘다 가능)
-	@PostMapping("/deptAjax.do")
+	@RequestMapping("deptAjax.do")
 	public String deptAjaxInitData(Dept sch, Model d) {
 		d.addAttribute("dlist",service.getDeptList(sch));
 		return "pageJsonReport";
 	}
-
 	@GetMapping("/getDept.do")
 	public String getDept(@RequestParam("deptno") int deptno, Model d) {
 		d.addAttribute("dept",service.getDept(deptno));
@@ -72,6 +72,4 @@ public class A02_DeptController {
 		service.delDept(deptno);
 		return "pageJsonReport";
 	}
-	
-	
 }

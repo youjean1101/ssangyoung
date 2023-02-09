@@ -21,7 +21,7 @@ CREATE SEQUENCE pay_seq
 		MAXVALUE 100000;
 DROP SEQUENCE pay_seq;
 
-SELECT * FROM pay;
+
 
 DELETE FROM pay;
 
@@ -34,4 +34,18 @@ INSERT INTO pay values(pay_seq.nextval,'정기권(2시간)',1,1000,'card',null,n
 UPDATE pay SET usetime='2' WHERE payno='pay1';
 DELETE FROM pay WHERE payno='pay1';
 
+SELECT * FROM pay ORDER BY payno;
+SELECT * FROM rentalInfo ORDER BY rentalno;
 
+UPDATE rentalInfo
+SET returntime = TO_DATE( '2023-01-30 03:30:00', 'YYYY/MM/DD HH:MI:SS PM'), 
+	USEDISTANCE = 20,
+	rentaltime = TO_DATE( '2023-01-30 03:30:00', 'YYYY/MM/DD HH:MI:SS PM')
+WHERE rentalno=2;
+UPDATE rentalInfo
+SET returntime = TO_DATE( '2023-02-03 04:30:00', 'YYYY/MM/DD HH:MI:SS PM'), 
+	USEDISTANCE = 20,
+	rentaltime = TO_DATE( '2023-02-03 03:20:00', 'YYYY/MM/DD HH:MI:SS PM')
+WHERE rentalno=3;
+
+SELECT bikeno, RETALSTATE  FROM bike WHERE bikeno=7;

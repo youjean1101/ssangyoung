@@ -62,7 +62,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#goBuyTicket").click(function(){
-			window.open("${path}/a40_BuyTicket/nonUser_TicketBuy.jsp");
+			window.open("/noneUserRentalGo.do");
 		})
 	});
 </script>

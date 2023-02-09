@@ -10,6 +10,7 @@
 		<typeAlias type="com.bikeWeb.vo.GetPayVo" alias="getpay"/>
 		<typeAlias type="com.bikeWeb.vo.PayVo" alias="pay"/>
 		<typeAlias type="com.bikeWeb.vo.RentalOfficeVo" alias="rentaloffice"/>
+		<typeAlias type="com.bikeWeb.vo.BikeInfoVo" alias="bikeinfo"/>
 		<typeAlias type="com.bikeWeb.vo.PayDaySeachVo" alias="paydayseach"/>
 		<typeAlias type="com.bikeWeb.vo.PayRentalTotVo" alias="payrentaltot"/>
 	</typeAliases>

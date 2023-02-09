@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	/*
+	#vue를 통해 ajax데이터 가져와서 로딩하기..
+	1. 처리 프로세스
+		1) vue 객체를 선언을 통해 이벤트에 의해 처리된 내용은
+		2) url, 요청값으로 특정한 controller기능 기능메서드 호출한다.
+		3) 해당 기능 메서드를 통해 받은 데이터는 json 객체로 받는다.
+		4) 이 json 데이터를 vue 객체의 모델 데이터에 할당된다.
+		5) 모델 데이터는 실시간으로 화면에 리스트를 출력 처리한다.
+		
+	2. 사전 지식
+		1) ajax 백엔드단 처리 내용(json데이터 형식) -RestController, JSON Viewer
+		2) vue의 모델데이터, 양방향 directive, methods 처리, vue를 통해 객체형 배열의 반복문 처리
+			v-model="" methods:{search:function(){	}} data:list:[]
+			@keyup="search" @click="search"
+			<tr v-for="(idx, emp) in list"
+				<td>{{emp.empno}}</td>
+		3) fetch ajax 처리 api 사용 방법
+			jquery : $.ajax({속성:속성값})
+			lib 설정 : https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api
+			var url = "${path}/empListAjax.do?ename=&job="
+			fetch(url).then(function(response){
+				반응객체 처리
+				return response.json; // json 데이터만 다음 블럭에 전달
+			}).then(function(json){
+				모델명 = json : 서버에서 온 json 데이터 할당.
+			})catch(function(err){
+				예외 처리
+			})
+		
+	3. 개발 순서
+		1) backend단 처리(스프링을 통한 json 데이터 로딩 처리)
+			/springweb/empListAjax.do?ename=A&job=ER
+		2) vue 모델데이터선언 : 요청값, 결과값
+			ename, job, emplist:[]
+		3) vue의 기능 메서드 선언 (methods)
+		4) 화면 ui 구현 : 요청값으르 처리할 form-v-model선언, 리스트 데이터 구현 - vue의 결과 리스트
+			@이벤트 = "이벤트 핸들러 함수"
+		5) fetch api를 통한 데이터 로딩 처리.
+			함수안에 this와 함수밖에서 모델 데이터를 처리하기 위한 this를 구분하기 위한 변수 선언
+			var vm = this : 함수 밖에서 모델 데이터를 접근하기 위하여 사용...
+			
+	
+	*/
+	
+	$(document).ready(function(){
+	      var vm = new Vue({
+	         el:".container",
+	         data:{msg:"사원정보 Vue 처리", ename:"", job:"", empList:[]},
+	         methods:{
+	            schKeyup:function(){
+	               if(event.keyCode==13){
+	                  this.fetchList(); // this. : 현재 객체의 소속
+	               }
+	            },
+	            fetchList:function(){
+	               alert("검색 처리")
+	               console.log("사원명:"+this.ename)
+	               console.log("직책명:"+this.job)
+	               this.empList = [] // 검색 리스트 데이터 초기화
+	               var url = "/springweb/empListAjax.do?ename="+this.ename+"&job="+this.job
+	               var vm = this; // Vue객체의 다른 속성(모델,메서드)를 fetch api 안에서 사용하기 위해 선언
+	               fetch(url).then(function(response){
+	                  console.log(response)
+	                  return response.json()
+	               }).then(function(json){
+	                  console.log("#서버에서 받아온 json데이터")
+	                  // 서버에서 가져온 json 데이터를 모델 데이터에 할당
+	                  vm.empList = json.empList
+	                  console.log(json.empList)
+	               }).catch(function(err){
+	                  console.log(err)
+	               })
+	            }
+	         }
+	      });   
+	   });
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="ename" @keyup="schKeyup" class="form-control mr-sm-2" placeholder="사원명입력" />
+	    <input v-model="job" @keyup="schKeyup" class="form-control mr-sm-2" placeholder="직책명 입력" />
+	    <button @click="fetchList" class="btn btn-info" type="button">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>사원번호</th>
+        <th>사원명</th>
+        <th>직책</th>
+        <th>급여</th>
+        <th>부서번호</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr v-for="emp in empList">
+    		<td>{{emp.empno}}</td><td>{{emp.ename}}</td><td>{{emp.job}}</td>
+    		<td>{{emp.sal}}</td><td>{{emp.deptno}}</td>
+    	</tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

@@ -303,7 +303,7 @@
 2. 개발 순서
 	1) 핵심 소스
 		공통환경 설정(업로드경로) : resource\a00_config
-			file.upload=webapp하위에 z01_upload폴드 지정
+			uesr01.upload=webapp하위에 z01_upload폴드 지정
 		컨테이너(업로드뷰):resource\a01_container.xml
 			 <bean id="multipartResolver"
    				class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
@@ -329,6 +329,7 @@
 			BoardFile.java(no, fname, regdte, uptdte, etc)
 			
 		화면단(파일 첨부 처리) : a02_insertBoard.jsp
+			<form enctype="multipart"/form-data"
 			<input type="file" name="report" />
 		화면단(첨부된 리스트 처리) : a03_board.jsp
 			<input value="${board.fname}"
@@ -370,11 +371,23 @@
 		mapper
 			<insert id="insertUploadFile" parameterType="boardfile" />
 					insert into boardfile(board_seq.currval, #{fname}, #{etc}, sysdate, sysdate);
-
+		
+		<select id="getBoard" resultType="board" parameterType="int">
+			SELECT a.*,fname 
+			FROM board a,boardfile b
+			WHERE a.no =b.no(+)
+			and NO = #{no}			
+		</select>
+		public Board getBoard(int no) {
+				return dao.getBoard(no);
+		}	
+		<!--선택(위 내용 처리시 생략 가능)-->
 			<select id="getBoardFile" parameterType="int" />
 					select fname 
 					from boardfile
 					where no = #{no}
+			</select>
+	--------------------------------------------------------------	
 		
 	4) controller/service단 구현
 			@Value("${user.upload")
@@ -390,15 +403,18 @@
 					}
 			}
 			public void insertBoard(Board ins){
+				// 우선 기본 정보를 등록해서 no가 생성(board_seq.nextval)
+				dao.insertBoard(ins);
+				
 				String fname = ins.getReport().getOriginalFilename();
 				if( !fname.equals("")){
 					uploadFile(ins.getReport());
 					BoardFile f = new BoardFile();
 					f.setFname(fname);
 					f.setEtc(ins.getSubject());
+					// 위 기본 정보에 있는 no와 동일한 no 입력(board_seq.currval)
 					dao.insertUploadFile(f);
 				}
-				dao.insertBoard(ins);
 			}
 			public Board getBoard(int no) {
 				Board b = dao.getBoard(no);
@@ -428,11 +444,102 @@
 2. 개발 순서
 	1) 다운로드 viewer 구현
 		- 모델명(파일명)
+		A04_DownloadView.java
+		@Value("${user.upload}") : 경로
+		String fname = (String)model.get("downloadFile"); 파일명
+		new File(upload+fname);
+		==> FileInputStream ==> reponse.getOutStream() ==> 클라이언트에 전달.
 	2) 다운로드 view 컨테이너에 등록
+		<bean id="downloadView"	class="board.A04_DownloadView"/>
 	3) 다운로드 컨트롤러 메서드 추가..
 		요청값 : name
 		모델명 name 설정
 		다운로드 뷰어 호출..
-	4) 화면단
+		//  download.do?fname=@@@@
+		@GetMapping("/download.do")
+		public String download(@RequestParam("fname")String fname, Model d) {
+			d.addAttribute("downloadFile", fname);
+			return "downloadView";
+		}
+		
+	4) 화면단(jsp)
 		파일클릭 시, 컨트롤러 호출 location.href 선언
+		<input id="downFile" value="${board.fname}">
+		$("#downFile").click(function(){
+	  		if(confirm($(this).val()+"을 다운로드하시겠습니까?")){
+	  			location.href="${path}/download.do?fname="+$(this).val()
+	  		}
+	  	})
+# 게시판 수정 처리
+1. 프로세스
+	1) 상세 화면에서
+		수정할 데이터를 변경한 후, 수정 버튼을 클릭하면
+	2) 수정 controller 호출
+	3) 수정 service 호출
+	4) DB 처리
+		service ==> dao ==> mapper
+	5) controller 메시지 "수정완료" 전달
+	6) 화면단 수정 처리 메시지
+		alert(msg);
+		
+2. 개발 순서
+	1) DB 처리 service 호출
+		sql 
+			update board
+				set content = #{content},
+					subject = #{subject},
+					uptdte = sysdate
+			where no = #{no}
+		vo, 공통 mybatis
+		dao
+			public void updateBoard(Board upt);
+		mapper
+			<update id="updateBoard" parameterType="board">
+				update board
+				set content = #{content},
+					subject = #{subject},
+					uptdte = sysdate
+				where no = #{no}
+			</update>
+		
+	2) controller 추가
+		/boardUpt.do
+		public String uptBoard(Board uptm Model d){
+			service.updateBoard(upt);
+			d.addAttribute("msg","수정완료");
+			d.addAttribute("board", service.getBoard(upt.getNo()));
+			return "";
+		}
+	3) 화면단
+		- 수정 버튼 클릭 시, confirm 수정하시겠습니까?
+		$("#uptBtn").click(function(){
+			if(confirm("수정하시겠습니까?")){
+				$("form").attr("action","${path}/boardUpt.do");
+				$("form").submit();
+			}
+		})
+		- 요청값 전달.
+		var msg = "${msg}"
+		if(msg=="수정완료"){
+		if(confirm(msg+"전체 조회화면 이동하시겠습니까?")){
+			location.href = "${path}/list.do";
+		}
+
+# 게시판 삭제 처리
+1. DB처리
+	sql delete from board where no = 1
+	dao public void deleteBoard(int no);
+	mapper
+		<delete id="deleteBoard" parameterType="int">
+			delete
+			from board
+			where no = #{no}
+		</delete>
+	service
+	
+2. controller 및 화면단 처리
+	1) controller
+	/delBoard.do
+	2) jsp
+	location.href = "delBoard.do?no="+no
 	

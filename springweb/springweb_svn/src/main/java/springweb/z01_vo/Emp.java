@@ -96,14 +96,8 @@ public class Emp {
 		this.mgr = mgr;
 	}
 
-	
 	public Date getHiredate() {
 		return hiredate;
-	}
-
-
-	public long getHiredateTime() {
-		return getHiredate().getTime();
 	}
 
 	public void setHiredate(Date hiredate) {

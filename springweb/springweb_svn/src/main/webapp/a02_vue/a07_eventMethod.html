@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"이벤트처리(함수호출)",amount:0,balance:0,id:"",pass:"",result:"아이디/패스워드를 입력하세요."},
+			methods:{
+				deposit:function(){
+					// this : 전체 Vue()객체를 지칭하여 모델데이터나 기타 소속되어 있는 기능 메서드 포함
+					alert("함수 호출:"+this.amount)
+					this.balance += parseInt(this.amount)
+				},
+				login:function(){
+					if(this.id=="himan" && this.pass=="7777"){
+						this.result ="로그인성공"
+					}else if(this.id=="" && this.pass==""){
+						this.result ="아이디/패스워드를 입력하세요."
+					}else{
+						this.result ="로그인실패"
+					}
+				}
+			}
+		});	// 모델데이터 id,pass, [아이디입력][패스워드입력] [로그인] ==> 로그인 클릭 시,
+		//	himan/7777일 떄, 로그인 성공 메시지 그외는 로그인 실패
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	  <h2 >${{balance}}</h2>
+	</div>
+	<form id="frm01" class="form"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="amount" class="form-control mr-sm-2" placeholder="입금액" />
+	    <button @click="deposit" class="btn btn-info" type="button">누적합계</button>
+ 	</nav>
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="id" class="form-control mr-sm-2" placeholder="아이디입력" />
+	    <input v-model="pass" class="form-control mr-sm-2" placeholder="패스워드입력" />
+	    <button @click="login" class="btn btn-info" type="button">로그인</button>
+ 	</nav>
+ 	<div class="jumbotron text-center">
+	  <h2 >{{result}}</h2>
+	</div>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

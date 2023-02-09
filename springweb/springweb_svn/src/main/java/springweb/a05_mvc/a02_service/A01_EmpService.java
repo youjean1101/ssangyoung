@@ -16,6 +16,12 @@ public class A01_EmpService {
 	@Autowired(required=false)
 	private A01_EmpDao dao;
 	
+	public List<Emp> getBsEmpList(Emp sch){
+		if(sch.getEname()==null) sch.setEname("");
+		if(sch.getJob()==null) sch.setJob("");
+		return dao.getBsEmpList(sch);
+	}
+	
 	public List<Emp> getEmpList(Emp sch){
 		if(sch.getEname()==null) sch.setEname("");
 		if(sch.getJob()==null) sch.setJob("");

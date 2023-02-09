@@ -7,7 +7,13 @@
 		인터페이스를 상속받은 실제 Dao객체를 위 규칙에 생성하는 xml파일..
 		-->
 <mapper namespace="springweb.a05_mvc.a03_dao.A01_EmpDao">
-
+	<select id="getBsEmpList" resultType="emp" parameterType="emp">
+		select * 
+		from emp100
+		where 1=1
+		and ename like '%'||#{ename}||'%'
+		and job like '%'||#{job}||'%'
+	</select>
 
 	<select id="getEmpList"  resultType="emp" parameterType="emp">
 		select e.empno, e.ename, d.dname, nvl(m.ename,'') mename, e.job

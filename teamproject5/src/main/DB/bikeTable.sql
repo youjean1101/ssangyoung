@@ -14,11 +14,19 @@ CREATE SEQUENCE bike_seq
 		MAXVALUE 100000;
 DROP SEQUENCE bike_seq;
 
-SELECT * FROM bike;
+SELECT * FROM bike WHERE bikeno=6;
 
+INSERT INTO bike values(bike_seq.nextval,'20221201',1,'배치중','홍대입구역 8번출구 앞 (신)');
+INSERT INTO bike values(bike_seq.nextval,'20221201',2,'배치중','홍대입구역 8번출구 앞 (신)');
+INSERT INTO bike values(bike_seq.nextval,'20221201',3,'배치중','홍대입구역 8번출구 앞 (신)');
+INSERT INTO bike values(bike_seq.nextval,'20221201',4,'배치중','홍대입구역 8번출구 앞 (신)');
+INSERT INTO bike values(bike_seq.nextval,'20221201',5,'배치중','홍대입구역 8번출구 앞 (신)');
+INSERT INTO bike values(bike_seq.nextval,'20221201',6,'배치중','홍대입구역 8번출구 앞 (신)');
 INSERT INTO bike values(bike_seq.nextval,'20221201',1,'배치중','홍대입구역 8번출구 앞 (신)');
 INSERT INTO bike values(bike_seq.nextval,'20210731',12,'배치중','홍대입구역 8번출구 앞 (신)');
 INSERT INTO bike values(bike_seq.nextval,'20220403',9,'대여중','홍대입구역 8번출구 앞 (신)');
 INSERT INTO bike values(bike_seq.nextval,'20220326',1,'수리중','홍대입구역 8번출구 앞 (신)');
 
 UPDATE bike SET breakdowncnt=3 WHERE bikeno='1';
+UPDATE bike SET RETALSTATE='대여중' WHERE bikeno=4;
+SELECT * FROM bike WHERE RETALSTATE ='배치중';

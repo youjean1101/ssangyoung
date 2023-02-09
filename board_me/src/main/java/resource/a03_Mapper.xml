@@ -9,7 +9,8 @@
 		from board
 		where 1=1
 		and subject like '%'||#{subject}||'%'
-		and writer like '%'||#{writer}||'%'	
+		and writer like '%'||#{writer}||'%'
+		order by no desc
 	</select>
 	<insert id="insertBoard" parameterType="board">
 		INSERT INTO board values(board_seq.nextval,
@@ -34,6 +35,17 @@
 		from boardfile
 		where no = #{no}
 	</select>		
+	<update id="updateBoard" parameterType="board">
+				update board
+				set content = #{content},
+					subject = #{subject},
+					uptdte = sysdate
+				where no = #{no}
+	</update>
+		
+	<delete id="deleteBoard" parameterType="int">
+		DELETE FROM board WHERE NO=#{no}
+	</delete>
 	
 	<select id="baseballList" resultType="BaseBallTeam">
 		SELECT * FROM baseballteam
@@ -49,5 +61,6 @@
 		AND returntime between '20230130' AND '20230208'
 		AND id='himan'
 	</select>
+
 </mapper>
 		

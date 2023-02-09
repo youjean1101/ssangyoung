@@ -257,11 +257,11 @@ $(document).ready(function(){
 	   	<col width="33%">
 	   	<col width="33%">
 		<thead>
-			<tr><th>대여일시</th><th>내역</th><th>금액</th></tr>
+			<tr><th>대여시간</th><th>내역</th><th>금액</th></tr>
 		</thead>
 		<tbody>
 			<c:forEach var="ulist" items="${unpaidlist}">
-				<tr><td><fmt:formatDate value="${ulist.rentalTime}"/></td>
+				<tr><td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${ulist.rentalTime}"/></td>
 					<td>${ulist.ticketKind}</td><td>${ulist.payMoney}</td></tr>
 			</c:forEach>
 		</tbody>

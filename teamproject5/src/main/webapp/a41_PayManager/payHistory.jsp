@@ -220,12 +220,12 @@ $(document).ready(function(){
 	   	<col width="20%">
 		<thead>
 			<tr><th>결제상품</th><th>금액</th><th>결제방법</th>
-				<th>이용권개시일</th><th>환불예정액</th><th>환불/취소</th></tr>
+				<th>대여시간</th><th>환불예정액</th><th>환불/취소</th></tr>
 		</thead>
 		<tbody>
 			<c:forEach var="plist" items="${paylist}">
 			<tr><td>${plist.ticketKind}</td><td>${plist.payMoney}</td><td>${plist.payMethod}</td>
-				<td><fmt:formatDate value="${plist.rentalTime}"/></td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${plist.rentalTime}"/></td>
 				<td>${plist.payMoney}</td><td>X</td></tr>
 			</c:forEach>
 		</tbody>

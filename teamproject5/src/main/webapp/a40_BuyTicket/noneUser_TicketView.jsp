@@ -59,17 +59,16 @@
 	   	<col width="25%">
 	   	<col width="10%">
 		<thead>
-			<tr><th>결제상품</th><th>선불금액</th><th>결제했던방법</th>
-				<th>대여날짜</th><th>반납시간</th><th>미납요금</th></tr>
+			<tr><th>결제상품</th><th>금액</th><th>결제방법</th>
+				<th>대여시간</th><th>사용시간</th></tr>
 		</thead>
 		<tbody>
 			<c:forEach var="nRlist" items="${nonUserRentalList}">
 			<tr><td>${nRlist.ticketKind}</td><td>${nRlist.payMoney}원</td><td>${nRlist.payMethod}</td>
-				<td><fmt:formatDate value="${nRlist.rentalTime}"/></td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${nRlist.rentalTime}"/></td>
 				<td>${nRlist.useTime}</td></tr>
-			</c:forEach> <!--총금액 출력(value값을 누적기능)  -->
+			</c:forEach> 
 		</tbody>
 	</table>
-	<button type="button">결제하기</button> <!-- 모달창으로 결제하기   -->
 </body>
 </html>

@@ -41,5 +41,10 @@ public class A01_EmpController {
 		d.addAttribute("empList", service.getEmpList(sch));
 		return "\\WEB-INF\\views\\a05_mvc\\a01_empList.jsp";
 	}
-	
+	//http://localhost:7080/springweb/empListAjax.do?ename=A&job=ER
+	@RequestMapping("empListAjax.do")
+	public String empListAjax(@ModelAttribute("sch")Emp sch,Model d) {
+		d.addAttribute("empList", service.getBsEmpList(sch));
+		return "pageJsonReport";
+	}
 }

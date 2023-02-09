@@ -63,7 +63,13 @@ public class A02_Service {
 	public void uptReadCnt(int no) {
 		dao.uptReadCnt(no);
 	}
-	
+	public void updateBoard(Board upt) {
+		dao.updateBoard(upt);
+	}
+	public void deleteBoard(int no) {
+		dao.deleteBoard(no);
+	}
+	//과제
 	public List<BaseBallTeam> baseballList(){
 		return dao.baseballList();
 	}
@@ -73,4 +79,5 @@ public class A02_Service {
 	public BaseBallTeam BaseballTeamDetail(int teamno) {
 		return dao.BaseballTeamDetail(teamno);
 	}
+	
 }

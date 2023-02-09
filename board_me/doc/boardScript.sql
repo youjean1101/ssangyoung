@@ -65,3 +65,12 @@ SELECT * FROM boardfile;
 select fname 
 from boardfile
 where no = 1;
+SELECT * FROM board;
+
+update board
+set content = '오늘은 무탈',
+	subject = '제발류',
+	uptdte = sysdate
+where no = 44;
+
+DELETE FROM board WHERE NO='41';
