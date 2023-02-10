@@ -56,16 +56,17 @@ AND returntime between '2022-11-07' AND '20230210'
 AND id='himan';
 
 -- 미납금액
-SELECT * FROM pay p,rentalInfo r
+SELECT rentalTime,ticketKind,payMoney
+FROM pay p,rentalInfo r
 WHERE r.payno = p.payno
 AND r.unpaidCharge BETWEEN 1 AND 100000
 AND id='himan';
 -- 비회원 대여조회
-SELECT ticketKind, payMoney, payMethod,rentalTime,useTime
+SELECT ticketKind, payMoney, payMethod,rentalTime,useTime,PHONENUMBER 
 FROM pay p,rentalInfo r
 WHERE r.payno = p.payno
-AND memberdiv='비회원'
-AND nonMemberPhoneNum = '010-5555-5555';
+AND memberdiv='비회원';
+AND nonMemberPhoneNum = '010-6666-6666';
 --비회원 미납금액 조회
 SELECT ticketKind,payMoney,payMethod,rentalTime,returnTime,useTime,unpaidCharge,unpaidCharge
 FROM pay p,rentalInfo r
@@ -74,7 +75,7 @@ AND memberdiv='비회원'
 AND nonMemberPhoneNum = '010-5555-5555'
 and unpaidcharge>0;
 
-SELECT * FROM rentalInfo;
+SELECT * FROM rentalInfo ORDER BY rentalno;
 UPDATE rentalInfo SET unpaidcharge='2000' WHERE rentalno=7;
 UPDATE rentalInfo SET ENDPLACENAME ='홍대입구역 8번출구 앞 (신)' WHERE rentalno=7;
 UPDATE rentalInfo

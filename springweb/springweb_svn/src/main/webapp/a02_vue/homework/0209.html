@@ -12,10 +12,15 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
+	//[1단계:확인] 4. methods 선언 이벤트 처리로 학생의 성적 국어, 영어, 수학 점수를 입력해서 
+	// 	select로 총점/평균/최고/최저 점수를 선택시 출력하세요.
+	//[1단계:확인] 7. vue와 fetch api를 이용하여 A03_MemberController.java의 
+	// 	/memberListMy.do ==> /memberListAjax.do 로 만들어 json데이터를 가져오게 하여 vue로 ajax처리하세요
 	$(document).ready(function(){
 		var vm = new Vue({
 			el:".container",
-			data:{msg:"0209과제",price:0,cnt:0,tot:0,kor:0,eng:0,math:0,result:"선택",resultval:0},
+			data:{msg:"0209과제",price:0,cnt:0,tot:0,kor:0,eng:0,math:0,result:"선택",resultval:0,scoreArr:[]
+								,id:"",name:"",auth:"",mlist:[]},
 			methods:{
 				calcu:function(){
 					var tot=parseInt(this.kor)+parseInt(this.eng)+parseInt(this.math)
@@ -24,13 +29,30 @@
 					}else if(this.result=="평균"){
 						this.resultval = tot/3
 					}else if(this.result=="최고점수"){
-						
+						this.resultval = Math.max(parseInt(this.kor),parseInt(this.eng),parseInt(this.math))
 					}else if(this.result=="최저점수"){
-						
+						this.resultval = Math.min(parseInt(this.kor),parseInt(this.eng),parseInt(this.math))
 					}else{
 						alert("값을 선택해주세요.")
 					}
-				}
+				},
+				 schKeyUp:function(){
+		               if(event.keyCode==13) this.memberList()
+		            },
+		            memberList:function(){
+		               this.mlist = [] 
+		               var vm = this
+		               var url = "/springweb/memberListAjax.do?id="+this.id+"&name="+this.name+"&auth="+this.auth
+		               fetch(url).then(function(response){
+		            	   return response.json()
+		               }).then(function(json){
+		            	   console.log("서버에서 온 json")
+		            	   vm.mlist = json.mlist
+		            	   console.log(json)
+		               }).catch(function(err){
+		            	   console.log(err)
+		               })
+		            }
 			}
 		});	
 	});
@@ -67,6 +89,15 @@
 	 	</nav>
  	<h3></h3>
 	</form>
+	<form id="frm01" class="form-inline"  method="post">
+	  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="color:white;">
+		    아이디 : <input v-model="id" @keyup.13="memberList" class="form-control mr-sm-2" placeholder="아이디" />
+		    이름 : <input v-model="name" @keyup="schKeyUp" class="form-control mr-sm-2" placeholder="이름" />
+		    권한 : <input v-model="auth" @keyup.13="memberList" class="form-control mr-sm-2" placeholder="권한" />
+		    <button @click="memberList" class="btn btn-info" type="button">검색</button>
+	 	</nav>
+ 	<h3></h3>
+	</form>
    <table class="table table-hover table-striped">
    	<col width="10%">
    	<col width="50%">
@@ -76,17 +107,16 @@
     <thead>
     
       <tr class="table-success text-center">
-        <th>번호</th>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>작성일</th>
-        <th>조회</th>
+        <th>아이디</th>
+        <th>이름</th>
+        <th>권한</th>
+        <th>포인트</th>
       </tr>
     </thead>	
     <tbody>
-    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
-    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
-    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr v-for="member in mlist">
+    		<td>{{member.id}}</td><td>{{member.name}}</td><td>{{member.auth}}</td><td>{{member.point}}</td>
+    	</tr>
     </tbody>
 	</table>       
 </div>

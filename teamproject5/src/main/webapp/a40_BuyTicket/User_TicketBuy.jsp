@@ -379,7 +379,7 @@
 						</td>
 					</tr>
 					<tr><td colspan="2">
-						<button id="userPayGo" type="button">결제하기</button>
+						<button id="#userPayGo" type="button">결제하기</button>
 						</td></tr>
 				</table>
 			</td></tr>

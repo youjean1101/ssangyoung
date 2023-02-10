@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		// https://sample.bmaster.kro.kr/
+		// https://sample.bmaster.kro.kr/contacts
+		// https://sample.bmaster.kro.kr/contacts/search/jo
+		// 전체 데이터 
+		// contacts
+		// [{"no":1675733810907,"name":"테스트중입니다",
+		// "tel":"010-1234-1111","address":"충청도",
+		// "photo":"http://sample.bmaster.kro.kr/photos/noimage.jpg"},
+		
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"외부 api 검색",
+				  name:"",contacts:[]},
+			methods:{
+				search:function(){
+					if( this.name.length >= 2){
+						console.log("검색 처리(서버 연동)")
+						var vm = this // Vue 객체 모델접근
+						var url = "https://sample.bmaster.kro.kr/contacts/search/"+this.name
+						fetch(url).then(function(response){
+							console.log(response)
+							return response.json()
+						}).then(function(json){
+							console.log("#json 데이터")
+							console.log(json)
+							vm.contacts = json
+						}).catch(function(err){
+							console.log(err)
+						})
+						
+					}else{
+						alert("검색최소 글자 2자 이상")
+					}
+				}
+			}
+		});	
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	</div>
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="name" @keyup.13="search" class="form-control mr-sm-2" placeholder="이름" />
+	    <button @click="search" class="btn btn-info" type="button">Search</button>
+ 	</nav>
+   <table class="table table-hover table-striped">
+  
+   	<col width="10%">
+   	<col width="30%">
+   	<col width="20%">
+   	<col width="20%">
+   	<col width="20%">
+    <thead>
+  	 <!-- [{"no":1675733810907,"name":"테스트중입니다",
+	 "tel":"010-1234-1111","address":"충청도",
+	 "photo":"http://sample.bmaster.kro.kr/photos/noimage.jpg"}, -->
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>전화번호</th>
+        <th>주소</th>
+        <th>이미지</th>
+      </tr>
+    </thead>	
+     <tbody>
+    	<tr v-for="contact in contacts">
+    		<td>{{contact.no}}</td><td>{{contact.name}}</td><td>{{contact.tel}}</td>
+    		<td>{{contact.address}}</td><td><img width="100%" :src="contact.photo"/></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

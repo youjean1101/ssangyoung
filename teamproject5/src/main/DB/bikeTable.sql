@@ -26,7 +26,8 @@ INSERT INTO bike values(bike_seq.nextval,'20221201',1,'배치중','홍대입구�
 INSERT INTO bike values(bike_seq.nextval,'20210731',12,'배치중','홍대입구역 8번출구 앞 (신)');
 INSERT INTO bike values(bike_seq.nextval,'20220403',9,'대여중','홍대입구역 8번출구 앞 (신)');
 INSERT INTO bike values(bike_seq.nextval,'20220326',1,'수리중','홍대입구역 8번출구 앞 (신)');
-
+SELECT * FROM bike;
 UPDATE bike SET breakdowncnt=3 WHERE bikeno='1';
 UPDATE bike SET RETALSTATE='대여중' WHERE bikeno=4;
+UPDATE bike SET RETALSTATE='배치중' WHERE bikeno=7;
 SELECT * FROM bike WHERE RETALSTATE ='배치중';

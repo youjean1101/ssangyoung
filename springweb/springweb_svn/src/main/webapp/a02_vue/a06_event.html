@@ -17,8 +17,9 @@
 	1. 기본 구조
 		1) view 단 
 		v-on:이벤트명 = "inline 모델데이터 처리 or 기능메서드"
-		==> @ : 이벤트명 = "inline 모델데이터 처리 or 기능메서드"
+		==> @이벤트명 = "inline 모델데이터 처리 or 기능메서드"
 			ex) v-on : click = "tot = grade*cnt"
+				@click = "totAll"
 				v-on : click = "totAll"
 				<input v-model="grade"/>
 				<input v-model="cnt"/>

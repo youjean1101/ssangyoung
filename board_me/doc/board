@@ -543,3 +543,50 @@
 	2) jsp
 	location.href = "delBoard.do?no="+no
 	
+# 답글 처리
+1. 프로세스
+	1) 각 게시글에 답글을 달기를 하면
+	2) 글을 등록한 후에 저잫하면 전체 리스트에 하단에 바로 출력이 된다.
+	3) 각 글을 계층적으로 출력이 된다.
+		상위글
+			==> 하위1
+				==> 차하위1
+				==> 차하위2
+			==> 하위2
+2. 사전 학습 및 이해 내용
+	0) 답글처리 데이터 저장 구조
+		no	refno	subject
+		1	0		첫번째글
+		2	0		두번째글
+		3	1		RE:첫번쨰답글1
+		4	1		RE:첫번쨰답글2
+		5	3		RE:RE 첫번째답글1답글1
+		===> 실제 화면에 나타날 출력 리스트
+		첫번째 글
+			RE : 첫번쨰답글1
+				RE:RE 첫번쨰답글1답글1
+			RE : 첫번쨰답글2
+		두번째 글		
+		ex) emp테이블에 mgr, empno가 위와 같은 계층구조로 되어 있다.
+		
+	1) 계층형 sql에 대한 이해
+		select *
+		from board
+		start with 최상위 계층의 조건을 설정
+		ex) 최상위계층 조건 refno=0, mgr=null
+		connect by prior 하위컬럼 = 상위컬럼
+		하위와 상위 컬럼 연결 조건
+		ex) no = refno, empno = mgr
+		ex) 
+			select * from emp
+			start with mgr=null
+			connect by prior empno = mgr;
+			
+	2) 답글 처리 데이터 저장 프로세스
+3. 개발 순서
+	
+# 페이징 처리
+	
+
+
+# 상세화면에서 첨부파일 수정처리

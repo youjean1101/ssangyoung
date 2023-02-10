@@ -20,6 +20,7 @@ CREATE SEQUENCE getPay_seq
 DROP SEQUENCE getPay_seq;
 
 SELECT getpayno,phonenumber,rrn,cardno FROM getPay WHERE getpayno=33;
+
 --INSERT INTO getPay values(getPay_seq.nextval,#{cardNo},#{validity},#{cardKind},#{email},#{birthDay},#{phoneNumber},#{rrn});
 INSERT INTO getPay values(getPay_seq.nextval,'0000-0000-0000-0000','01/24','신한카드','himan@gmail.com','19951101',null,null);
 INSERT INTO getPay values(getPay_seq.nextval,'1111-1111-1111-1111','06/23','쌍용카드','higirl@gmail.com','19970708',null,null);
@@ -29,3 +30,9 @@ INSERT INTO getPay values(getPay_seq.nextval,null,null,null,null,null,null,null)
 
 UPDATE getPay SET cardno='4444-4444-4444-4444' WHERE getcardno='getcard1';
 DELETE FROM getPay WHERE getcardno='getcard1';
+
+
+
+SELECT * FROM getPay ORDER by getPayno desc;
+SELECT id, getcardno FROM user1 WHERE id='himan';
+--WHERE getcardno=35;

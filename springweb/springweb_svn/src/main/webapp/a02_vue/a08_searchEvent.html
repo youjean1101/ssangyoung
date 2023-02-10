@@ -32,6 +32,7 @@
 			jquery : $.ajax({속성:속성값})
 			lib 설정 : https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api
 			var url = "${path}/empListAjax.do?ename=&job="
+			* fetch(url).then(함수1)..then(함수2).catch(함수3)
 			fetch(url).then(function(response){
 				반응객체 처리
 				return response.json; // json 데이터만 다음 블럭에 전달
@@ -99,6 +100,7 @@
 	<form id="frm01" class="form-inline"  method="post">
   	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 	    <input v-model="ename" @keyup="schKeyup" class="form-control mr-sm-2" placeholder="사원명입력" />
+	    <!-- keyup.13 : keycode 값이 13일떄,  -->
 	    <input v-model="job" @keyup="schKeyup" class="form-control mr-sm-2" placeholder="직책명 입력" />
 	    <button @click="fetchList" class="btn btn-info" type="button">Search</button>
  	</nav>

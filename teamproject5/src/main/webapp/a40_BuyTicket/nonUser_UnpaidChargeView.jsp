@@ -131,12 +131,13 @@
 		</thead>
 		<tbody>
 			<c:forEach var="nUlist" items="${nonUserUnpaidList}">
-			<tr><td>${nUlist.ticketKind}</td><td>${nUlist.payMoney}원</td><td>${nUlist.payMethod}</td>
-				<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${nUlist.rentalTime}"/></td>
-				<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${nUlist.returnTime}"/></td>
-				<td>${nUlist.useTime}</td><td>${nUlist.unpaidCharge}원</td></tr>
-			<tr style="display:none"><td colspan="7"><input type="hidden" id="totCharge" value="${nUlist.unpaidCharge}"/></td></tr>
-			</c:forEach><!--총금액 출력(value값을 누적기능)  -->
+				<tr><td>${nUlist.ticketKind}</td><td>${nUlist.payMoney}원</td><td>${nUlist.payMethod}</td>
+					<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${nUlist.rentalTime}"/></td>
+					<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${nUlist.returnTime}"/></td>
+					<td>${nUlist.useTime}</td><td>${nUlist.unpaidCharge}원</td></tr>
+				<tr style="display:none"><td colspan="7"></td></tr>
+			</c:forEach>
+			<!--<input type="hidden" id="totCharge" value="${nUlist.unpaidCharge}"/> 총금액 출력(value값을 누적기능)  -->
 		</tbody>
 	</table>
 	<table id="nonUserUnpaidPayTab">

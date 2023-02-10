@@ -30,6 +30,12 @@ public class A03_MemberController {
 		d.addAttribute("mlist",service.getMemberList(sch));
 		return "WEB-INF\\views\\a05_mvc\\a03_memberList.jsp";
 	}
+	
+	@RequestMapping("/memberListAjax.do")
+	public String memberListAjax(@ModelAttribute("sch") Member sch,Model d) {
+		d.addAttribute("mlist",service.getMemberList(sch));
+		return "pageJsonReport";
+	}
 	// memberMy.do
 	@GetMapping("/memberMy.do")
 	public String getMember(@RequestParam("id") String id, 
