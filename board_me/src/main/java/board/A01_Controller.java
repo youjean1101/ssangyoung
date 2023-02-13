@@ -23,7 +23,7 @@ public class A01_Controller {
 		d.addAttribute("list", service.boardList(sch));
 		return "a01_boardList";
 	}
-	@GetMapping("/insertFrm.do")
+	@RequestMapping("/insertFrm.do")
 	public String insertFrm(){
 		return "a02_insertBoard";
 	}
@@ -50,8 +50,9 @@ public class A01_Controller {
 	@RequestMapping("/boardUpt.do")
 	public String boardUpt(Board upt, Model d) {
 		service.updateBoard(upt);
-		d.addAttribute("msg2","수정완료");
+		System.out.println(upt.getFname());
 		d.addAttribute("board", service.getBoard(upt.getNo()));
+		d.addAttribute("msg2","수정완료");
 		return "a03_board";
 	}
 	@RequestMapping("/delBoard.do")

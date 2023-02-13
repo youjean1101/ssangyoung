@@ -53,13 +53,16 @@
 
 </div>
 <div class="container">
-	<form id="frm01" class="form"  method="post">
+	<form id="frm01" class="d-flex"  method="post">
   	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 	    <input name="subject" value="${sch.subject}" class="form-control mr-sm-2" placeholder="제목" />
 	    <input name="writer" value="${sch.writer}" class="form-control mr-sm-2" placeholder="내용" />
-	    <button class="btn btn-info" type="submit">Search</button>
 	    <button class="btn btn-info" type="button" data-toggle="modal" data-target="#exampleModalCenter">등록</button>
  		<button class="btn btn-success" id="regBtn" type="button">등록</button>
+ 		 &nbsp;
+	    <button class="btn btn-info" type="submit">Search</button>
+	    
+	    <input type="hidden" name="curPage" value="${sch.curPage}"/>
  	</nav>
 	</form>
    <table class="table table-hover table-striped">
@@ -81,15 +84,37 @@
     <tbody>
     	<c:forEach var="board" items="${list}">
     	<tr ondblclick="goDetail(${board.no})">
-    		<td>${board.no}</td>
-    		<td>${board.subject}</td>
+    		<td>${board.cnt}</td>
+    		<td style="text-align:left;">
+    			<c:if test="${board.level>1}">
+	    			<c:forEach begin="2" end="${board.level}">
+	    				&nbsp;&nbsp;&nbsp;
+	    			</c:forEach>
+    				<img src="${path}/a01_img/re.png" width="5%" height="5%">
+    			</c:if>
+    		${board.subject}</td>
     		<td>${board.writer}</td>
     		<td><fmt:formatDate value="${board.regdte}"/></td>
     		<td>${board.readcnt}</td></tr>
     	</c:forEach>
     </tbody>
 	</table>    
-    
+    <ul class="pagination  justify-content-end"> 
+		<li class="page-item">
+			<a class="page-link" href="javascript:goPage(${sch.startBlock-1});">Previous</a></li>
+		<c:forEach var="cnt" begin="${sch.startBlock}" end="${sch.endBlock}">
+	  		<li class="page-item ${sch.curPage==cnt?'active':''}">
+	  		<a class="page-link" 
+	  			href="javascript:goPage(${cnt});">${cnt}</a></li>
+	  	</c:forEach>
+	  	<li class="page-item"><a class="page-link" href="javascript:goPage(${sch.endBlock+1});">Next</a></li>
+	</ul>    
+   <script type="text/javascript">
+		function goPage(cnt){
+			$("[name=curPage]").val(cnt);
+			$("#frm01").submit()
+		}
+	</script>
 </div>
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">

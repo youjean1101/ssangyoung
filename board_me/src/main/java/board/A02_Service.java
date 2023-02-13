@@ -21,6 +21,41 @@ public class A02_Service {
 	public List<Board> boardList(BoardSch sch){
 		if(sch.getSubject()==null) sch.setSubject("");
 		if(sch.getWriter()==null) sch.setWriter("");
+		// 1. 총페이지 수
+		sch.setCount(dao.totCnt(sch));
+		// 2. 현재페이지 번호(클릭한)
+		if(sch.getCurPage()==0) {
+			sch.setCurPage(1);
+		}
+		// 3. 한페이지에 보일 데이터 갯수
+		//   - 초기화면 현재 페이지 번호 0 ==> default설정
+		if(sch.getPageSize()==0) {
+			sch.setPageSize(5);
+		}
+		// 4. 총페이지 수.(전체데이터/한페이지에 보일 데이터 건수)
+		//    한번에 보일 데이터 건수 5건일 때, 총건수11 ==> 3페이지
+		sch.setPageCount((int)Math.ceil(sch.getCount()/(double)sch.getPageSize()));
+// 		블럭의 [이후]에 대한 예외 처리..
+		if(sch.getCurPage()>sch.getPageCount()) {
+			sch.setCurPage(sch.getPageCount());
+		}
+		// 5. 마지막 번호
+		sch.setEnd(sch.getCurPage()*sch.getPageSize());
+		sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
+		// 6. 블럭처리
+		//		1) 블럭 크기 지정
+		sch.setBlockSize(5);
+		// 		2) 블럭 번호 지정 : 현재 페이지 번호/블럭의 크기 올림 처리
+		int blocknum = (int)Math.ceil(sch.getCurPage()/(double)sch.getBlockSize());
+		//		3) 마지막 블럭
+		int endBlock = blocknum*sch.getBlockSize();
+		if(endBlock>sch.getPageCount()) {
+			endBlock = sch.getPageCount();
+		}
+		
+		sch.setEndBlock(endBlock);
+		//		4) 시작 블럭
+		sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
 		return dao.boardList(sch);
 	}
 	@Value("${user.upload}")
@@ -39,14 +74,13 @@ public class A02_Service {
 	public void insertBoard(Board ins) {
 		dao.insertBoard(ins);
 		String fname = ins.getReport().getOriginalFilename();
-		if( !fname.equals("") ){
+		//if( !fname.equals("") ){
 			uploadFile(ins.getReport());
 			BoardFile f = new BoardFile();
 			f.setFname(fname);
 			f.setEtc(ins.getSubject());
 			dao.insertUploadFile(f);
-		}
-		
+		//}
 	}		
 	public Board getBoard(int no) {
 		Board b = dao.getBoard(no);
@@ -65,6 +99,13 @@ public class A02_Service {
 	}
 	public void updateBoard(Board upt) {
 		dao.updateBoard(upt);
+		String fname = upt.getReport().getOriginalFilename();
+		uploadFile(upt.getReport());
+		BoardFile f = new BoardFile();
+		f.setNo(upt.getNo());
+		f.setFname(fname);
+		f.setEtc(upt.getSubject());
+		dao.uptBoardFile(f);
 	}
 	public void deleteBoard(int no) {
 		dao.deleteBoard(no);

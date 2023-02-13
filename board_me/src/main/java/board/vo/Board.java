@@ -13,6 +13,8 @@ readcnt 조회수
 regdte 등록일
 updte 수정일*/
 public class Board {
+	private int cnt;
+	private int level;
 	private int no;
 	private int refno;
 	private String subject;
@@ -24,6 +26,18 @@ public class Board {
 	private String fname;
 	private MultipartFile report;
 	
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
 	public int getNo() {
 		return no;
 	}

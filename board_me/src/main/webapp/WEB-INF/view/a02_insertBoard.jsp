@@ -92,10 +92,10 @@
       <div class="input-form col-md-12 mx-auto">
         <h4 class="mb-3">게시판 등록</h4>
         <form method="post" enctype="multipart/form-data" action="${path}/insert.do" class="validation-form" novalidate>
-        	<input type="hidden" name="refno" value="0"/>
+        	<input type="hidden" name="refno" value="${empty param.refno?0:param.refno}"/>
           <div class="mb-3">
             <label for="subject">제목</label>
-            <input name="subject" type="text" class="form-control  ckValid" id="subject" placeholder="제목 입력" required>
+            <input name="subject" value="${param.subject}" type="text" class="form-control  ckValid" id="subject" placeholder="제목 입력" required>
             <div class="invalid-feedback">
               제목을 입력해주세요.
             </div>
@@ -109,7 +109,7 @@
           </div>   
           <div class="mb-3">
             <label for="content">내용</label>
-            <textarea name="content"  class="form-control  ckValid" id="content" placeholder="내용 입력" required rows="5" ></textarea>
+            <textarea name="content"  class="form-control  ckValid" id="content" placeholder="내용 입력" required rows="5" >${param.content }</textarea>
             <div class="invalid-feedback">
               내용를 입력해주세요.
             </div>
