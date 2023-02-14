@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+	.set01{background-color:aqua;color:purple;}
+	.set02{text-align:center;width:120px;}
+	.set03{border:sandybrown dashed 1px;}
+	.cls1{color:skyblue;}
+	.cls2{font-size:30pt;}
+	.cls3{border:3px double blue;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"시작!!(클래스 바인딩)", s1:false, s2:false, s3:false,
+					c1:false, c2:false, c3:false}
+		});	
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	  <!-- data:{msg:"시작!!(클래스 바인딩)", s1:false, s2:false, s3:false}
+	  		set01:s1
+	  		set01 : 클래스
+	  		s1 : 적용여부를 model데이터로 선언 v-model="s1"로 
+	  			value="true"로 양방향 적용여부 체크
+	  			체크가 되면 true값으로 모델데이터에 영향을 미치고,
+	  			이와 연결되어 있는 :class="{set01:s1}에 클래스 적용 여부에 영향을 미친다.
+	    -->
+	  <button :class="{set01:s1,set02:s2,set03:s3}">버튼1</button>
+	  <p>
+	  	<input type="checkbox" v-model="s1" value="true">set1 디자인<br>
+	  	<input type="checkbox" v-model="s2" value="true">set2 디자인<br>
+	  	<input type="checkbox" v-model="s3" value="true">set3 디자인<br>
+	  </p>
+	  <!--
+	  	ex) 
+	  		클래스 cls1 글자 색상 cls2 글자크기 cls3 border
+	  		모델데이터로 c1, c2, c3로 초기에 falseㄹ로 적용하고, 
+	  		이것을 input type="checkbox와 연결하여 해당 내용의 체크에 따라 클래스
+	  		적용 유무를 처리하게 하세요.
+	    -->
+	    <h2 :class="{cls1:c1,cls2:c2,cls3:c3}">요호</h2>
+		<input type="checkbox" v-model="c1" value="true">c1 적용<br>
+		<input type="checkbox" v-model="c2" value="true">c2 적용<br>
+		<input type="checkbox" v-model="c3" value="true">c3 적용<br>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input class="form-control mr-sm-2" placeholder="제목" />
+	    <input class="form-control mr-sm-2" placeholder="내용" />
+	    <button class="btn btn-info" type="submit">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

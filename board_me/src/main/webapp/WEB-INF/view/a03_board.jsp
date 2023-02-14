@@ -58,18 +58,27 @@
 		<%-- 
 		
 		--%>	
+		var sessName = "${mem.name}"
 		$("#goMain").click(function(){
 			location.href="${path}/list.do"			
 		});	
 		$("#uptBtn").click(function(){
-			if(confirm("수정하시겠습니까?")){
-				$("form").attr("action","${path}/boardUpt.do");
-				$("form").submit();
+			if(sessName != $("[name=writer]").val()){
+				alert("수정 권한이 없습니다\n수정은 작성자만 가능합니다");
+			}else{				
+				if(confirm("수정하시겠습니까?")){
+					$("form").attr("action","${path}/boardUpt.do");
+					$("form").submit();
+				}
 			}
 		})
 		$("#delBtn").click(function(){
-			if(confirm("삭제하시겠습니까?")){
-				location.href = "delBoard.do?no="+$("#no").val()
+			if(sessName != $("[name=writer]").val()){
+				alert("삭제 권한이 없습니다\n삭제는 작성자만 가능합니다");
+			}else{	
+				if(confirm("삭제하시겠습니까?")){
+					location.href="${path}/delBoard.do?no="+$("[name=no]").val();
+				}
 			}
 		})
 		$("#repBtn").click(function(){
@@ -95,6 +104,11 @@
 			alert(msg3+" 전체조회화면으로 이동합니다.")
 			location.href = "${path}/list.do";
 		}
+		var sessId = "${mem.id}"
+   		if(sessId==""){
+   			alert("로그인을 하여야 합니다.\n로그인 화면 이동");
+   			location.href="${path}/loginFrm.do"
+   		}
 	});
 </script>
 </head>

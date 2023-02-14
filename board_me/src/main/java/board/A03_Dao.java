@@ -6,6 +6,7 @@ import board.vo.BaseBallTeam;
 import board.vo.Board;
 import board.vo.BoardFile;
 import board.vo.BoardSch;
+import board.vo.Member;
 
 public interface A03_Dao {
 	public int totCnt(BoardSch sch);
@@ -20,6 +21,8 @@ public interface A03_Dao {
 	
 	public void updateBoard(Board upt);
 	public void deleteBoard(int no);
+	
+	public Member login(Member m);
 	
 	// 과제
 	public List<BaseBallTeam> baseballList();

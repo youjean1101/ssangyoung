@@ -611,18 +611,39 @@
 			mapper 처리 내용
 			select *
 			from board
-			where 1=1
+			where 1=1		# 1 = 1은 말그대로 참을 의미 => 쿼리 디버깅 시, 주석처리가 편하다.
 			and subject like '%'||#{subject}||'%'
 			and writer like '%'||#{writer}||'%'
 			order by no desc
 			START WITH refno=0
 			CONNECT BY PRIOR NO=refno
 			ORDER siblings BY NO desc
+# 계층적 sql은 통해 답글이 원래글 밑에
+
+/* 계층적 sql
+ 	START WITH refno=0 : 계층 트리의 최상위 부분 설정
+	CONNECT BY PRIOR NO=refno : 계층 트리를 처리하는 조건
+ */
+	select rownum cnt, LEVEL, b.*
+	from board b
+	where 1=1
+	START WITH refno=0
+	CONNECT BY PRIOR NO=refno;
+	
+	select rownum cnt, LEVEL, b.*
+	from board b
+	where 1=1
+	START WITH refno=0
+	CONNECT BY PRIOR NO=refno
+	ORDER siblings BY NO desc; -- 역순위 처리
+-- level : 계층형 sql을 사용하는 것으로 공백 간격을 계층 레벨에 따라 처리하기 위한 내용이다.
+-- 최상위 글 desc 포함된 하위글을 바로 나오게 하면서 desc
 			
 		- VO(Board) 추가 cnt, level
 		- 화면단 처리
 			no ==> cnt,
 			level을 기준으로 왼쪽 들여쓰기 처리(계층 레벨에 따른 간격 추가)
+
 		
 # 페이징 처리
 1. 기능
@@ -746,12 +767,25 @@ blocknum	페이지번호
 	2) 수정 클릭 시, controller단 수정 처리를 호출하면서 
 	3) service단 수정 처리를 수행한다.
 		파일 정보 수정 update 처리(DB수정)
+			merge를 이용하여 첨부파일이 없는 경우에는 insert 처리
+							첨부파일이 있는 경우에는 update 처리
 		수정된 파일을 해당 폴드에 업로드한다.(물리적 파일 위치로 업로드)
 				
 2. 개발순서
 	0) 등록시, 공백이라도 해당 파일정보를 등록되게 한다.
-		service단 파일 공백 조건 없애기
 	1) DB 파일 정보 수정 처리.
+		<update id="uptBoardFile" parameterType="boardfile">
+		    merge into boardfile  a 	# 수정하거나 등록할 테이블
+			     using BOARD b			# 위 수정/등록을 위한 비교할 테이블
+			        on (a.no = b.no)	# 수정 등록의 조건
+			      when matched then    	
+				update set fname = ${fname},
+						uptdate = sysdate
+					   where no = ${no}	
+				  when not matched then
+					insert values(b.no, 
+							${fname},b.subject,sysdate,sysdate)		     			
+		</update>
 		update boardfile
 			set fname = #{fname}
 			where no = #{no}
@@ -763,3 +797,54 @@ blocknum	페이지번호
 	3) 화면단 처리..
 
 # 로그세션으로 처리하는 게시판 권한 관리
+1. 주요기능
+	1) 게시판에서 로그인 session 없으면 로그인 화면으로 이동한다.
+	2) 로그인 화면에서 로그인하면 로그인 권한과ㅏ 세션값을 가지고 있다.
+	3) 로그인 후 게시판을 작성하면 작성자가 session값에 있는 회원명으로 등록이 된다.(입력으로 등록하지 않음)
+	4) 게시판을 수정 삭제시, session 을 확인해서 session 회원명과 동일한 경우에서 수정 삭제 된다.
+		- 이 경우, 동명이인이 있을 수 있을 경우 session의 id명을 DB에서도 처리하여 비교한다.
+2. 개발 순서
+	1) 로그인 DB처리
+		sql 작성
+			SELECT * 
+			FROM MEMBER
+			WHERE id='himan'
+			AND pass='0000'
+		vo
+		공통 mybatis
+		dao
+			public Member login(Member m);
+		mapper
+		service
+		=====================================================
+		
+	2) 로그인 controller 처리 session 처리 HttpSession session
+		/loginFrm.do
+		/login.do
+		a04_login.jsp
+		
+		- 로그인 form
+		- 로그인 처리기능 메서드
+		화면단 
+		로그인 성공/로그인 실패
+		----------------------------------------
+		
+	3) 화면단(각 화면)
+		session 값을 id가 없는 경우에 로그인 화면 controller 화면으로 이동하게 처리 
+		var sessId = "${mem.id}"
+		if(sessId==""){
+			alert("로그인을 하여야 합니다.\n로그인 화면 이동");
+			location.href="${path}/loginFrm.do"
+		}
+	4) 등록화면에서 session 이름을 등록 시, 작성자를 등록되게 한다.
+		<input value=${mem.name} readonly
+		
+	5) 상세화면에서 수정/삭제 버튼 클릭 시, session 이름을 비교하여 처리하게 한다.
+		<input value=${mem.name} readonly
+		var sessName = "${mem.name}"
+		if(sessName == $("[name=writer]").val()){
+			alert("수정 권한이 없습니다\n수정은 작성자만 가능합니다.");
+			// alert("삭제 권한이 없습니다\n삭제은 작성자만 가능합니다.");
+			return;
+		}
+		

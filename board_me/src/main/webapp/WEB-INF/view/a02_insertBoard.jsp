@@ -82,7 +82,15 @@
 		})
         $(".custom-file-input").on("change",function(){
         	$(this).next(".custom-file-label").text($(this).val())
-        })		
+        })
+        var sessId = "${mem.id}"
+   		if(sessId==""){
+   			alert("로그인을 하여야 합니다.\n로그인 화면 이동");
+   			location.href="${path}/loginFrm.do"
+   		}/* else{
+   			$("#writer").val("${mem.name}")
+   			$("#writer").attr("readonly",true)
+   		} */
 	});
 </script>
 </head>
@@ -102,7 +110,7 @@
           </div>
           <div class="mb-3">
             <label for="writer">작성자</label>
-            <input type="text" name="writer" class="form-control ckValid" id="작성자" placeholder="작성자를 입력" required>
+            <input type="text" value="${mem.name}" readonly name="writer" class="form-control ckValid" id="writer" placeholder="작성자를 입력" required>
             <div class="invalid-feedback">
               작성자를 입력해주세요.
             </div>

@@ -12,6 +12,7 @@ import board.vo.BaseBallTeam;
 import board.vo.Board;
 import board.vo.BoardFile;
 import board.vo.BoardSch;
+import board.vo.Member;
 
 @Service
 public class A02_Service {
@@ -21,7 +22,7 @@ public class A02_Service {
 	public List<Board> boardList(BoardSch sch){
 		if(sch.getSubject()==null) sch.setSubject("");
 		if(sch.getWriter()==null) sch.setWriter("");
-		// 1. 총페이지 수
+		// 1. 총페이지 수(행수)
 		sch.setCount(dao.totCnt(sch));
 		// 2. 현재페이지 번호(클릭한)
 		if(sch.getCurPage()==0) {
@@ -34,6 +35,8 @@ public class A02_Service {
 		}
 		// 4. 총페이지 수.(전체데이터/한페이지에 보일 데이터 건수)
 		//    한번에 보일 데이터 건수 5건일 때, 총건수11 ==> 3페이지
+		//		100건? 100/5 ==> 20 page 필요
+		//		101건? 101/5 ==> 21 page 필요(올림처리 필요)
 		sch.setPageCount((int)Math.ceil(sch.getCount()/(double)sch.getPageSize()));
 // 		블럭의 [이후]에 대한 예외 처리..
 		if(sch.getCurPage()>sch.getPageCount()) {
@@ -100,16 +103,23 @@ public class A02_Service {
 	public void updateBoard(Board upt) {
 		dao.updateBoard(upt);
 		String fname = upt.getReport().getOriginalFilename();
-		uploadFile(upt.getReport());
-		BoardFile f = new BoardFile();
-		f.setNo(upt.getNo());
-		f.setFname(fname);
-		f.setEtc(upt.getSubject());
-		dao.uptBoardFile(f);
+		//if( !fname.equals("") ){
+			uploadFile(upt.getReport());
+			BoardFile f = new BoardFile();
+			f.setNo(upt.getNo());
+			f.setFname(fname);
+			f.setEtc(upt.getSubject());
+			// merge르르 이용하면 fname만 추가해도 됨..
+			dao.uptBoardFile(f);
+		//}
 	}
 	public void deleteBoard(int no) {
 		dao.deleteBoard(no);
 	}
+	public Member login(Member m) {
+		return dao.login(m);
+	}
+	
 	//과제
 	public List<BaseBallTeam> baseballList(){
 		return dao.baseballList();

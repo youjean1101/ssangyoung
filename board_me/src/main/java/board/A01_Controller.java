@@ -1,5 +1,7 @@
 package board;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import board.vo.BaseBallTeam;
 import board.vo.Board;
 import board.vo.BoardSch;
+import board.vo.Member;
 
 @Controller
 public class A01_Controller {
@@ -60,6 +63,24 @@ public class A01_Controller {
 		service.deleteBoard(no);
 		d.addAttribute("msg3","삭제완료");
 		return "a03_board";
+	}
+	
+	@GetMapping("/loginFrm.do")
+	public String loginFrm() {
+		return "a04_login";
+	}
+	
+	@RequestMapping("/login.do")
+	public String login(Member mem,HttpSession session, Model d) {
+		String msg="로그인 실패";
+		Member login = service.login(mem);
+		if(login!=null) {
+			msg="로그인 성공";
+			// DB에 데이터가 있을 때, 세션 설정
+			session.setAttribute("mem", login);
+		}
+		d.addAttribute("msg",msg);
+		return "a04_login";
 	}
 	
 	//과제

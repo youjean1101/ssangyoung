@@ -61,11 +61,17 @@
 					subject = #{subject},
 					uptdte = sysdate
 				where no = #{no}
-	</update>
-		
+	</update>	
 	<delete id="deleteBoard" parameterType="int">
 		DELETE FROM board WHERE NO=#{no}
 	</delete>
+	<select id="login" resultType="member" parameterType="member">
+			SELECT * 
+			FROM MEMBER
+			WHERE id=#{id}
+			AND pass=#{pass}
+	</select>
+	
 	
 	<select id="baseballList" resultType="BaseBallTeam">
 		SELECT * FROM baseballteam

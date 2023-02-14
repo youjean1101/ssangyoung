@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+	/* 
+	[1단계:확인] 6. 선택 select  배경색상 : [빨/주/노/초/파/남/보] 
+		글자색상 : [빨/주/노/초/파/남/보] 크기  [100px, 200px 300px]
+          ==> 위에 선택한 내용을 따라서, 색상박스의  배경색상과 글자색상, 크기가 변경되게 처리하세요.
+	*/
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"시작!!(뷰와함께)",
+					back:"white",col:"black",size:"20px"
+			}
+		});	
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2>{{msg}}</h2>
+	  <h4 v-bind:style="{background:back,color:col,fontSize:size}">아래 선택에 따른 글자 css변경</h4>
+	</div>
+	<form id="frm01" class="form-inline"  method="post" style="color:white">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  		배경색상 : 
+  		<select v-model="back">
+  			<option value="red">빨</option>
+  			<option value="orange">주</option>
+  			<option value="yellow">노</option>
+  			<option value="green">초</option>
+  			<option value="blue">파</option>
+  			<option value="navy">남</option>
+  			<option value="purple">보</option>
+  		</select>
+  		글자색상 : 
+  		<select v-model="col">
+  			<option value="red">빨</option>
+  			<option value="orange">주</option>
+  			<option value="yellow">노</option>
+  			<option value="green">초</option>
+  			<option value="blue">파</option>
+  			<option value="navy">남</option>
+  			<option value="purple">보</option>
+  		</select>
+  		크기 : 
+  		<select v-model="size">
+  			<option>100px</option>
+  			<option>200px</option>
+  			<option>300px</option>
+  		</select>
+  		
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script type="text/javascript">
+/* 
+# vue에서 style과 모델의 이벤트 핸들러를 통한 연결 처리
+1. 처리 순서
+	1) 모델 데이터
+	2) 뷰단 모델 데이터 호출, 이벤트 핸들러 메서드 호출
+	3) 이벤트 핸들러 메서드 선언과 이벤트 시에 해당 기능 모델 데이터 변경 처리
+		methods:{
+			핸들러메서드 : function(){
+				this.모델명(css설정)="값 변경처리"
+			}
+		}
+*/
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"style과 이벤트 핸들러",
+					style01:{color:'tomato'},
+					style02:{color:'navy'}
+			}, 
+			methods:{
+				chColor:function(){
+					this.style01.color="pink"
+					this.style02.color="orange"
+				}
+			}
+		});	
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	  <h2 @click="chColor">클릭 시 이벤트 핸들러 변경</h2>
+	  <h3 :style="style01">첫번째 스타일</h3>
+	  <h3 :style="style02">두번째 스타일</h3>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input class="form-control mr-sm-2" placeholder="제목" />
+	    <input class="form-control mr-sm-2" placeholder="내용" />
+	    <button class="btn btn-info" type="submit">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

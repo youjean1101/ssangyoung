@@ -35,6 +35,45 @@
 		$("#regBtn").click(function(){
 			location.href="${path}/insertFrm.do"
 		})
+		
+		var sessId = "${mem.id}"
+		if(sessId==""){
+			alert("로그인을 하여야 합니다.\n로그인 화면 이동");
+			location.href="${path}/loginFrm.do"
+		}else{
+			$("#namePosition").text("${mem.name}"+" 로그인중");
+		}
+		
+		var auth =  "${mem.auth}"
+		$("#allRemove").click(function(){
+			if(auth=="관리자"){
+				$(this).attr("href","${path}/insertFrm.do?action=게시판 전체삭제")
+			}else{
+				alert("권한이 없습니다.")
+			}
+		})
+		$("#authSet").click(function(){
+			if(auth=="관리자"){
+				$(this).attr("href","${path}/insertFrm.do?action=게시판권한설정")
+			}else{
+				alert("권한이 없습니다.")
+			}
+		})
+		$("#view").click(function(){
+			if(auth=="회원"){
+				$(this).attr("href","${path}/list.do?auth=회원&action=게시판조회")
+			}else{
+				alert("권한이 없습니다.")
+			}
+		})
+		$("#insert").click(function(){
+			if(auth=="회원"){
+				$(this).attr("href","${path}/list.do?auth=회원&action=게시판등록")
+			}else{
+				alert("권한이 없습니다.")
+			}
+		})
+		
 	});
 	
 	function insertFrm(){
@@ -44,15 +83,35 @@
 	function goDetail(no){
 		location.href="${path}/board.do?no="+no
 	}
+	
 </script>
 </head>
 
 <body>
 <div class="jumbotron text-center">
   <h2 >게시판</h2>
-
+  <h3 id="namePosition"></h3>
 </div>
+
 <div class="container">
+	<div class="container-fluid">
+		<nav id="navbar" class="navbar navbar-expand-sm">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" id="allRemove" href="">게시판 전체삭제</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="authSet" href="">게시판 권한설정</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="view" class="userAuth" href="">게시판 조회</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="insert" class="userAuth" href="">게시판 등록</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
 	<form id="frm01" class="d-flex"  method="post">
   	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 	    <input name="subject" value="${sch.subject}" class="form-control mr-sm-2" placeholder="제목" />
