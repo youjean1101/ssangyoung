@@ -815,6 +815,10 @@ blocknum	페이지번호
 		dao
 			public Member login(Member m);
 		mapper
+			SELECT * 
+			FROM MEMBER
+			WHERE id=#{id}
+			AND pass=#[pass}
 		service
 		=====================================================
 		

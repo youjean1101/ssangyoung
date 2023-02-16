@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<template id="tmp01">
+	<div>
+		<h2>이름은 홍길동</h2>
+	</div>
+</template>
+<template id="tmp02">
+	<div>
+		<h2># 이름은 {{name}}입니다. #</h2>
+		<h2># 나이는 {{age}} ({{age>=18?'성인':'미성년자'}})입니다. #</h2>
+		<h2># 사는곳 {{loc}}입니다. #</h2>
+	</div>
+</template>
+<template id="tmp03">
+	<div>
+		<h2>시험 성적은 {{score}}점 입니다.</h2>
+		<h2>{{score>=70?'합격':'불합격'}} 입니다.</h2>
+	</div>
+</template>
+<script type="text/javascript">
+	Vue.component("com02",{
+		template:"#tmp02",
+		props:["name","age","loc"]
+	})
+	// <com02 name="홍길동" age="25" loc="서울"></com02>
+	// <com02 name="홍길동"></com02>
+	// <com02 name="김길동"></com02>
+	// <com02 name="신길동"></com02>
+	// ex) 템플릿을 활용하고, exam01 컴포넌트를 만들어
+	//		시험 성적은 @@@점 입니다. 합격/불합격(70점이상일 때)
+	Vue.component("exam01",{
+		template:"#tmp03",
+		props:["score"]
+	})
+	// <exam01 point="80" />
+	// <exam01 point="60" />
+	// <exam01 point="90" />
+
+	Vue.component("com01",{
+		template:"#tmp01"
+	})
+	/*
+	# 템플릿 선언과 속성값 전달
+	1. 태그로 구성된 템플릿을 따로, 테블릿 이름을 지정하여 선언할 수 있다.
+		template id="tmp01"
+			포함될 태그
+		Vue.component("comp01",{template:"#tmp01"})
+	2. 템플릿을 구조로 하여 변경될 데이터를 입력할 수 있다.
+		<comp01 name="홍길동"></comp01>
+		<comp01 name="김길동"></comp01>
+		<comp01 name="신길동"></comp01>
+		Vue.component("comp01",{props:['name']})
+		template에서 
+			이름은 {{name}}	props에 지정된 내용을 mustache형식으로 받음
+	*/
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"템플릿이 있는 컴포넌트"}
+		});	
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	  <com01></com01>
+	  <com01></com01>
+	  <com01></com01>
+	  <com02 name="홍길동"></com02>
+	  <com02 name="김길동"></com02>
+	  <com02 name="신길동"></com02>
+	  <com02 name="홍길동" age="25" loc="서울"></com02>
+	  <exam01 score="70"></exam01>
+	  <exam01 score="50"></exam01>
+	  <exam01 score="90"></exam01>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input class="form-control mr-sm-2" placeholder="제목" />
+	    <input class="form-control mr-sm-2" placeholder="내용" />
+	    <button class="btn btn-info" type="submit">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

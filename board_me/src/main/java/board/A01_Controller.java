@@ -17,6 +17,7 @@ import board.vo.BoardSch;
 import board.vo.Member;
 
 @Controller
+// @SessionAttributes 방법도 있으나 버그가 있음.
 public class A01_Controller {
 	@Autowired(required=false)
 	private A02_Service service;
@@ -82,7 +83,18 @@ public class A01_Controller {
 		d.addAttribute("msg",msg);
 		return "a04_login";
 	}
-	
+	// $("#logOut").click(function(){
+	//		if(confirm("로그아웃하시겠습니까?"))
+	//			location.href="${path}/logout.do"
+	// 로그아웃 시 session 종료
+	@GetMapping("/logout.do")
+	public String logout(HttpSession session, Model d) {
+		if(session.getAttribute("mem")!=null) {
+			session.removeAttribute("mem");
+		}
+		// d.addAttribute("msg", "로그아웃 완료");
+		return "a04_login";
+	}
 	//과제
 	@RequestMapping("/baseballList.do")
 	public String baseballList(Model d) {

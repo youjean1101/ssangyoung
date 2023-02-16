@@ -11,33 +11,35 @@
 <script src="/springweb/a00_com/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<template id="tmp01">
+	<div>
+		<h2>무지개 색상</h2>
+		<h3 v-for="color in rainbow"
+			:style="{backgroundColor:color}">{{color}}</h3>	
+	</div>
+</template>
 <script type="text/javascript">
-/* 
-# vue에서 style과 모델의 이벤트 핸들러를 통한 연결 처리
-1. 처리 순서
-	1) 모델 데이터
-	2) 뷰단 모델 데이터 호출, 이벤트 핸들러 메서드 호출
-	3) 이벤트 핸들러 메서드 선언과 이벤트 시에 해당 기능 모델 데이터 변경 처리
-		methods:{
-			핸들러메서드 : function(){
-				this.모델명(css설정)="값 변경처리"
-			}
+	Vue.component("color-comp",{
+		template:"#tmp01",
+		props:{
+			rainbow:{type:Array} // prop의 데이터 유형 선언
 		}
-*/
+	})
+	/*
+	# 객체형 및 배열형 속성 설정
+	1. 속성은 배열형이나 객체형도 전달할 수 있다.
+		1) 이 때, 속성의 타입을 지정하여 전달하여야 한다.
+	2. Vue에서 모델 데이터도 이러한 속성에 할당하여 전달할 수 있다.
+	
+	
+	*/
+	
 	$(document).ready(function(){
 		var vm = new Vue({
 			el:".container",
-			data:{msg:"style과 이벤트 핸들러",
-					style01:{color:'tomato'},
-					style02:{color:'navy'}
-			}, 
-			methods:{
-				chColor:function(){
-					this.style01.color="pink"
-					this.style02.color="orange"
-					this.msg="메시지도 변경하네요!!"
+			data:{msg:"배열형 데이터 컴포넌트 전송",
+					colors:['red','orange','yellow','green','blue','navy','purple']	
 				}
-			}
 		});	
 	});
 </script>
@@ -47,9 +49,11 @@
 <div class="container">
 	<div class="jumbotron text-center">
 	  <h2 >{{msg}}</h2>
-	  <h2 @click="chColor">클릭 시 이벤트 핸들러 변경</h2>
-	  <h3 :style="style01">첫번째 스타일</h3>
-	  <h3 :style="style02">두번째 스타일</h3>
+	  <!-- v-bind:rainbow="자바코드로 인식"  -->
+	  <!-- name="홍길동" : 문자열 그대로 넘기기에 :속성 필요없이 처리  -->
+	  <color-comp :rainbow="['빨강','파랑','노랑']"></color-comp>
+	  <!-- 모델데이터 ==> 컴포넌트 속성 선언 ==> 템플릿에 전달  -->
+	  <color-comp :rainbow="colors"></color-comp>
 	</div>
 	<form id="frm01" class="form-inline"  method="post">
   	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">

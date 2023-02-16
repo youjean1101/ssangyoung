@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<template id="stTmp">
+	<div>
+		<h2>{{name}}의 성적, 평균 : {{avg}}</h2>
+	  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		    <input v-model="kor" class="form-control mr-sm-2" placeholder="국어" />
+		    <input v-model="eng" class="form-control mr-sm-2" placeholder="영어" />
+		    <input v-model="math" class="form-control mr-sm-2" placeholder="수학" />
+		    <button class="btn btn-info" @click="calcu" type="button">평균</button>
+	 	</nav>
+	</div>
+</template>
+<script type="text/javascript">
+Vue.component("stu-comp",{
+	template:"#stTmp",
+	data:function(){
+		return {kor:'',eng:'',math:'',avg:''}
+	},
+	props:['name'],
+	methods:{
+		calcu:function(){
+			var tot = parseInt(this.kor)+parseInt(this.eng)+parseInt(this.math)
+			this.avg = Math.floor(tot/3)
+			this.$emit("calcuavg", this.avg)
+			// <stu-comp :name="홍길동" @calcuavg="totavg" v-for="sname in stnames"><stu-comp>
+		}
+	}
+})
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"학생 성적 (컴포넌트)", tot:0, allavg:0, stnames:['홍길동','김길동','신길동']},
+			methods:{
+				totavg:function(avg){
+					console.log(avg)
+					var stucount = this.stnames.length
+					console.log(stucount)
+					this.tot +=avg;
+					this.allavg = Math.floor(this.tot/stucount)
+				}
+			}
+		});	
+		/*
+		<h2>전체 평균:{{allavg}}</h2>
+		<stu-comp :name="sname"  v-for="sname in stnames"><td>{{sname}}</stu-comp>
+		*/
+	});
+	
+	
+/*
+[1단계:확인] 5. 입력된 학생한명당 국어/영어/수학점수를 컴포넌트를 
+	반 전체 평균을 출력하세요. 
+ */	
+</script>
+
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	  <h3>전체 평균:{{allavg}}</h3>
+	</div>
+	<stu-comp :name="sname"  v-for="sname in stnames"  @calcuavg="totavg"><stu-comp>
+</div>
+</body>
+</html>

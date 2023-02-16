@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+	
+<mapper namespace="springweb.a05_mvc.a03_dao.A20_CalendarDao">
+	<resultMap type="calendar" id="calRst">
+		<result column="start01" property="start"/>
+		<result column="end01" property="end"/>
+	</resultMap>
+	<select id="calList" resultMap="calRst">
+		SELECT * FROM calendar01
+	</select>
+</mapper>

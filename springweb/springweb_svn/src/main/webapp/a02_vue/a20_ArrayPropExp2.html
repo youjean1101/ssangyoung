@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<template id="tmp01">
+	<table class="table table-hover table-striped">
+    <thead>
+      <tr class="table-success text-center">
+        <th>학생이름</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr v-for="name in names"><td>{{name}}</td></tr>
+    </tbody>
+	</table>       
+
+</template>
+
+<template id="tmp02">
+	<table class="table table-hover table-striped">
+    <thead>
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>이름</th>
+        <th>국어점수</th>
+        <th>영어점수</th>
+        <th>수학점수</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr v-for="stu in students">
+    		<td>{{stu.no}}</td>
+    		<td>{{stu.sname}}</td>
+    		<td>{{stu.kor}}</td>
+    		<td>{{stu.eng}}</td>
+    		<td>{{stu.math}}</td>
+    	</tr>
+    </tbody>
+	</table>       
+</template>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"시작!!(뷰와함께)",
+					namelist:['김길동','마길동','이길동'],
+					studentslist:[
+						{no:"10",sname:"김아무개",kor:"70",eng:"80",math:"90"},
+						{no:"20",sname:"이아무개",kor:"60",eng:"70",math:"100"},
+						{no:"30",sname:"마아무개",kor:"100",eng:"90",math:"70"}
+					]		
+			}
+		});	
+	});
+	Vue.component("students01",{
+		template:"#tmp01",
+		props:{
+			names:{type:Array}
+		}
+	})
+	Vue.component("students02",{
+		template:"#tmp02",
+		props:{
+			students:{type:Array}
+		}
+	})
+	/*
+	ex) 학생 3명의 이름을 리스트한 컴포넌트 선언
+	--------------------------------------------
+	ex) 학생 3명의 번호, 이름, 국어, 영어, 수학점수를 컴포넌트 선언
+		및 호출 처리..
+	*/
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	</div>
+   <students01 :names="namelist"></students01>
+   <students02 :students="studentslist"></students02>
+</div>
+</body>
+</html>

@@ -18,7 +18,8 @@
 	vue에서는 json형태의 객체로 선언이 가능하다.
 2. css 속성과 vue css 속성 비교
 	인라인 css : <h1 style="color:red;background-color:yellow">
-	vue css 속성 : <h1 v-bind : style="{color:'red';background:'yellow'}"
+	vue css 속성 : <h1 v-bind : style="{color:'red';backgroundColor:'yellow'}"
+	vue css 속성 : <h1 v-bind : style="{color:'red';"background-color":'yellow'}"
 3. 클래스 속성 비교
 	기존 class 속성 <h1 class="클래스1 클래스2">
 	vue 클래스속성 : <h1 v-bind:class="{클래스1:true, 클래스2:false}"
@@ -27,6 +28,7 @@
 		<h1 v-bind:style="{color:color01}" : 모델에서 선언된 속성을 가져온다.>
 	data:{show01:{color:'red',backgroundColor:'yellow'}}
 		<h1 v-bind:style="show01" : 모델에서 선언된 속성과 속성값을 모두 가져온다.
+	# css 속성을 모델데이터로 연동하는 순간, v-model/이벤트 핸들 메서드로 속성을 동적인 변경을 처리할 수 있다.
 */
 
 	$(document).ready(function(){

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<template id="tmp01">
+	<div>
+		<h2>컴포넌트의 구성({{title}})</h2>
+		<h3>이름 : {{name}}</h3>
+		<h4>총계 : {{tot}}</h4>
+		물건명 : <input type="text" v-model="name"><br>
+		물건 가격 : <input type="text" v-model="price"><br>
+		물건 갯수 : <input type="text" v-model="cnt"><br>
+		<input type="button" @click="calcu" value="총계 계산"/>
+	</div>
+</template>
+<template id="tmp02">
+	<div>
+		<h2>컴포넌트의 구성({{title}})</h2>
+		<h3>이름 : {{name}}</h3>
+		<h4>총계 : {{tot}}</h4>
+		물건명 : <input type="text" v-model="name"><br>
+		물건 가격 : <input type="text" v-model="price"><br>
+		물건 갯수 : <input type="text" v-model="cnt"><br>
+		<input type="button" @click="calcu" value="총계 계산"/>
+	</div>
+</template>
+<script type="text/javascript">
+Vue.component("com01",{
+	template:"#tmp01",
+	props:["title"],
+	data:function(){
+		return {name:"",price:0,cnt:0,tot:0}
+	},
+	methods:{
+		calcu:function(){
+			this.tot = this.price*this.cnt;
+		}
+	}
+})
+Vue.component("com02",{
+	template:"#tmp02",
+	props:["title"],
+	data:function(){
+		return {name:"",price:0,cnt:0,tot:0}
+	},
+	methods:{
+		calcu:function(){
+			this.tot = this.price*this.cnt;
+			// this.$emit("상위이벤트", 전달데이터1, 전달데이터2..)
+			this.$emit("calcuall",this.tot)
+			// <com02 v-on:calcuall="sumAll">
+			// sumAll는 상위에 있는 이벤트 핸들러에 선언되어 있어야 함
+			
+		}
+	}
+})
+/*
+# 컴포넌트 데이터 전달
+1. 컴포넌트는 body를 최상위로 하여, 계층 구조로 컴포넌트를 가지고 있을 수 있다.
+	1) 최상위 body ==> new Vue 객체가 활용
+	2) body 밑에
+		사용자 정의 component ==> 컴포넌트	Vue.component()
+	3) 사용자 정의 컴포넌트 하위에 계층적으로 하위 컴포넌트를 
+		template에서 선언하여 사용할 수 있다.
+	4) 계층 구조상
+		body	최상위 : Vue 속성 el:".container",
+			 컴포넌트1 차상위(1레벨) ex) 게시판의 전체 form
+			 	컴포넌트1sub1 차차위(2레벨) ex) 검색1 - 제목
+			 	컴포넌트1sub2 차차위(2레벨) ex) 검색2 - 작성자
+			 컴포넌트2 차상위	ex) 게시판에서 데이터 리스트 테이블
+			 	컴포넌트2sub1 차차위(2레벨)	ex) 타이틀 항목
+			 	컴포넌트2sub2 차차위(2레벨)	ex) 행단위 
+		ex)
+			<boardschform :sch01="name" :sch02="subject"></boardschform>
+			<boardlist :list="blist"></boardlist>
+2. 데이터 전달 처리
+	1) 상위에서 하위로 내려서 전달(Vue ==> 1레벨 컴포넌트)
+		<comp01 : 속성="속성값"
+		
+		props:["속성"]
+		
+		template
+			{{속성}}
+	2) 하위에서 상위로 전달(ex) 검색할 항목을 입력해서 계층 구조상 상위에 컴포넌트/Vue 객체의 모델데이터의 할당)
+		이벤트 핸들러 선언과 이벤트 매개변수에 의해서 상위로 전달하여 궁극적으로 모델데이터에 할당하여 ajax데이터 처리
+
+# 컴포넌트의 이벤트 처리 및 상위계층에 데이터 전달
+1. 컴포넌트의 속성과 이벤트 처리
+	1) 컴포넌트 자체내 데이터를 처리하기 위하여
+		data:function(){
+			return {속성:속성값} 형식으로 모델데이터를 사용할 수 있다.
+		}
+	3) 컴포넌트의 메서드 사용
+		컴포넌트의 methods:{
+			메서드명:function(){
+				
+			}
+		}
+		형식으로 이벤트를 처리할 수 있다.
+2. 컴포넌트의 이벤트 처리에 의해서 상위 데이터 전달.
+	1) 컴포넌트 메서드 선언
+		이벤트핸들러1: function(){
+			this.$emit("상위에서 선언 이벤트명",전달할 데이터1,전달할 데이터2...)
+		}
+		<하위컴포넌트 @이벤트="이벤트핸들러1"
+		
+		<상위컴포넌트 @상위에서 선언 이벤트명 = "상위 선언 이벤트 핸들러"
+		
+		methods:상위 선언 이벤트 핸들러(하위에서 전달한 데이터받은 변수1, 변수2){}
+	2) 하위에서 상위로 전달 event
+		- 하위 템플릿
+		<button @click="calcu">과일가격:{{price}}</button>
+		- 컴포넌트 메서드 선언
+		Vue.component("comp",{
+			props:['price'],
+			methods:{
+				calcu:function(){
+					console.log("가격:"+this.price) props속성도 this.속성명으로 접근가능
+					this.$emit("totcal",this.price) 이벤트에 해당값을 전달.
+				}
+			}
+		- 상위 템플릿/화면 구성
+			<com price="1000" @allprice="" @이벤트명="이벤트핸들러함수"
+		- 상위 요소객체 선언
+			data:{msg:"시작!!(뷰와함께)", sum:0},
+			methods:{
+				allprice:function(price, cnt){
+					this.sum += parseInt(price) # 누적해서 합산 처리..
+				}
+			}
+*/
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"이벤트 전달", sum:0},
+			methods:{
+				// this.$emit("calcuAll",this.tot)
+				sumall:function(tot){
+					this.sum += parseInt(tot)
+				}
+			}
+		});	
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	  <h3>전체 총계:{{sum}}</h3>
+	  <com02 title="계산기1" v-on:calcuall="sumall"></com02>
+	  <com02 title="계산기2" v-on:calcuall="sumall"></com02>
+	  <com02 title="계산기3" v-on:calcuall="sumall"></com02>
+	  <com01 title="컴포넌트연습1"></com01>
+	  <com01 title="컴포넌트연습2"></com01>
+	  <com01 title="컴포넌트연습3"></com01>
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input class="form-control mr-sm-2" placeholder="제목" />
+	    <input class="form-control mr-sm-2" placeholder="내용" />
+	    <button class="btn btn-info" type="submit">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

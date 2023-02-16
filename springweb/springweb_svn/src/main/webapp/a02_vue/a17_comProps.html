@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<template id="tmp01">
+ <table class="table table-hover table-striped">
+   	<col width="25%">
+   	<col width="25%">
+   	<col width="25%">
+   	<col width="25%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>도서명</th>
+        <th>가격</th>
+        <th>구매갯수</th>
+        <th>총비용</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td>{{bookname}}</td><td>{{price}}</td><td>{{cnt}}</td><td>{{price*cnt}}</td></tr>
+    </tbody>
+	</table>       
+</template>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"컴포넌트 연습!!(여러가지 속성 설정)"}
+		});	
+	});
+	// ex) 다중 속성값 테이블 템플릿 예제
+	//		도서명, 가격, 구매갯수 총비용을 속성으로 템플릿을 설정하여
+	//		화면에 출력하세요.
+	Vue.component("book",{
+		template:"#tmp01",
+		props:["bookname","price","cnt"]
+	})
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	</div>
+  	<book bookname="데이터베이스" price="14000" cnt="3"></book>
+  	<book bookname="파이썬" price="24000" cnt="2"></book>
+  	<book bookname="이것이 자바다" price="35000" cnt="1"></book>
+</div>
+</body>
+</html>

@@ -12,32 +12,55 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
-/* 
-# vue에서 style과 모델의 이벤트 핸들러를 통한 연결 처리
-1. 처리 순서
-	1) 모델 데이터
-	2) 뷰단 모델 데이터 호출, 이벤트 핸들러 메서드 호출
-	3) 이벤트 핸들러 메서드 선언과 이벤트 시에 해당 기능 모델 데이터 변경 처리
-		methods:{
-			핸들러메서드 : function(){
-				this.모델명(css설정)="값 변경처리"
-			}
-		}
-*/
+	/*
+	# 컴포넌트
+	1. 구조화된 화면을 처리하기 위하여, 사용자 정의 컴포넌트(사용자 정의 태그)를 지정하여 사용할 수 있다.
+	2. 기본형식
+		1) Vue.component("컴포넌트명",{
+			template:"컴포넌트로 출력한 포함된 화면 태그",
+			data:{
+					function(){
+					
+						return {컴포넌트에서 사용할 모델 데이터}
+					},
+					속성:속성값,
+					methods:{
+						기능메서드:function(){}
+					}
+				}
+			})
+			
+		2) 
+	*/
 	$(document).ready(function(){
+		Vue.component("hello-component",{
+			template:"<h3>컴포넌트와 첫만남!!</h3>"
+		})
+		Vue.component("show-comp",{
+			template:`
+				<div>
+					<h2>좋은 하루 시작</h2>
+					<p>
+						Vue가 재미 있나요?
+					</p>
+				</div>
+			`
+		})
+		// ex) div 안에 이름 나이 사는 곳의 정보가 있는 컴포넌트를 선언하고 호출하세요.
+		Vue.component("person",{
+			template:`
+				<div>
+					<h2>이름: 홍길동</h2>
+					<p> 나이: 28
+						사는곳: 인천
+					</p>
+				</div>
+			`
+		})
+		// # 컴포넌트의 템플릿을 root 태그 하나 안에서 설정을 해야합니다.
 		var vm = new Vue({
 			el:".container",
-			data:{msg:"style과 이벤트 핸들러",
-					style01:{color:'tomato'},
-					style02:{color:'navy'}
-			}, 
-			methods:{
-				chColor:function(){
-					this.style01.color="pink"
-					this.style02.color="orange"
-					this.msg="메시지도 변경하네요!!"
-				}
-			}
+			data:{msg:"컴포넌트 기초"}
 		});	
 	});
 </script>
@@ -47,9 +70,12 @@
 <div class="container">
 	<div class="jumbotron text-center">
 	  <h2 >{{msg}}</h2>
-	  <h2 @click="chColor">클릭 시 이벤트 핸들러 변경</h2>
-	  <h3 :style="style01">첫번째 스타일</h3>
-	  <h3 :style="style02">두번째 스타일</h3>
+	  <show-comp></show-comp>
+	  <show-comp></show-comp>
+	  <hello-component></hello-component>
+	  <hello-component></hello-component>
+	  <hello-component></hello-component>
+	  <person></person>
 	</div>
 	<form id="frm01" class="form-inline"  method="post">
   	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">

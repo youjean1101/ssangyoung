@@ -11,45 +11,51 @@
 <script src="/springweb/a00_com/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<template id="tmp01">
+	<div>
+		<button @click="calcu">과일가격:{{price}}</button>
+	</div>
+</template>
 <script type="text/javascript">
-/* 
-# vue에서 style과 모델의 이벤트 핸들러를 통한 연결 처리
-1. 처리 순서
-	1) 모델 데이터
-	2) 뷰단 모델 데이터 호출, 이벤트 핸들러 메서드 호출
-	3) 이벤트 핸들러 메서드 선언과 이벤트 시에 해당 기능 모델 데이터 변경 처리
-		methods:{
-			핸들러메서드 : function(){
-				this.모델명(css설정)="값 변경처리"
-			}
-		}
-*/
 	$(document).ready(function(){
 		var vm = new Vue({
 			el:".container",
-			data:{msg:"style과 이벤트 핸들러",
-					style01:{color:'tomato'},
-					style02:{color:'navy'}
-			}, 
-			methods:{
-				chColor:function(){
-					this.style01.color="pink"
-					this.style02.color="orange"
-					this.msg="메시지도 변경하네요!!"
-				}
-			}
+			data:{msg:"시작!!(뷰와함께)", tot:0}
 		});	
 	});
+	// 템플릿
+	//		구매한 총 가격 : @@@
+	//		과일가격:@@@@ ==> 버튼으로 표시 클릭 시, 누적합산
+	//		과일가격:@@@@ ==> 버튼으로 표시
+	//		과일가격:@@@@ ==> 버튼으로 표시
+	//
+	// <comp price="3000" @totcal="allprice"></comp>
+	// <comp price="2000" @totcal="allprice"></comp>
+	// <comp price="1000" @totcal="allprice"></comp>
+	Vue.component("comp",{
+		template:"#tmp01",
+		props:['price'],
+		data:function(){
+			return {pay:0};
+		},
+		methods:{
+			calcu:function(){
+				this.tot +=price
+				this.$emit("totcal",this.tot)
+			}
+		}
+		
+	})
 </script>
 </head>
 <body>
 
 <div class="container">
 	<div class="jumbotron text-center">
-	  <h2 >{{msg}}</h2>
-	  <h2 @click="chColor">클릭 시 이벤트 핸들러 변경</h2>
-	  <h3 :style="style01">첫번째 스타일</h3>
-	  <h3 :style="style02">두번째 스타일</h3>
+	  	<h2 >{{msg}}</h2>
+		<comp price="3000" @totcal="allprice"></comp>
+		<comp price="2000" @totcal="allprice"></comp>
+		<comp price="1000" @totcal="allprice"></comp>
 	</div>
 	<form id="frm01" class="form-inline"  method="post">
   	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">

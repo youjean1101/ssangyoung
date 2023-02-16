@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<template id="tmp01">
+	<table class="table table-hover table-striped">
+	    <thead>
+	      <tr class="table-success text-center">
+	        <th>부서번호</th>
+	        <th>부서명</th>
+	        <th>부서위치</th>
+	      </tr>
+	    </thead>	
+	    <tbody>
+	    	<tr v-for="dept in deptlist">
+	    		<td>{{dept.deptno}}</td><td>{{dept.dname}}</td><td>{{dept.loc}}</td>
+	    	</tr>
+	    </tbody>
+	</table>
+</template>      
+<template id="tmp02">
+	<table class="table table-hover table-striped">
+	    <thead>
+	      <tr class="table-success text-center">
+	        <th>팀명</th>
+	      </tr>
+	    </thead>	
+	    <tbody>
+	    	<tr v-for="tname in ranklist">
+	    		<td>{{tname}}</td>
+	    	</tr>
+	    </tbody>
+	</table> 
+</template>
+<template id="tmp03">
+	<div>
+	<h2>학생평균:{{avg}}</h2>
+	학생이름:<input type="text" v-model="name">
+	국어:<input type="text" v-model="kor">
+	영어:<input type="text" v-model="eng">
+	수학:<input type="text" v-model="math">
+	<button @click=calcu>계산</button>
+	</div>
+</template>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"0215과제",
+					dlist:[
+						{deptno:"10",dname:"인사",loc:"서울 강남"},
+						{deptno:"20",dname:"개발",loc:"인천 송도"},
+						{deptno:"30",dname:"기획",loc:"서울 영등포"}
+					],
+					flist:["아스널","맨시티","맨유","뉴캐슬","토트넘"],
+					llist:["파리생제르망","올랭피크드마르세유","모나코","RC랑스","릴 OSC"],
+					lalist:["바로셀로나","레알마드리드","레알소시에다드","클루브아틀레티코데마드리드","레앞베티스발롬피에"]
+					,allavg:0
+			}, methods:{
+				avgall:function(avg){
+					this.allavg += parseInt(avg)
+				}
+			}
+		});	
+	});
+	Vue.component("com01",{
+		template:"#tmp01",
+		props:{
+			deptlist:{type:Array}
+		}
+	})
+	
+	Vue.component("com02",{
+		template:"#tmp02",
+		props:{
+			ranklist:{type:Array}
+		}
+	})
+	Vue.component("com03",{
+		template:"#tmp03",
+		data:function(){
+			return {name:"",kor:0,eng:0,math:0,avg:0}
+		},
+		methods:{
+			calcu:function(){
+				this.avg = (parseInt(this.kor)+parseInt(this.math)+parseInt(this.eng))/3
+				this.$emit("calcuall",this.avg)
+			}
+		}
+	})
+</script>
+</head>
+<body>
+<!--
+[1단계:확인] 2. com01 컴포넌트를 통해 속성값(부서번호,부서명,부서위치)을 전달하여 부서정보를 출력하세요.
+
+[1단계:확인] 3. com02 컴포넌트를 통해 속성값(배열형데이터)을 전달하여 리그명과 팀순위를 출력하세요.(컴포넌트3개호출)
+ 
+[1단계:확인] 5. 입력된 학생한명당 국어/영어/수학점수를 컴포넌트를 반 전체 평균을 출력하세요.
+  -->
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	</div>
+	<com01 :deptlist="dlist"></com01>
+	<h2>프리미어리그 순위</h2>
+   	<com02 :ranklist="flist"></com02>
+   	<h2>리그 순위</h2>
+   	<com02 :ranklist="llist"></com02>
+   	<h2>라리가 순위</h2>
+   	<com02 :ranklist="lalist"></com02>
+   	<h3>전체 학생 평균: {{allavg}}</h3>
+   	<com03  v-on:calcuall="avgall"></com03>
+   	<com03  v-on:calcuall="avgall"></com03>
+   	<com03  v-on:calcuall="avgall"></com03>
+</div>
+</body>
+</html>

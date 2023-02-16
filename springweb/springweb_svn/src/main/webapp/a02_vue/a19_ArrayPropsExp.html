@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<template id="tmp01">
+	<table class="table table-hover table-striped">
+    <thead>
+      <tr class="table-success text-center">
+        <th>사원명</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr v-for="ename in emplist">
+    		<td>{{ename}}</td>
+    	</tr>
+    </tbody>
+	</table> 
+</template>
+<template id="empTmp">
+	<table class="table table-hover table-striped">
+    <thead>
+      <tr class="table-success text-center">
+        <th>사원번호</th>
+        <th>사원명</th>
+        <th>급여</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr v-for="emp in emplist">
+    		<td>{{emp.empno}}</td>
+    		<td>{{emp.ename}}</td>
+    		<td>{{emp.sal}}</td>
+    	</tr>
+    </tbody>
+	</table> 
+</template>
+
+<script type="text/javascript">
+	/*
+	ex) 모델데이터 사원이름만 배열(사원번호,사원명,급여)로 선언하여, 
+		<emp> 컴포넌트에 속성으로 전달하고,
+		템플릿에서는 사원명을 리스트로 출력하게 하세요.
+	*/
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"시작!!(뷰와함께)",
+					list01:['김길동','마길동','오길동'],
+					list02:[
+						{empno:7001,ename:"홍길동",sal:3500},
+						{empno:7002,ename:"김길동",sal:4000},
+						{empno:7003,ename:"마길동",sal:5000}
+					]}
+		});	
+	});
+	Vue.component("emp",{
+		template:"#tmp01",
+		props:{	// 속성이 문자열이거나 단일데이터일 경우: props:['','','']
+			emplist:{type:Array}
+		}
+	})
+	Vue.component("emp2",{
+		template:"#empTmp",
+		props:{	// 속성이 문자열이거나 단일데이터일 경우: props:['','','']
+			emplist:{type:Array}
+		}
+	})
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	</div>
+	<emp :emplist="['김영수','오현정','이영미']"></emp>
+	<emp :emplist="list01"></emp>
+    <emp2 :emplist="list02"></emp2>
+</div>
+</body>
+</html>

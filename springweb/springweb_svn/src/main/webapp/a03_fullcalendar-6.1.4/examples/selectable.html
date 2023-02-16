@@ -4,7 +4,8 @@
 <meta charset='utf-8' />
 <script src='../dist/index.global.js'></script>
 <script>
-
+	// 위 js를 사용할 수 있게 같은 폴드에 있는 dist 폴드를 
+	// 복사해서 webapp/a00_com 폴드하위에 넣어주세요.
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
@@ -14,12 +15,12 @@
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
-      initialDate: '2023-01-12',
+      initialDate: '2023-02-16',
       navLinks: true, // can click day/week names to navigate views
       selectable: true,
       selectMirror: true,
       select: function(arg) {
-        var title = prompt('Event Title:');
+        var title = prompt('일정 등록:');
         if (title) {
           calendar.addEvent({
             title: title,
