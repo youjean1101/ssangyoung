@@ -2,7 +2,10 @@
 <html>
 <head>
 <meta charset='utf-8' />
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+
 <script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
 <script src='/springweb/a00_com/dist/index.global.js'></script>
 
 <script>
@@ -11,19 +14,46 @@
   
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
-
+	// 오늘 날짜로 초기화면이 로딩되게 처리
+	console.log(new Date())
+	console.log(new Date().toISOString())
+	var toDay = new Date().toISOString().split("T")[0];
+	console.log(toDay);
     var calendar = new FullCalendar.Calendar(calendarEl, {
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
-      initialDate: '2023-02-16',
-      navLinks: true, // can click day/week names to navigate views
+      initialDate: toDay,
+      //navLinks: true, // can click day/week names to navigate views
       selectable: true,
       selectMirror: true,
+      // eventClick: function(arg)
+      //  select: function(arg)
       select: function(arg) {
+    	  $("h2").click();
+          console.log("# 등록시 내용 # ")
+          console.log(arg) 
+          // 입력되는 기본 정보 재로딩 초기화
+          $("form")[0].reset()
+          
+          $("#modalTitle").text("일정등록")
+          $("#regBtn").show()
+          $("#uptBtn").hide()
+          $("#delBtn").hide()
+          $("[name=start]").val(arg.start.toISOString())
+          $("#start").val(arg.start.toLocaleString())
+          $("[name=end]").val(arg.end.toISOString())
+          $("#end").val(arg.end.toLocaleString())
+          $("[name=allDay]").val(arg.allDay?1:0);
+          $("#allDay").val(""+arg.allDay)
+    	  
+    	  // 초기 등록시 이벤트 핸들러
+    	/*
         var title = prompt('일정 등록:');
+        console.log("# 등록시 내용 # ")
+        console.log(arg)
         if (title) {
           calendar.addEvent({
             title: title,
@@ -33,11 +63,24 @@
           })
         }
         calendar.unselect()
+        */
       },
+      
       eventClick: function(arg) {
+    	 // 등록된 데이터 이벤트 핸들러
+    	  $("h2").click();
+          console.log(arg) 
+          // 입력되는 기본 정보 재로딩 초기화
+          $("#modalTitle").text("일정상세화면")
+          $("#regBtn").hide()
+          $("#uptBtn").show()
+          $("#delBtn").show()
+    	  addForm(arg.event)	
+    	/*  
         if (confirm('Are you sure you want to delete this event?')) {
-          arg.event.remove()
+          	arg.event.remove()
         }
+    	*/
       },
       editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
@@ -57,9 +100,64 @@
 			})
 		} 
     });
+	
+	
     calendar.render();
+    
+    $("#regBtn").click(function(){
+    	if($("[name=title]").val()==""){
+    		alert("일정을 입력하세요")
+    		$("[name=title]").focus()
+    		return;
+    	}
+    	ajaxFun("insCalendar.do")
+    });
   });
-
+  	function ajaxFun(url){
+  		$.ajax({
+  			type:"post",
+  			url:"/springweb/"+url,
+  			data:$("form").serialize(), // form하위 데이터 요청형식변경
+  			dataType:"json",
+  			success:function(data){
+  				alert(data.msg)
+  				location.reload() 
+  				// 화면 refresh 전체데이터 로딩 처리
+  			},
+  			error:function(err){
+  				console.log(err)
+  			}
+  		})
+  	}
+  
+  	// eventClick 함수에서   addForm(arg.event) 추가
+	function addForm(event){
+  		console.log("# 상세화면 #")
+  		console.log(event)
+        $("form")[0].reset()
+        $("[name=id]").val(event.id)
+        $("[name=title]").val(event.title)
+        $("[name=textColor]").val(event.textColor)
+        $("[name=backgroundColor]").val(event.backgroundColor)
+        $("[name=writer]").val(event.extendedProps.writer)   
+        $("[name=content]").val(event.extendedProps.content)
+        $("[name=url]").val(event.url)
+        $("[name=start]").val(event.start.toISOString())
+        $("#start").val(event.start.toLocaleString())
+        if(event.end==null){
+        	$("[name=end]").val(event.start.toISOString())
+        	$("#end").val(event.start.toLocaleString())
+        }else{
+        	$("[name=end]").val(event.end.toISOString())
+        	$("#end").val(event.end.toLocaleString())
+        }
+        $("[name=allDay]").val(event.allDay?1:0);
+        $("#allDay").val(""+event.allDay)		
+	
+		
+	}
+  
+  
 </script>
 <style>
 
@@ -79,7 +177,91 @@
 </head>
 <body>
 
-  <div id='calendar'></div>
-
+  	<div id='calendar'></div>
+  	<h2 data-toggle="modal" data-target="#exampleModalCenter"></h2>
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="modalTitle">타이틀</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form class="form" novalidate>
+	          <input type="hidden" name="id" value="0"/>
+	          <div class="mb-3">
+	            <label for="title">일정명</label>
+	            <input type="text" name="title" class="form-control" id="title" placeholder="일정타이틀입력" >
+	          </div>
+	          <div class="row">
+	            <div class="col-md-6 mb-3">
+	              <label for="start">시작일</label>
+	              <!-- 
+	              GMT 시간과 한국에서 사용되는 시간 +9차이
+	               -->
+	              <input readonly type="text" id="start" class="form-control"  >
+	              <input type="hidden" name="start" class="form-control"  >
+	            </div>
+	            <div class="col-md-6 mb-3">
+	              <label for="end">종료일</label>
+	              <input readonly type="text" id="end" class="form-control">
+	              <input type="hidden" name="end" class="form-control">
+	            </div>  
+	          </div>
+	          <div class="row">
+	            <div class="col-md-6 mb-3">
+	              <label for="writer">작성자</label>
+	              <input type="text" name="writer" class="form-control" id="writer" >
+	            </div>
+	            <div class="col-md-6 mb-3">
+ 	              <label for="allDay">종일여부</label>
+ 	              <!-- 
+ 	              db : 1/0
+ 	               -->
+				  <select  id="allDay" class="form-control" >
+				   	<option value="true">종일</option>
+				   	<option value="false">시간</option>
+				  </select>
+				  <input type="hidden" name="allDay"/>
+	            </div>  
+	              <script type="text/javascript">
+	              	$("#allDay").change(function(){
+	              		$("[name=allDay]").val($(this).val()=='true'?1:0);
+	      	        })
+	              	// 16:05~~
+	              </script>	
+	            
+	          </div>
+	          <div class="row">
+	            <div class="col-md-6 mb-3">
+	              <label for="textColor">글자색상</label>
+	              <input type="color"  value="#ccffff"  name="textColor" class="form-control" id="textColor" >
+	            </div>
+	            <div class="col-md-6 mb-3">
+	              <label for="backgroundColor">배경색상</label>
+	              <input type="color"  value="#0099cc"  name="backgroundColor" class="form-control" id="backgroundColor" >
+	            </div>  
+	          </div>
+	          <div class="mb-3">
+	            <label for="content">내용</label>
+	            <textarea name="content" rows="5" class="form-control" id="content" placeholder="일정내용입력"></textarea>
+	          </div>	          	          	
+	          <div class="mb-3">
+	            <label for="url">링크 주소</label>
+	            <input type="url" name="url" class="form-control" id="url" placeholder="링크할 주소 입력" >
+	          </div>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button id="regBtn" type="button" class="btn btn-primary">등록</button>
+	        <button id="uptBtn" type="button" class="btn btn-success">수정</button>
+	        <button id="delBtn" type="button" class="btn btn-warning">삭제</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </body>
 </html>

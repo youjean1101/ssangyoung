@@ -14,12 +14,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src='${path}/a00_com/dist/index.global.js'></script>
 <title>Insert title here</title>
 <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
 <link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
 <style>
-	td{text-align:center;}
+
+  body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
 </style>
 <script src="${path}/a00_com/jquery.min.js"></script>
 <script src="${path}/a00_com/popper.min.js"></script>
@@ -27,6 +38,8 @@
 <script src="${path}/a00_com/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script src='${path}/a00_com/dist/index.global.js'></script>
+
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
@@ -120,6 +133,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     calendar.render();
   });
+  
+
+
 	$(document).ready(function(){
 		<%-- 
 		
@@ -129,8 +145,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </head>
 
 <body>
-<div id='calendar'></div>
 
+<div id='calendar'></div>
 
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">

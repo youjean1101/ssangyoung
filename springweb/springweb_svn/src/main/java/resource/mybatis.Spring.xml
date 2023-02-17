@@ -13,6 +13,7 @@
 		<typeAlias alias="filerep" type="springweb.z01_vo.FileRep"/>
 		<typeAlias alias="fileexvo" type="springweb.z01_vo.FileExpVo"/>
 		<typeAlias alias="calendar" type="springweb.z01_vo.Calendar"/>
+		<typeAlias alias="calen2" type="springweb.z01_vo.Calen2"/>
 	</typeAliases>
 	<!-- 2. 사용 XXXMapper.xml을 추가(dao와 mapper 1:1) -->
 	<mappers>

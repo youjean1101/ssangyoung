@@ -18,4 +18,26 @@ DROP SEQUENCE cal_seq;
 INSERT INTO calendar01 values(cal01_seq.nextval, '첫번째 일정 등록',
 '2023-02-16T09:00:00','2023-02-16T23:00:00', '홍길동','내용','#0404B4','#FFFF00',
 1,'https://fullcalendar.io/docs/event-object');
+INSERT INTO calendar01 values(cal01_seq.nextval, '세번째 일정 등록',
+'2023-02-18T09:00:00','2023-02-19T11:00:00', '김길동','내용2','#0404B4','#FFFF00',
+1,'https://fullcalendar.io/docs/event-object');
+INSERT INTO calendar01 values(cal01_seq.nextval, '네번째 일정 등록',
+'2023-02-20T09:00:00','2023-02-22T11:00:00', '김길동','내용2','#0404B4','#FFFF00',
+0,'https://fullcalendar.io/docs/event-object');
+
 SELECT * FROM calendar01;
+-- 과제
+create table calen2(
+	id number primary key,
+	title varchar2(100),
+	start01 varchar2(50)
+);
+create sequence calen2_seq
+	start with 1
+	minvalue 1;
+DROP SEQUENCE cal_seq;
+	--#FFFF00 #0404B4
+INSERT INTO calen2 values(calen2_seq.nextval, '첫번째 일정 등록',
+'2023-02-16T09:00:00');
+
+SELECT * FROM calen2;

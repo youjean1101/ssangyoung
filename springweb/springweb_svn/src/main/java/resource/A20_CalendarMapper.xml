@@ -12,4 +12,16 @@
 	<select id="calList" resultMap="calRst">
 		SELECT * FROM calendar01
 	</select>
+	
+	<resultMap type="calen2" id="calRst2">
+		<result column="start01" property="start"/>
+	</resultMap>
+	<select id="calList2" resultMap="calRst2">
+		SELECT * FROM calen2
+	</select>
+	<insert id="insertCalendar" parameterType="calendar">
+		INSERT INTO calendar01 values(cal01_seq.nextval, #{title},
+		#{start}, #{end}, #{writer}, #{content},#{backgroundColor},#{textColor},
+		#{allDay},null)
+	</insert>
 </mapper>

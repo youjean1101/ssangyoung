@@ -177,6 +177,92 @@
 			})
 		}
 				
- 			
+ # fullcandar 데이터 등록하기
+ 1. 진행 프로세스
+ 	1) 특정일정을 클릭하여, 
+ 	2) 기본 데이터(시작일/종료일, 전체일/시간)를 포함한 등록할 항목이 
+ 		있는 다이얼로그화면을 로딩한다.
+ 	3) DB에 등록할 각 항목(타이틀, 내용, 작성자, 배경색상, 글자색상, 링크할 url)을 입력 후, 등록 버튼 클릭 시, 
+ 		ajax로 controller를 호출하여 등록 처리한다.
+ 	
+ 	4) 해당 내용을 처리 후, 초기화면에서 등록된 내용을 확인할 수 있다.
  		
+		
+ 2. 핵심 기능
+ 	1) DB 등록 처리(백엔드단)
+ 	2) 화면 인터페이스 
+ 		다이얼로그 박스 로딩
+ 		select: function(arg) 로 받은 데이터를 
+ 			- arg에서 어떤 값이 초기에 로딩되는지 확인
+ 			form 요소객체에 로딩하여 출력 처리
+ 	3) ajax로 입력된 데이터 controller단에 전송 처리
+ 	
+ 	
+ 3. 개발 순서
+ 	1) 일정 등록(백엔드 처리)
+ 		- DB
+ 		sql
+ 			INSERT INTO calendar01 values(cal01_seq.nextval, '첫번째 일정 등록',
+			'2023-02-16T09:00:00','2023-02-16T23:00:00', '홍길동','내용','#0404B4','#FFFF00',
+			1,'https://fullcalendar.io/docs/event-object')
+			
+ 		vo
+ 		private int id;
+		private String title;
+		private String start;
+		private String end;
+		private String writer;
+		private String content;
+		private String backgroundColor;
+		private String textColor;
+		private boolean allDay;
+		
+ 		공통 mybatis
+ 			<typeAlias alias="calendar" type="springweb.z01_vo.Calendar"/>
+ 			<mapper resource="resource/A20_CalendarMapper.xml"/>
+ 		dao
+ 			public void insertCalendar(Calendar ins);
+ 		mapper
+ 			<insert id="insertCalendar" parameterType="calendar">
+				INSERT INTO calendar01 values(cal01_seq.nextval, #{title},
+				#{start}, #{end}, #{writer}, #{content},#{backgroundColor},#{textColor},
+				#{allDay},null)
+			</insert>
+ 		
+	service ==> controller
+	controller
+		/insCalendar.do 기능메서드 추가.
+	-------------------------------------------------------
+	2) 화면단 처리
+		- select: function(arg){} 시 처리할 내용
+			arg에서 나오는 기본정보를 다이얼로그 박스에 입력
+				시작일/종료일/종일여부
+			입력/상세 화면 구분
+			 타이틀 변경
+			 기능 버튼 hide/show
+		- eventClick: function(arg){일정 상세화면
+				
+		- 다이얼로그 로딩
+			입력할 항목 form객체로 처리
+			
+		- $.ajax({}) 처리 및 controller 호출
+			등록 버튼 클릭 시, ajax 호출 처리..
+			
+ 			title
+ 			start end
+ 			writer allDay
+ 			content
+ 			backgroundColor textColor
+ 			url
+ 			
+ 			form 화면 구성
+ 			
+ 			타이틀
+ 			시작일 종료일
+ 			작성자 종일여부
+ 			내용<text area>
+ 			일정배경색상 일정글자색상 type=color
+ 			외부링크주소
+ 			--------------------------
+		
 		
