@@ -10,7 +10,7 @@ public class Calendar {
 		private String backgroundColor;
 		private String textColor;
 		private boolean allDay;
-//		private String url;
+		private String urllink;
 		public int getId() {
 			return id;
 		}
@@ -65,10 +65,10 @@ public class Calendar {
 		public void setAllDay(boolean allDay) {
 			this.allDay = allDay;
 		}
-//		public String getUrl() {
-//			return url;
-//		}
-//		public void setUrl(String url) {
-//			this.url = url;
-//		}
+		public String getUrllink() {
+			return urllink;
+		}
+		public void setUrllink(String urllink) {
+			this.urllink = urllink;
+		}
 }

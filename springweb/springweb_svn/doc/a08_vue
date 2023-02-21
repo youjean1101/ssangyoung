@@ -1,0 +1,53 @@
+# 컴포넌트와 ajax를 활용할 검색 처리
+1. 프로세스
+	1) 검색 컴포넌트와 리스트를 컴포넌트를 별개로 만들고,
+	2) 검색 컴포넌트에서는 검색할 데이터를 넣어서 상위에 전달하고
+	3) 검색 컴포넌트에서 받은 데이터를 최상위 Vue객체에서 모델 데이터와
+		메서드에 의해서 데이터를 ajax로 로딩하고
+	4) 리스트 컴포넌트에 가지고 온 데이터를 props로 전달하여,
+		데이터를 리스트하여 출력하는 처리를 한다.
+2. 개발순서
+	1) 검색 컴포넌트 만들기
+		- 템플릿
+			v-model ename
+			v-model job
+			@click="search" @keyup.13="search"
+		- 컴포넌트 객체 선언
+			search-comp
+			모델 데이터 : ename:"", job:""
+			핸들러 메서드
+				search:function(){
+					this.$emit("schemp", this.ename, this.job )
+				}
+			<search-com @schemp="searchEmp"></search-com>
+	2) 데이터 리스트 컴포넌트 만들기
+		- 템플릿
+			<table...
+				<tr v-for="emp in empList">
+					<td>{{emp.empno}}...
+		- 컴포넌트 객체
+			list-comp
+			props:["empList"]
+			<list-com : empList="list"
+	3) 최상위 Vue객체
+		new Vue({
+			data:{ list:[] },
+			methods:{
+				searchEmp:function(ename, job){
+					var url="/springweb/empList.do?ename="+ename+"$job="+job
+					var vm = this
+					fetch(url).then(function(response){
+						return response.json()
+					}).then(function(json){
+						vm.list = json
+					}).catch(function(err){
+						console.log("#에러발생")
+						console.log(err)
+					})
+				}
+			}
+		})
+	
+			
+		
+3. 

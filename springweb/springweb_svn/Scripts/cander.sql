@@ -41,3 +41,16 @@ INSERT INTO calen2 values(calen2_seq.nextval, '첫번째 일정 등록',
 '2023-02-16T09:00:00');
 
 SELECT * FROM calen2;
+SELECT * FROM calendar01;
+
+update calendar01
+			set title = '일정변경',
+				start01 = '2023-02-20T09:00:00',
+				end01 = '2023-02-20T15:00:00',
+				writer = '변길동',
+				content = '내용변경',
+				textcolor = '#0099cc',
+				backgroundcolor = '#ccffff',
+				allday = '0',
+				url = 'https://www.naver.com'
+			where id = 16;

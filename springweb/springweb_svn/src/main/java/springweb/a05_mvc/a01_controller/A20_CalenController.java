@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import springweb.a05_mvc.a02_service.A20_CalendarService;
 import springweb.z01_vo.Calendar;
@@ -39,4 +40,17 @@ public class A20_CalenController {
 		d.addAttribute("msg", "일정등록성공");
 		return "pageJsonReport";
 	}
+	@RequestMapping("uptCalendar.do")
+	public String uptCalendar(Calendar upt,Model d) {
+		service.uptCalendar(upt);
+		d.addAttribute("msg", "일정수정성공");
+		return "pageJsonReport";
+	}
+	@RequestMapping("delCalendar.do")
+	public String delCalendar(@RequestParam("id")int id,Model d) {
+		service.delCalendar(id);
+		d.addAttribute("msg", "일정삭제성공");
+		return "pageJsonReport";
+	}
+	
 }

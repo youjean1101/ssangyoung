@@ -31,10 +31,17 @@
       selectMirror: true,
       // eventClick: function(arg)
       //  select: function(arg)
+      // 월별/주간/일별 현황에서 클릭, 스크롤, 시간
       select: function(arg) {
+    	  // 해당 선택된 날짜의 시작/마지막 시간 일정, 전일/시간인지를 가져와서,
+    	  // 다이얼로그 박스로 기본 데이터 표현
     	  $("h2").click();
           console.log("# 등록시 내용 # ")
           console.log(arg) 
+          console.log("arg.start 데이터 유형 : "+arg.start) 
+          console.log("ISO 변형: "+arg.start.toISOString()) 
+          console.log("locale 변형 : "+arg.start.toLocaleString()) 
+          console.log("arg.allday 유형 : "+arg.allDay) 
           // 입력되는 기본 정보 재로딩 초기화
           $("form")[0].reset()
           
@@ -42,7 +49,9 @@
           $("#regBtn").show()
           $("#uptBtn").hide()
           $("#delBtn").hide()
+          // 저장되는 시간을 ISO형식의 GMT 시간
           $("[name=start]").val(arg.start.toISOString())
+          // 현재 한국시간을 표현
           $("#start").val(arg.start.toLocaleString())
           $("[name=end]").val(arg.end.toISOString())
           $("#end").val(arg.end.toLocaleString())
@@ -65,7 +74,7 @@
         calendar.unselect()
         */
       },
-      
+      // 등록된 일정을 클릭 시,
       eventClick: function(arg) {
     	 // 등록된 데이터 이벤트 핸들러
     	  $("h2").click();
@@ -82,6 +91,16 @@
         }
     	*/
       },
+      // 클릭하여 스크롤해서 다른 날짜로 변경했을 때,
+		eventDrop:function(info){
+			addForm(info.event)
+			ajaxFun("uptCalendar.do")
+		},
+		// 시간일정에서 하단 부분을 스크롤해서 일정범위를 변경했을 때.
+		eventResize:function(info){
+			addForm(info.event)
+			ajaxFun("uptCalendar.do")
+		},
       editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
    	  // 상단에 jquery lib 호출	
@@ -100,8 +119,11 @@
 			})
 		} 
     });
-	
-	
+    /* 
+    function successCallback(데이터리스){
+    	this.캘린더 데이터 = 데이터리스트
+    } 
+    */
     calendar.render();
     
     $("#regBtn").click(function(){
@@ -112,6 +134,23 @@
     	}
     	ajaxFun("insCalendar.do")
     });
+    $("[name=urllink]").dblclick(function(){
+		if(confirm("페이지 이동하시겠습니까?")){
+			window.open($(this).val())
+			//location.href=$(this).val()
+		}
+	})
+	
+	$("#uptBtn").click(function(){
+		if(confirm("수정하시겠습니까?")){
+			ajaxFun("uptCalendar.do")
+		}
+	})
+	$("#delBtn").click(function(){
+		if(confirm("삭제하시겠습니까?")){
+			ajaxFun("delCalendar.do")
+		}
+	})
   });
   	function ajaxFun(url){
   		$.ajax({
@@ -141,7 +180,6 @@
         $("[name=backgroundColor]").val(event.backgroundColor)
         $("[name=writer]").val(event.extendedProps.writer)   
         $("[name=content]").val(event.extendedProps.content)
-        $("[name=url]").val(event.url)
         $("[name=start]").val(event.start.toISOString())
         $("#start").val(event.start.toLocaleString())
         if(event.end==null){
@@ -152,9 +190,9 @@
         	$("#end").val(event.end.toLocaleString())
         }
         $("[name=allDay]").val(event.allDay?1:0);
-        $("#allDay").val(""+event.allDay)		
-	
-		
+        $("#allDay").val(""+event.allDay)	
+        
+        $("[name=urllink]").val(event.extendedProps.urllink)
 	}
   
   
@@ -250,7 +288,7 @@
 	          </div>	          	          	
 	          <div class="mb-3">
 	            <label for="url">링크 주소</label>
-	            <input type="url" name="url" class="form-control" id="url" placeholder="링크할 주소 입력" >
+	            <input type="url" name="urllink" class="form-control" id="url" placeholder="링크할 주소 입력" >
 	          </div>
 	        </form>
 	      </div>

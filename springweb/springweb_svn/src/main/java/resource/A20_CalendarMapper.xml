@@ -8,6 +8,7 @@
 	<resultMap type="calendar" id="calRst">
 		<result column="start01" property="start"/>
 		<result column="end01" property="end"/>
+		<result column="url" property="urllink"/>
 	</resultMap>
 	<select id="calList" resultMap="calRst">
 		SELECT * FROM calendar01
@@ -22,6 +23,23 @@
 	<insert id="insertCalendar" parameterType="calendar">
 		INSERT INTO calendar01 values(cal01_seq.nextval, #{title},
 		#{start}, #{end}, #{writer}, #{content},#{backgroundColor},#{textColor},
-		#{allDay},null)
+		#{allDay},#{urllink})
 	</insert>
+	<update id="uptCalendar" parameterType="calendar">
+			update calendar01
+				set title = #{title},
+					start01 = #{start},
+					end01 = #{end},
+					writer = #{writer},
+					content = #{content},
+					textcolor = #{textColor},
+					backgroundcolor = #{backgroundColor},
+					allday = #{allDay},
+					url = #{urllink}
+				where id = #{id}
+	</update>
+	<delete id="delCalendar" parameterType="int">
+		delete from calendar01
+		where id= #{id}
+	</delete>
 </mapper>

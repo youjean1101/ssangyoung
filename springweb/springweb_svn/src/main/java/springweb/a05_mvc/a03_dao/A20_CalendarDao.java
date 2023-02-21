@@ -10,4 +10,7 @@ public interface A20_CalendarDao {
 	public List<Calendar> calList2(); // 과제
 	
 	public void insertCalendar(Calendar ins);
+	
+	public void uptCalendar(Calendar upt);
+	public void delCalendar(int id);
 }

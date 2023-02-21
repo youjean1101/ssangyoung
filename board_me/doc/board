@@ -6,9 +6,10 @@
 		기본 정보 등록(session으로 로그인된 사용자 id로 등록)
 		첨부 파일 추가
 	3) 상세화면
-		수정 처리(session 작성자가 동일한 id인 경우만)
+		수정 처리(session 작성자가 동일한 id인 경우만) : 첨부파일 수정
 		삭제 처리(session 작성자가 동일한 id인 경우만)
 		답글 처리
+	4) 로그인을 통한 세션 처리
 2. 개발 순서
 	1) Database 설계
 		메인 테이블(board) - 번호, 상위번호, 제목, 작성자, 내용
@@ -95,11 +96,23 @@
 	- A02_Service.java(service)
 		컨테이너에서 객체 로딩
 		@Autowired에 의해 소스상 자동 객체 할당.
+		페이징 처리 비즈니스 로직 처리
 	- A03_Dao.java(dao)
 		dao 인터페이스(껍데기) 
 		==> 컨테이너()에서 패키지(a01_container.xml)를 지정하고,
 		XXXMapper.xml에서 컨테이너에 연동 규칙에 의해 실제 객체가 만들어 진다.
 	- Board.java, BoardSch.java(vo)
+		매개변수나 리턴값을 통해 데이터를 처리해주
+	- a01_boardList.jsp(화면단처리 리스트)
+		페이지 처리되어 제목과 작성자로 검색
+		등록버튼 등록 화면
+		데이터 항목 클릭 시, 상세화면 이동
+	- a02_insertBoard.jsp(등록/답글 화면)
+		파일첨부기능 처리(등록자를 session값으로 등록)
+	- a03_board.jsp(상세 화면)
+		수정 삭제 답글 기능 버튼(권한에 따른 수정 삭제 처리-session)
+		첨부파일수정 기능
+	- 
 	
 1. 컨테이너 분리
 	<init-param>
@@ -227,6 +240,8 @@
 		- 등록 form을 위한 화면 구현..
 			#{refno}, #{subject},#{content},#{writer},
 			<input name="refno" value="0" />
+				- 답글화면에서 등록 번호를 답글 번호로 할당 계층 구조
+					데이터 만들기
 			<input name="subject" value=""/>..
 # 수정/삭제를 위한 상세화면
 1. 처리 프로세스 
@@ -247,7 +262,10 @@
 		 	NO=${no};
 			UPDATE board 
 				SET readcnt = readcnt+1
-			WHERE NO =${no} 
+			WHERE NO =${no}
+			delete
+			from board
+			where 
 		- vo
 		- 공통
 		- dao
@@ -339,6 +357,8 @@
    				class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
    				
 		파일업로드할 파일서버 경로 위치 공통 설정파일 선언
+			주의 : 현재 pc에서 테스트할 때와 서버 pc에서 테스트 할 때가 다르므로, 
+					서버에서는 해당 서버 경로에 맞게 설정하여 변경되어 있어야 한다.(파일 관리 주의)
 			user.upload = C:/a01_javaexp/workspace/board_me/src/main/webapp/z01_upload/
 	3) DB 처리
 		테이블 생성
@@ -598,13 +618,14 @@
 		- 답글 클릭 시, form요소 데이터의 변경 및 submit로 글 등록으로 요청값 전달.
 			$("[name=refno]").val($("[name=no]").val())
 			$("[name=subject]").val("RE:"+$("[name=subject]").val())
+			==> 이미지로, 로직에 의해서 답글이라는 것을 표기
 			$("[name=content]").val("\n\n\n===이전글===\n"+$("[name=content]").val())
 			$("form").attr("action","${path}/insert.do");
 			$("form").submit()
 		- 등록 처리 프로세스로 진행..
 		- 계층형 sql 작성(mapper)
 			select rownum cnt, level : 글을 순서별로 numbering, level : 계층 레벨처리
-			start with refno = 0
+			start with refno = 0 
 			connect by prior no = refno
 			order siblings by no desc 
 				-- 최근 등록된 글을 가장 먼저 나오게 처리(계층별)
@@ -776,7 +797,8 @@ blocknum	페이지번호
 	1) DB 파일 정보 수정 처리.
 		<update id="uptBoardFile" parameterType="boardfile">
 		    merge into boardfile  a 	# 수정하거나 등록할 테이블
-			     using BOARD b			# 위 수정/등록을 위한 비교할 테이블
+	   		  using (SELECT '${fname}' fname, ${no} NO, '${etc}' subject 
+	     				FROM dual) b	# 위 수정/등록을 위한 비교할 테이블
 			        on (a.no = b.no)	# 수정 등록의 조건
 			      when matched then    	
 				update set fname = ${fname},
@@ -784,7 +806,7 @@ blocknum	페이지번호
 					   where no = ${no}	
 				  when not matched then
 					insert values(b.no, 
-							${fname},b.subject,sysdate,sysdate)		     			
+							b.fname ,b.subject,sysdate,sysdate)		     			
 		</update>
 		update boardfile
 			set fname = #{fname}
@@ -833,7 +855,7 @@ blocknum	페이지번호
 		로그인 성공/로그인 실패
 		----------------------------------------
 		
-	3) 화면단(각 화면)
+	3) 화면단(각 화면) -- 핵심기술
 		session 값을 id가 없는 경우에 로그인 화면 controller 화면으로 이동하게 처리 
 		var sessId = "${mem.id}"
 		if(sessId==""){

@@ -1,0 +1,29 @@
+# 다국어 처리
+1. 하나의 웹 프로그램을 개발하는 경우 이 시스템을 다국적 기업에서는 여러나라에서 사용하는 경우가 많다.
+2. 특히, 우리나라 대기업(삼성, LG)/중견기업의 경우는 현지법인에 공장을 따로 두어서 개발한 시스템을 원격에서 
+	사용하는 경우가 있는데, 이때 과거에는 해당 언어로 다시 개발하는 경우가 많았지만, 
+	현재는 다국어 처리라는 기능을 통해 같은 시스템에서 여러 언어로 표현되게 처리하고 있다.
+3. 다국어 처리는 코드값을 따로 파일이나 DB로 선언하고, 사용할 언어에 따라 연동하여 설정하는 형식으로 사용된다.
+4. 다국어 프로세스
+	1) 초기에 설정된 언어로 화면이 로딩된다.
+	2) 화면에 언어 설정 부분을 선택해서 해당 언어로 변경하면, 
+	3) 화면에 해당 언어로 바뀌어 보인다.
+5. 다국어 처리 개발 순서(파일사용)
+	0) 컨테이너
+		- 지역별 언어 변환을 위한 객체 등록 SessionLocaleResolver
+		- 다국어 처리를 위한 코드 설정 파일 설정위치 지정
+	1) 다국어 처리를 위한 코드값 설정(java/message 하위)
+		- 기본 코드 파일(msg.properties)
+		- 한국어 파일(msg_ko.properties)
+		- 영어 파일(msg_en.properties)
+		.. 기타 추가 언어 설정파일
+		코드 내용 : key = value 형식으로 설정
+	2) 다국어 처리를 위한 테스트용 화면 controller를 통해 로딩
+	3) 뷰단 화면 처리 내용
+		<% taglib preix="spring" uri="http://www.springframework.org/tags" %>
+		<spring:message code="코드값" /> 언어 처리 부분에 위에 다국어 처리 코드설정 파일의 key을 설정
+		선택 form에 <select>로 언어 설정 처리 선택변경 시, 컨트롤단 호출
+	4) 화면에 요청에 의해 컨트롤단 언어 처리 메서드 처리
+		메서드 매개변수 : 요청값 lang, HttpServletRequest, HttpServletResponse
+		전역 변수 : @Autowired(컨테이너 객체 호출) LocaleResolver
+			localeResolver.setLocale(request, response, new Locale(요청값에 의한 언어설정))

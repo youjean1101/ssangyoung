@@ -11,6 +11,31 @@
 <script src="/springweb/a00_com/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<!-- 
+	템플릿
+		{{속성}}
+		@이벤트명 = "핸들러함수"
+		
+	컴포넌트객체 선언
+		props=["속성"]
+		methods:{
+			핸들러함수 : function(){
+			this.$emit("이벤트명",전달데이터1, 전달데이터2..)
+			}
+		}
+		
+	<컴포넌트 :속성="속성값" @이벤트명="외부핸들러함수"
+	new Vue({
+		methods:{
+			외부핸들러함수=function(전달변수1, 전달변수2){
+				데이터 처리 및 변경
+			}
+		}
+	})
+	props : 상위에서 하위로 데이터 전달
+	$emit 이벤트는 하위에서 상위에 데이터 전달
+	
+ -->
 <template id="tmp01">
 	<div>
 		<button @click="calcu">과일가격:{{price}}</button>

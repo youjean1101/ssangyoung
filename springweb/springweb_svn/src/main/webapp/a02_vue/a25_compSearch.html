@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<template id="schTmp">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark"
+  		>
+	    <input @keyup.13="search" v-model="ename" class="form-control mr-sm-2" placeholder="사원명" />
+	    <input @keyup.13="search"  v-model="job" class="form-control mr-sm-2" placeholder="직책명" />
+	    <button @click="search" class="btn btn-info" type="button">Search</button>
+ 	</nav>
+</template>
+<script type="text/javascript">
+Vue.component("search-comp",{
+	template:"#schTmp",
+	data:function(){
+		return {ename:"",job:""}
+	},
+	created:function(){
+		this.search()
+	},
+	methods:{
+		search:function(){
+			this.$emit("schemp",this.ename, this.job)
+			// <search-comp @이벤트명="상위에 선언한 이벤트핸들러 메서드"
+			// <search-comp @schemp="searchEmp"
+			// 이벤트 핸들러메서드에 매개변수 2개로 ename, job전달
+			// searchEmp:function(ename, job)
+		}
+	}
+})
+</script>
+<template id="listTmp">
+   <table class="table table-hover table-striped">
+   	<col width="20%">
+   	<col width="20%">
+   	<col width="20%">
+   	<col width="20%">
+   	<col width="20%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>사원번호</th>
+        <th>사원명</th>
+        <th>직책명</th>
+        <th>급여</th>
+        <th>부서번호</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr v-for="emp in emplist">
+    		<td>{{emp.empno}}</td>
+    		<td>{{emp.ename}}</td>
+    		<td>{{emp.job}}</td>
+    		<td>{{emp.sal}}</td>
+    		<td>{{emp.deptno}}</td></tr>
+    </tbody>
+	</table>  
+</template>
+<script type="text/javascript">
+Vue.component("list-comp",{
+	template:"#listTmp",
+	props:["emplist"]
+})
+
+/*
+		Vue() 최상위(el:".container")
+		
+	컴포넌트1(#schTmp),		컴포넌트2(#listTmp)
+	
+상위에서 하위로 데이터 전달(props통한 속성)
+하위에서 상위로 데이터 전달(이벤트)
+	
+*/
+
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"사원정보", list:[]},
+			methods:{
+				searchEmp:function(ename, job){
+					var url="/springweb/empListAjax.do?ename="
+						+ename+"&job="+job
+					var vm = this
+					fetch(url).then(function(response){
+						return response.json()
+					}).then(function(json){
+						vm.list = json.empList
+					}).catch(function(err){
+						console.log("#에러발생")
+						console.log(err)
+					})					
+				}
+			}
+		});
+		
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	</div>
+	<search-comp @schemp="searchEmp"></search-comp>
+    <list-comp :emplist="list"></list-comp> 
+</div>
+</body>
+</html>
