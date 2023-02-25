@@ -62,16 +62,30 @@
 		// 3. 메시지보내기1(버튼)
 		$("#sendBtn").click(function(){
 			console.log("메시지1")
+			wsocket.send( $("#id").val()+":"+$("#msg").val() )
+			$("#msg").val("").focus()	
+			
 		})
 		// 4. 메시지보내기2(enter키) 
 		$("#msg").keyup(function(){
 			if(event.keyCode==13){
 				console.log("메시지2")
+				wsocket.send( $("#id").val()+":"+
+								$("#msg").val() )
+				$("#msg").val("").focus()				
 			}
 		})	
-		// 5. 종료 버튼
+		// 5. 종료 버튼    10:05~
 		$("#exitBtn").click(function(){
 			console.log("종료")
+			if(confirm("접속을 종료하시겠습니까?")){
+				wsocket.send( $("#id").val()+":연결을 종료하였습니다." )
+				// 핸들러 클래스의 afterConnectionClosed 메서드 호출
+				wsocket.close()
+				$("#chatMessageArea").text("")
+				$("#id").val("").focus()
+			}
+			
 		})
 		// 6. 전송해보는 메시지 처리(socket 객체를 통해서 처리)
 	});
@@ -84,10 +98,48 @@
 		wsocket.onopen=function(evt){
 			console.log(evt)
 			// 메시지 전송 메서드 호출 서버상 handleMessage() 메서드 연동
-			wsocket.send("msg:"+$("#id").val()+":연결 접속했습니다.")
+			wsocket.send($("#id").val()+":연결 접속했습니다.")
+		}
+		// 2. 메시지를 받을 때, 처리 내용.
+		//    서버 핸들러에 ws.sendMessage(message);에 의해 push방식으로 메시지
+		//    전달 받음..
+		wsocket.onmessage=function(evt){
+			var revMsg = evt.data
+			revMsgFun(revMsg)
 		}
 	}
-	
+	function revMsgFun(msg){
+		var alignOpt = "left"
+		// 모든 메시지 내용 ex)  김길동:연결 접속했습니다.
+		// 배열 = 문자열.split("구분자")
+		//   	해당 구분자로 배열을 만든다.
+		// msg[0] : 김길동
+		// msg[1] : 연결 접속했습니다.
+		var sndId = msg.split(":")[0]
+		// 현재 접속한 아이디와 서버에서 전송하는 아이디 비교
+		// 같으면 내가 보낸 메시지 이므로 오른쪽 정렬
+		// 다르면 다른 사람의 메시지이므로 왼쪽 정렬
+		if($("#id").val()==sndId){
+			alignOpt="right"
+		}
+		// width를 설정해서 정렬 처리
+		console.log("넓이:"+$("#chatArea").width());
+		
+		// $("요소객체").text("메시지내용")
+		// .attr("align","정렬속성")
+		// .css("width","넓이 속성")
+		var msgObj =$("<div></div>").text(msg
+				).attr("align",alignOpt).css("width",
+						$("#chatArea").width())
+		$("#chatMessageArea").append(msgObj)
+		// 스크롤링 처리
+		// 1. 전체 해당 데이터의 높이를 구한다.
+		// 2. 포함하고 있는 부모객체(#chatArea)에서
+		// 		스크롤 기능메서드로 스크롤되게 처리한다.
+		// 		scrollTop()
+		var height = parseInt($("#chatMessageArea").height())
+		$("#chatArea").scrollTop(height)
+	}
 	
 </script>
 </head>

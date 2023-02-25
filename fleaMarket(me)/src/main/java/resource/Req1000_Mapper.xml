@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+   
+
+    <mapper namespace="fleaMarket.a03_dao.Req1000_Dao">
+    	<select id="DuplicateEmail" parameterType="string" resultType="member">
+    		SELECT * FROM FLEAMARKETMEMBER WHERE email = #{email}
+    	</select>
+    	<select id="DuplicateMem" parameterType="hashmap" resultType="member">
+    	SELECT * FROM FLEAMARKETMEMBER WHERE name = #{name} and personalnumber = #{personalnumber}
+    	</select>
+    </mapper>
+    
+    
