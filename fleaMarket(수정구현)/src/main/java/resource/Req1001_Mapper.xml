@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+    <mapper namespace="fleaMarket.a03_dao.Req1001_Dao">
+    	<select id="MemberList" resultType="Member"
+		parameterType="Member">
+		select *
+		from FLEAMARKETMEMBER
+		where nickname like '%'||#{nickname}||'%'	
+		</select>
+		
+		<update id="UpdateMemberInfo" parameterType="member">
+			UPDATE FLEAMARKETMEMBER
+			SET NICKNAME = #{nickname},
+			PHONENUMBER = #{phonenumber},
+			ADDRESS = #{address},
+			category = #{category}
+			where email = #{email}    
+		</update>
+		
+		<update id="UpdateProfile" parameterType="profileimg">
+			UPDATE PROFILE
+			SET PROFILEIMG = #{profileimg}
+			WHERE EMAIL = #{email}
+		</update>
+    </mapper>
+    
+    

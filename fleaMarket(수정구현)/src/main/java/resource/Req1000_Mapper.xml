@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+   
+
+    <mapper namespace="fleaMarket.a03_dao.Req1000_Dao">
+    	<!-- 이메일 중복검사 -->
+    	<select id="DuplicateEmail" parameterType="string" resultType="member">
+    		SELECT * FROM FLEAMARKETMEMBER WHERE email = #{email}
+    	</select>
+    	<!-- 이름/주민 중복검사 -->
+    	<select id="DuplicateMem" parameterType="hashmap" resultType="member">
+    	SELECT * FROM FLEAMARKETMEMBER 
+    	WHERE name = #{name} 
+    	and personalnumber = #{personalnumber}
+    	<if test="email!=null">
+    	and email=#{email}
+    	</if>
+    	</select>
+    	
+    	<!--회원가입 -->
+    	<insert id="SignUp" parameterType="member">
+    		INSERT INTO FLEAMARKETMEMBER values(
+				#{email},
+				#{password},
+				#{nickname},
+				#{personalnumber},
+				#{phonenumber},
+				#{address},
+				#{authority},
+			<if test="businessnumber!=null">
+				#{businessnumber},
+			</if>
+			<if test="businessnumber==null">
+				NULL,
+			</if>
+				NULL,
+				NULL,
+				#{category},
+				#{name}
+				)
+    	</insert>
+    	
+    	<!--회원가입시 해당 회원 프로필사진 삽입  -->
+    	<insert id="insprofile" parameterType="profileimg">
+    		INSERT INTO PROFILE VALUES(#{email},#{profileimg})
+    	</insert>
+    	
+
+    	
+    	
+    	<select id="Login" parameterType="string" resultType="member">
+    		SELECT f.*,p.PROFILEIMG as profileimgname FROM FLEAMARKETMEMBER f,PROFILE p
+			WHERE f.EMAIL(+) = p.EMAIL
+			AND f.email = #{email}
+    	</select>
+    	<select id="kakaoLogin" parameterType="string" resultType="member">
+    		SELECT f.*,p.PROFILEIMG as profileimgname FROM FLEAMARKETMEMBER f,PROFILE p
+			WHERE f.EMAIL(+) = p.EMAIL
+    		WHERE f.KAKAOEMAIL=#{kakaoemail}
+    	</select>
+    	<select id="naverLogin" parameterType="string" resultType="member">
+    		SELECT f.*,p.PROFILEIMG as profileimgname FROM FLEAMARKETMEMBER f,PROFILE p
+			WHERE f.EMAIL(+) = p.EMAIL
+			AND f.NAVEREMAIL = #{naveremail}
+    	</select>
+    	
+    	<select id="CheckPeristalsisSNS_K" parameterType="string" resultType="member">
+    		SELECT * FROM FLEAMARKETMEMBER 		
+    			WHERE EMAIL = #{snsemail}
+    	</select>
+    	<select id="CheckPeristalsisSNS_N" parameterType="string" resultType="member">
+    		SELECT * FROM FLEAMARKETMEMBER 		
+    			WHERE NAME = #{name}
+    	</select>
+    	
+    	<update id="SnsEmailPlus" parameterType="member">
+    		UPDATE FLEAMARKETMEMBER 
+    		<choose>
+    			<when test="name==null">
+    				SET KAKAOEMAIL = #{kakaoemail}
+					WHERE EMAIL =#{kakaoemail}
+    			</when>
+    			<otherwise>
+    				SET NAVEREMAIL=#{naveremail}
+					where name=#{name}
+    			</otherwise>
+    		</choose>
+    	</update>
+    	
+    	<update id="MemberFindPassword" parameterType="hashmap">
+    		UPDATE FLEAMARKETMEMBER 
+				SET password = '1111' 
+				WHERE NAME = #{name}
+				AND PERSONALNUMBER  = #{personalnumber}
+				AND EMAIL  =#{email}
+    	</update>
+    	
+    </mapper>
+    
+    

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<typeAliases>
+		<typeAlias alias="member" type="vo.Member"/>
+		<typeAlias alias="profileimg" type="vo.ProfileImg"/>
+		<typeAlias alias="capplication" type="vo.Capplication"/>
+		<typeAlias alias="boardimg" type="vo.BoardImg"/>
+		<typeAlias alias="fleamarket" type="vo.FleaMarket"/>
+		<typeAlias alias="ffile" type="vo.FFile"/>
+		<typeAlias alias="totfleamarket" type="vo.TotFleaMarket"/>
+		<typeAlias alias="followmemberinfo" type="vo.FollowMemberInfo"/>
+	</typeAliases>
+
+	<!-- 2. 사용 XXXMapper.xml을 추가 -->
+	<mappers>
+		<mapper resource="resource/Req1000_Mapper.xml"/>
+		<mapper resource="resource/Req1001_Mapper.xml"/>
+		<mapper resource="resource/Req4002_Mapper.xml"/>
+		<mapper resource="resource/Req3000_Mapper.xml"/>
+	</mappers>
+</configuration>

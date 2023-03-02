@@ -109,6 +109,47 @@
 	
 2. 메시지가 입력할 때, 화면에 메시지 내용을 메시지 상하범위가 
 	넘더라도 하단에 표시 처리
+	
+# 채팅 처리 프로세스(파일별)
+1. 컨테이너(dispatcher-servlet.xml)
+	1) 채팅 서버단 소켓통신 객체 및 핸들러 호출 url 설정
+		<websocket:mapping handler="chatHandler" path="/chat-ws.do"/>
+2. 서버단(핸들러/controller)
+	1) 채팅핸들러 A02_ChatHandler.java @Component("chatHandler")
+		- 필드 - 접속자 세션(소켓세션, 접속자 아이디)
+		- 기능메서드
+			처음 접속시 afterConnnectionEstablshed
+					users.put(session.getId(),session);
+					소켓 세션을 추가(서버내 처리)
+			메시지 전달 handleMessage
+				클라이언트에서 온 메시지 받기 - 접속자아이디 : 메시지 내용
+				접속자 아이디를 추출해서 중복되지 않게 등록
+				접속한 클라이언트에게 메시지 전달하기
+			접속종료 afterConnectionClosed
+				서버단 단위로 접속을 종료 처리한다.
+			에러처리 handleTransportError
+			---------
+			접속자할 때, 중복 없이 접속자 등록
+				conList(String[] msgArr) : 등록/리스트를 가져오는 메서드
+			
+	2) 초기호출 및 접속자확인(ajax)
+		/chatting.do : 초기화면 호출
+	//	/chGroup.do : 현재 접속한 사용자 중복제거한 아이디 ajax로 가져오기
+			@Autowired private A02_ChatHandler chHandl;
+			d.addAttribute("group", chHandl.conList(new String[]{""}));
+3. 클라이언트(jsp)
+	1) 화면 UI
+		접속자 채팅입장/나가기 활성/비활성
+		접속자처리
+		내용에 메시지 입력시 스크롤처리
+		메시지 입력 후, 초기화
+		접속자리스트(ajax)
+		
+	2) 기능메서드(소켓 클라이언트 객체)
+		접속시 
+		메시지 전송
+		메시지 받기(서버에서 전달)
+		종료시
 			
 				
 			

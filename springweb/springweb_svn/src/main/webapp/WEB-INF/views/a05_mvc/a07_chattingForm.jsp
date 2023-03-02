@@ -93,6 +93,9 @@
 	function conn(){
 		// 스프링 컨테이너 안에 선언된 서버 핸들러 호출 객체 호출과 함께 소켓 서버 접속
 		wsocket = new WebSocket("ws:localhost:7080/${path}/chat-ws.do")
+		//wsocket = new WebSocket("ws:localhost:7080/${path}/chat-ws.do")
+		// 고정아이피 기준으로 원격서버 주소를 localhost로 처리하여야
+		// 1:다 관계 채팅이 가능하다.
 		// 이벤트 핸들러 메서드 선언
 		// 1. 접속될 때.. 서버상 afterConnectionEstablished() 메서드와 연동
 		wsocket.onopen=function(evt){
@@ -140,7 +143,6 @@
 		var height = parseInt($("#chatMessageArea").height())
 		$("#chatArea").scrollTop(height)
 	}
-	
 </script>
 </head>
 

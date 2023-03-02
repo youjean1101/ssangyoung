@@ -1,0 +1,74 @@
+sql 
+insert into FleaMarket
+       values(flea01_seq.nextval,#{title},sysdate,
+         #{content},#{bisenessNumber},#{email},#{approvalMaxCnt},
+         #{recruitmentStartDate},#{recruitmentEndDate},#{openDate},#{closeDate},
+         #{checkForm},#{viewCnt},#{address})
+
+	postingNumber varchar2(100) NOT NULL,--게시글 번호: 시퀀스
+	title varchar2(100),
+	registDate date, 
+	content varchar2(500),
+	bisenessNumber varchar2(100),
+	email varchar2(50) NOT NULL, -- 회원 테이블
+	approvalMaxCnt number,
+	recruitmentStartDate date,
+	recruitmentEndDate date,
+	openDate date,
+	closeDate date,
+	-- N,P,C 
+	checkForm varchar2(10),
+	viewCnt number,
+	address varchar2(200),
+	PRIMARY KEY (postingNumber)
+
+vo
+Member
+
+dao
+public void insertMember(Member ins);
+
+mapper.xml
+	 <insert id="insertMember" parameterType="member">
+       insert into member100
+       values(#{id},
+         #{pass},#{name},#{grade},#{point},#{rday})
+      </insert> 
+
+service
+ public void insMember(Member ins) {
+    	dao.insertMember(ins);
+    }
+
+view
+	if(proc=="ins"){
+			if(confirm("등록성공!\n조회화면이동하시겠습니까?")){
+				$("#frm01").submit()
+			}
+		}
+		
+//등록 버튼 클릭시
+		$("#insBtn").click(function(){
+			console.log("#1")
+			var passVal=$("#frm02 [name=pass]").val()
+			var passFrmVal = $("#frm02 #passFrm").val()
+			if(passVal!=passFrmVal){
+				alert("패스워드 패드워드 확인 동일하여야 합니다.")
+				return;
+			}
+			console.log("#2")
+			var gradeVal = $("#frm02 [name=grade]").val()
+			if(gradeVal==""){
+				alert("권한을 선택하여야 합니다.")
+				return;
+			}
+			console.log("#3")
+			if(confirm("등록하시겠습니까?")){
+				$("#frm02 [name=proc]").val("ins");
+				$("#frm02").attr("action","${path}/memberins.do");
+				$("#frm02").submit();
+			}
+		})
+		
+//등록버튼
+      <button id="insBtn" type="button" class="btn btn-warning">등록</button>				

@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+#HeaderBackground{
+	  background-color: white;
+}
+.invalid-feedback{
+	font-size: 10px;
+    margin-top: -13px;
+    font-weight: bold;
+}
+
+#SignUp_1Section{
+	margin-bottom: -187px;
+    margin-top: -8px;
+    width: 390px;
+}
+#SignUp_2Section{
+	display: none;
+    position: absolute;
+    top: 72px;
+}
+#SignUp_3Section{
+	display:none;
+	position: absolute;
+    top: 23px;
+}
+
+.SignUp_wrap{ /* 회원가입틀 wrap */
+	margin-top: -5px;
+}
+.Signup_infomation{ /* step1/2 글자 위치 */
+	position: absolute;
+    top: 17px;
+    right: -50px;
+    width: 280px;
+}
+.SignUp_container{
+	margin-top: -86px;
+}
+.SignUp_container .SignUp_MustSpan{
+	color:red;
+}
+
+.SecondSectionBtnWrap{ /* 2번째 섹션 버튼그룹 wrap */
+	display:flex;
+	margin-top: -20px;
+	margin-left: 22px;
+    width: 351px;
+}
+.SignUp_container{ /* 회원가입 틀 위치조정 */
+	margin-top: -204px;
+	margin-left: 141px;
+}
+.SignUp_cardgroup{ /* 사업자/셀러 카드그룹 크기 */
+	width: 553px;
+	margin-left: -76px;
+}
+.SignUp_cardgroup .card{
+	border:1px solid;
+}
+.SignUp_cardgroup .card img{
+    transition: all 0.2s linear;
+}
+.SignUp_cardgroup .card #AuthImg{
+	width: 57px;
+    margin-left: 112px;
+    margin-top: 17px;
+}
+.SignUp_cardgroup .card #AuthCheckImg{
+	position: absolute;
+    top: 0;
+    right: 13px;
+    width: 40px;
+    display:none;
+}
+
+.SignUp_cardgroup .card:hover #AuthImg{
+	transform: scale(1.4);
+}
+.SignUp_cardgroup .card:hover{
+	cursor:pointer;
+	background-color:#f5f2f6;	
+}
+.SignUp_cardgroup .card p{
+	font-size:12px;
+}
+.SignUp_cardgroup .card p span{
+	font-weight:bold;
+}
+#Signup_authSpan{
+	margin-left: 108px;
+    margin-top: 22px;
+}
+#SignUp_nextBtn img{
+   width: 24px;
+   margin-left: 14px;
+   margin-top: -5px;
+}
+#SignUp_prevBtn{
+	background-color: #a28adf;
+}

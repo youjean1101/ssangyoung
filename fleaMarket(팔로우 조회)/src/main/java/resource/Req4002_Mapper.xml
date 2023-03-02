@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+    <mapper namespace="fleaMarket.a03_dao.Req4002_Dao">
+    
+    	<insert id="communityInsert" parameterType="capplication">
+    		INSERT INTO capplicaion values('comBoard'||communityNumber_seq.nextval,
+    		 #{title},#{content},sysdate,NULL,#{category},#{email},#{hashtag},0)
+    	</insert>
+    	
+    	<insert id="communityFileInsert" parameterType="boardimg">
+			INSERT INTO BoardImg values(#{imgname},#{imgpath},'comBoard'||communityNumber_seq.currval)
+		</insert>
+		
+    	<update id="communityUpdate" parameterType="capplication">
+    		UPDATE capplicaion 
+			SET title=#{title},
+				content=#{content},
+				hashtag=#{hashtag},
+				updatedate=sysdate
+			WHERE communityNumber=#{communitynumber}
+		</update>
+    	<!-- <update id="communityFileUpdate" parameterType="boardimg">
+    		
+		</update> -->
+		<select id="followerSelect" parameterType="followmemberinfo" resultType="followmemberinfo">
+			select *
+			FROM FLEAMARKETMEMBER m,friend f,profile pro
+			WHERE f.following=m.email
+			AND f.following=pro.email
+			AND myemail=#{myemail}
+			AND (m.email LIKE '%'||#{keyword}||'%'
+			OR m.nickname LIKE '%'||#{keyword}||'%')
+		</select>
+		<delete id="followmemberdelete" parameterType="followmemberinfo">
+			DELETE FROM friend
+			WHERE myemail=${myemail}
+			AND FOLLOWING=${following}
+		</delete>
+    </mapper>
