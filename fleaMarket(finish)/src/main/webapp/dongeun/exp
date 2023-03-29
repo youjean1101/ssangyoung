@@ -1,0 +1,176 @@
+sql 
+//플리마켓 erd
+insert into FleaMarket
+       values(flea01_seq.nextval,#{title},sysdate,
+         #{content},#{bisenessNumber},#{email},#{approvalMaxCnt},
+         #{recruitmentStartDate},#{recruitmentEndDate},#{openDate},#{closeDate},
+         #{checkForm},#{viewCnt},#{address})
+
+*주의* : 플리마켓 개최글 등록 이후 해당 게시물 번호를 해당 파일 업로드 테이블에 넣어주기
+//파일 업로드          
+INSERT INTO PROFILE VALUES(#{postingNumber},#{filename},#{filePath})
+
+
+vo
+//플리마켓 
+private String title;
+private String registDate;
+private String content;
+private String bisenessNumber;
+private String email;
+private int approvalMaxCnt;
+private String recruitmentStartDate;
+private String recruitmentEndDate;
+private String openDate;
+private String closeDate;
+private String checkForm;
+private int viewCnt;
+private String address;
+
+//플리마켓 신청
+private String filename;
+private String filePath;
+
+
+
+dao
+public void insertFleaMarket(FleaMarket ins);
+public void insFFile(FFile ins);
+
+mapper.xml
+	 <insert id="insertFleaMarket" parameterType="FleaMarket">
+    insert into FleaMarket
+       values(flea01_seq.nextval,#{title},sysdate,
+         #{content},#{bisenessNumber},#{email},#{approvalMaxCnt},
+         #{recruitmentStartDate},#{recruitmentEndDate},#{openDate},#{closeDate},
+         #{checkForm},#{viewCnt},#{address})
+      </insert> 
+
+service
+public void insertFleaMarket(FleaMarket ins){
+    	dao.insertFleaMarket(ins);
+    }
+
+
+//수정하기 
+
+
+
+dao
+public void UptFleaMarket(FleaMarket upt);
+
+//mapper.xml
+
+	<update id="UptFleaMarket"  parameterType="fleamarket">
+		update FleaMarket
+			set title=#{title},
+				content=#{content},
+				approvalMaxCnt=#{approvalMaxCnt},
+				recruitmentStartDate=#{recruitmentStartDate},
+				recruitmentEndDate=#{recruitmentEndDate},
+				openDate=#{openDate},
+				closeDate=#{closeDate},
+				checkForm=#{checkForm},
+				address=#{address},
+			where postingNumber = #{postingNumber}
+	</update>	
+
+service
+public void UptFleaMarket(FleaMarket upt);
+public void UptFleaMarket(FleaMarket ins){
+
+}
+
+public void insertFleaMarket(FleaMarket ins){
+    	dao.insertFleaMarket(ins);
+    }
+
+
+//삭제하기 
+컨트롤러
+	@RequestMapping("FleaMarketDel.do")
+	public String FleaMarketDel(@RequestParam("postingNumber") String postingNumber) {
+		service.delFleaMarket(postingNumber);
+		return "WEB-INF\\views\\a05_mvc\\a03_memberList.jsp";
+	}	
+
+dao
+public void delFleaMarket(String postingNumber);
+
+service
+public void delFleaMarket(FleaMarket postingNumber);
+public void delFleaMarket(FleaMarket postingNumber){
+    dao.
+}
+
+//mapper.xml
+
+	<delete id="delFleaMarket" parameterType="string">
+		delete fleamarket 
+		where postingNumber = #{postingNumber}
+	</delete>
+
+
+//전체 조회 
+
+dao 
+	public List<FleaMarket> getFleaMarketList(FleaMarket sch);	
+
+vo
+
+service
+public List<FleaMarket> getFleaMarketList(FleaMarket sch);	
+
+	public List<FleaMarket> getFleaMarketList(FleaMarket sch){
+		if(sch.getId()==null) sch.setId("");
+		if(sch.getName()==null) sch.setName("");
+		if(sch.getGrade()==null) sch.setGrade("");
+		return dao.getMemberList(sch);
+	}	
+
+컨트롤러
+		@RequestMapping("totalSearch.do")
+		public String totalSearch(@ModelAttribute("sch") FleaMarket sch, Model d) {
+		d.addAttribute("flist",service.);
+			return "FleaMarketOverallCheck";
+		}
+		
+	@RequestMapping("totalSearch.do")
+	public String totalSearch(FleaMarket sch, Model d) {
+	d.addAttribute("flist",service.getFleaMarketList(sch));
+		return "FleaMarketOverallCheck";
+	}
+	
+mapper
+	<select id="getFleaMarketList" parameterType="fleamarket"
+		 resultType="fleamarket">
+		select * from FleaMarket
+		where title like '%'||#{title}||'%'
+		and address like '%'||#{address}||'%'
+	</select>				
+	
+
+
+//전체 조회에서 상세조회 가는거
+<script>
+function goDetailPage(postingNumber) {
+		location.href="${path}/fleaMarketDetail.do?postingNumber"="+postingNumber;
+	}
+</script>
+
+
+<a onclick="goDetailPage('${flea.postingNumber}')">
+
+
+//컨트롤
+	@GetMapping("/fleaMarketDetail.do")
+	public String prodDetail(@RequestParam String postingNumber, 
+							Model d) {
+		d.addAttribute("flea", service.productDetail(postingNumber));
+		
+		
+		return "상세페이지";
+	}
+
+
+

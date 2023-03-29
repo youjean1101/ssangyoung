@@ -1,0 +1,77 @@
+# 스프링 부트를 통한 웹개발
+1. 스프링 부트의 효율
+	1) 컨테이너 설정을 간편화 처리
+	2) 확장기능의 효율화
+	3) 자체내 내장 tomcat 개발 서버 지원
+2. 스프링 부트의 환경설정
+	1) sts 툴을 통해서 스프링 부트 통합개발 툴 다운로드 
+	2) sts 실행
+	3) gradle/maven을 통한 필요  lib(프레임워크) 다운로드
+	4) 기본 호출 화면 처리
+3. 스프링 부트의 통한 spring MVC 화면 호출
+4. 스프링 부트를 통한 DB 연동 및 화면 처리..
+
+# 개발 환경 설정
+1. sts 다운로드 검색 다운로드처리
+	https://spring.io/tools
+2. a02_springbt 폴드 생성
+	다운로드 파일 이동 처리
+   a02_springbt/workspce 폴드 생성
+3. 다운로드 파일 sts.jar 파일명 변경
+   c:\a02_springbt/sts.jar
+	java -jar sts.jar 명령 실행
+4. 폴드 
+	c:\a02_springbt\sts-4.17.2.RELEASE\SpringToolSuite4.exe파일 확인
+	 및 a01_springbt/workspce 
+	대상폴드로 지정 및 실행.
+	
+	
+# 스프링 부트에서 Vue와 연동하여 처리
+1. backend
+	1) json데이터 로딩환경 설정 RestController 활용
+	2) 초기 화면 html 처리
+2. frontend
+	1) html에서 vue lib 호출을 통한 화면 처리
+	2) html에서 vue ajax lib(jquery==> fetch api ==> axios)를 활용하여
+		backend 호출
+
+# 프로젝트 만들기
+1. 			
+
+# 스프링부트 구조
+0. 초기 실행 파일
+	tomcat과 연동하여 웹 프로그램 실행 파일
+	com.example.demo.BootexpApplication.java
+1. application.properties(src\main\resources\application.properties)
+	주요핵심 컨테이너 설정을 처리 : DB, 서버포트
+2. mybatis 환경 설정
+	src\main\resources 하위에
+	1) 위 application.properties에 의해 mapper파일과 공통 mybatis파일 설정
+		src\main\resources\mybatis\mybatis.Spring.xml
+		src\main\resources\mybatis\mapper\bootMapper.xml
+	2) mybatis config파일 설정
+		com.example.demo.configuration.MybatisConfig.java 
+		: 기본적은 SqlSessionTemplate 설정
+3. view단 처리를 위한 환경 설정
+	1) com.example.demo.configuration.MvcConifguration.java
+		controller에 의해 호출 되는 html 파일 경로 위치 지정
+		공통 css/js파일 설정위치 지정
+		jsonView 설정위칭 지정
+	2) 위 설정 파일에 의해
+		src\main\resources\templates 하위에 view단 처리를 위한 html 설정(controller호출위치)	
+		src\main\resources\static 하위에 view단 처리 html에서처 필요한 부트스트랩 파일 css/js/이미지 파일 위치
+			지정
+4. controller/service/dao 설정
+	기본 폴드 com.example.demo하위에
+	controller	: com.example.demo.controller.A01_BootStartController.java		
+	service			
+	dao
+	폴드를 만들어 각각 수행할 내용을 선언.
+				
+ 	
+
+
+
+	
+	
+	   

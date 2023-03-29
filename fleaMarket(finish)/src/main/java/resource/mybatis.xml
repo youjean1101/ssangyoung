@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<typeAliases>
+		<typeAlias alias="member" type="vo.Member"/>
+		<typeAlias alias="profileimg" type="vo.ProfileImg"/>
+		<typeAlias alias="capplication" type="vo.Capplication"/>
+		<typeAlias alias="boardimg" type="vo.BoardImg"/>
+		<typeAlias alias="fleamarket" type="vo.FleaMarket"/>
+		<typeAlias alias="ffile" type="vo.FFile"/>
+		<typeAlias alias="calendar" type="vo.Calendar"/>
+		<typeAlias alias="totfleamarket" type="vo.TotFleaMarket"/>
+		<typeAlias alias="fapplication" type="vo.FApplication"/>
+		<typeAlias alias="fapplicationsch" type="vo.FApplicationSch"/>
+		<typeAlias alias="applicationfile" type="vo.ApplicationFile"/>
+		<typeAlias alias="followmemberinfo" type="vo.FollowMemberInfo"/>
+		<typeAlias alias="capplicationList" type = "vo.CapplicationList"/>
+		<typeAlias alias="roommemberinfo" type = "vo.RoomMemberInfo"/>
+		<typeAlias alias="qna" type="vo.QNA"/>
+		<typeAlias alias="qnafile" type="vo.QNAFile"/>
+		<typeAlias alias="reply" type="vo.ReplyVo"/>
+		<typeAlias alias="irregular" type="vo.irregularReportVo"/>
+		<typeAlias alias="guestBook" type="vo.guestBookVo"/>
+	</typeAliases>
+
+	<!-- 2. 사용 XXXMapper.xml을 추가 -->
+	<mappers>
+		<mapper resource="resource/Req1000_Mapper.xml"/>
+		<mapper resource="resource/Req1001_Mapper.xml"/>
+		<mapper resource="resource/Req4002_Mapper.xml"/>
+		<mapper resource="resource/Req3000_Mapper.xml"/>
+		<mapper resource="resource/FMViewMapper.xml"/>
+		<mapper resource="resource/communitySelect_Mapper.xml"/>
+		<mapper resource="resource/ReplyMapper.xml"/>
+	</mappers>
+</configuration>

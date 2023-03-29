@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="fleaMarket.a03_dao.Req3000_Dao">
+
+ 	<resultMap type="calendar" id="calRst">
+		<result column="start01" property="start"/>
+		<result column="end01" property="end"/>
+	</resultMap> 
+
+	
+	<select id="calList" resultMap ="calRst">
+		SELECT * FROM calendar01		
+	</select> 
+	
+    <insert id="insertCalendar" parameterType="fleamarket">
+		INSERT INTO calendar01 values( 
+			#{title}, #{openDate},#{closeDate},
+			#{backgroundColor},#{textColor})
+	</insert>
+   	 
+   	
+   	 
+  	<insert id="insertFleaMarket" parameterType="fleamarket">
+		insert into FleaMarket
+		values(fleaMarket_seq.nextval,#{title}, to_CHAR(sysdate,'YYYY-MM-DD'),
+		#{content},#{bisenessNumber},#{email},#{approvalMaxCnt},
+		#{recruitmentStartDate},#{recruitmentEndDate},#{openDate},
+		#{closeDate},#{checkForm},#{viewCnt},#{address})
+	</insert>  
+
+	<!--플리마켓 홍보글 등록시 -->
+	<insert id="insprofile" parameterType="ffile">
+		INSERT INTO FFile VALUES(#{filename},#{filePath},fleaMarket_seq.currval)
+	</insert>
+	<insert id="uptprofile" parameterType="ffile">
+		INSERT INTO FFile VALUES(#{filename},#{filePath},#{postingNumber})
+	</insert>
+	
+	<!-- 수정 상세정보 -->
+	<select id="fleaDetail" resultType="fleamarket" parameterType="string">
+		SELECT *
+		FROM FleaMarket
+		WHERE postingNumber = #{postingNumber}
+    </select>	
+	
+    <!-- 수정하기 -->
+	<update id="UptFleaMarket" parameterType="fleamarket">
+		update FleaMarket
+		set title=#{title},
+			content=#{content},
+			approvalMaxCnt=#{approvalMaxCnt},
+			recruitmentStartDate=#{recruitmentStartDate},
+			recruitmentEndDate=#{recruitmentEndDate},
+			openDate=#{openDate},
+			closeDate=#{closeDate},
+			checkForm=#{checkForm},
+			address=#{address}
+		where postingNumber = #{postingNumber}
+	</update>
+	<update id="UptFFile" parameterType="ffile">
+		update FFile
+		set filename=#{filename},
+		    filePath=#{filePath}
+		where postingNumber = #{postingNumber}
+    </update>	
+	
+
+    <delete id="delFleaMarket" parameterType="string">
+		delete fleamarket 
+		where postingNumber = #{postingNumber}
+	</delete>
+    <delete id="delFfile" parameterType="string">
+		DELETE FROM ffile WHERE POSTINGNUMBER 
+		 = #{postingNumber}
+	</delete>
+	
+	<select id="DelFail" resultType="ffile" parameterType="string">
+		    SELECT *  
+			FROM ffile 
+			where postingNumber=#{postingNumber}
+    </select>
+	
+    <select id="getFleaMarketList" parameterType="fleamarket"
+		 resultType="fleamarket">
+				select * from FleaMarket
+			where title like '%'||#{title}||'%'
+			ORDER BY REGISTDATE DESC
+	</select>	
+	
+
+	<select id="FileNum" parameterType="string" resultType="string">
+SELECT f2.filename  FROM (
+      SELECT rownum,f.FILENAME FROM FFILE f
+      WHERE SUBSTR(f.filename,INSTR(f.filename,'.',-1,1)+1,100) 
+      in ('jpg','png','gif','jpe','png','bmp','ico','apng','jfif')
+      AND POSTINGNUMBER =#{POSTINGNUMBER}
+      AND rownum=1) f2
+	</select>	 
+</mapper>
+    
+    

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="fleaMarket.a03_dao.FMViewDao">
+	<!-- 홍보글 상세 조회 -->
+	<select id="fmView" resultType="fleamarket" parameterType="string">
+		SELECT *
+		FROM fleamarket
+		WHERE postingNumber = #{postingNumber}			
+	</select>	
+	<select id="fmFileView" resultType="string" parameterType="string">
+		SELECT filename
+		FROM ffile
+		WHERE postingNumber = #{postingNumber}
+	</select>
+	
+	<!-- 신청 중복 검사 -->
+   	<select id="duplicateApp" resultType="int" parameterType="fapplication">
+   		SELECT count(applicationno)
+		FROM FApplication
+   		WHERE postingNumber = #{postingNumber}
+   		AND email = #{email}
+   	</select>
+	<!-- 신청글 등록 -->
+	<insert id="insApp" parameterType="fapplication">
+		INSERT INTO FApplication VALUES (#{postingNumber},#{email},FApplication_seq.nextval,sysdate,null)		
+	</insert>
+	<!-- 신청글 파일 업로드 -->
+	<insert id="insAppFile" parameterType="applicationfile">
+		INSERT INTO ApplicationFile VALUES (#{filename},FApplication_seq.currval)
+	</insert>
+	
+	<!-- 받은 신청 전체 조회(최신순) + 페이징 + 제목 검색 -->
+	<!-- 전체 데이터 -->
+	<select id="totCnt"  resultType="int" parameterType="fapplicationsch">
+		SELECT count(*)
+		FROM fapplication a, fleaMarket fm
+		WHERE a.postingNumber = fm.postingNumber(+)
+		AND fm.title like '%'||#{title}||'%'
+		AND fm.email = #{search}
+	</select>
+	<select id="appReceivedList" resultType="fapplication" parameterType="fapplicationsch">
+		SELECT *
+		FROM (
+			SELECT ROW_NUMBER() over(ORDER BY a.applicationno DESC) cnt,
+					a.applicationno,
+					fm.title,
+					a.applicationdate,
+					a.approvalwhether,
+					p.profileimg,
+					m.nickname,
+					f.filename
+			FROM fapplication a, applicationfile f, fleaMarket fm, fleamarketmember m, profile p
+			WHERE a.applicationno = f.applicationno(+)
+			AND a.postingNumber = fm.postingNumber(+)
+			AND a.email = m.email(+)
+			AND a.email = p.email(+)
+			AND fm.title like '%'||#{title}||'%'
+			AND fm.email = #{search}
+			ORDER BY a.applicationno DESC)
+		WHERE cnt BETWEEN #{start} AND #{end}
+	</select>
+	
+	<!-- 받은 신청 승인 -->
+	<update id="updateAppRe" parameterType="hashmap">
+		UPDATE FApplication
+		SET approvalWhether = #{approvalWhether}
+		WHERE applicationNo = #{applicationNo}
+	</update>
+	
+	<!-- 내 신청 전체 조회(최신순) + 페이징 + 제목 검색 -->
+	<!-- 전체 데이터 -->
+	<select id="totCntMy"  resultType="int" parameterType="fapplicationsch">
+		SELECT count(*)
+		FROM fapplication a, fleaMarket fm
+		WHERE a.postingNumber = fm.postingNumber(+)
+		AND fm.title like '%'||#{title}||'%'
+		AND a.email = #{search}
+	</select>
+	<select id="appMyList" resultType="fapplication" parameterType="fapplicationsch">
+		SELECT *
+		FROM (
+			SELECT ROW_NUMBER() over(ORDER BY a.applicationno DESC) cnt,
+					a.applicationno,
+					fm.title,
+					a.applicationdate,
+					a.approvalwhether,
+					p.profileimg,
+					m.nickname,
+					f.filename
+			FROM fapplication a, applicationfile f, fleaMarket fm, fleamarketmember m, profile p
+			WHERE a.applicationno = f.applicationno(+)
+			AND a.postingNumber = fm.postingNumber(+)
+			AND fm.email = m.email(+)
+			AND fm.email = p.email(+)
+			AND fm.title LIKE '%'||#{title}||'%'
+			AND a.email = #{search}
+			ORDER BY a.applicationno DESC)
+		WHERE cnt BETWEEN #{start} AND #{end}
+	</select>
+	<!-- 신청 상세 조회 -->
+	<select id="appFileView" resultType="string" parameterType="int">
+		SELECT filename
+		FROM ApplicationFile
+		WHERE applicationNo = #{applicationNo}
+	</select>
+	<!-- 내 신청 수정 -->
+	<update id="uptApp" parameterType="applicationfile">
+	    update applicationfile
+	    set filename = #{filename}
+	    where applicationNo = #{applicationNo}
+	</update>	
+	<!-- 내 신청 삭제 -->
+	<delete id="delApp" parameterType="int">
+		DELETE
+		FROM FApplication 
+		WHERE applicationno = #{applicationno}
+	</delete>
+	<select id="getprofile" parameterType="string" resultType="string">
+		select profileimg from profile where email=#{email}
+	</select>
+</mapper>		
+		

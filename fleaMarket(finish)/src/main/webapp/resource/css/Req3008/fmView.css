@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+#frmfile #imgs_wrap label{
+	font-size: 10px !important;
+	margin-right: 7px;
+}
+#frmfile #imgs_wrap img{
+	width:70px !important; 
+}

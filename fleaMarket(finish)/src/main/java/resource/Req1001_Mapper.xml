@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+    <mapper namespace="fleaMarket.a03_dao.Req1001_Dao">
+    
+		
+		<sql id="membercheck">
+			where (name || email || nickname) like '%'||#{title}||'%'
+			<choose>
+				<when test="search=='전체'">
+					and authority !='관리자'
+				</when>
+				<otherwise>
+					and authority = #{search}
+				</otherwise>
+			</choose>
+		</sql>
+		    
+    
+    	<!-- 회원조회 -->
+    	<select id="totMemCnt" resultType="int" parameterType="fapplicationsch">
+			SELECT count(*) FROM FLEAMARKETMEMBER f 
+			where (name || email || nickname) like '%'||#{title}||'%'
+			<choose>
+				<when test="search=='전체'">
+					and authority !='관리자'
+				</when>
+				<otherwise>
+					and authority = #{search}
+				</otherwise>
+			</choose>
+		</select>
+		
+    	<select id="MemberList" resultType="member" parameterType="fapplicationsch">
+			SELECT a.* FROM (select rownum cnt,f.*
+			from FLEAMARKETMEMBER f
+			where (name || email || nickname) like '%'||#{title}||'%'
+			<choose>
+				<when test="search=='전체'">
+					and authority !='관리자'
+				</when>
+				<otherwise>
+					and authority = #{search}
+				</otherwise>
+			</choose>
+			) a
+			WHERE cnt BETWEEN #{start} AND #{end}
+		</select>
+		
+		<!-- 회원정보 수정! -->
+		<update id="UpdateMemberInfo" parameterType="member">
+			UPDATE FLEAMARKETMEMBER
+			SET NICKNAME = #{nickname},
+			PHONENUMBER = #{phonenumber},
+			ADDRESS = #{address},
+			category = #{category}
+		 <if test="businessnumber!=null">
+		    ,authority=#{authority},businessnumber=#{businessnumber}
+		 </if>
+			where email = #{email}    
+		</update>
+		<!-- 회원정보(이미지) 수정 -->
+		<update id="UpdateProfile" parameterType="profileimg">
+			UPDATE PROFILE
+			SET PROFILEIMG = #{profileimg}
+			WHERE EMAIL = #{email}
+		</update>
+		<!-- 비번수정! -->
+		<update id="UpdatePassword" parameterType="member">
+			UPDATE FLEAMARKETMEMBER
+			SET PASSWORD = #{password}
+			WHERE EMAIL=#{email}
+		</update>
+		<!-- 회원정보 뽑아오기 여러가지 용도로 사용됨!! -->
+		<select id="Login" parameterType="string" resultType="member">
+    		SELECT f.*,p.PROFILEIMG as profileimgname FROM FLEAMARKETMEMBER f,PROFILE p
+			WHERE f.EMAIL(+) = p.EMAIL
+			AND f.email = #{email}
+    	</select>
+    	
+    	<!-- 회원탈퇴 전 이미지삭제 -->
+    	<delete id="DeleteProfile" parameterType="string">
+    		DELETE PROFILE
+    		WHERE EMAIL=#{email}
+    	</delete>
+    	<!-- 회원탈퇴  -->
+    	<delete id="DeleteMember" parameterType="string">
+    		DELETE FLEAMARKETMEMBER
+    		WHERE EMAIL=#{email}
+    	</delete>
+    	<!-- 내가 쓴 플리마켓글 -->
+    	<select id="totCnt2" resultType="int">
+			SELECT count(*) FROM FLEAMARKET f WHERE email = #{title}
+		</select>
+		<select id="FleaMarketList" resultType="fleamarket" parameterType="fapplicationsch">
+			SELECT a.* from
+			(SELECT rownum cnt,f.* FROM FLEAMARKET f WHERE email = #{title}) a
+			WHERE cnt BETWEEN #{start} AND #{end} ORDER BY postingnumber desc
+		</select>
+		<!-- 관리자 회원탈퇴용 이메일/프로필이미지 가져오기 -->
+		<select id="getMemberProfile" parameterType="string" resultType="profileimg">
+			SELECT * FROM PROFILE
+			WHERE EMAIL = #{email}
+		</select>
+		<!-- 고객센터 전체조회 큰틀 검색제외 -->
+		<select id="QNAListNotics" resultType="qna">
+			SELECT * FROM FLEAMARKETQNA
+			WHERE METHOD = 'n'
+			and qnano!=0
+			ORDER BY qnano DESC 
+		</select>
+		<select id="totCnt" resultType="int">
+			SELECT count(*) FROM FLEAMARKETQNA
+			WHERE METHOD != 'n'
+			AND (title || EMAIL) LIKE '%'||#{title}||'%'
+		</select>
+		<select id="QNAList" resultType="qna" parameterType="fapplicationsch">
+			SELECT qna.*,qf.qfilecnt FROM
+			(SELECT rownum cnt,level,f.* FROM fleamarketqna f
+			WHERE 1=1
+			AND f.METHOD != 'n'
+			and (title || email || status) LIKE '%'||#{title}||'%'
+			START with refno=0
+			CONNECT BY PRIOR qnano=refno
+			ORDER siblings BY qnano DESC) qna,
+			(SELECT qnano,count(*) qfilecnt FROM qnafile GROUP BY QNANO) qf
+			WHERE qna.qnano = qf.qnano(+)
+			and cnt BETWEEN #{start} AND #{end}
+			ORDER BY cnt
+		</select>
+		<select id="NoAnswerQnaList" resultType="int">
+			select count(*) from fleamarketqna where status = '미답변'
+		</select>
+		<!-- 내가 쓴 문의글 조회 -->
+		<select id="totCnt3" resultType="int">
+			SELECT count(*) FROM FLEAMARKETQNA WHERE email = #{title}
+		</select>
+		<select id="MemberQNAList" resultType="qna" parameterType="fapplicationsch">
+			SELECT a.* from
+			(SELECT rownum cnt,f.* FROM FLEAMARKETQNA f WHERE email = #{title}) a
+			WHERE cnt BETWEEN #{start} AND #{end} ORDER BY qnano desc
+		</select>
+		<!-- 상세조회 -->
+		<!-- 상세조회 확인용 -->
+		<select id="getQNA" resultType="qna" parameterType="string">
+			SELECT * FROM FLEAMARKETQNA
+			WHERE qnano = #{qnano}
+		</select>
+		<!-- 파일명가져오기 -->
+		<select id="getQNAFile" resultType="qnafile" parameterType="string">
+			SELECT *
+			FROM QNAFile
+			WHERE qnano = #{qnano}
+		</select>
+		
+		
+		
+		
+		
+		<!-- ===============회원 삭제시, 얻어올 파일이름 리스트들================ -->
+		<!-- 1.이미지 -->
+		<select id="DeleteProFileList" parameterType="string" resultType="string">
+			SELECT PROFILEIMG  FROM PROFILE WHERE EMAIL = #{email}
+			and profileimg != 'defaultprofile.png'
+		</select>
+		<!-- 1.문의/공지 -->
+		<select id="DeleteQnaFileList" parameterType="string" resultType="string">
+			SELECT CONCAT(FILEPATH,filename) FROM QNAFILE q
+			WHERE QNANO IN (
+			SELECT QNANO  FROM FLEAMARKETQNA f 
+			WHERE email = #{email}
+			OR refno IN (
+			SELECT QNANO  FROM FLEAMARKETQNA f 
+			WHERE email = #{email}
+			))
+			and filename IS NOT NULL
+		</select>
+		<!-- 커뮤니티 파일리스트 -->
+		<select id="DeleteCommunityFileList" parameterType="string" resultType="string">
+			SELECT IMGNAME FROM BOARDIMG b WHERE b.COMMUNITYNUMBER in(
+			SELECT c.COMMUNITYNUMBER  FROM CAPPLICAION c, FLEAMARKETMEMBER f 
+			WHERE c.EMAIL = f.EMAIL AND f.EMAIL = #{email})
+			and IMGNAME IS NOT NULL
+		</select>
+		<!-- 동은 파일리스트 -->
+		<select id="DeleteFleamarketFileList" parameterType="string" resultType="string">
+			SELECT CONCAT(SUBSTR(f2.FILEPATH,INSTR(f2.FILEPATH, '/',-1,3)+1,100),f2.FILENAME) AS filename
+			FROM FLEAMARKET f, FFILE f2 , FLEAMARKETMEMBER fm
+			WHERE f.EMAIL=fm.EMAIL
+			AND f.POSTINGNUMBER =f2.POSTINGNUMBER
+			AND fm.EMAIL LIKE '%'||#{email}||'%'
+			AND f2.FILENAME Is NOT null
+		</select>
+		<!-- 미리 파일리스트 -->
+		<select id="DeleteApplicationFileList" parameterType="string" resultType="string">
+			SELECT FILENAME
+			FROM APPLICATIONFILE f, FAPPLICATION a
+			WHERE f.APPLICATIONNO = a.APPLICATIONNO
+			AND email = '%'||#{email}||'%'
+			AND filename IS NOT null
+		</select>
+		
+		
+    </mapper>
+    
+    

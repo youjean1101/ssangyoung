@@ -1,0 +1,73 @@
+# 단계별 ajax 처리
+1. 동기적 처리
+	1) 기본 데이터 가져오기
+	2) 요청값 처리로 데이터 가져오기
+		form요청 데이터로 전달해서 가져오는 처리
+	
+2. 비동기적 처리
+	1) 화면가져오기 가져오기
+		- 기본 로딩
+		- 요청값 처리 로딩
+	2) DB와 연동된 데이터 가져오기
+	3) 요청 + DB연동 처리가져오기
+	4) json 데이터 가져오기
+		- 기본 json형식 서버에서 가져오기
+		- 배열형 json데이터 로딩해보기
+		- 온라인상 배포되는 json데이터 가져와서 화면구성하기(빅데이터)
+			https://sample.bmaster.kro.kr/
+		- 서버에 json데이터 전달 및 client 에서 가져와서 처리
+	5) DB연동 ==> 객체(자바) ==> json문자열 데이터
+
+# 비동기식으로 DB와 연동해서 요청값을 전달하는 ajax 처리 순서
+ 1. 화면 구성/form 하위 객체 선언
+ 	 <input name="ename" />
+ 	 <input id="job" />
+ 	 DOM으로 효과적으로 접근하기 위해 선언
+ 	 
+ 2. 사용할 DOM 선언
+ 	var enameOb = document.querySelector("[name=ename]")
+ 	var schArr = document.querySelectorAll(".sch")
+ 	
+ 	
+ 	1) value
+ 	2) 이벤트 처리할 내용(onclick, onkeyup(event.keyCode)... )
+ 		enameOb.onclick=function(){}	// 익명함수(재활용 가능성 X)
+ 		enameOb.onclick=call	// 선언된 함수(재활용을 해야될 때)
+ 		schArr.forEach(function(sch){
+ 			sch.onkeyup=function(){
+ 				this.value
+ 				this.innerText
+ 			}
+ 		})
+ 		function call(){
+ 		
+ 		}
+ 	
+ 3. 이벤트 핸들러 함수 선언
+ 	1) query string을 만들기(*)
+ 		서버에 보낼 query string(key=value&key2=value2)
+ 	2) ajax 처리할 내용
+ 		객체 생성
+ 		open 설정
+ 		보내기
+ 		onreadystatechange=function(){
+ 			조건(상태 처리)
+ 				xhr.responseText
+ 		}
+ 4. 데이터를 처리할 jsp화면/json 구성
+ 	1) 요청값 처리
+ 	2) DB연결 및 결과 처리
+ 	
+ # gson api를 활용한 json데이터 처리
+ 1. 서버에서 사용하는 데이터는 java의 class를 통한 생성된 객체이다.
+ 2. ajax로 활용되는 데이터는 json문자열을 js애서 객체로 변환해서 사용한다.
+ 3. 클라이언트가 호출할 때, 서버에서 자바 객체를 json문자열로 변환해서 전달하여야 한다.
+ 4. 이 때, 활용되는 lib가 gson api이다.
+ 5. 환경 설정 \webapp\WEB-INF\lib\gson-2.8.2.jar
+ 	위치를 시키고,
+ 6. 호출되는 data.jsp에서 객체를 json문자열로 변환 처리하여 출력한다.
+ 	Person p = new Person("홍길동",25,"서울")
+ 	Gson gson = new Gson()
+ 	String json = gson.toJson(p); // 객체를 json문자열로 변환
+ 	System.out.println(json)
+  

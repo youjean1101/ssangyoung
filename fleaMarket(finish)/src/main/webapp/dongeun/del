@@ -1,0 +1,33 @@
+dao 
+<가정1>
+postingNumber를 외래키로 사용한다면 primary 키로 구성된 테이블을 삭제시 !
+다른 테이블은 삭제가 되는 것인가? 
+
+결과 => 사라지지 않는다. 
+
+
+
+
+
+//sql 
+SELECT *  
+FROM ffile 
+where postingNumber=#{postingNumber};
+
+
+dao
+public FleaMarket DelFail(String postingNumber);	  
+
+service
+public FleaMarket DelFail(String postingNumber);	
+
+public FleaMarket DelFail(String postingNumber){
+
+    return dao.fleaDetail(postingNumber);
+}
+
+<select id="DelFail" resultType="ffile" parameterType="string">
+		    SELECT *  
+			FROM ffile 
+			where postingNumber=#{postingNumber}
+</select>	

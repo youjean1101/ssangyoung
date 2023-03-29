@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="fleaMarket.a03_dao.CommunitySelectDao">
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<choose>
+			    <when test="type == ''.toString()">
+					c.title like '%'||#{keyword}||'%' or
+					c.content like '%'||#{keyword}||'%' or
+					nickname like '%'||#{keyword}||'%'
+				</when>
+				<when test="type == 'T'.toString()">
+					c.title like '%'||#{keyword}||'%'
+				</when>
+				<when test="type == 'C'.toString()">
+					c.content like '%'||#{keyword}||'%'
+				</when>
+				<when test="type == 'W'.toString()">
+					c.nickname like '%'||#{keyword}||'%'
+				</when>
+			</choose>
+		</trim>
+	</sql>
+
+
+	<!--전체글목록 검색+페이징+카테고리정렬 포함 -->
+	<select id="getCommunityList" resultType="capplicationList">
+    <![CDATA[
+    SELECT  LAST.*
+FROM (SELECT ROWNUM RNUM,
+             TEMP.*
+      FROM (SELECT b.imgName,
+                   c.communityNumber,
+                   c.email,
+                   c.title,
+                   c.content,
+                   c.registDate,
+                   c.updateDate,
+                   c.viewCnt,
+                   m.nickname,
+                   count(c2.COMMUNITYNUMBER) likeCnt,
+                   CASE
+                       WHEN c.viewCnt >= 30 
+                           THEN 'T'
+                       ELSE 'F'
+                       END AS bestType
+           FROM fleamarketmember m,CAPPLICAION c,BOARDIMG b,COMMUNITYHEART c2
+                 WHERE m.EMAIL = c.EMAIL
+              AND c.COMMUNITYNUMBER = c2.COMMUNITYNUMBER(+)
+              AND c.COMMUNITYNUMBER = b.COMMUNITYNUMBER 
+              AND                               
+      ]]>
+		<include refid="criteria"></include>
+		<![CDATA[
+		c.CATEGORY = #{category}
+		]]>
+		group by b.imgName,
+                   c.communityNumber,
+                   c.email,
+                   c.title,
+                   c.content,
+                   c.registDate,
+                   c.updateDate,
+                   c.viewCnt,
+                   m.nickname
+                   
+		<if test="shift != null and shift !=''">
+			ORDER BY
+
+			<choose>
+
+				<when test="shift eq 'registDate'">RegistDate</when>
+
+				<when test="shift eq 'viewCnt'"> viewCnt </when>
+
+				<when test="shift eq 'likeCnt'"> likeCnt </when>
+
+			</choose>
+
+		</if> 
+		
+		<![CDATA[
+	  DESC	) TEMP ) LAST 
+        WHERE RNUM BETWEEN ((#{pageNum}-1)* ${amount}) +1 AND #{pageNum} * #{amount}
+     ]]>
+
+	</select>
+	<!--전체글목록 검색+페이징+카테고리정렬 포함 -->
+	<select id="getBestCommunityList" resultType="capplicationList">
+    <![CDATA[
+    SELECT  LAST.*
+FROM (SELECT ROWNUM RNUM,
+             TEMP.*
+      FROM (SELECT b.imgName,
+                   c.communityNumber,
+                   c.email,
+                   c.title,
+                   c.content,
+                   c.registDate,
+                   c.updateDate,
+                   c.viewCnt,
+                   m.nickname,
+                   count(c2.COMMUNITYNUMBER) likeCnt,
+                   CASE
+                       WHEN c.viewCnt >= 30 
+                           THEN 'T'
+                       ELSE 'F'
+                       END AS bestType
+            FROM fleamarketmember m,CAPPLICAION c,BOARDIMG b,COMMUNITYHEART c2
+            WHERE m.EMAIL = c.EMAIL
+              AND c.COMMUNITYNUMBER = c2.COMMUNITYNUMBER(+)
+              AND c.COMMUNITYNUMBER = b.COMMUNITYNUMBER 
+            AND c.viewCnt >= 30 
+            AND 
+      ]]>
+		<include refid="criteria"></include>
+		<![CDATA[
+		c.CATEGORY = #{category}
+		]]>
+		group by b.imgName,
+                   c.communityNumber,
+                   c.email,
+                   c.title,
+                   c.content,
+                   c.registDate,
+                   c.updateDate,
+                   c.viewCnt,
+                   m.nickname
+                              
+		<if test="shift != null and shift !=''">
+			ORDER BY
+
+			<choose>
+
+				<when test="shift eq 'registDate'">RegistDate</when>
+
+				<when test="shift eq 'viewCnt'"> viewCnt </when>
+
+				<otherwise>likeCnt</otherwise>
+
+			</choose>
+
+		</if> 
+		
+		<![CDATA[
+	  DESC	) TEMP 
+)LAST 
+        WHERE RNUM BETWEEN ((#{pageNum}-1)* ${amount})+1 AND #{pageNum} * #{amount}
+     ]]>
+
+	</select>
+
+	<!-- 페이징+검색+ 포함 전체 count -->
+	<select id="getCommunitySelectNum" resultType="int">
+		select
+		count(*)
+		from fleamarketmember m, CAPPLICAION c,BOARDIMG b
+		where m.EMAIL = c.EMAIL AND c.COMMUNITYNUMBER = b.COMMUNITYNUMBER AND
+		c.category = #{category}
+		AND
+		<include refid="criteria"></include>
+		1=1
+	</select>
+	<!-- 인기 페이징+검색+ 포함 전체 count -->
+	<select id="getBestCommunityListNum" resultType="int">
+		select
+		count(*)
+		from fleamarketmember m, CAPPLICAION c,BOARDIMG b
+		where m.EMAIL = c.EMAIL AND c.COMMUNITYNUMBER = b.COMMUNITYNUMBER AND
+		c.category = #{category}
+		AND
+		<include refid="criteria"></include>
+		c.viewCnt >= 30
+	</select>
+	
+	<!-- 커뮤니티 상세 조회 + 이전글 다음글 목록 불러오기 (키워드, 제목, 카테고리) -->
+	<select id="getCommunityDetailList"
+	resultType="capplicationList">
+	select A.* FROM(
+	SELECT
+	c.COMMUNITYNUMBER,c.TITLE,c.CONTENT,c.REGISTDATE,c.UPDATEDATE,f.nickname,p.PROFILEIMG,c.EMAIL,
+	c.viewCnt,count(c2.COMMUNITYNUMBER) likeCnt,
+	NVL(LEAD(c.communityNumber, 1) OVER (ORDER BY c.communityNumber
+	DESC),0) AS prevNum,
+	NVL(LAG(c.communityNumber, 1) OVER (ORDER BY
+	c.communityNumber DESC),0) AS nextNum
+	FROM FLEAMARKETMEMBER f,BOARDIMG b,PROFILE p,
+	CAPPLICAION c LEFT OUTER JOIN COMMUNITYHEART c2 on c.communityNumber =
+	c2.communityNumber
+
+	WHERE f.EMAIL = c.EMAIL AND c.COMMUNITYNUMBER = b.COMMUNITYNUMBER AND
+	f.EMAIL = p.EMAIL
+	AND
+	<include refid="criteria"></include>
+<![CDATA[
+		c.CATEGORY = #{category}
+		]]>
+	group by
+	c.communityNumber,
+	c.title,
+	c.content,
+	c.registDate,
+	c.updateDate,
+	f.nickname,
+	p.PROFILEIMG,
+	c.email,
+	c.viewCnt,
+	c2.COMMUNITYNUMBER
+	<if test="shift != null and shift !=''">
+		ORDER BY
+
+		<choose>
+
+			<when test="shift eq 'registDate'">RegistDate</when>
+
+			<when test="shift eq 'viewCnt'"> viewCnt </when>
+
+			<otherwise>likeCnt</otherwise>
+
+		</choose>
+
+	</if>
+	DESC) A
+	WHERE communityNumber = #{communityNumber}
+</select> 
+<!-- 조회수 mapper  -->
+<update id = "updateViewCnt">
+UPDATE CAPPLICAION SET VIEWCNT = VIEWCNT + 1 WHERE COMMUNITYNUMBER = #{communityNumber}
+
+</update>
+<delete id = "deleteBoard" parameterType = "java.util.HashMap">
+delete from capplicaion where communityNumber = #{communityNumber} and email = #{email}
+</delete>
+   <select id = "getCommunityImgList" resultType = "String">
+   SELECT b.IMGNAME FROM CAPPLICAION c,BOARDIMG b 
+WHERE c.COMMUNITYNUMBER = b.COMMUNITYNUMBER 
+AND c.COMMUNITYNUMBER = #{communityNumber}
+   </select>
+   <!-- 팔로잉 된 목록 조회 -->
+   <select id = "getFollowYesOrNot" parameterType ="java.util.HashMap" resultType = "int">
+   SELECT count(*) FROM FRIEND f, CAPPLICAION c
+WHERE f.FOLLOWING  = c.EMAIL 
+AND c.COMMUNITYNUMBER = #{communityNumber}
+AND f.MYEMAIL = #{session}  
+   </select>
+   <!-- 좋아요 눌렀는지 여부 확인 -->
+   <select id = "getLikeYesOrNot" parameterType = "java.util.HashMap" resultType = "int">
+   SELECT count(*) FROM communityHeart
+   WHERE communityNumber = #{communityNumber}
+   AND email = #{session}
+</select>
+   <!-- 좋아요 cnt 확인 -->
+    <select id = "getLikeCnt" resultType = "int">
+    SELECT count(*) FROM communityHeart
+    WHERE communityNumber = #{communityNumber}
+    </select>
+    <!-- 좋아요 Insert -->
+    <insert id="getLikeInsert" parameterType = "java.util.HashMap">
+   INSERT INTO communityHeart VALUES(#{communityNumber},#{email})
+   </insert>
+   <!-- 좋아요 delete  -->
+   <delete id="getLikeDelete" parameterType = "java.util.HashMap">
+   DELETE FROM communityHeart WHERE communityNumber = #{communityNumber}  AND email = #{email} 
+   </delete>
+   <!-- insert keyproperty 값 반환 -->
+   <insert id="getInsertFriend" parameterType = "java.util.HashMap">
+   INSERT INTO FRIEND VALUES(#{myEmail},#{following})
+   </insert>
+   <!--  -->
+   <delete id="getDeleteFriend" parameterType ="java.util.HashMap">
+   DELETE FROM FRIEND WHERE MYEMAIL = #{myEmail}  AND FOLLOWING =#{following} 
+   </delete>
+   <!-- 게시물 신고하기 -->
+   <insert id = "insertIrrReport">
+   insert into irregularReport values(irr_seq.nextval,#{communityNumber},#{email},#{irrType},sysdate)
+   </insert>
+   <!-- 신고 중복확인 -->
+   <select id = "getCountReport" resultType = "int">
+   select count(*) from irregularReport where communityNumber = #{communityNumber} and email = #{email}
+   </select>
+   
+   <select id="getIrrReportList" resultType="irregular">
+	SELECT LAST.*
+	from(
+	SELECT rownum rnum,show.*
+	FROM (
+	SELECT
+	c.COMMUNITYNUMBER,c.CATEGORY ,c.email ,sum(DECODE(i.irrtype,1,1,0))
+	spam,sum(DECODE(i.irrtype,2,1,0)) cuss,sum(DECODE(i.irrtype,3,1,0))
+	politics,
+	sum(DECODE(i.irrtype,4,1,0)) info, count(decode(i.irrtype,1,1,2,1,3,1,4,1)) total
+	FROM CAPPLICAION c,IRREGULARREPORT i,FLEAMARKETMEMBER f
+	WHERE f.EMAIL = c.EMAIL AND c.COMMUNITYNUMBER = i.communitynumber
+	GROUP BY c.COMMUNITYNUMBER,c.CATEGORY,c.EMAIL,i.irrtype
+	ORDER BY total ASC
+	) show ) LAST
+	WHERE rnum BETWEEN (#{pageNum}-1)* ${amount} AND (#{pageNum} * #{amount})
+
+</select>
+   <select id = "getIrrNum" resultType = "int">
+   SELECT count(*) FROM IRREGULARREPORT
+   </select>
+   
+   <select id = "guestBookList" resultType = "guestBook">
+   SELECT LAST.*
+from(
+SELECT rownum rnum,show.*
+FROM (
+SELECT
+    g.guestBookid,g.email,g.guestemail,g.message,g.registDate,g.UPDATEdate,f.nickname,p.profileimg
+FROM GUESTBOOK g,fleamarketMember f,PROFILE p
+WHERE g.email = f.email and f.email = p.email(+)
+and g.email = #{email}
+ORDER BY g.registDate asc
+) show ) LAST
+WHERE rnum BETWEEN (#{pageNum}-1)* ${amount} AND #{pageNum} * #{amount}
+   </select>
+   <select id = "guestBookNum" resultType = "int">
+   SELECT count(*) FROM guestBook g,fleamarketmember f,profile p
+   WHERE 
+   g.email=f.email and 
+   f.email=p.email(+) and
+   g.email = #{email}
+   </select>
+   <insert id = "insertGuestBook">
+   INSERT INTO GUESTBOOK VALUES(guest_seq.nextval,#{email},#{guestemail},#{message},sysdate,null);
+   </insert>
+   <update id = "updateGuestBook">
+   UPDATE GUESTBOOK SET message = #{message},updateDate = sysdate WHERE guestemail = #{guestemail} AND GUESTBOOKID = #{guestBookid}
+   </update>
+   <delete id = "deleteGuestBook">
+   DELETE FROM GUESTBOOK WHERE guestbookid = ${guestBookid} 
+   </delete>
+</mapper>
+

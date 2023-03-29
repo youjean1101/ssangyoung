@@ -1,0 +1,55 @@
+상세페이지 
+
+//클릭시
+ <button onclick="uptBtn(${fleamarket.postingNumber})" class="btn btn-link text-dark px-3 mb-0">
+			                    	
+//js처리 
+	function uptBtn(postingNumber){
+		location.href="${path}/FleaMarketUpt.do?postingNumber="+postingNumber
+	}				                    	
+			            
+			            
+			            
+			                  
+//초기 컨트롤러 화면
+@GetMapping("/FleaMarketUpt.do")
+	public String FleaMarketUpt(@RequestParam String postingNumber, Model d) {
+		d.addAttribute("prod", service.fleaDetail(postingNumber));
+		
+		return "WEB-INF\\heejunView\\prod_updatePage.jsp";
+	} 
+	
+//dao
+public FleaMarket fleaDetail(String postingNumber);	   
+
+
+//service
+	public FleaMarket fleaDetail(String postingNumber) {
+		
+		return dao.fleaDetail(postingNumber);
+	}    
+	
+//mapper
+<select id="fleaDetail" resultType="fleamarket" parameterType="string">
+		SELECT *
+		FROM FleaMarket
+		WHERE postingNumber = #{postingNumber}
+</select>	           
+
+ 	
+
+//FFile update 
+//dao
+public void UptFFile(FFile upt);
+
+//service
+public void UptFFile(FFile upt);
+public void UptFFile(FFile upt) {
+		dao.UptFFilet(upt);
+	}  	
+	
+<update id="UptFFilet" parameterType="ffile">
+		update FFile
+		set filename=#{filename}
+		where postingNumber = #{postingNumber}
+</update>	

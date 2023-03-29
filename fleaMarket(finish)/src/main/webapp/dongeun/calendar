@@ -1,0 +1,44 @@
+vo
+FleaMarket
+openDate
+closeDate 
+
+dao 
+public List<FleaMarket> calList(); 
+
+service(구현체)
+public List<FleaMarket> calList(); 
+
+service(자식) 
+   public List<FleaMarket> calList(){
+      return dao.calList();
+   }
+ 
+mapper
+    <select id="calList" parameterType="fleamarket"
+		 resultType="fleamarket">
+		SELECT openDate, closeDate, title
+		FROM FLEAMARKET 
+		WHERE address like '%'||#{address}||'%';'
+	</select>	 
+  
+ //컨트롤러   
+    //캘린더
+	@RequestMapping("/calendarAjax.do")
+	public String calendarAjax(Model d) {
+		d.addAttribute("callist", service.calList());
+		return "pageJsonReport";
+	}
+	
+	
+//캘린더 등록 
+dao
+public void insertCalendar(FleaMarket ins);
+
+
+
+
+
+
+	
+	

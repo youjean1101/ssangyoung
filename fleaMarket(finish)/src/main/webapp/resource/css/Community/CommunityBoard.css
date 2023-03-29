@@ -1,0 +1,259 @@
+@charset "UTF-8";
+
+.postUpdateTitle{
+	font-size:15pt;
+}
+
+.postInsertTitle{
+	font-size:15pt;
+}
+
+.pagination1{
+	/* border:1px solid black; */
+    background: #fff;
+    padding-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    height: 37px;
+    width: 100%;
+}
+#numbers1{ 
+   padding:0;
+   margin: 0 2rem;
+   list-style-type:none;
+   display:flex; 
+}
+#numbers1 li a{
+   color:#333;
+   padding: .5rem 1rem;
+   text-decoration:none;
+   opacity:0.7;
+}
+#numbers1 li a:hover{
+   opacity:1;
+}
+#numbers1 li a.active{
+   opacity:1;
+   background:#333;
+   color:#fff;
+}
+
+.pagination1 i{
+   color:#333;
+   font-size:1.2em;
+}
+
+.pagination2{
+	/* border:1px solid black; */
+    background: #fff;
+    padding-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    height: 37px;
+    width: 100%;
+}
+#numbers2{ 
+   padding:0;
+   margin: 0 2rem;
+   list-style-type:none;
+   display:flex; 
+}
+#numbers2 li a{
+   color:#333;
+   padding: .5rem 1rem;
+   text-decoration:none;
+   opacity:0.7;
+}
+#numbers2 li a:hover{
+   opacity:1;
+}
+#numbers2 li a.active{
+   opacity:1;
+   background:#333;
+   color:#fff;
+}
+
+.pagination2 i{
+   color:#333;
+   font-size:1.2em;
+}
+
+.pagination3{
+	/* border:1px solid black; */
+    background: #fff;
+    padding-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    height: 37px;
+    width: 100%;
+}
+#numbers3{ 
+   padding:0;
+   margin: 0 2rem;
+   list-style-type:none;
+   display:flex; 
+}
+#numbers3 li a{
+   color:#333;
+   padding: .5rem 1rem;
+   text-decoration:none;
+   opacity:0.7;
+}
+#numbers3 li a:hover{
+   opacity:1;
+}
+#numbers3 li a.active{
+   opacity:1;
+   background:#333;
+   color:#fff;
+}
+
+.pagination3 i{
+   color:#333;
+   font-size:1.2em;
+}
+
+.pagination4{
+	/* border:1px solid black; */
+    background: #fff;
+    padding-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    height: 37px;
+    width: 100%;
+}
+#numbers4{ 
+   padding:0;
+   margin: 0 2rem;
+   list-style-type:none;
+   display:flex; 
+}
+#numbers4 li a{
+   color:#333;
+   padding: .5rem 1rem;
+   text-decoration:none;
+   opacity:0.7;
+}
+#numbers4 li a:hover{
+   opacity:1;
+}
+#numbers4 li a.active{
+   opacity:1;
+   background:#333;
+   color:#fff;
+}
+
+.pagination4 i{
+   color:#333;
+   font-size:1.2em;
+}
+
+.pagination5{
+	/* border:1px solid black; */
+    background: #fff;
+    padding-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    height: 37px;
+    width: 100%;
+}
+#numbers5{ 
+   padding:0;
+   margin: 0 2rem;
+   list-style-type:none;
+   display:flex; 
+}
+#numbers5 li a{
+   color:#333;
+   padding: .5rem 1rem;
+   text-decoration:none;
+   opacity:0.7;
+}
+#numbers5 li a:hover{
+   opacity:1;
+}
+#numbers5 li a.active{
+   opacity:1;
+   background:#333;
+   color:#fff;
+}
+
+.pagination5 i{
+   color:#333;
+   font-size:1.2em;
+}
+.pagination6{
+	/* border:1px solid black; */
+    background: #fff;
+    padding-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    height: 37px;
+    width: 100%;
+}
+#numbers6{ 
+   padding:0;
+   margin: 0 2rem;
+   list-style-type:none;
+   display:flex; 
+}
+#numbers6 li a{
+   color:#333;
+   padding: .5rem 1rem;
+   text-decoration:none;
+   opacity:0.7;
+}
+#numbers6 li a:hover{
+   opacity:1;
+}
+#numbers6 li a.active{
+   opacity:1;
+   background:#333;
+   color:#fff;
+}
+
+.pagination6 i{
+   color:#333;
+   font-size:1.2em;
+}
+.pagination7{
+	/* border:1px solid black; */
+    background: #fff;
+    padding-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    height: 37px;
+    width: 100%;
+}
+#numbers7{ 
+   padding:0;
+   margin: 0 2rem;
+   list-style-type:none;
+   display:flex; 
+}
+#numbers7 li a{
+   color:#333;
+   padding: .5rem 1rem;
+   text-decoration:none;
+   opacity:0.7;
+}
+#numbers7 li a:hover{
+   opacity:1;
+}
+#numbers7 li a.active{
+   opacity:1;
+   background:#333;
+   color:#fff;
+}
+
+.pagination7 i{
+   color:#333;
+   font-size:1.2em;
+}

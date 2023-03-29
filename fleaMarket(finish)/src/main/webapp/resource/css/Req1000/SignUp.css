@@ -1,0 +1,190 @@
+@charset "UTF-8";
+
+#HeaderBackground{
+	  background-color: white;
+}
+.invalid-feedback{
+	font-size: 10px;
+    margin-top: -13px;
+    font-weight: bold;
+}
+
+#SignUp_1Section{
+	margin-bottom: -187px;
+    margin-top: -8px;
+    margin-left: 62px;
+    width: 390px;
+}
+#SignUp_2Section{
+	display: none;
+    position: absolute;
+    top: 72px;
+    left:62px;
+}
+#SignUp_3Section{
+	display:none;
+	position: absolute;
+    top: 23px;
+}
+
+.SignUp_wrap{ /* 회원가입틀 wrap */
+	margin-top: -5px;
+}
+.Signup_infomation{ /* step1/2 글자 위치 */
+	position: absolute;
+    top: 17px;
+    right: -50px;
+    width: 280px;
+}
+.SignUp_container{
+	margin-top: -86px;
+}
+.SignUp_container .SignUp_MustSpan{
+	color:red;
+}
+
+.SecondSectionBtnWrap{ /* 2번째 섹션 버튼그룹 wrap */
+	display:flex;
+	margin-top: -20px;
+	margin-left: 22px;
+    width: 351px;
+}
+.SignUp_container{ /* 회원가입 틀 위치조정 */
+	margin-top: -204px;
+	margin-left: 141px;
+}
+.SignUp_cardgroup{ /* 사업자/셀러 카드그룹 크기 */
+	width: 553px;
+	margin-left: -76px;
+}
+.SignUp_cardgroup .card{
+	border:1px solid;
+}
+.SignUp_cardgroup .card img{
+    transition: all 0.2s linear;
+}
+.SignUp_cardgroup .card #AuthImg{
+	width: 57px;
+    margin-left: 112px;
+    margin-top: 17px;
+}
+.SignUp_cardgroup .card #AuthCheckImg{
+	position: absolute;
+    top: 0;
+    right: 13px;
+    width: 40px;
+    display:none;
+}
+
+.SignUp_cardgroup .card:hover #AuthImg{
+	transform: scale(1.4);
+}
+.SignUp_cardgroup .card:hover{
+	cursor:pointer;
+	background-color:#f5f2f6;	
+}
+.SignUp_cardgroup .card p{
+	font-size:12px;
+}
+.SignUp_cardgroup .card p span{
+	font-weight:bold;
+}
+#Signup_authSpan{
+	margin-left: 108px;
+    margin-top: 22px;
+}
+#SignUp_nextBtn img{
+   width: 24px;
+   margin-left: 14px;
+   margin-top: -5px;
+}
+#SignUp_prevBtn{
+	background-color: #a28adf;
+}
+
+
+
+
+
+/* 동의약관 팝업 css */
+input[id="terms_popup"]{
+	display:none;
+}
+input[id="terms_popup"] + label{
+	display: inline-block;
+    padding: 20px;
+    background: #ffcd41;
+    color: #333;
+    font-weight: 900;
+    margin: 10px 0 10px 13px;
+    cursor: pointer;
+}
+input[id="terms_popup"] + label + div{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index:100;
+}
+input[id="terms_popup"] + label +div > div{
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	width:500px;
+	height:750px;
+	background:#fff;
+	z-index:2;
+	padding:15px;
+	border: 4px solid orange;
+}
+input[id="terms_popup"] + label + div > div > label{
+	position:absolute;
+	top:0%;
+	right:0%;
+	transform:translate(40%,-40%);
+	padding:20px;
+	background:#A83CA8;
+	border-radius:100%;
+	z-index:1;
+}
+
+input[id="terms_popup"] + label + div > label{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background:rgba(0,0,0,0.7);
+	z-index:1;
+}
+
+input[id="terms_popup"] + label + div {
+	display:none;
+}
+input[id="terms_popup"]:checked + label + div{
+	display:block;
+}
+
+input[id="SuccessTerms"]{
+    display: none;
+}
+input[id="SuccessTerms"] + label{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border:3px solid #ffcd41;
+    position: relative;
+}
+input[id="SuccessTerms"]:checked + label::after{
+    content: '✔';
+    font-size: 28px;
+    color: purple;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    position: absolute;
+    left: -1px;
+    top: -16px;
+}

@@ -1,0 +1,35 @@
+sql 
+
+sql에서 부등호를 사용할 때 c데이터를 사용한다. 
+	<select id="FileNum" parameterType="ffile" resultType="ffile">
+	<![CDATA[
+		SELECT ROWNUM rn,f.*
+		FROM ffile f
+		WHERE ROWNUM <2 AND 
+	    postingNumber = #{postingNumber}	    
+	    ]]>
+	</select>
+
+
+vo
+//플리마켓 신청
+private String filename;
+private String filePath;
+
+dao
+public List<FFile> FileNum(FFile sch);	
+
+
+service
+public List<FFile> FileNum(FFile sch);	
+
+	//전체조회(img 파일)
+	public List<FFile> FileNum(FFile sch){
+		if(sch.getFilename()==null) sch.setFilename("");
+		if(sch.getFilePath()==null) sch.setFilePath("");
+		return dao.FileNum(sch);
+	}
+
+컨트롤러 
+
+

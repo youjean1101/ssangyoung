@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+/*페이지네이션*/
+.pagination_wrap{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+.pagination{
+	background: #fff;
+    padding-top: 9px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    height: 37px;
+    width: 400px;
+}
+#numbers{
+	padding:0;
+	margin: 0 2rem;
+	list-style-type:none;
+	display:flex; 
+}
+#numbers li a{
+	color:#333;
+	padding: .5rem 1rem;
+	text-decoration:none;
+	opacity:0.7;
+}
+#numbers li a:hover{
+	opacity:1;
+}
+#numbers li a.active{
+	opacity:1;
+	color:#fff;
+	border-radius: 50%;
+    background: #e45e72;
+}
+
+.pagination i{
+	color:#333;
+	font-size:1.2em;
+}

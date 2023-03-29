@@ -1,6 +1,6 @@
 # 컴포넌트와 ajax를 활용할 검색 처리
 1. 프로세스
-	1) 검색 컴포넌트와 리스트를 컴포넌트를 별개로 만들고,
+	1) 검색 컴포넌트와 리스트를 컴포넌트을 별개로 만들고,
 	2) 검색 컴포넌트에서는 검색할 데이터를 넣어서 상위에 전달하고
 	3) 검색 컴포넌트에서 받은 데이터를 최상위 Vue객체에서 모델 데이터와
 		메서드에 의해서 데이터를 ajax로 로딩하고
@@ -17,24 +17,25 @@
 			모델 데이터 : ename:"", job:""
 			핸들러 메서드
 				search:function(){
-					this.$emit("schemp", this.ename, this.job )
+					this.$emit("schemp", this.ename,this.job )
 				}
 			<search-com @schemp="searchEmp"></search-com>
 	2) 데이터 리스트 컴포넌트 만들기
 		- 템플릿
 			<table...
 				<tr v-for="emp in empList">
-					<td>{{emp.empno}}...
-		- 컴포넌트 객체
+					<td>{{emp.empno}}.....
+		- 컨포넌트 객체 
 			list-comp
 			props:["empList"]
-			<list-com : empList="list"
+			<list-com :empList="list"
 	3) 최상위 Vue객체
 		new Vue({
 			data:{ list:[] },
 			methods:{
 				searchEmp:function(ename, job){
-					var url="/springweb/empList.do?ename="+ename+"$job="+job
+					var url="/springweb/empList.do?ename="
+					+ename+"&job="+job
 					var vm = this
 					fetch(url).then(function(response){
 						return response.json()
@@ -44,10 +45,32 @@
 						console.log("#에러발생")
 						console.log(err)
 					})
+					
 				}
 			}
-		})
+		})									
+# 컴포넌트에서 event Bus
+1. props를 통해서 상위 컴포넌트에서 하위 컴포넌트에 데이터를 전송하고,
+	이벤트를 통해서 하위 컴포넌트에서 상위 컴포넌트로 데이터를 전송하는데
+2. 이벤트를 통해서 전송하는 것은 상/하위 컴포넌트별도 모두 처리해 주어야
+	하는 불편함이 있다.
+3. 이러한 문제때문에 화면에서 처리하여 다른 컴포넌트에 전달될 데이터를
+	공통 이벤트 bus메모리를 설정해서 해당 bus에 전달하고, 전달 받는
+	컴포넌트(상/하위 상관없이)는 해당 이벤트가 왔을 때, 처리할 수 있게
+	하는 방식이 이벤트 bus에 의한 처리라고 한다.
 	
+			상위 컴포넌트
+							이벤트버스(var eveBus = new Vue())
 			
-		
-3. 
+	하위컴포넌트1  하위컴포넌트2  하위컴포넌트3 
+			
+	차하위컴포넌트1  차하위컴포넌트2  차하위컴포넌트3 		
+	1) 기본에는 하위컴포넌트1의 이벤트에 의해서 상위 컴포넌트의 
+		이벤트 핸들러메서드의 매개변수로 발생한 데이터를 전달.
+	2) 하위컴포넌트2에서 이벤트에 의해 발생한 한데이터를 공유 메모리
+		영역인 이벤트 버스에 전달하고, 이 이벤트버스는 하위컴포넌트들이
+		생성하는 생성되는 시점 메서드(created:function(){})기능
+		에서 이벤트 버스를 모니터링하고 있다가.
+	3) 이벤트가 발생하는 순간 데이터를 처리하고, 그 데이터를 이벤트 버스에
+		의해 전달하여 처리하는 방식을 말한다.	
+				

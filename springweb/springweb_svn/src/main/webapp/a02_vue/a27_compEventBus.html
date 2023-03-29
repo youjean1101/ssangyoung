@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<template id="addTmp">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input v-model="prod" @keyup.13="addProd" class="form-control mr-sm-2" placeholder="물건명" />
+	    <button @click="addProd" class="btn btn-info" type="button">물건추가</button>
+ 	</nav>
+</template>
+<template id="listTmp">
+   <table class="table table-hover table-striped">
+    <thead>
+      <tr class="table-success text-center">
+        <th>물건명</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr v-for="prod in plist"><td>{{prod}}</td></tr>
+    </tbody>
+	</table>  
+</template>
+<script type="text/javascript">
+	var eventBus = new Vue()
+	Vue.component("add-comp",{
+		template:"#addTmp",
+		data:function(){
+			return {prod:''}
+		},
+		methods:{
+			addProd:function(){
+				// 이벤트 버스에 시간을 전송
+				eventBus.$emit("addclick",this.prod)
+				this.prod=""
+			}
+		}
+	})	
+Vue.component("plist-comp",{
+	template:"#listTmp",
+	data:function(){
+		return {
+			plist:[]
+		}
+	},
+	created:function(){ 
+		eventBus.$on("addclick", this.showList)
+	},
+	methods:{
+		showList:function(prod){
+			this.plist.push(prod)
+		}
+	}
+})
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"이벤트 버스 연습"}
+		});	
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	</div>
+	<add-comp></add-comp>
+	<plist-comp></plist-comp>
+	<!-- add-comp -->
+
+	<!-- plist-comp -->
+     
+</div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+ <!--    
+     <resultMap type="totfleamarket" id="totjoin" >
+ 	 	<association property="fleamarket" javaType="fleamarket" >
+ 	 		<result column="email" property="email"/>
+ 	 		<result column="bisenessNumber" property="bisenessNumber"/>
+ 	 		<result column="title" property="title"/>
+ 	 		<result column="openDate" property="openDate"/>
+ 	 		<result column="closeDate" property="closeDate"/>
+ 	 		<result column="approvalMaxCnt" property="approvalMaxCnt"/>
+ 	 		<result column="recruitmentStartDate" property="recruitmentStartDate"/>
+ 	 		<result column="recruitmentEndDate" property="recruitmentEndDate"/>
+ 	 		<result column="address" property="address"/>
+ 	 		<result column="content" property="content"/>
+ 	 		<result column="checkForm" property="checkForm"/>
+ 	 	</association>
+ 	 	<association property="ffile"  javaType="ffile">
+ 	 		<result column="filename" property="filename"/>
+ 	 		<result column="filePath" property="filePath"/>
+ 	 	</association>
+ 	 </resultMap> -->

@@ -1,0 +1,162 @@
+# 웹프로그래밍 지식계열화
+1. 네트워크 환경에 대한 이해
+	1) 웹이란 무엇인가?
+		www으로 구축된 네트워크 망에 의해서 서버/클라이언트간에 상호작용할 수 있는 환경
+	2) 서버와 클라이언트
+		서버 : 서비스를 지원하는 컴퓨터
+			웹서버 : 웹프로그래밍으로 서비스를 지원하는 컴퓨터
+				tomcat, apache, IIS 와 웹프로그램이 연동하여
+				서비스를 지원 
+				
+		클라이언트 : 서비스를 지원받는 컴퓨터
+			브라우저를 통해서 웹서버의 서비스를 지원 받는 처리
+	3) ip, port 
+		http://www.google.com/frontWeb/id=himan&pass=7777
+			ex) https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=웹프로그래밍
+			www.google.com : 도메인기관에서 발급한 도메인 주소
+				도메인기관 : 하단에 ip형식의 주소를 영문/한글 이름의 주소로 변환 처리해준다.
+		http://192.168.172.3:7080/prj01/index.jsp?id=himan&pass=7777
+			192.168.172.3 : 고유의 ip주소를 가지고 있어서 그 아이피 주소를
+			통해서 특정한 서버에 접속한다.
+			http : 통신프로토콜(네트워크 언어 중 하나) html을 효과적으로 전송하기
+				 위한 네트워크 언어 ex) ftp, smtp, telnet, svn, ...
+			7080 : 서버가 하나의 서비스만 지원하는 것이 아니라, 여러서비스를 지원하기
+					 위하여 구분하는 port를 숫자로 지정해서 처리하는 것을 말한다.
+				 ex) 하나의 컴퓨터 서버에서 오라클 서비스도 지원하고 웹서비스1, 웹서비스2 등
+				 	여러가지 서비스를 지원할 수 있게 해준다. 그래서 동일한 port 이름을 사용하면
+				 	충돌이 일어나기에 구분해주어야 한다.
+			/frontWeb : context명으로 프로젝트 이름으로 설정하는 경우가 많다.
+						기본적으로 url주소창으에 포함되어서 처리된다.
+						Servers\Tomcat v10.0 Server at localhost-config\server.xml
+						파일에 path 속성에 영향을 미친다.
+				 	
+			/prj01/index.jsp?
+				\frontWeb\src\main\webapp가
+				http://192.168.172.3:7080/frontWeb가 동일한 위치를 말한다.
+				클라이언트가 웹서버를 호출할 때와 웹프로그램의 default 경로 위치
+				
+			id=himan&pass=7777
+				서버에 특정한 페이지에 요청값을 넘길 때, 사용하는 방식 : 
+				query string 이라고 한다.
+				
+				
+		http://localhost:7080/prj01/id=himan&pass=7777
+			localhost : 현재 pc에서 서버와 클라이언트 둘다 사용해서
+			개발된 내용을 확인할 때, 사용하는 loopback주소를 말한다.
+			127.0.0.1도 같은 의미이다.
+			eclipse에서 톰캣서버를 구축하고 실행(ctrl+f11)로 해당 내용을 확인할 때, 
+				localhost로 뜨는 이유가 여기에 있다.
+			
+2. 웹서버 구축
+	1) eclipse 환경에서 구축
+		웹서버 - 일반 웹서버(Web server)
+					html/css/js만 서버에 클라이언트로 전달
+					ex) apache, iis
+				웹어플리케이션서버(WAS)
+					웹서버 + application를 컴파일해서 실행시켜주는 서버
+					ex) tomcat, jeus, weblogic 
+		웹서버를 apache 사이트에서 다운로드, 특정위치에 폴드를 만들어 압축을 풀어 놓는다.
+			특정 폴드에 압축 풀기..
+			c:\a01_javaexp\tomcat\에 압축을 풀면
+				c:\a01_javaexp\tomcat\apache-tomcat-10.0.27\
+			생성
+			
+		eclipse 하단에 servers 메뉴를 통해서 추가 처리
+			해당 폴드를 지정하여 서버를 만들고, 더블 클릭
+			port를 변경 7080 저장 처리
+			서버를 클릭 후, 오른쪽 마우스의 메뉴를 통해서 실행 처리
+		프로젝트와 연동
+	
+	2) 일반 환경 구축
+3. 웹프로그래밍 처리 방식에 대한 이해
+	1) front end와 back end란 무엇인가?
+		- front end
+			서버에서 html을 client로 전달된 후, 그 이후에 실행되는 프로그램
+			html/css/js등을 말한다.
+		- back end
+			자바등 컴파일이 필요하여 서버 내에서 실행하는 프로그래밍
+			java, jsp, servlet
+		- 차이점
+			컴파일되고 실행되는 위치가 서버나 브라우저냐에서 차이가 난다.
+			
+	2) front end 언어
+		- html
+		- css
+		- js
+	3) back end 언어
+		- jsp ==> servlet.java ==>servlet.class 
+			==> 자바코드가 처리되어 최종적으로 html 만들어 client에게 html을 넘겨준다.
+		- spring frame work
+	4) 기타
+		- ajax
+		- jquery
+		- DB는 어떤 역할을 하는가?
+		
+4. 웹프로그램의 처리 순서
+	1) 웹프로젝트 생성
+	2) 웹서버 생성 및 웹프로젝트 연동
+	3) 웹프로젝트 webapp 하위에 시작 html 생성
+	4) 프런트단 프로그래밍 생성 및 처리
+		html/css/js
+	5) DB서버 및 데이터 베이스 처리
+	6) 자바 프로그래밍 코드 생성
+		vo, dao, 컨트롤단/서비스(MVC패턴시)
+	7) jsp 프로그래밍 생성
+	8) 실행 결과 처리
+	
+5. front단 처리 프로세스
+
+# 웹프로그램 처리순서
+1. 진행 프로세스 이해
+	1) jsp 언제 해야 하고 어떤 내용을 처리해야 하는지?
+	2) javascript 언제 처리해야 하는지?
+	3) html/css 화면 구성을 어떤 식으로 처리해야지?
+	4) html/css, javascript, jsp 상호간의 관계 속에서 웹프로그램을 어떻게 처리해야 하는지?
+
+2. 웹프로그램 처리..
+	브라우저(클라이언트) <===> 웹어플리케이션서버(서버)
+	# 웹서버가 구축되고 서버를 가동한 상황에서..
+	1) 브라우저 url 주소 : http://주소(도메인명):포트/경로/특정jsp/html
+	2) 해당 자원이 html이면 그대로 전송 jsp이면 java/class과정을 거친 여부에 따라서 [처음 호출 java(서블릿) ==> class]
+		 ==> 실행명령에 의해서 ==> java+html 혼합된 html코드(css, js포함) ==> 클라이언트에 전달 
+		 ==> html 랜더링(h1=>태그에 맞는 내용으로 변환), js도 여기에 실행처리.(이벤트 처리 등 처리)
+	3) 로딩된 화면이 form형태로 입력값을 처리할 수 있는 화면이면.
+		action, name, value ==> 페이지명?key=value 형태로 submit 클릭시, 
+		서버에 특정페이지에 전송 ==> jsp/php/asp(어플리케이션 프로그램)에서
+		요청값을 받아서 해석(로직/DB접속)해서 화면을 다시 구성 ==> client에 전달.
+	cf) Ajax는 구성한 화면에서 화면이 변경하지 않고, js명령어로 바로 서버를 접속해서 처리할 결과를 js받아 처리하는 것을 말한다.
+3. 요청값..
+	1) 클라이언트 서버로 요청 : page(어떤 자원 - url), 데이터
+		a href = "페이지"
+		a href = "페이지?key=val&key=val"
+		location.href = "페이지"
+		location.href = "페이지?key=val&key=value"
+		form action="이동될 페이지"
+			name value 이동할 값
+	2) 데이터(key=value) = query string
+		- url에 주소로 페이지와 함께 요청처리도 가능
+		- form action = "이동할 페이지"
+			<input name="요청 key" value="요청val"
+			<select : 선택된 값이 value
+			<textarea : 다중 행의 입력된 값..
+			
+		submit 버튼을 클릭시,
+		이동할페이지?요청 key=요청val&key=val&key=val
+	
+4. session 이해
+	pageContext, [request, session], application
+		request.setAttribute(key, value)
+		request.getAttribute(key)
+		.removeAttribute(key)
+		.invalidate()
+	<C:set var="" value="" scope="page|request|session|application"/>
+	<jsp:useBean scope="page|request|session|application"/>	
+5. DB연동 처리 
+
+# 에러
+1. jsp는 ==> java ==> class ==> 클라이언트 결과물 전달 
+	이 과정을 거치기 때문에 저장해서 서버에 올릴 때, 정상적으로 전달이 안되는 경우가 많다.
+2. 상단에 project ==> clean
+3. 하단 server의 tomcat의 오른쪽 마우스 ==> clean 처리를 해야 함..
+4. 
+		

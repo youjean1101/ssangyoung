@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+#downloadAppFileForm input:hover{
+	text-decoration:underline;
+	cursor:pointer;
+}
+tbody tr{
+	cursor:pointer;
+}

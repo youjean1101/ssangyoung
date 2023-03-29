@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+tbody td,th{
+text-align:center;
+}
+table td:hover {
+  text-decoration: underline;
+  color: blue;
+}

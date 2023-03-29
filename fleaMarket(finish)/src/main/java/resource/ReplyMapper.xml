@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   <mapper namespace="fleaMarket.a03_dao.ReplyDao">
+     <!-- 부 모댓글 쓰기 -->
+     <insert id = "replyWrite" parameterType = "reply">
+         INSERT INTO REPLY values(replys_seq.nextval,#{communityNumber},#{email},#{repcontent},0,0,#{groupid},sysdate,'',0)
+     </insert>
+     <!-- groupId를 구하기 위함. -->
+     <select id = "replyMax" resultType = "int">
+          select nvl(max(replyNo),0) from REPLY
+     </select>
+     <update id = "replyCheck" parameterType = "reply">
+         update reply set groupid = #{groupid} where Replyno != #{groupid}
+     </update>
+     <!-- 댓글 리스트 가져오기 -->
+     <select id="replyList" parameterType = "java.util.HashMap" resultType="reply">
+     SELECT  LAST.*
+FROM (SELECT ROWNUM RNUM,
+             TEMP.*
+      FROM (SELECT r.replyNo
+                 , r.COMMUNITYNUMBER
+                 , r.groupid
+                 , r.repclass
+                 , r.repcontent
+                 , r.REPDATE
+                 , r.Email
+                 , r.repUpdateDate
+                 , r.isdeleted
+                 , f.NICKNAME
+                 , p.PROFILEIMG
+            FROM REPLY r,
+                 FLEAMARKETMEMBER f,
+                 CAPPLICAION c,
+                 PROFILE p
+            WHERE c.COMMUNITYNUMBER = r.COMMUNITYNUMBER
+              AND r.EMAIL = f.EMAIL
+              AND f.EMAIL = p.EMAIL
+              and r.COMMUNITYNUMBER = #{communityNumber}
+            ORDER BY groupid ASC, groupOrderid ASC) <![CDATA[TEMP 
+)LAST 
+        WHERE RNUM BETWEEN (#{vo.pageNum}-1)* ${vo.amount} AND #{vo.pageNum} * #{vo.amount}
+     ]]>
+</select>
+<!-- 답글 달기 -->
+      <insert id = "rereplyWrite" parameterType = "reply">
+          INSERT INTO REPLY values(replys_seq.nextval,#{communityNumber},#{email},#{repcontent},1,#{groupOrderid},#{groupid},sysdate,'',0) 
+      </insert>
+      
+ <!-- Orderby 해주기위해 답글..  -->     
+ <select id="getGroupOrder" resultType = "int">
+    SELECT NVL(max(groupOrderid),0)  FROM REPLY WHERE groupid = #{groupid} AND repclass = 1
+ </select>
+ 
+ <select id = "getReplyCnt" resultType = "int">
+ SELECT count(*) FROM REPLY WHERE COMMUNITYNUMBER = #{communityNumber}
+ </select>
+ <update id = "updateReply">
+ UPDATE reply SET REPCONTENT = #{repcontent}, repUpdateDate = sysdate WHERE COMMUNITYNUMBER = #{communityNumber} AND REPLYNO = #{replyNo}
+ </update>
+ <select id = "getRepCount" resultType = "int">
+ SELECT count(*) FROM REPLY WHERE COMMUNITYNUMBER = #{communityNumber} and GROUPID = #{groupid}
+ </select>
+ <select id = "delCount" resultType="int">
+ select count(*) FROM REPLY WHERE COMMUNITYNUMBER = #{communityNumber} and GROUPID = #{groupid} AND isdeleted = 1
+ </select>
+ <update id="delUpdate">
+ UPDATE reply SET isdeleted = 1 WHERE COMMUNITYNUMBER = #{communityNumber} AND REPLYNO = #{replyNo}
+ </update>
+ <delete id = "deleteReply">
+ DELETE FROM reply WHERE groupid = #{groupid}
+ </delete>
+   </mapper>

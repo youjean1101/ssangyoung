@@ -1,0 +1,79 @@
+# jsp에서 데이터 처리
+1. 지식 계열화 순서
+	1) DB 처리하는 DAO 만들기 : sql ==> vo ==> 기능메서드 선언 ==> 구체화된 내용 처리.
+	2) 웹프로세스에 대한 이해(클라이언트(브라우저)프로그램-  vs 서버 프로그램)
+		나와 물건을 주고 받은 친구(바다가의 친구)
+		나 == 수산물 중에 좋은 거 없냐 		==> 친구	 	url을 통해서 검색 사이트로 접속
+			<== 과메기나 생선 좋은것들이 있다.<== 			해당 정보를 페이지로 출력
+			== 5만원을 줄테니 적절한 생선 주라 ==>			페이지? price=50000
+			<== 5만원에 해당하는 생선을 전달 <==			페이지를 만들어 50000원의 요청값 처리해
+													조건문이나 반복문을 통해서 원하는 페이지를 
+													만들어서 전달.
+		내가 친구에게 사과를 전달
+		사과농장(나) =========================> 부산(친구)
+		1) 흠이 있는 사과를 전달하면 친구는 부산까지 가서 다시 	request.getParameter("price")
+		2) 다시 사과가 문제가 있다고 전달해야 됨...			공백값이나 숫자형태가 아닌 데이터 처리
+													if(price!=null&&price.equals(""))
+														예외./
+		------------------------------------------------------------------------------
+	3) 보내기 전에 사과농장에서 사과의 흠결을 골라서			js) <input type="button" onclick = "send()">
+		부산으로 보내는 것..							function send()
+													var price = document.querySelector("[name=price]")
+													var priceVal = price.value.trim()
+													if(priceVal=="" || isNaN(priceVal))프로세스 중단.
+														return
+													...
+													document.querySelector("form").submit
+											
+	3) 요청값 처리
+		- 요청값이란?
+		- 기본 처리형식(query string)
+		- form 요소객체와 관꼐
+		- 요청값 처리에서 default : null, equals("")
+			물리적으로 하나의 파일이나? 전달되는 내용(html)이 다르기 때문에 요청과
+			요청을 받는 페이지가 동일한 jsp에서는 처리해야 되는 내용
+			초기 페이지 호출 : 요청값이 없음	request.getParameter("name") : null
+			form에 데이터를 입력 후 : 요청값 있음 request.getParameter("name") : 홍길동
+			이 두개를 구분 ==>	if(name!=null)
+			form에 데이터를 입력하지 않고 submit 클릭 시 request.getParameter("name") : ""
+			이러한 입력없는 요청값 처리
+			==> if(!name.equals(""))
+			form에 숫자형 데이터가 아닐 때, submit 클릭 시 request.getParameter("price") : "이십오"
+			==> 
+			try{
+				Integer.parseInt(priceS)
+			}catch(Exception e){
+			
+			}
+		- 요청값의 숫자형 데이터 처리
+	4) 요청값에 의한 VO 객체 생성
+		name, price, cnt는 요청값에 의해서 처리된 값(공백처리, null, 숫자형 0 처리 등)
+		Product p = new Product(name, price, cnt)
+		
+	5) Dao 연동 처리
+		# 전체 조회 후, 처리시는 if 조건문 필요없이 Dao 호출...
+			null ==> ""으로 변환 처리한다.
+		# 등록/수정/삭제시는 form에서 요청값이 있을 때, 처리함으로 아래 전제 조건으로 Dao 호출
+		boolean isInsert = true;
+		if(name!=null){ // 요청값이 있을 때를 기준으로 Dao 호출 처리..
+			XXXDao dao = new XXXDao();
+			dao.insertXXX(p); // 데이터 입력 및 기능 메서드 처리...		
+		}
+	6) 화면 전환
+		form형식으로 전환 submit
+		- submit
+		- 유효성 check 후 처리
+		location.href="이동페이지"
+	7) 서버 전송 전 js로 유효성 처리
+	8) 등록 처리 후 메시지 처리 (jsp ==> js)
+		var isInsert = <%=inInsert%>;
+		if(isInsert){
+			if(confirm("등록성공 조회페이지로 이동하시겠습니까?")){
+				location.href = "이동할 조회리스트"
+			}
+		}
+# 단계별 연습
+1. dao로 출력 처리하는 연습(조건없이)
+2. 검색 요청값을 넣어서 dao 호출 출력
+3. 등록 폼을 넣어서 dao 호출 출력.
+

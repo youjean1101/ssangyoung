@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+   
+
+    <mapper namespace="fleaMarket.a03_dao.Req1000_Dao">
+    	<!-- 이메일 중복검사 -->
+    	<select id="DuplicateEmail" parameterType="string" resultType="member">
+    		SELECT * FROM FLEAMARKETMEMBER WHERE email = #{email}
+    	</select>
+    	<!-- 이름/주민 중복검사 -->
+    	<select id="DuplicateMem" parameterType="hashmap" resultType="member">
+    	SELECT * FROM FLEAMARKETMEMBER 
+    	WHERE name = #{name} 
+    	and personalnumber = #{personalnumber}
+    	<if test="email!=null">
+    	and email=#{email}
+    	</if>
+    	</select>
+    	<!-- 사업자번호 확인 -->
+    	<select id="checkBusiness" parameterType="string" resultType="int">
+    		select count(*) from fleamarketmember where businessnumber=#{businessnumber}
+    	</select>
+    	<!--회원가입 -->
+    	<insert id="SignUp" parameterType="member">
+    		INSERT INTO FLEAMARKETMEMBER values(
+				#{email},
+				#{password},
+				#{nickname},
+				#{personalnumber},
+				#{phonenumber},
+				#{address},
+				#{authority},
+			<if test="businessnumber!=null">
+				#{businessnumber},
+			</if>
+			<if test="businessnumber==null">
+				NULL,
+			</if>
+				NULL,
+				NULL,
+				#{category},
+				#{name}
+				)
+    	</insert>
+    	
+    	<!--회원가입시 해당 회원 프로필사진 삽입  -->
+    	<insert id="insprofile" parameterType="profileimg">
+    		INSERT INTO PROFILE VALUES(#{email},#{profileimg})
+    	</insert>
+    	
+    	
+    	<select id="Login" parameterType="string" resultType="member">
+    		SELECT f.*,p.PROFILEIMG as profileimgname FROM FLEAMARKETMEMBER f,PROFILE p
+			WHERE f.EMAIL(+) = p.EMAIL
+			AND f.email = #{email}
+    	</select>
+    	<select id="kakaoLogin" parameterType="string" resultType="member">
+    		SELECT f.*,p.PROFILEIMG as profileimgname FROM FLEAMARKETMEMBER f,PROFILE p
+			WHERE f.EMAIL(+) = p.EMAIL
+    		and f.KAKAOEMAIL=#{kakaoemail}
+    	</select>
+    	<select id="naverLogin" parameterType="string" resultType="member">
+    		SELECT f.*,p.PROFILEIMG as profileimgname FROM FLEAMARKETMEMBER f,PROFILE p
+			WHERE f.EMAIL(+) = p.EMAIL
+			AND f.NAVEREMAIL = #{naveremail}
+    	</select>
+    	<!-- 카카오연동시 계정 존재 야부 -->
+    	<select id="CheckPeristalsisSNS_K" parameterType="string" resultType="member">
+    		SELECT * FROM FLEAMARKETMEMBER 		
+    		WHERE (EMAIL||kakaoemail) like '%'||#{snsemail}||'%'
+    	</select>
+    	<!-- 네이버 연동시 계정잇는지 여부 -->
+    	<select id="CheckPeristalsisSNS_N" parameterType="string" resultType="member">
+    		SELECT * FROM FLEAMARKETMEMBER 		
+    			WHERE NAME = #{name}
+    	</select>
+    	
+    	
+    	<!-- sns연동 업데이트 -->
+    	<!-- 1. 로그인 전 -->
+    	<update id="SnsEmailPlus" parameterType="member">
+    		UPDATE FLEAMARKETMEMBER 
+    		<choose>
+    			<when test="kakaoemail!=null">
+    				SET KAKAOEMAIL = #{kakaoemail}
+					WHERE EMAIL =#{kakaoemail}
+    			</when>
+    			<otherwise>
+    				SET NAVEREMAIL=#{naveremail}
+					where name=#{name}
+    			</otherwise>
+    		</choose>
+    	</update>
+    	
+    	<!-- 2. 로그인 후 연동 -->
+    	<update id="SnsEmailPlus2" parameterType="member">
+    		UPDATE FLEAMARKETMEMBER 
+    		<choose>
+    			<when test="kakaoemail!=null">
+    				SET KAKAOEMAIL = #{kakaoemail}
+    			</when>
+    			<when test="naveremail!=null">
+    				SET NAVEREMAIL=#{naveremail}
+    			</when>
+    		</choose>
+    			WHERE EMAIL =#{email}
+    	</update>
+    	<!-- 비번찾기 -->
+    	<update id="MemberFindPassword" parameterType="hashmap">
+    		UPDATE FLEAMARKETMEMBER 
+				SET password = '1111' 
+				WHERE NAME = #{name}
+				AND PERSONALNUMBER  = #{personalnumber}
+				AND EMAIL  =#{email}
+    	</update>
+    	
+    	<!-- 문의하기 등록 -->
+    	<insert id="QNAInsert" parameterType="qna">
+    		INSERT INTO FLEAMARKETQNA values(
+			FLEAMARKETQNA_seq.nextval,
+			#{title},#{content},
+			to_CHAR(sysdate,'YYYY-MM-DD'),
+			to_CHAR(sysdate,'YYYY-MM-DD'),
+			#{email},#{method},
+			#{category},#{status},#{refno},#{secretwhether}
+			)
+    	</insert>
+    	<!-- 문의하기 파일등록 -->
+    	<insert id="QNAFileInsert" parameterType="qnafile">
+    		INSERT INTO qnafile values(#{filename},#{filepath},
+    		<if test="qnano==null">
+    		 FLEAMARKETQNA_seq.currval,
+    		</if>
+    		<if test="qnano!=null">
+    		 #{qnano},
+    		</if>
+    		#{filename2})
+    	</insert>
+    	<!-- 문의/공지글 업데이트 -->
+    	<update id="QNAUpdate" parameterType="qna">
+    		update FLEAMARKETQNA
+    		set title=#{title}, content=#{content},uptdate=to_CHAR(sysdate,'YYYY-MM-DD')
+    		where qnano=#{qnano}
+    	</update>
+    	<!-- 문의게시글 파일 수정 전 파일담기 -->
+    	<select id="GetFileNames" parameterType="string" resultType="qnafile">
+    		select * from qnafile
+    		where qnano = #{qnano}
+    	</select>
+    	
+    	<!-- 문의/게시글파일데이터 삭제 -->
+    	<delete id="QNAFileDelete" parameterType="string">
+    		delete qnafile where qnano=#{qnano}
+    	</delete>
+    	<!-- 문의/게시글데이터 삭제 -->
+    	<delete id="QNADelete" parameterType="string">
+    		delete FLEAMARKETQNA where qnano=#{qnano}
+    	</delete>
+    	<update id="QNAAnswerUpdate" parameterType="string">
+    		update FLEAMARKETQNA set status = '답변완료' where qnano=#{qnano}
+    	</update>
+    	
+    </mapper>
+    
+    

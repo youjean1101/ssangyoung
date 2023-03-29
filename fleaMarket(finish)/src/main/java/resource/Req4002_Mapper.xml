@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+    <mapper namespace="fleaMarket.a03_dao.Req4002_Dao">
+    
+    	<!-- 커뮤니티 게시글 등록  -->
+    	<insert id="communityInsert" parameterType="capplication">
+    		INSERT INTO capplicaion values(communityNumber_seq.nextval,
+    		 #{title},#{content},sysdate,NULL,#{category},#{email},#{hashtag},0)
+    	</insert>
+    	
+    	<!-- 커뮤니티 게시글 파일 등록 -->
+    	<insert id="communityFileInsert" parameterType="boardimg">
+			INSERT INTO BoardImg values(#{imgname},#{imgpath},communityNumber_seq.currval)
+		</insert>
+		
+		<!-- 수정할 게시글 정보 불러오기 -->
+		<select id="boardDetailSelect" parameterType="int" resultType="capplication">
+			SELECT *
+			FROM BoardImg i,capplicaion c
+			WHERE i.communitynumber=c.communitynumber
+			AND c.communitynumber =#{communitynumber}
+		</select>
+		
+		<!-- 커뮤니티게시글 수정하기  -->
+    	<update id="communityUpdate" parameterType="capplication">
+    		UPDATE capplicaion 
+			SET title=#{title},
+				content=#{content},
+				hashtag=#{hashtag},
+				updatedate=sysdate
+			WHERE communityNumber=#{communitynumber}
+		</update>
+		
+		<!-- 커뮤니티 파일 수정하기  -->
+    	<update id="communityFileUpdate" parameterType="boardimg">
+    		UPDATE BoardImg
+			SET imgname=#{imgname}
+			WHERE communitynumber =#{communitynumber}
+		</update>
+		
+		<!-- 팔로우 회원 조회(검색) -->
+		<select id="followerSelect" parameterType="followmemberinfo" resultType="followmemberinfo">
+				select *
+				FROM FLEAMARKETMEMBER m,friend f,profile pro
+				WHERE (m.email LIKE '%'||#{keyword}||'%'
+					OR m.nickname LIKE '%'||#{keyword}||'%')
+			<choose>
+				<when test="div==null">
+					AND f.following=pro.email
+					AND f.following=m.email
+					AND myemail=#{myemail}
+				</when>
+				<when test="div!=null">
+					AND f.myemail=pro.email
+					AND f.myemail=m.email
+					AND following=#{myemail}
+				</when>
+			</choose>
+		</select>
+		
+		<!-- 팔로우여부 체크 -->
+		<select id="followCheck" parameterType="HashMap" resultType="int">
+			SELECT count(*) FROM friend
+			WHERE myemail=#{myEmail}
+			AND FOLLOWING=#{following}
+		</select>
+		
+		<!-- 언팔로우  -->
+		<delete id="followmemberdelete" parameterType="followmemberinfo">
+			DELETE FROM friend
+			WHERE myemail=#{myemail}
+			AND FOLLOWING=#{following}
+		</delete>
+		
+		
+		<!-- room 회원정보(게시글이 없을 때를 대비해서 join할수 없음) -->
+		<select id="roomMemberInfo" parameterType="HashMap" resultType="roommemberinfo">
+			SELECT * 
+			FROM fleamarketmember m, profile p
+			WHERE m.email=p.email
+			AND authority!='관리자'
+			<if test="div==null">
+				and m.email=#{email}
+			</if>
+			<if test="div=='unfollowMem'.toString()">
+				AND m.email!=#{email}
+				AND m.email NOT in (SELECT following 
+							FROM friend
+							WHERE myemail=#{email})
+			</if>
+		</select>
+	
+		<!-- 좋아요 갯수(누적합계) -->
+		<select id="boardLikeCnt" parameterType="String" resultType="int">
+			SELECT count(*) 
+			FROM communityHeart l, capplicaion c
+			WHERE l.COMMUNITYNUMBER = c.COMMUNITYNUMBER
+			AND c.email = #{email}
+		</select>
+		
+		<!-- 게시글 조회 -->
+		<select id="boardSelect" parameterType="roommemberinfo" resultType="roommemberinfo">
+			SELECT *
+			FROM BoardImg i,capplicaion c
+			WHERE i.communitynumber=c.communitynumber
+			AND email = #{email}
+			AND category LIKE '%'||#{category}||'%'
+			AND  TO_CHAR(REGISTDATE, 'mm') LIKE '%'||#{registDateMonth}||'%'
+		</select>
+		
+		<!-- 게시글댓글 조회 / 내가쓴 댓글 조회 (구분자를 주기위해 파라미터값 vo로 넣기)-->
+		<select id="boardReplySelect" parameterType="HashMap" resultType="roommemberinfo">
+			SELECT * 
+			FROM capplicaion c, reply r
+			WHERE c.COMMUNITYNUMBER = r.COMMUNITYNUMBER
+			<if test="div=='meboard'.toString()">
+				AND c.email=#{email}
+			</if>
+			<if test="div=='mereply'.toString()">
+				AND r.email=#{email}
+			</if>
+			ORDER BY repdate desc
+		</select>
+		
+		<!-- 팔로우 회원 추가  -->
+		 <insert id="insertFriend" parameterType="HashMap">
+		 	  INSERT INTO FRIEND VALUES(#{myEmail},#{following})
+		 </insert>
+		 
+    </mapper>

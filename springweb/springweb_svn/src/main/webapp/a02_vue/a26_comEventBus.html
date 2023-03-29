@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/springweb/a00_com/bootstrap.min.css" >
+<style>
+	td{text-align:center;}
+</style>
+<script src="/springweb/a00_com/jquery.min.js"></script>
+<script src="/springweb/a00_com/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<!--1. 공통 데이터 전달 이벤트 버스 객체  -->
+<script type="text/javascript">
+	var eventBus = new Vue()
+</script>
+<!-- 2. 첫번째 자식 컴포넌트  -->
+<template id="child1Template">
+	<div>
+		<button v-on:click="clickEvent" 
+			type="button">첫번째 아들 버튼</button>
+		<div>{{currentTime}}</div>
+	
+	</div>
+</template>
+<script type="text/javascript">
+	Vue.component("child1-component",{
+		template:"#child1Template",
+		data:function(){
+			return {currentTime:''}
+		},
+		methods:{
+			clickEvent:function(){
+				var d= new Date()
+				var t = d.toLocaleTimeString()+" "+ 
+					d.getMilliseconds()
+				console.log(t)	
+				// 이벤트 버스에 시간을 전송
+				eventBus.$emit("click1",t)
+				this.currentTime= t
+			}
+		}
+	})
+</script>
+<!-- 두번째 자식 컴포넌트 시작 -->
+<template id="child2Template">
+	<ul>
+		<li v-for="time in timelist">{{time}}</li>
+	</ul>
+</template>
+<script type="text/javascript"> 
+// child1-component   child2-component
+Vue.component("child2-component",{
+	template:"#child2Template",
+	data:function(){
+		return {
+			timelist:[]
+		}
+	},
+	created:function(){ 
+		// eventBus.$emit("click1",t)
+		// 컴포넌트가 생성될 때, 이벤트 버스 모니터링
+		// 공통 이벤트 버스에서 click이란 이벤트가 오면은
+		// 현재 메서드 child1Click로 전달..
+		eventBus.$on("click1", this.child1Click)
+	},
+	methods:{
+		child1Click:function(time){
+			// 배열에 클릭시 마다, 시간을 누적 처리
+			this.timelist.push(time)
+		}
+	}
+})
+/*
+이벤트 버스선언(var event = new Vue()) 
+ 
+<child1-component></child1-component>
+	첫번째 아들 버튼
+	클릭 시 - 화면에 현재시간 출력, child2에 시작전달
+		메서드를 통해서 이벤트 버스에 넘김
+			eventBus.$emig("click1",t)
+	
+<child2-component></child2-component>
+	리스트로 위 컴포넌트를 클릭 시 마다 현재시간 누적 처리
+	1) created:function(){} 컴포넌트가 생성할 때, 처리되는 메서드
+			이벤트 버스를 모니터링
+			eventBus.$on("click1", this.child1Click)
+		click1이라는 이벤트가 발생하면, 현재 이 컴포넌트가 
+		가지고 있는 child1Click()메서드를 수행처리
+	2) child1Click:function(time){
+		// 배열에 클릭시 마다, 시간을 누적 처리
+		this.timelist.push(time)
+	}
+*/
+
+	$(document).ready(function(){
+		var vm = new Vue({
+			el:".container",
+			data:{msg:"이벤트 버스 연습"}
+		});	
+	});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="jumbotron text-center">
+	  <h2 >{{msg}}</h2>
+	  <child1-component></child1-component>
+	  <hr/>
+	  <child2-component></child2-component>
+	  
+	</div>
+	<form id="frm01" class="form-inline"  method="post">
+  	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	    <input class="form-control mr-sm-2" placeholder="제목" />
+	    <input class="form-control mr-sm-2" placeholder="내용" />
+	    <button class="btn btn-info" type="submit">Search</button>
+ 	</nav>
+	</form>
+   <table class="table table-hover table-striped">
+   	<col width="10%">
+   	<col width="50%">
+   	<col width="15%">
+   	<col width="15%">
+   	<col width="10%">
+    <thead>
+    
+      <tr class="table-success text-center">
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+    </thead>	
+    <tbody>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+	</table>       
+</div>
+</body>
+</html>

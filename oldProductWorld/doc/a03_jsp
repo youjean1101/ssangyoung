@@ -1,0 +1,99 @@
+# jsp 지식계열화
+1. 서브단 프로그램의 처리 순서에 대한 이해
+	1) url 호출
+	2) 서버단 안에 처리
+		html + java ==> html ==> 클라이언트 전달
+		jsp ==> servlet java ==> class ==> html 클라이언트 전달
+		
+	3) 에러트래킹
+		웹서버와 연동되어 있는 jsp는 서버의 데몬의 로그 내용을 
+		하단의 console로 확인할 수 있다.
+		log()- 웬만하면 이걸로 쓰기
+		System.out.println() : jsp 자동X
+		을 통해서 현재 서버프로그램의 내부적인 프로세스를 확인할 수 있다.
+		해당 로그인 라인 내용의 메시지를 통해서 확인하고 소스를 변경 처리..
+		- 위 log() 등 출력 메서드와 에러라인, 에러메시지를 통해서 문제를 확인하고 처리할 수 있도록 합니다.
+		DB서버위치와 계정이 다른 곳을 바라보고 있을 때, 
+			- 테이블이 없거나, 변경 수정하는데도 처리가 되지 않는다..
+		조회하는 테이블과 변경/수정/삭제하는 테이블을 다르게 하는 경우도 많이 발생..
+			select * 
+			from emp;
+			
+			update emp01
+				set @@@;
+		
+2. jsp 기초 문법
+	1) jsp의 화면 구성 : 페이지 지시자 + 스크립트 
+	2) 스크립트에 대한 이해와 활용
+		- 선언(declare) : <%! %>
+		- scriptlet : <% %>
+		- 표현(expression) : <%=%>
+	3) jsp의 기본 제어문
+		- 조건문
+		- 반복문 : script와 함께 사용하는 반복문..
+			for(:){
+			
+			}
+3. 지시자와 태그
+	1) jsp의 지시자
+		page
+		include
+	2) 액션 태그
+4. jsp의 내장 객체
+	1) 내부 객체
+		- 요청과 반응처리
+			*request
+				브라우저 화면에서 전송되는 데이터를 처리해주는 객체..
+				request.getParameter("요청키")
+				request.getParameterValue("다중의키")
+				ex) ?name=himan&price=1000&price=2000
+				String name = request.getParameter("name");
+				String []price = requerst.getParameter("price");
+				if
+				
+				ex) ?price=3000&cnt=2
+				ex) ?price=&cnt= : 서버에서 이렇게 안받게 처리..
+				String priceS = request.getParameter("price")
+				int price = 0;
+				if(price!=null && price.trim().equals("")){
+					try{
+							price = Integer.parseInt(prices)
+					} catch(Excepction e){
+						log("예외발생"+e.getMessage)
+					
+				}
+				하단의 js를 처리하면
+				int price = Integer.paraseInt(request.get Parameter("price));
+				
+				
+				function send(){
+					var price = document.querySelector("[name=price]");
+					var pVal = price.value 
+					//isNaN("이십오") ==> true 숫자형이 아닐 떄,
+						if(pVal.trim()=="" || isNaN( pVal ){
+						alert("해당 내용이 공백이거나 숫자가 아닙니다.");
+						price.focus();
+						return; // 해당조건일 떄, 프로세스가 진행 안되게 막음.
+					}
+					document.querySelector("form").submit();
+				}
+				<input type="button" value="서버호출" onclick="send()"
+				
+				String priceS = request.getParameter("price")
+				
+			response
+		- session scope범위	
+			pageContext, request, session, application
+		- 예외 처리(exception)
+5. 자반 bean 활용하기
+	<jsp:useBean>
+6. session 과 cookie
+7. el과 jstl
+8. MVC 
+	1) servlet이란?
+	2) Model/View/Controller
+9. Database 연동
+	
+
+	
+		

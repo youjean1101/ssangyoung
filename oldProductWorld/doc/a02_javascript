@@ -1,0 +1,187 @@
+# 자바스크립트의 지식계열화
+1. 웹에 대한 이해
+2. 웹개발에서 자바스크립트의 위치와 기능
+	1) 서버와의 관계에서 실행 시점
+		- 소스는 서버
+		- 실행을 브라우저에서 실행 (node 등 최근에는 서버에서 실행하여 전달하는 경우도 있음)
+	2) 서버와 프로그램(jsp)과 javascript의 연동
+	3) ajax통해서 비동기적으로 서버에 데이터 받아서 javascript 처리.
+	
+	4) 에러 트래킹
+		- ctrl+s 저장 후, 브라우저화면 f5(적용),
+		- f12 console 메뉴를 통해서 에러 라인 확인
+			==> 앞뒤 코드 확인..
+		- 소스변경 ==> ctrl+s 저장 ==> 브라우저 f5
+		# 해당 내용으로 에러가 보이는 경우가 있기도 하지만,
+		초기(앞라인)에 다른 기능에 오류가 난 경우 전체적으로 실행이 되지 않는다.
+		
+	
+3. 프로그래밍 공통
+	1) 변수 : 데이터 유형이 가변적 - 실제 데이터를 할당하는 순간에 데이터 유형이 결정
+		var, let, const
+		ex) var num01 = 25; var name="홍길동"
+	2) 데이터 유형
+		- 종류 : 숫자형(number), 문자열형(string), 함수형(function), boolean형(true/false), 객체(object)
+		- 형변환 : 자유롭게 데이터 변환이 일어난다.
+			"25" * "3" ==> 75
+			"25" + "3" ==> 253 + 연산자만 자동형변환이 일어나지 않는다.
+				문자열 연결 기능과 동일하게 처리하기 때문이다.
+			25+3 ==>28
+			명시적 형변환 함수
+			Number("25") + parseInt("30") + parseFloat("5.5")
+			==> 60.5
+			
+	3) 조건문/반복문
+		if(){}, for(var idx=0;idx<30;idx++){}
+		
+		for(var idx=0; idx<arry.length;idx++){
+			idx+1, arry[idx]
+		}
+		
+		for(var idx in arry){	// 배열일 때
+			idx, arry[idx]	 idx 0시작하는데 문자열 "0","1"...
+							 arr['0'] arr['1'] arr['2']
+		}
+		for(var prop in obj){	// 객체일 때. var p01= {name:"홍길동", age:25}
+			prop, obj[prop]			prop ==> name, age 
+		}							obj[prop] ==> p01[name], p01[age]
+		for(var ele of arry){ //java의 for(String one:arry)
+		
+		}
+		배열. forEach(익명 함수)
+		배열. forEach(function(idx, obj){
+			
+		});
+		
+	4) 배열형 데이터
+		var arry = [데이터, 데이터2..]
+		 
+4. 함수처리
+	1) 내장형 함수
+		setInterval(반복할 시간, function(){반복할 내용})
+		setTimeout(시간, function(){ 시간이후에 처리할 내용})
+		형변환함수
+	2) 사용자 정의 함수	
+		function 함수명(){}
+		var 함수명 = function(){}
+		
+		함수명();
+	3) arguments : 매개변수를 배열로 받아서 처리해주는 객체
+	4)	function 함수명(가변변수...){
+			가변변수 : 매개변수를 가변적으로 받아 처리해줌.
+		}
+	5) function 함수1(){
+		}
+		function 함수2(변수1){
+			변수1(); : 매개변수를 함수로 전달될 때, 해당 블럭안에서 함수로 활용.
+		}
+		
+		함수2(함수1); // 함수를 매개변수로 전달할 수 있다.
+	
+5. 객체형 데이터
+	1) 내장형 객체
+		Math 수학적 함수..
+	2) 사용자 정의 객체
+		function 객체명(매개변수1, 매개변수2...){
+			this.속성명 = 매개변수1;
+			this.메서드명 = function(){
+			
+			}
+		}
+		var 참조명 = new 객체명(데이터1, 데이터2);
+		참조명.메서드명();
+		
+		class 객체명{
+			constructor(){
+			
+			}
+			메서드명(){
+			
+			}
+		}
+		json 형 객체..
+		var obj = {속성:속성값, 속성2:속성2값, 메서드명:function(){}}
+		obj.속성 = "할당"
+		obj.메서드명(); //기능메서드 호출 사용..
+		
+		
+		
+6. 예외처리
+	exception 예외 처리
+	
+7. DOM객체(화면에서 요소 태그 객체)
+	1) js의 실행 순서(메모리 로딩 순서) : 위에서부터 아래로
+		body 태그에 있는 태그를 객체화해서 인식하려면
+		- 태그 선언 후, 하단에서 script 안에서 
+			아래 형식의 DOM 객체를 선언해서 호출.
+			<h2>안녕</h2>
+			<script>
+			var h2Obj = document.querySelector("h2");
+		- 이벤트 핸들러 선언되어 핸들러함수를 통해서 호출하는 내용 : 태그 상단/하단
+			function call(){
+				var idObj = document.querySelector("id")
+				idObj.value = "아이디입니다"
+			}
+			<h2 onclick="call()"> 클릭해보세요 </h2>
+			<input name="id" />
+		- 전체화면이 로딩된 후, 처리하 내용을 상단에 기술해서 처리하는 경우는 상단에서
+			DOM 호출이 가능하다.
+			// BOM(browser object model)
+			// 브라우저(window)가 켜졌을 때(로딩이 다되었을 때) : window.onload
+			// 실행할 함수 = function(){}
+			
+			window.onload = function(){
+				var h2Obj = document.querySelector("h2")
+			}
+			<body>
+				<h2>
+
+
+	var 객체명 = document.querySelector("선택자");
+	객체명.속성 = "속성값";
+	var 배열명 = document.querySelectorAll("선택자");
+	배열명[0].속성 = "속성값";
+	2) 속성
+		.innerText : 해당 객체에 출력한 내용
+		.innerHTML : 해당 객체에 태그로 랜더링해 출력할 내용
+		.src : "img01.jpg"
+		.align = "center" 기본속성으로 지원하는 속성값
+		.width = "200px"
+		# css 속성 설정
+		.style.속성 = "속성값"
+		.style.color = "red"
+		.style.border = "1px solid blue"
+		.style.textAlign = "center"
+			css속성에 - (구분자)로된 속성은 camel case(낙타모양 구분자)
+			를 통해서 js에서는 대문자로 변경하여 처리된다.{text-align:center;}
+		.style.backgroundColor = "blue"	
+	
+	ps) 선택자는 css의 선택자 유형을 다 활용할 수 있다. #아이디명, .클래스명, 태그명
+		부터 시작해서, 복합유형, 가상클래스선언형 등등 사용할 수 있다.
+	var body = document.body
+	var forms = document.forms // for 요소객체는 배열형식으로 접근가능
+	<form name="form01"
+		<input name="id"
+	var id = document.form01.id;
+		
+8. BOM객체(frame이나 window형 객체)
+	var win01 = window.open("","",""); 브라우저 창을 기준으로 처리
+	var fram01 = document.querySelector("#frame01");
+	
+9 이벤트 처리
+	function call(){	//이벤트 핸들러 함수
+	
+	}
+	<h1 onclick="call()">
+		on이벤트명
+	// DOM에 속성으로 이벤트를 선언하고 해당 이벤트가 수행될 때, 함수를 할당 처리..	
+	dom객체.onclick=function(){
+	
+	}
+	
+10. 기타 api
+	쿠키, 웹스트로지, 구글 api 등등. 
+11. ajax 처리(**)
+	서버단과 비동기 연계하여 처리하는 ajax 처리
+12. jquery
+13.. vue
