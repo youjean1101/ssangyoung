@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="boardsch" type="board.vo.BoardSch"/>
+		<typeAlias alias="board" type="board.vo.Board"/>
+		<typeAlias alias="boardfile" type="board.vo.BoardFile"/>
+		<typeAlias alias="member" type="board.vo.Member"/>
+	</typeAliases>
+	<mappers>
+	
+		<mapper resource="resource/a03_Mapper.xml"/>
+	</mappers>
+</configuration>

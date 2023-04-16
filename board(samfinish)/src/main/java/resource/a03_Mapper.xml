@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="board.A03_Dao">
+	<!-- public int totCnt(BoardSch sch); -->
+	<select id="totCnt" resultType="int" 
+			parameterType="boardsch">
+		select count(*)
+		from board b
+		where 1=1
+		and subject like '%'||#{subject}||'%'
+		and writer like '%'||#{writer}||'%'		
+	</select>
+			
+	<select id="boardList" resultType="board"
+		parameterType="boardsch">
+		select *
+		from (
+			select rownum cnt, level, b.*
+			from board b
+			where 1=1
+			and subject like '%'||#{subject}||'%'
+			and writer like '%'||#{writer}||'%'	
+			START WITH refno =0
+			CONNECT BY PRIOR NO =refno
+			ORDER siblings BY NO DESC )
+		where cnt between #{start} and #{end}			
+	</select>
+	<insert id="insertBoard" parameterType="board">
+		INSERT INTO board values(board_seq.nextval,
+			#{refno}, #{subject},#{content},#{writer},
+			0, sysdate, sysdate)			
+	</insert>
+	<!-- 
+
+	조회수 처리 -->	
+	<update id="uptReadCnt" parameterType="int">
+		UPDATE BOARD 
+			SET READCNT = readcnt+1
+	  	WHERE NO = #{no}				
+	</update>	
+	<select id="getBoard" resultType="board" parameterType="int">
+		SELECT * FROM board
+		WHERE NO = #{no}			
+	</select>
+	<insert id="insertUploadFile" parameterType="boardfile">
+		insert into boardfile values(board_seq.currval, 
+		#{fname},#{etc},sysdate,sysdate)
+	</insert>
+	<!-- public void uptBoardFile(BoardFile upt);	
+	# 동적 query
+	String sql = "select " + fname + " fname, "+no+" no.."
+	# board와 boradfile 의 데이터 비교
+	1. 첨부파일이 있을 때, 없을 때를 구분하여 update/insert 동시 처리	
+	 -->
+	<update id="uptBoardFile" parameterType="boardfile">
+    merge into boardfile  a
+	     using (SELECT '${fname}' fname, ${no} NO, '${etc}' subject  
+	     		FROM dual) b
+	        on (a.no = b.no)
+	      when matched then    
+		update set fname = b.fname,
+				uptdte = sysdate
+		  when not matched then
+			insert values(b.no, 
+					b.fname,b.subject,sysdate,sysdate)	
+	</update>
+	<select id="getBoardFile" resultType="string" parameterType="int">
+		select fname
+		from boardfile
+		where no = #{no}
+	</select>
+	<update id= "updateBoard" parameterType="board">
+		update board
+		set content = #{content},
+			subject = #{subject},
+			uptdte = sysdate
+	   where no = #{no}			
+	</update> 
+	<delete id="deleteBoard" parameterType="int">
+		delete 
+		from board 
+		where no = #{no}
+	</delete>		
+	<!-- public Member login(Member m); -->		
+	<select id="login" parameterType="member" resultType="member">
+		select *
+		from member
+		where id =#{id}
+		and pass = #{pass}	
+	</select>
+</mapper>		
+		
